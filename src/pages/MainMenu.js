@@ -13,7 +13,7 @@ class MainMenu extends React.Component {
             <MenuItem key={item}>
                 <div>
                     {item}
-                    <a style={{float:"right"}} onClick={() => console.log("Closing "+item)}>
+                    <a href={"#close?q="+item} style={{float:"right"}} onClick={() => console.log("Closing "+item)}>
                         <Icon type="close" />
                     </a>
                 </div>

@@ -16,7 +16,7 @@ class OntologiesList extends React.Component {
                         item ? (
                             <List.Item key={item.ontologyID}>
                                 <Card hoverable actions={[
-                                    <a onClick={
+                                    <a href={"#delete?q="+item.ontologyID} onClick={
                                         () => console.log("Delete "+item.ontologyID)
                                     }>
                                         delete
@@ -24,7 +24,7 @@ class OntologiesList extends React.Component {
                                 ]}>
                                     <Card.Meta key={item.ontologyID}
                                         avatar={<img alt="" src={item.avatar} />}
-                                        title={<a>{item.ontologyID}</a>}
+                                        title={<a href={"#open?q="+item.ontologyID}>{item.ontologyID}</a>}
                                         description={
                                             <Ellipsis>
                                                 {item.ontologyDescription}

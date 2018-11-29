@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Icon } from 'antd';
 import OntologyMenu from './OntologyMenu'
+import OntologyInfo from './OntologyInfo';
 const { Content, Sider } = Layout;
 
 class CurrentOntology extends React.Component {
@@ -14,7 +15,7 @@ class CurrentOntology extends React.Component {
         });
       }
     render() {
-        const contents = ["PIPOPO"];
+        const contents = [<OntologyInfo/>];
         return (
             <Layout style={{ margin: '0px 0px 0px -24px' }}>
                 <Sider

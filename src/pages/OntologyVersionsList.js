@@ -31,11 +31,11 @@ class OntologyVersionsList extends React.Component {
                                                 <p>{item.numAxioms+ " axioms"}</p>
                                             </div>
                                         } placement="bottom">
-                                        <a>
+                                        <a href={"#info?q="+item.ontologyID}>
                                             info
                                         </a>
                                     </Popover>,
-                                    <a onClick={
+                                    <a href={"#delete?q="+item.ontologyID} onClick={
                                         () => console.log("Delete "+item.ontologyID+"-"+item.versionID)
                                     }>
                                         delete
@@ -43,7 +43,7 @@ class OntologyVersionsList extends React.Component {
                                 ]}>
                                     <Card.Meta key={item.versionID}
                                         avatar={<img alt="" src={item.avatar} />}
-                                        title={<a>{item.ontologyID+"-"+item.versionID}</a>}
+                                        title={<a href={"#open?q="+item.ontologyID+"-"+item.versionID}>{item.ontologyID+"-"+item.versionID}</a>}
                                         description={
                                             <Ellipsis>
                                                 {item.versionDescription}
