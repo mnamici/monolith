@@ -22,7 +22,7 @@ const data = {
         "Second descritpion",
         "Last descritpion"
     ],
-    ontologyMetrics:{
+    ontologyMetrics: {
         metrics: [{
             mapKey: 'Axioms:',
             mapValue: '234500'
@@ -32,7 +32,7 @@ const data = {
         }, {
             mapKey: 'Object Properties:',
             mapValue: '2'
-        },{
+        }, {
             mapKey: 'Data Properties:',
             mapValue: '2000000'
         }],
@@ -75,24 +75,15 @@ class OntologyInfo extends React.Component {
     render() {
         const elements = [
             <Card title="IRI">{data.ontolgogyIRI}</Card>,
-            <OntologyMetricsTabs titles={[{key:"imports",tab:"Imports"}]} data={data.ontologyImports}/>,
-            <OntologyMetricsTabs titles={[{key:"pm",tab:"Prefix Manager"}]} data={data.ontologyPrefixManager}/>,
-            <OntologyMetricsTabs titles={[{key:"desc",tab:"Descriptions"}]} data={data.ontologyDescriptions}/>,
-            <OntologyMetricsTabs titles={[
-                    {key:"metrics",tab:"Metrics"},
-                    {key:"classAxioms",tab:"Class Axioms"},
-                    {key:"objectPropertyAxioms",tab:"Object Properties Axioms"},
-                    {key:"dataPropertyAxioms",tab:"Data Properties Axioms"},
-                    {key:"individualAxioms",tab:"Individual Axioms"},
-                    {key:"annotationAxioms",tab:"Annotation Axioms"}
-                ]} 
-                data={data.ontologyMetrics}
-            />,
+            <OntologyMetricsTabs titles={[{ key: "imports", tab: "Imports" }]} data={data.ontologyImports} />,
+            <OntologyMetricsTabs titles={[{ key: "pm", tab: "Prefix Manager" }]} data={data.ontologyPrefixManager} />,
+            <OntologyMetricsTabs titles={[{ key: "desc", tab: "Descriptions" }]} data={data.ontologyDescriptions} />,
+
         ]
         return (
             <div>
                 <List
-                    grid={{ gutter: 12, column: 1 }}
+                    grid={{ gutter: 12, column: 2 }}
                     dataSource={elements}
                     renderItem={item => (
                         <List.Item>
@@ -100,7 +91,17 @@ class OntologyInfo extends React.Component {
                         </List.Item>
                     )}
                 />
-                <DownloadFile></DownloadFile>
+                <OntologyMetricsTabs titles={[
+                    { key: "metrics", tab: "Metrics" },
+                    { key: "classAxioms", tab: "Class Axioms" },
+                    { key: "objectPropertyAxioms", tab: "Object Properties Axioms" },
+                    { key: "dataPropertyAxioms", tab: "Data Properties Axioms" },
+                    { key: "individualAxioms", tab: "Individual Axioms" },
+                    { key: "annotationAxioms", tab: "Annotation Axioms" }
+                ]}
+                    data={data.ontologyMetrics}
+                />,
+                <DownloadFile/>
             </div>
         );
     }

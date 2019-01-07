@@ -4,18 +4,19 @@ import Entity from './Entity';
 import AssertionsList from './AssertionsList';
 
 const data =
-{
-    currentEntity: {
-        entityRender: 'Person',
-        entityID: 12
-    },
-    iri: {
-        shortIRI: 'obda:Person',
-        extendedIRI: 'http://www.example.com/#Person'
-    },
-    mappingAssertions: [
+    [
         {
-            mappingTemplate: 'http://www.example.com/person_{ssn}',
+            currentEntity: {
+                entityRender: 'Person',
+                entityID: 12
+            },
+            iri: {
+                shortIRI: 'obda:Person',
+                extendedIRI: 'http://www.example.com/#Person'
+            },
+            mappingHead: {
+                firstArg: 'http://www.example.com/person_{ssn}',
+            },
             mappingDescription: 'Data from main table',
             mappingBody: {
                 bodySelect: 'ssn',
@@ -30,7 +31,17 @@ const data =
             }
         },
         {
-            mappingTemplate: 'http://www.example.com/person_{name}-{surname}',
+            currentEntity: {
+                entityRender: 'Person',
+                entityID: 12
+            },
+            iri: {
+                shortIRI: 'obda:Person',
+                extendedIRI: 'http://www.example.com/#Person'
+            },
+            mappingHead: {
+                firstArg: 'http://www.example.com/{person_name}-{surname}',
+            },
             mappingDescription: 'Data from names and surnames tables',
             mappingBody: {
                 bodySelect: 'namesView.person_name, surnameView.surname',
@@ -50,16 +61,15 @@ const data =
             }
         }
     ]
-}
 
 class AssertionsPage extends React.Component {
     render() {
         const elements = [
-            <Card title="Label"> <Entity entity={data.currentEntity} /> </Card>,
+            <Card title="Label"> <Entity entity={data[0].currentEntity} /> </Card>,
             <Card title="IRI">
-                <Popover content={data.iri.extendedIRI}>
-                    <a href={"#class?q=" + data.currentEntity.entityID}>{data.iri.shortIRI}</a>
-                </Popover> 
+                <Popover content={data[0].iri.extendedIRI}>
+                    <a href={"#class?q=" + data[0].currentEntity.entityID}>{data[0].iri.shortIRI}</a>
+                </Popover>
             </Card>,
 
         ]
@@ -74,7 +84,7 @@ class AssertionsPage extends React.Component {
                         </List.Item>
                     )}
                 />
-                <AssertionsList list={data.mappingAssertions} />
+                <AssertionsList list={data} />
             </div>
         );
     }

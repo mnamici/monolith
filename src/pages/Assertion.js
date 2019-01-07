@@ -7,7 +7,9 @@ class Assertion extends React.Component {
 
         return (
             <div>
-                <MapItem mapKey="Template" mapValue={this.props.assertion.mappingTemplate}/>
+                {this.props.entity === true && <MapItem mapKey="Entity" mapValue={this.props.assertion.currentEntity.entityRender}/>}
+                <MapItem mapKey="Description" mapValue={this.props.assertion.mappingDescription}/>
+                <MapItem mapKey="Head" mapValue={this.props.assertion.mappingHead.firstArg}/>
                 <MapItem mapKey="Body" mapValue={<MappingBody body={this.props.assertion.mappingBody}/>}/>
                 
             </div>

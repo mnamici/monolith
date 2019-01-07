@@ -15,6 +15,7 @@ import LoadMappings from './pages/LoadMappings';
 import CurrentMapping from './pages/CurrentMapping';
 import MappingInfo from './pages/MappingInfo';
 import AssertionsPane from './pages/AssertionsPane'
+import SQLViewsPane from './pages/SQLViewsPane';
 
 class App extends Component {
   render() {
@@ -29,7 +30,8 @@ class App extends Component {
 
     const mappings = [
       <MappingInfo />,
-      <AssertionsPane/>
+      <AssertionsPane/>,
+      <SQLViewsPane/>
     ]
 
     const ontos = [
@@ -37,7 +39,7 @@ class App extends Component {
       <OntologyWiki />, 
       <LoadMappings />, 
       <CurrentMapping>
-        {mappings[1]}
+        {mappings[2]}
       </CurrentMapping>]
     const contents = [
       <Home />,
