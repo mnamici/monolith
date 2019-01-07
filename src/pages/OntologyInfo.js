@@ -2,7 +2,7 @@ import React from 'react';
 import { List, Card } from 'antd';
 
 import OntologyMetricsTabs from './OntologyMetricsTabs'
-import MapItem  from './MapItem'
+import DownloadFile from './DownloadFile'
 
 const data = {
     ontolgogyIRI: "http://www.example.com/ACI",
@@ -74,7 +74,7 @@ const data = {
 class OntologyInfo extends React.Component {
     render() {
         const elements = [
-            <Card><MapItem mapKey="IRI:" mapValue={data.ontolgogyIRI}/></Card>,
+            <Card title="IRI">{data.ontolgogyIRI}</Card>,
             <OntologyMetricsTabs titles={[{key:"imports",tab:"Imports"}]} data={data.ontologyImports}/>,
             <OntologyMetricsTabs titles={[{key:"pm",tab:"Prefix Manager"}]} data={data.ontologyPrefixManager}/>,
             <OntologyMetricsTabs titles={[{key:"desc",tab:"Descriptions"}]} data={data.ontologyDescriptions}/>,
@@ -90,15 +90,18 @@ class OntologyInfo extends React.Component {
             />,
         ]
         return (
-            <List
-                grid={{ gutter: 16, column: 1 }}
-                dataSource={elements}
-                renderItem={item => (
-                    <List.Item>
-                        {item}
-                    </List.Item>
-                )}
-            />
+            <div>
+                <List
+                    grid={{ gutter: 12, column: 1 }}
+                    dataSource={elements}
+                    renderItem={item => (
+                        <List.Item>
+                            {item}
+                        </List.Item>
+                    )}
+                />
+                <DownloadFile></DownloadFile>
+            </div>
         );
     }
 }

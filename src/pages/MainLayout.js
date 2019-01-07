@@ -6,7 +6,7 @@ const { Content, Footer, Sider } = Layout;
 
 class MainLayout extends React.Component {
   state = {
-    collapsed: false,
+    collapsed: true,
   };
 
   onCollapse = (collapsed) => {
@@ -33,8 +33,8 @@ class MainLayout extends React.Component {
               <Breadcrumb.Item>User</Breadcrumb.Item>
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
             </Breadcrumb> */}
-            <div style={{ padding: 24, background: '#fff', minHeight: '90vh' }}>
-              {this.props.content}
+            <div style={{ padding: 24, background: '#fff' }}>
+              {this.props.children}
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>

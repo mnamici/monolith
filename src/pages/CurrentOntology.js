@@ -1,12 +1,12 @@
 import React from 'react';
 import { Layout, Icon } from 'antd';
 import OntologyMenu from './OntologyMenu'
-import OntologyInfo from './OntologyInfo';
+
 const { Content, Sider } = Layout;
 
 class CurrentOntology extends React.Component {
     state = {
-        collapsed: false,
+        collapsed: true,
     };
 
     toggle = () => {
@@ -15,26 +15,28 @@ class CurrentOntology extends React.Component {
         });
       }
     render() {
-        const contents = [<OntologyInfo/>];
         return (
-            <Layout style={{ margin: '0px 0px 0px -24px' }}>
+            <Layout style={{ margin: '0px -24px -10px -24px', minHeight:'100%' }}>
                 <Sider
                     // width={200} 
                     style={{ background: '#fff' }}
                     collapsed={this.state.collapsed}
-                >
-                    <Icon
-                        style={{display: "inherit", cursor: "pointer",  transition: "color .3s"}}
-                        theme="filled"
-                        type={this.state.collapsed ? 'caret-right' : 'caret-left'}
-                        onClick={this.toggle}
-                    />
+                >   
                     <OntologyMenu />
+                    <div>
+                        <Icon
+                            style={{display: "inherit", cursor: "pointer",  transition: "color .3s"}}
+                            theme="filled"
+                            type={this.state.collapsed ? 'caret-right' : 'caret-left'}
+                            onClick={this.toggle}
+                        />
+                    </div>
+                    
                 </Sider>
                 <Layout>
                     <Content >
-                        <div style={{ padding: 24, background: '#fff', minHeight: '80vh' }}>
-                            {contents[0]}
+                        <div style={{ padding: '0px 12px 0px 12px', background: '#fff', minHeight: '100%'}}>
+                            {this.props.children}
                         </div>
                     </Content>
                 </Layout>

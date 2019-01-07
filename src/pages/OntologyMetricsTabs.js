@@ -41,7 +41,7 @@ class OntologyMetricsTabs extends React.Component {
                     grid={{ gutter: 0, column: 1 }}
                     dataSource={data[key]}
                     renderItem={item => (
-                        <List.Item>
+                        <List.Item >
                             {
                                 item.mapKey !== undefined ? // single tab pairs
                                     <MapItem mapKey={item.mapKey} mapValue={item.mapValue} /> :

@@ -10,8 +10,8 @@ class OntologyMenu extends React.Component {
 
     render() {
         return (
-            <Menu style={{ paddingTop: 0}} theme="light" defaultSelectedKeys={['o']} mode="vertical">
-                <MenuItem key="info">
+            <Menu style={{ paddingTop: 0, minHeight:'90vh'}} theme="light" defaultSelectedKeys={['info']} mode="vertical">
+                <MenuItem key="info" style={{ marginTop: 0}}>
                     <Icon type="info" />
                     <span>Info</span>
                 </MenuItem>
