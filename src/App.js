@@ -31,7 +31,7 @@ class App extends Component {
     const mappings = [
       <MappingInfo />,
       <AssertionsPane/>,
-      <SQLViewsPane/>
+      <SQLViewsPane/>,
     ]
 
     const ontos = [

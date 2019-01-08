@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Card, Popover } from 'antd';
+import { List, Card, Popover, Divider } from 'antd';
 import Entity from './Entity';
 import AssertionsList from './AssertionsList';
 
@@ -84,6 +84,7 @@ class AssertionsPage extends React.Component {
                         </List.Item>
                     )}
                 />
+                <Divider children="Assertions"/>
                 <AssertionsList list={data} />
             </div>
         );

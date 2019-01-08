@@ -35,9 +35,9 @@ class CurrentMapping extends React.Component {
                         <Menu.Item key="views">
                             SQL Views
                         </Menu.Item>
-                        <Menu.Item key="dependencies">
+                        {/* <Menu.Item key="dependencies">
                             Dependencies
-                        </Menu.Item>
+                        </Menu.Item> */}
                     </Menu>
                 </Header>
                 <Content style={{ background: '#fff' }}>
