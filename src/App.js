@@ -16,6 +16,7 @@ import CurrentMapping from './pages/CurrentMapping';
 import MappingInfo from './pages/MappingInfo';
 import AssertionsPane from './pages/AssertionsPane'
 import SQLViewsPane from './pages/SQLViewsPane';
+import SPARQLEndpoint from './pages/SPARQLEndpoint';
 
 class App extends Component {
   render() {
@@ -40,12 +41,14 @@ class App extends Component {
       <LoadMappings />, 
       <CurrentMapping>
         {mappings[2]}
-      </CurrentMapping>]
+      </CurrentMapping>,
+      <SPARQLEndpoint />
+    ]
     const contents = [
       <Home />,
       <LoadOntologies />,
       <CurrentOntology>
-        {ontos[3]}
+        {ontos[4]}
       </CurrentOntology>
     ]
 

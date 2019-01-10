@@ -7,11 +7,15 @@
     "ant-design": "^1.0.0",
     "ant-design-pro": "^2.1.1",
     "antd": "^3.10.9",
+    "griddle-callback": "^0.2.1",
+    "griddle-react": "^0.8.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-infinite-scroller": "^1.2.4",
     "react-scripts": "^2.1.3",
     "react-syntax-highlighter": "^10.1.2",
-    "sql-formatter": "^2.3.2"
+    "sql-formatter": "^2.3.2",
+    "yasgui-yasqe": "^2.11.22"
   },
   "scripts": {
     "start": "react-scripts start",
