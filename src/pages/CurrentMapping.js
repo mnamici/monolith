@@ -1,39 +1,41 @@
 import React from 'react';
+import { Route, NavLink } from 'react-router-dom'
 import { Layout, Menu } from 'antd';
+import MappingInfo from './MappingInfo';
+import AssertionsPane from './AssertionsPane';
+import SQLViewsPane from './SQLViewsPane';
 
 const {
     Header, Content,
 } = Layout;
 
 class CurrentMapping extends React.Component {
-    state = {
-        current: 'info',
-    }
-
-    handleClick = (e) => {
-        console.log('click ', e);
-        this.setState({
-            current: e.key,
-        });
-    }
+    
 
     render() {
+
+        const curr = [this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/')+1)]
         return (
             <Layout>
                 <Header style={{ background: '#fff' }}>
                     <Menu
-                        onClick={this.handleClick}
-                        selectedKeys={[this.state.current]}
+                    defaultSelectedKeys={curr}
                         mode="horizontal"
                     >
                         <Menu.Item key="info">
-                            Mapping Info
+                            <NavLink to="/open/ontology/mapping/info">
+                                Mapping Info
+                            </NavLink>
                         </Menu.Item>
                         <Menu.Item key="assertions">
-                            Assertions
+                            <NavLink to="/open/ontology/mapping/assertions">
+                                Assertions
+                            </NavLink>
                         </Menu.Item>
                         <Menu.Item key="views">
-                            SQL Views
+                            <NavLink to="/open/ontology/mapping/sqlViews">
+                                SQL Views
+                            </NavLink>
                         </Menu.Item>
                         {/* <Menu.Item key="dependencies">
                             Dependencies
@@ -41,7 +43,9 @@ class CurrentMapping extends React.Component {
                     </Menu>
                 </Header>
                 <Content style={{ background: '#fff' }}>
-                    {this.props.children}
+                    <Route path="/open/ontology/mapping/info" component={MappingInfo} />
+                    <Route path="/open/ontology/mapping/assertions" component={AssertionsPane} />
+                    <Route path="/open/ontology/mapping/sqlViews" component={SQLViewsPane} />
                 </Content>
             </Layout>
 

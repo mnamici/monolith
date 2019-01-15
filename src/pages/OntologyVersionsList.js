@@ -1,15 +1,16 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom'
 import { List, Card, Divider, Popover } from 'antd';
 import Ellipsis from 'ant-design-pro/lib/Ellipsis'
 import UploadFile from './UploadFile';
 
 class OntologyVersionsList extends React.Component {
-   
+
     render() {
         var list = [];
-        for(let i=0;i<this.props.data.length;i++){
-            if(this.props.data[i].ontologyID === this.props.current){
-                list = [...this.props.data[i].ontologyVersions, ''];       
+        for (let i = 0; i < this.props.data.length; i++) {
+            if (this.props.data[i].ontologyID === this.props.current) {
+                list = [...this.props.data[i].ontologyVersions, ''];
                 break;
             }
         }
@@ -25,33 +26,38 @@ class OntologyVersionsList extends React.Component {
                             <List.Item key={item.versionID}>
                                 <Card hoverable actions={[
                                     <Popover content={
-                                            <div>
-                                                <p>{item.numClasses+ " classes"}</p>
-                                                <p>{item.numObjectProperties+ " object properties"}</p>
-                                                <p>{item.numDataProperties+ " data properties"}</p>
-                                                <p>{item.numAxioms+ " axioms"}</p>
-                                            </div>
-                                        } placement="bottom">
-                                        <a href={"#info?q="+item.ontologyID}>
+                                        <div>
+                                            <p>{item.numClasses + " classes"}</p>
+                                            <p>{item.numObjectProperties + " object properties"}</p>
+                                            <p>{item.numDataProperties + " data properties"}</p>
+                                            <p>{item.numAxioms + " axioms"}</p>
+                                        </div>
+                                    } placement="bottom">
+                                        <a href={"#info?q=" + item.ontologyID}>
                                             info
                                         </a>
                                     </Popover>,
-                                    <a href={"#delete?q="+item.ontologyID} onClick={
-                                        () => console.log("Delete "+item.ontologyID+"-"+item.versionID)
+                                    <a href={"#delete?q=" + item.ontologyID} onClick={
+                                        () => console.log("Delete " + item.ontologyID + "-" + item.versionID)
                                     }>
                                         delete
                                     </a>
                                 ]}>
                                     <Card.Meta key={item.versionID}
                                         avatar={<img alt="" src={item.avatar} />}
-                                        title={<a href={"#open?q="+item.ontologyID+"-"+item.versionID}>{item.ontologyID+"-"+item.versionID}</a>}
+                                        title={
+                                            <NavLink to={"/open/ontology/info"}>{/*?id="+item.ontologyID+"&v="+item.versionID}>*/}
+                                                {item.ontologyID + "-" + item.versionID}
+                                            </NavLink>
+
+                                        }
                                         description={
                                             <Ellipsis>
                                                 {item.versionDescription}
                                             </Ellipsis>
                                         }
                                         onClick={
-                                            () => { 
+                                            () => {
                                                 console.log("Open Ontology page")
                                             }
                                         }
@@ -60,7 +66,7 @@ class OntologyVersionsList extends React.Component {
                             </List.Item>
                         ) : (
                                 <List.Item>
-                                    <UploadFile/>
+                                    <UploadFile />
                                     {/* <Button type="dashed" onClick={() => console.log("Add version of ontology")}>
                                         <Icon type="plus" />
                                         Add Ontology Version

@@ -55,10 +55,10 @@ class Results extends React.Component {
 
     componentDidMount() {
         //fetch from server
-        this.fetch(1);
+        //this.fetch(1);
         
         //test mastro results
-        //this.convertData();
+        this.convertData();
     }
 
     convertData(){

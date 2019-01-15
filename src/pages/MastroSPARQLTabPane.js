@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Button, Progress } from 'antd';
+import { Switch, Button, Progress, List } from 'antd';
 import YASQE from 'yasgui-yasqe'
 import '../css/yasqe.min.css'
 import { Input } from 'antd';
@@ -34,7 +34,7 @@ class MastroSPARQLTabPane extends React.Component {
     }
 
     componentDidMount() {
-        this.yasqe = YASQE(document.getElementById('sparql'),
+        this.yasqe = YASQE(document.getElementById('sparql_' + this.props.num),
             {
                 // Disable share link
                 createShareLink: null,
@@ -50,21 +50,35 @@ class MastroSPARQLTabPane extends React.Component {
         this.yasqe.refresh();
     }
     render() {
-
-        return (
+        const elements = [
             <div>
-                <div>
-                    <Button>Run</Button>
-                    <Button>Stop</Button>
-                    <Button>Store in catalog</Button>
-                    <Switch defaultChecked />
-                </div>
-                <Progress percent={status.percentage} />
-                <div id="sparql" />
-                <TextArea placeholder="Description" autosize />
-                <p>{status.numResults} results</p>
-                <Results />
-                <QueryExecutionReport />
+                <Button.Group style={{ marginRight: 8 }}>
+                    <Button type="primary" icon="play-circle">Run</Button>
+                    <Button type="danger" icon="stop">Stop</Button>
+                </Button.Group>
+                <Button style={{ marginRight: 8 }} icon="save">Store in catalog</Button>
+                <Switch defaultChecked />
+
+
+            </div>,
+            <Progress percent={status.percentage} />,
+            <div id={"sparql_" + this.props.num} />,
+            <TextArea placeholder="Description" autosize />,
+            <p>{status.numResults} results</p>,
+            <Results />,
+            <QueryExecutionReport status={status} />,
+        ]
+        return (
+            <div style={{margin:12}}>
+                <List
+                    grid={{ gutter: 8, column: 1 }}
+                    dataSource={elements}
+                    renderItem={item => (
+                        <List.Item>
+                            {item}
+                        </List.Item>
+                    )}
+                />
             </div>
         );
     }

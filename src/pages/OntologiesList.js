@@ -24,7 +24,7 @@ class OntologiesList extends React.Component {
                                 ]}>
                                     <Card.Meta key={item.ontologyID}
                                         avatar={<img alt="" src={item.avatar} />}
-                                        title={<a href={"#open?q="+item.ontologyID}>{item.ontologyID}</a>}
+                                        title={item.ontologyID}
                                         description={
                                             <Ellipsis>
                                                 {item.ontologyDescription}

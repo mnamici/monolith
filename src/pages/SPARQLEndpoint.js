@@ -59,7 +59,7 @@ class SPARQLEndpoint extends React.Component {
         panes : [
             { 
                 title: 'New Tab', 
-                content: <MastroSPARQLTabPane/> , 
+                content: <MastroSPARQLTabPane num={1}/> , 
                 key: '1', 
                 closable: false,
             },
@@ -85,7 +85,7 @@ class SPARQLEndpoint extends React.Component {
                 </Sider>
                 <Layout>
                     <Content >
-                        <div style={{ padding: '0px 12px 0px 12px', background: '#fff', minHeight: '100%' }}>
+                        <div style={{ marginLeft:0, background: '#fff', minHeight: '100%' }}>
                             <AddCloseTabs panes={this.state.panes}/>
                         </div>
                     </Content>

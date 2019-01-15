@@ -26,7 +26,7 @@ class QueryCatalog extends React.Component {
         const queries = this.props.queryCatalog.map( item => this.getClosableMenuItem(item.queryID));
 
         return (
-            <Menu theme="light" mode="inline">
+            <Menu style={{ minHeight:'50vh'}} theme="light" mode="inline">
                 {queries}
             </Menu>
         )

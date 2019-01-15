@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
+import { NavLink } from 'react-router-dom';
 //import ClosableMenuItem from './ClosableMenuItem'
 
 const SubMenu = Menu.SubMenu;
@@ -8,12 +9,12 @@ const MenuItem = Menu.Item;
 
 class MainMenu extends React.Component {
 
-    getClosableMenuItem(item){
+    getClosableMenuItem(item) {
         return (
             <MenuItem key={item}>
                 <div>
                     {item}
-                    <a href={"#close?q="+item} style={{float:"right"}} onClick={() => console.log("Closing "+item)}>
+                    <a href={"#close?q=" + item} style={{ float: "right" }} onClick={() => console.log("Closing " + item)}>
                         <Icon type="close" />
                     </a>
                 </div>
@@ -23,28 +24,38 @@ class MainMenu extends React.Component {
 
     render() {
 
-        const ontolgies = this.props.open.ontologies.map( item => this.getClosableMenuItem(item));
-        const kgs = this.props.open.kgs.map( item => this.getClosableMenuItem(item));
-        const dss = this.props.open.dss.map( item => this.getClosableMenuItem(item));
+        const ontolgies = this.props.open.ontologies.map(item => this.getClosableMenuItem(item));
+        const kgs = this.props.open.kgs.map(item => this.getClosableMenuItem(item));
+        const dss = this.props.open.dss.map(item => this.getClosableMenuItem(item));
 
         return (
-            <Menu theme="dark" defaultSelectedKeys={['o']} mode="inline">
+            <Menu defaultSelectedKeys={["ontology"]} theme="dark" mode="inline">
+
                 <SubMenu
-                    key="o"
-                    title={<span><Icon type="block" /><span>Ontology</span></span>}
+                    key="ontology"
+                    title={
+                        <NavLink to="/ontology" activeStyle={{fontWeight: "bold", color: "white"}}>
+                            <span><Icon type="block" /><span>Ontology</span></span>
+                        </NavLink>}
                 >
                     {ontolgies}
                 </SubMenu>
-                    
+
                 <SubMenu
                     key="kg"
-                    title={<span><Icon type="deployment-unit" /><span>Knowledge Graph</span></span>}
+                    title={
+                        <NavLink to="/kg" activeStyle={{fontWeight: "bold", color: "white"}}>
+                            <span><Icon type="deployment-unit" /><span>Knowledge Graph</span></span>
+                        </NavLink>}
                 >
                     {kgs}
                 </SubMenu>
                 <SubMenu
-                    key="ds"
-                    title={<span><Icon type="table" /><span>Dataset</span></span>}
+                    key="dataset"
+                    title={
+                        <NavLink to="/dataset" activeStyle={{fontWeight: "bold", color: "white"}}>
+                            <span><Icon type="table" /><span>Dataset</span></span>
+                        </NavLink>}
                 >
                     {dss}
                 </SubMenu>

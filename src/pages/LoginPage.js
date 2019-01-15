@@ -6,10 +6,10 @@ class LoginPage extends React.Component {
  
   render() {
     return (
-      <textare style={{maxWidth: 300, margin:"0 auto"}}>
+      <div style={{maxWidth: 300, margin:"0 auto"}}>
         <h1>HOCKETY POCKETY!</h1>
         <LoginForm/>
-      </textare>
+      </div>
       
     );
   }

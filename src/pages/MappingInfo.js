@@ -39,7 +39,7 @@ class MappingInfo extends React.Component {
                 <MapItem mapKey="User" mapValue={data.mappingDBConnection.dbUser}/>
                 <MapItem mapKey="Password" mapValue={data.mappingDBConnection.dbPassword}/>
             </Card>,
-            <Card title="Templates"> {data.mappingTemplates.map(item => <p>{item}</p>)} </Card>,
+            <Card title="Templates"> {data.mappingTemplates.map((item,index) => <p key={index}>{item}</p>)} </Card>,
         ]
         return (
             <div>

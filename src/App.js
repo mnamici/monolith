@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {HashRouter} from 'react-router-dom'
 import RenderAuthorized from 'ant-design-pro/lib/Authorized'
 //import { Alert } from 'antd';
 //import logo from './logo.svg';
@@ -31,14 +32,14 @@ class App extends Component {
 
     const mappings = [
       <MappingInfo />,
-      <AssertionsPane/>,
-      <SQLViewsPane/>,
+      <AssertionsPane />,
+      <SQLViewsPane />,
     ]
 
     const ontos = [
-      <OntologyInfo />, 
-      <OntologyWiki />, 
-      <LoadMappings />, 
+      <OntologyInfo />,
+      <OntologyWiki />,
+      <LoadMappings />,
       <CurrentMapping>
         {mappings[2]}
       </CurrentMapping>,
@@ -54,11 +55,14 @@ class App extends Component {
 
 
     return (
-      <div>
-        <Authorized authority="admin" noMatch={noMatch}>
-          <MainLayout open={open} >{contents[2]}</MainLayout>
-        </Authorized>
-      </div>
+      <HashRouter>
+        <div>
+          <Authorized authority="admin" noMatch={noMatch}>
+            <MainLayout open={open} >{contents[0]}</MainLayout>
+          </Authorized>
+        </div>
+      </HashRouter>
+
 
 
 

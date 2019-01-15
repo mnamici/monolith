@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tabs } from 'antd';
+import MastroSPARQLTabPane from './MastroSPARQLTabPane'
 
 const TabPane = Tabs.TabPane;
 
@@ -25,7 +26,7 @@ class AddCloseTabs extends React.Component {
   add = () => {
     const panes = this.state.panes;
     const activeKey = `newTab${this.newTabIndex++}`;
-    panes.push({ title: 'New Tab', content: 'Content of new Tab', key: activeKey });
+    panes.push({ title: 'New Tab', content: <MastroSPARQLTabPane num={activeKey}/>, key: activeKey });
     this.setState({ panes, activeKey });
   }
 
