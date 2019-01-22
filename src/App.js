@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
-import {HashRouter} from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import RenderAuthorized from 'ant-design-pro/lib/Authorized'
 //import { Alert } from 'antd';
 //import logo from './logo.svg';
 import './App.css';
 
 import LoginPage from './pages/LoginPage'
-import MainLayout from './pages/MainLayout';
-import Home from './pages/Home'
-import LoadOntologies from './pages/LoadOntologies'
-import CurrentOntology from './pages/CurrentOntology'
-import OntologyInfo from './pages/OntologyInfo'
-import OntologyWiki from './pages/OntologyWiki'
-import LoadMappings from './pages/LoadMappings';
-import CurrentMapping from './pages/CurrentMapping';
-import MappingInfo from './pages/MappingInfo';
-import AssertionsPane from './pages/AssertionsPane'
-import SQLViewsPane from './pages/SQLViewsPane';
-import SPARQLEndpoint from './pages/SPARQLEndpoint';
+import MainLayout from './pages/MainLayout'
 
 class App extends Component {
   render() {
@@ -30,35 +19,11 @@ class App extends Component {
       dss: ["DS1", "DS2"]
     }
 
-    const mappings = [
-      <MappingInfo />,
-      <AssertionsPane />,
-      <SQLViewsPane />,
-    ]
-
-    const ontos = [
-      <OntologyInfo />,
-      <OntologyWiki />,
-      <LoadMappings />,
-      <CurrentMapping>
-        {mappings[2]}
-      </CurrentMapping>,
-      <SPARQLEndpoint />
-    ]
-    const contents = [
-      <Home />,
-      <LoadOntologies />,
-      <CurrentOntology>
-        {ontos[4]}
-      </CurrentOntology>
-    ]
-
-
     return (
       <HashRouter>
         <div>
           <Authorized authority="admin" noMatch={noMatch}>
-            <MainLayout open={open} >{contents[0]}</MainLayout>
+            <MainLayout open={open} />
           </Authorized>
         </div>
       </HashRouter>

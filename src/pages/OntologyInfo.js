@@ -76,7 +76,7 @@ class OntologyInfo extends React.Component {
         const elements = [
             <Card title="IRI">{data.ontolgogyIRI}</Card>,
             <OntologyMetricsTabs titles={[{ key: "imports", tab: "Imports" }]} data={data.ontologyImports} />,
-            <OntologyMetricsTabs titles={[{ key: "pm", tab: "Prefix Manager" }]} data={data.ontologyPrefixManager} />,
+            <OntologyMetricsTabs titles={[{ key: "pm", tab: "Prefixes" }]} data={data.ontologyPrefixManager} />,
             <OntologyMetricsTabs titles={[{ key: "desc", tab: "Descriptions" }]} data={data.ontologyDescriptions} />,
 
         ]

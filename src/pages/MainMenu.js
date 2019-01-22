@@ -1,6 +1,6 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom'
 import { Menu, Icon } from 'antd';
-import { NavLink } from 'react-router-dom';
 //import ClosableMenuItem from './ClosableMenuItem'
 
 const SubMenu = Menu.SubMenu;
@@ -9,11 +9,11 @@ const MenuItem = Menu.Item;
 
 class MainMenu extends React.Component {
 
-    getClosableMenuItem(item) {
+    getClosableMenuItem(item, path) {
         return (
             <MenuItem key={item}>
                 <div>
-                    {item}
+                    <NavLink to={path}>{item}</NavLink>
                     <a href={"#close?q=" + item} style={{ float: "right" }} onClick={() => console.log("Closing " + item)}>
                         <Icon type="close" />
                     </a>
@@ -24,9 +24,9 @@ class MainMenu extends React.Component {
 
     render() {
 
-        const ontolgies = this.props.open.ontologies.map(item => this.getClosableMenuItem(item));
-        const kgs = this.props.open.kgs.map(item => this.getClosableMenuItem(item));
-        const dss = this.props.open.dss.map(item => this.getClosableMenuItem(item));
+        const ontolgies = this.props.open.ontologies.map(item => this.getClosableMenuItem(item,"/open/ontology/info"));
+        const kgs = this.props.open.kgs.map(item => this.getClosableMenuItem(item,"/kg"));
+        const dss = this.props.open.dss.map(item => this.getClosableMenuItem(item,"/dataset"));
 
         return (
             <Menu defaultSelectedKeys={["ontology"]} theme="dark" mode="inline">

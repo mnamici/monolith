@@ -48,9 +48,9 @@ class OntologyMenu extends React.Component {
                         <NavLink to="/open/ontology/endpoint"><span>Endpoint</span> </NavLink>
                     </MenuItem>
 
-                    <MenuItem key="spaqlink">
+                    {/* <MenuItem key="spaqlink">
                         <NavLink to="/open/ontology/sparqling"><span>Sparqling</span></NavLink>
-                    </MenuItem>
+                    </MenuItem> */}
                 </SubMenu>
 
                 <MenuItem key="dataQuality">

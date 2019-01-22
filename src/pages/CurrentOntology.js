@@ -7,6 +7,7 @@ import OntologyWiki from './OntologyWiki';
 import LoadMappings from './LoadMappings';
 import SPARQLEndpoint from './SPARQLEndpoint';
 import CurrentMapping from './CurrentMapping';
+import Graphol from './Grapholscape';
 
 const { Content, Sider } = Layout;
 
@@ -45,6 +46,7 @@ class CurrentOntology extends React.Component {
 
                             <Route path="/open/ontology/info" component={OntologyInfo} />
                             <Route path="/open/ontology/wiki" component={OntologyWiki} />
+                            <Route path="/open/ontology/graphol" component={Graphol} />
                             <Route path="/open/ontology/mappings" component={LoadMappings} />
                             <Route path="/open/ontology/mapping" component={CurrentMapping} />
                             <Route path="/open/ontology/endpoint" component={SPARQLEndpoint} />

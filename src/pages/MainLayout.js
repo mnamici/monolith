@@ -26,7 +26,7 @@ class MainLayout extends React.Component {
           onCollapse={this.onCollapse}
         >
           <div className="logo" >
-            <NavLink to="/home">
+            <NavLink to="/">
               <img src={logo} alt="logo" />
             </NavLink>
           </div>
@@ -40,7 +40,7 @@ class MainLayout extends React.Component {
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
             </Breadcrumb> */}
             <div style={{ padding: 24, background: '#fff' }}>
-              <Route path="/home" component={Home} />
+              <Route exact path="/" component={Home} />
               
               <Route path="/ontology" component={LoadOntologies} />
               <Route path="/open/ontology" component={CurrentOntology} />
