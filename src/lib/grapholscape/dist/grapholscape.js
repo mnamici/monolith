@@ -1,3 +1,5 @@
+// disable warnings
+/* eslint-disable */
 const cytoscape = require('cytoscape')
 
 function GrapholScape(file,container,xmlstring) {

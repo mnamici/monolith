@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, NavLink } from 'react-router-dom'
 import { Layout } from 'antd';
-import logo from '../logo.svg';
+import logo from '../logo_NEW.svg';
 import MainMenu from './MainMenu'
 import Home from './Home'
 import LoadOntologies from './LoadOntologies'
@@ -25,7 +25,7 @@ class MainLayout extends React.Component {
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
         >
-          <div className="logo" >
+          <div className="logo" style={{padding:8}}>
             <NavLink to="/">
               <img src={logo} alt="logo" />
             </NavLink>

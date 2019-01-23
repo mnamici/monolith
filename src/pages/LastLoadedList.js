@@ -1,5 +1,6 @@
 import React from 'react';
 import { List, Card, Divider } from 'antd';
+import { NavLink } from 'react-router-dom'
 
 class LastLoadedList extends React.Component {
     render() {
@@ -11,7 +12,13 @@ class LastLoadedList extends React.Component {
                     dataSource={this.props.data}
                     renderItem={item => (
                         <List.Item>
-                            <Card title={item.title}>{item.description}</Card>
+                            <Card title={
+                                <NavLink to={this.props.path}>
+                                    {item.title}
+                                </NavLink>}
+                            >
+                                {item.description}
+                            </Card>
                         </List.Item>
                     )}
                 />

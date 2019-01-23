@@ -41,9 +41,9 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <LastLoadedList title="Last Loaded Ontologies" data={dataOntologies} />
-        <LastLoadedList title="Last Loaded Knowledge Graphs" data={dataKG} />
-        <LastLoadedList title="Last Loaded Datasets" data={dataDataset} />
+        <LastLoadedList title="Last Loaded Ontologies" data={dataOntologies} path="/open/ontology/info"/>
+        <LastLoadedList title="Last Loaded Knowledge Graphs" data={dataKG} path="/kg"/>
+        <LastLoadedList title="Last Loaded Datasets" data={dataDataset} path="/dataset"/>
         <MainMenuDescriptions />
       </div>
     );
