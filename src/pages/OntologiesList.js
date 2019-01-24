@@ -1,6 +1,8 @@
 import React from 'react';
-import { List, Card, Divider, Button, Icon } from 'antd';
+import { List, Card, Divider } from 'antd';
 import Ellipsis from 'ant-design-pro/lib/Ellipsis'
+import AddOntology from './AddOntology';
+import { deleteOntology } from '../api/MastroApi';
 
 class OntologiesList extends React.Component {
    
@@ -16,11 +18,14 @@ class OntologiesList extends React.Component {
                         item ? (
                             <List.Item key={item.ontologyID}>
                                 <Card hoverable actions={[
-                                    <a href={"#delete?q="+item.ontologyID} onClick={
-                                        () => console.log("Delete "+item.ontologyID)
+                                    <span onClick={
+                                        () => {
+                                            deleteOntology(item.ontologyID)
+                                            this.props.rerender()
+                                        }
                                     }>
                                         delete
-                                    </a>
+                                    </span>
                                 ]}>
                                     <Card.Meta key={item.ontologyID}
                                         avatar={<img alt="" src={item.avatar} />}
@@ -40,10 +45,7 @@ class OntologiesList extends React.Component {
                             </List.Item>
                         ) : (
                                 <List.Item>
-                                    <Button type="dashed" onClick={() => console.log("Add ontology")}>
-                                        <Icon type="plus" />
-                                        Add Ontology
-                                    </Button>
+                                    <AddOntology rerender={this.props.rerender}/>
                                 </List.Item>
                             )
                     }

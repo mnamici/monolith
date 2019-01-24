@@ -18,7 +18,7 @@ class CollapsibleList extends React.Component {
                                 <List.Item>
                                     {Array.isArray(item)?
                                         item.map((e,i) => 
-                                            <div style={{display:'inline'}}>
+                                            <div style={{display:'inline'}} key={i}>
                                                 <Entity entity={e}/>
                                                 {item.length !== i+1 && ", "/*not last one*/} 
                                             </div>)

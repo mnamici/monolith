@@ -11,9 +11,9 @@ class OntologyMenu extends React.Component {
 
     render() {
         return (
-            <Menu style={{ paddingTop: 0, minHeight: '90vh' }} theme="light" defaultSelectedKeys={['info']} mode="vertical">
+            <Menu style={{ paddingTop: 0, minHeight: '90vh' }} theme="light" mode="vertical">
                 <MenuItem key="info" style={{ marginTop: 0 }}>
-                    <NavLink to="/open/ontology/info">
+                    <NavLink to="/open/ontology/info" activeStyle={{ fontWeight: "bold", color: "blue" }}>
                         <Icon type="info" />
                         <span>Info</span>
                     </NavLink>
@@ -23,35 +23,38 @@ class OntologyMenu extends React.Component {
                     title={<span><Icon type="book" /><span>Documentation</span></span>}
                 >
                     <MenuItem key="wiki">
-                        <NavLink to="/open/ontology/wiki">
+                        <NavLink to="/open/ontology/wiki" activeStyle={{ fontWeight: "bold", color: "blue" }}>
                             <span>Wiki</span>
                         </NavLink>
                     </MenuItem>
                     <MenuItem key="graphol">
-                        <NavLink to="/open/ontology/graphol">
+                        <NavLink to="/open/ontology/graphol" activeStyle={{ fontWeight: "bold", color: "blue" }}>
                             <span>Graphol</span>
                         </NavLink>
                     </MenuItem>
                 </SubMenu>
                 <MenuItem key="mappings">
-                    <NavLink to="/open/ontology/mappings">
+                    <NavLink to="/open/ontology/mappings" activeStyle={{ fontWeight: "bold", color: "blue" }}>
                         <Icon type="to-top" />
                         <span>Mappings</span>
                     </NavLink>
                 </MenuItem>
-                <SubMenu
+                {/* <SubMenu
                     key="sparql"
                     title={<span><Icon type="database" /><span>Sparql</span></span>}
-                >
+                > */}
 
-                    <MenuItem key="endpoint">
-                        <NavLink to="/open/ontology/endpoint"><span>Endpoint</span> </NavLink>
-                    </MenuItem>
+                <MenuItem key="endpoint">
+                    <NavLink to="/open/ontology/endpoint">
+                        <Icon type="database" />
+                        <span>Endpoint</span>
+                    </NavLink>
+                </MenuItem>
 
-                    {/* <MenuItem key="spaqlink">
+                {/* <MenuItem key="spaqlink">
                         <NavLink to="/open/ontology/sparqling"><span>Sparqling</span></NavLink>
                     </MenuItem> */}
-                </SubMenu>
+                {/* </SubMenu> */}
 
                 <MenuItem key="dataQuality">
                     <NavLink to="/open/ontology/dataQuality">

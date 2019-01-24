@@ -1,8 +1,6 @@
 import React from 'react';
 import { Upload, Icon, message, Button } from 'antd';
-// import reqwest from 'reqwest'
-
-const request = require('ajax-request');
+import { uploadFile } from '../api/MastroApi';
 
 function getBase64(file, callback) {
   const reader = new FileReader();
@@ -15,6 +13,7 @@ function getBase64(file, callback) {
 }
 
 function beforeUpload(file) {
+  this.setState({ loading: true });
   const validFormat = file.type === 'application/rdf+xml';
   if (!validFormat) {
     message.error('You can only upload OWL file!');
@@ -28,37 +27,15 @@ function beforeUpload(file) {
         fileName: file.name
       }
 
-      // reqwest({
-      //   url: 'http://192.168.0.59:8080/mws-x/rest/file',
-      //   method: 'put',
-      //   contentType: 'application/json',
-      //   data: JSON.stringify(json),
-      //   headers: {
-      //     'Authorization': 'Basic bWFzdHJvOmRhc2lsYWI='
-      //   },
-      //   success: () => {
-      //     message.success('upload successfully.');
-      //   },
-      //   error: () => {
-      //     message.error('upload failed.');
-      //   },
-      // });
-      // TEST UPLOAD
-      request({
-        url: 'http://192.168.0.59:8080/mws-x/rest/file',
-        method: 'PUT',
-        data: json,
-        headers: {
-          'Authorization': 'Basic bWFzdHJvOmRhc2lsYWI='
-        },
-      }, function (err, res, body) {
+      uploadFile(json, this.props.current, () => {
         message.success('upload successfully.');
-
-      });
+        this.props.rerender()
+        this.setState({ loading: false });
+      })
     })
   }
 
-  this.setState({ loading: false });
+  
   return false;
 }
 
@@ -70,9 +47,9 @@ class UploadFile extends React.Component {
   render() {
     return (
       <div>
-        <Upload beforeUpload={beforeUpload.bind(this)}>
-          <Button>
-            <Icon type="plus" /> Upload
+        <Upload beforeUpload={beforeUpload.bind(this)} fileList={[]}>
+          <Button loading={this.state.loading}>
+            <Icon type={this.state.loading?"loading":"plus"} /> {this.state.loading?"Uploading":"Upload"}
               </Button>
         </Upload>
       </div>
