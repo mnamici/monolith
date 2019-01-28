@@ -63,6 +63,23 @@ export function deleteOntology(ontologyID, callback) {
     });
 }
 
+export function deleteOntologyVersion(ontologyID, version, callback) {
+    const url = mastroUrl + '/owlOntology/' + ontologyID + '/version'
+    const method = 'DELETE'
+    request({
+        url: url,
+        method: method,
+        data: version,
+        headers: headers
+    }, function (err, res, body) {
+        if (err) {
+            reportError('Error calling ' + method + ' ' + url)
+        }
+        else
+            callback(body)
+    });
+}
+
 export function uploadFile(file, ontologyID, callback) {
     const url = mastroUrl + '/owlOntology/'+ontologyID
     const method = 'PUT'
@@ -78,5 +95,22 @@ export function uploadFile(file, ontologyID, callback) {
         else
             callback(body)
 
+    });
+}
+
+export function getOntologyVersionInfo(ontologyID, version, callback) {
+    const url = mastroUrl + '/owlOntology/' + ontologyID + '/version/info'
+    const method = 'DELETE'
+    request({
+        url: url,
+        method: method,
+        data: version,
+        headers: headers
+    }, function (err, res, body) {
+        if (err) {
+            reportError('Error calling ' + method + ' ' + url)
+        }
+        else
+            callback(body)
     });
 }

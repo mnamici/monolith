@@ -3,6 +3,7 @@ import { List, Card } from 'antd';
 
 import OntologyMetricsTabs from './OntologyMetricsTabs'
 import DownloadFile from './DownloadFile'
+import { getOntologyVersionInfo } from '../api/MastroApi';
 
 const data = {
     ontolgogyIRI: "http://www.example.com/ACI",
@@ -72,6 +73,18 @@ const data = {
 }
 
 class OntologyInfo extends React.Component {
+    componentDidMount(){
+        getOntologyVersionInfo(this.loaded)
+    }
+
+    loaded = (data) => {
+        if (data === undefined)
+            data = []
+        this.setState({
+            data: data
+        });
+    }
+
     render() {
         const elements = [
             <Card title="IRI">{data.ontolgogyIRI}</Card>,

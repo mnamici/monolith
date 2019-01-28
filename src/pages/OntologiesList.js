@@ -19,10 +19,7 @@ class OntologiesList extends React.Component {
                             <List.Item key={item.ontologyID}>
                                 <Card hoverable actions={[
                                     <span onClick={
-                                        () => {
-                                            deleteOntology(item.ontologyID)
-                                            this.props.rerender()
-                                        }
+                                        () => deleteOntology(item.ontologyID, this.props.render)
                                     }>
                                         delete
                                     </span>

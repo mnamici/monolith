@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { List, Card, Divider, Popover } from 'antd';
 import Ellipsis from 'ant-design-pro/lib/Ellipsis'
 import UploadFile from './UploadFile';
+import { deleteOntologyVersion } from '../api/MastroApi';
 
 class OntologyVersionsList extends React.Component {
 
@@ -33,15 +34,15 @@ class OntologyVersionsList extends React.Component {
                                             <p>{item.numAxioms + " axioms"}</p>
                                         </div>
                                     } placement="bottom">
-                                        <a href={"#info?q=" + item.ontologyID}>
+                                        <span>
                                             info
-                                        </a>
+                                        </span>
                                     </Popover>,
-                                    <a href={"#delete?q=" + item.ontologyID} onClick={
-                                        () => console.log("Delete " + item.ontologyID + "-" + item.versionID)
+                                    <span onClick={
+                                        () => deleteOntologyVersion(item.ontologyID, item.versionID, this.props.rerender)
                                     }>
                                         delete
-                                    </a>
+                                    </span>
                                 ]}>
                                     <Card.Meta key={item.versionID}
                                         avatar={<img alt="" src={item.avatar} />}
