@@ -5,8 +5,8 @@ import OntologyMetricsTabs from './OntologyMetricsTabs'
 import DownloadFile from './DownloadFile'
 import { getOntologyVersionInfo } from '../api/MastroApi';
 
-const data = {
-    ontolgogyIRI: "http://www.example.com/ACI",
+const fakeData = {
+    ontologyIRI: "http://www.example.com/ACI",
     ontologyImports: [
         "http://www.aci.it/ACI",
         "http://www.lod-aci.com/ACI"
@@ -73,8 +73,15 @@ const data = {
 }
 
 class OntologyInfo extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {data: {}}
+    }
     componentDidMount(){
-        getOntologyVersionInfo(this.loaded)
+        getOntologyVersionInfo(
+                this.props.match.params.ontologyID,
+                this.props.match.params.versionID,
+                this.loaded)
     }
 
     loaded = (data) => {
@@ -87,10 +94,21 @@ class OntologyInfo extends React.Component {
 
     render() {
         const elements = [
-            <Card title="IRI">{data.ontolgogyIRI}</Card>,
-            <OntologyMetricsTabs titles={[{ key: "imports", tab: "Imports" }]} data={data.ontologyImports} />,
-            <OntologyMetricsTabs titles={[{ key: "pm", tab: "Prefixes" }]} data={data.ontologyPrefixManager} />,
-            <OntologyMetricsTabs titles={[{ key: "desc", tab: "Descriptions" }]} data={data.ontologyDescriptions} />,
+            <Card title="IRI">{this.state.data.ontologyIRI}</Card>,
+            <OntologyMetricsTabs titles={[{ key: "imports", tab: "Imports" }]} data={this.state.data.ontologyImports} />,
+            <OntologyMetricsTabs titles={[{ key: "pm", tab: "Prefixes" }]} data={this.state.data.ontologyPrefixManager} />,
+            <OntologyMetricsTabs titles={[{ key: "desc", tab: "Descriptions" }]} data={this.state.data.ontologyDescriptions} />,
+            <OntologyMetricsTabs titles={[
+                { key: "metrics", tab: "Metrics" },
+                { key: "classAxioms", tab: "Class Axioms" },
+                { key: "objectPropertyAxioms", tab: "Object Properties Axioms" },
+                { key: "dataPropertyAxioms", tab: "Data Properties Axioms" },
+                { key: "individualAxioms", tab: "Individual Axioms" },
+                { key: "annotationAxioms", tab: "Annotation Axioms" }
+            ]}
+                data={this.state.data.ontologyMetrics}
+            />,
+            <DownloadFile/>
 
         ]
         return (
@@ -104,17 +122,7 @@ class OntologyInfo extends React.Component {
                         </List.Item>
                     )}
                 />
-                <OntologyMetricsTabs titles={[
-                    { key: "metrics", tab: "Metrics" },
-                    { key: "classAxioms", tab: "Class Axioms" },
-                    { key: "objectPropertyAxioms", tab: "Object Properties Axioms" },
-                    { key: "dataPropertyAxioms", tab: "Data Properties Axioms" },
-                    { key: "individualAxioms", tab: "Individual Axioms" },
-                    { key: "annotationAxioms", tab: "Annotation Axioms" }
-                ]}
-                    data={data.ontologyMetrics}
-                />,
-                <DownloadFile/>
+                
             </div>
         );
     }

@@ -47,7 +47,7 @@ class OntologyVersionsList extends React.Component {
                                     <Card.Meta key={item.versionID}
                                         avatar={<img alt="" src={item.avatar} />}
                                         title={
-                                            <NavLink to={"/open/ontology/info"}>{/*?id="+item.ontologyID+"&v="+item.versionID}>*/}
+                                            <NavLink to={"/open/ontology/info/"+item.ontologyID+"/"+encodeURIComponent(item.versionID)}>
                                                 {item.ontologyID + "-" + item.versionID}
                                             </NavLink>
 

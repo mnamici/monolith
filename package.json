@@ -9,6 +9,7 @@
     "ant-design": "^1.0.0",
     "ant-design-pro": "^2.1.1",
     "antd": "^3.10.9",
+    "axios": "^0.18.0",
     "cytoscape": "^3.3.2",
     "electron-is-dev": "^1.0.1",
     "griddle-callback": "^0.2.1",
@@ -52,7 +53,7 @@
       "build/**/*",
       "node_modules/**/*"
     ],
-    "directories":{
+    "directories": {
       "buildResources": "assets"
     }
   }

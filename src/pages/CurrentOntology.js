@@ -10,7 +10,6 @@ import CurrentMapping from './CurrentMapping';
 import Graphol from './Grapholscape';
 
 const { Content, Sider } = Layout;
-
 class CurrentOntology extends React.Component {
     state = {
         collapsed: true,
@@ -44,7 +43,7 @@ class CurrentOntology extends React.Component {
                     <Content >
                         <div style={{ padding: '0px 12px 0px 12px', background: '#fff', minHeight: '100%' }}>
 
-                            <Route path="/open/ontology/info" component={OntologyInfo} />
+                            <Route path="/open/ontology/info/:ontologyID/:versionID" component={OntologyInfo} />
                             <Route path="/open/ontology/wiki" component={OntologyWiki} />
                             <Route path="/open/ontology/graphol" component={Graphol} />
                             <Route path="/open/ontology/mappings" component={LoadMappings} />
