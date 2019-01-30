@@ -1,80 +1,23 @@
 import React from 'react';
 import { Tree, Input } from 'antd';
+import { getOntologyVersionHierarchy } from '../api/MastroApi';
 
 const { TreeNode } = Tree;
 const Search = Input.Search;
 
-const gData = [
-  {
-    title: "Classes",
-    key: "Classes",
-    children: [
-      {
-        title: "Course",
-        key: "Course",
-      },
-      {
-        title: "Person",
-        key: "Person",
-        children: [
-          {
-            title: "Student",
-            key: "Student",
-          },
-          {
-            title: "Professor",
-            key: "Professor",
-          },
-        ]
-      },
-    ]
-  },
-  {
-    title: "Object Properties",
-    key: "Object Properties",
-    children: [
-      {
-        title: "attends",
-        key: "attends",
-      },
-      {
-        title: "takes",
-        key: "takes",
-      },
-    ]
-  },
-  {
-    title: "Data Properties",
-    key: "Data Properties",
-    children: [
-      {
-        title: "courseName",
-        key: "courseName",
-      },
-      {
-        title: "fullName",
-        key: "fullName",
-      },
-      {
-        title: "enrollmentYear",
-        key: "enrollmentYear",
-      }
-    ]
-  },
-]
+function convertData(node, arr) {
 
-const dataList = [];
-const generateList = (data) => {
-  for (let i = 0; i < data.length; i++) {
-    const node = data[i];
-    const key = node.key;
-    dataList.push({ key, title: key });
-    if (node.children) {
-      generateList(node.children, node.key);
-    }
+  for (let item of node) {
+    const children = convertData(item.children, [])
+    arr.push({
+      title: item.entity.entityRender,
+      key: item.entity.entityID,
+      children: children
+    })
   }
-};
-generateList(gData);
+
+  return arr;
+}
 
 const getParentKey = (key, tree) => {
   let parentKey;
@@ -96,28 +39,89 @@ class SearchTree extends React.Component {
     expandedKeys: [],
     searchValue: '',
     autoExpandParent: true,
+    data:[],
+    dataList:[]
+  }
+
+  componentDidMount() {
+    getOntologyVersionHierarchy(
+      this.props.ontology.name,
+      this.props.ontology.version,
+      this.loaded)
+  }
+
+  componentWillReceiveProps(props) {
+    console.log(this.props)
+    getOntologyVersionHierarchy(
+        props.ontology.name,
+        props.ontology.version,
+        this.loaded)
+}
+
+  loaded = (mastroData) => {
+    const gData = [
+      {
+        title: "Classes",
+        key: "Classes",
+        children: convertData(mastroData.hierarchyTree.classTree.children, [])
+      },
+      {
+        title: "Object Properties",
+        key: "Object Properties",
+        children: convertData(mastroData.hierarchyTree.objectPropertyTree.children, [])
+      },
+      {
+        title: "Data Properties",
+        key: "Data Properties",
+        children: convertData(mastroData.hierarchyTree.dataPropertyTree.children, [])
+      }
+    ]
+
+    const dataList = [];
+    const generateList = (data) => {
+      for (let i = 0; i < data.length; i++) {
+        const node = data[i];
+        const key = node.key;
+        dataList.push({ key, title: key });
+        if (node.children) {
+          generateList(node.children, node.key);
+        }
+      }
+    };
+    generateList(gData);
+    this.setState((state) => ({
+      expandedKeys: state.expandedKeys,
+      searchValue: state.searchValue,
+      autoExpandParent: state.autoExpandParent,
+      data: gData,
+      dataList: dataList
+    }))
   }
 
   onExpand = (expandedKeys) => {
-    this.setState({
+    this.setState((state) => ({
       expandedKeys,
       autoExpandParent: false,
-    });
+      data: state.data,
+      dataList: state.dataList
+    }));
   }
 
   onChange = (e) => {
     const value = e.target.value;
-    const expandedKeys = dataList.map((item) => {
+    const expandedKeys = this.state.dataList.map((item) => {
       if (item.title.indexOf(value) > -1) {
-        return getParentKey(item.key, gData);
+        return getParentKey(item.key, this.state.data);
       }
       return null;
     }).filter((item, i, self) => item && self.indexOf(item) === i);
-    this.setState({
+    this.setState((state) => ({
       expandedKeys,
       searchValue: value,
       autoExpandParent: true,
-    });
+      data: state.data,
+      dataList: state.dataList
+    }));
   }
 
   render() {
@@ -134,7 +138,7 @@ class SearchTree extends React.Component {
         </span>
       ) : <span>{item.title}</span>;
       if (item.children) {
-        let selectable=item.key!=="Classes"&&item.key!=="Object Properties"&&item.key!=="Data Properties";
+        let selectable = item.key !== "Classes" && item.key !== "Object Properties" && item.key !== "Data Properties";
         return (
           <TreeNode key={item.key} title={title} selectable={selectable}>
             {loop(item.children)}
@@ -151,7 +155,7 @@ class SearchTree extends React.Component {
           expandedKeys={expandedKeys}
           autoExpandParent={autoExpandParent}
         >
-          {loop(gData)}
+          {loop(this.state.data)}
         </Tree>
       </div>
     );

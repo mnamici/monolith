@@ -11,10 +11,17 @@ class MainMenu extends React.Component {
 
     getClosableMenuItem(item, path) {
         return (
-            <MenuItem key={item}>
+            <MenuItem key={item.name + "-" + item.version}>
                 <div>
-                    <NavLink to={path} activeStyle={{ fontWeight: "bold", color: "white" }} style={{ color: 'rgba(255, 255, 255, 0.65)' }}>{item}</NavLink>
-                    <span style={{ float: "right" }} onClick={() => console.log("Closing " + item)}>
+                    <NavLink
+                        to={path}
+                        onClick={() => this.props.setcurrent(item)}
+                        activeStyle={{ fontWeight: "bold", color: "white" }}
+                        style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                    >
+                        {item.name + "-" + item.version}
+                    </NavLink>
+                    <span style={{ float: "right" }} onClick={() => this.props.close(item)}>
                         <Icon type="close" style={{ color: 'rgba(255, 255, 255, 0.65)' }} />
                     </span>
                 </div>
@@ -23,7 +30,6 @@ class MainMenu extends React.Component {
     }
 
     render() {
-
         const ontolgies = this.props.open.ontologies.map(item => this.getClosableMenuItem(item, "/open/ontology/info"));
         const kgs = this.props.open.kgs.map(item => this.getClosableMenuItem(item, "/kg"));
         const dss = this.props.open.dss.map(item => this.getClosableMenuItem(item, "/dataset"));

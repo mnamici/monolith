@@ -43,8 +43,8 @@ class CurrentOntology extends React.Component {
                     <Content >
                         <div style={{ padding: '0px 12px 0px 12px', background: '#fff', minHeight: '100%' }}>
 
-                            <Route path="/open/ontology/info/:ontologyID/:versionID" component={OntologyInfo} />
-                            <Route path="/open/ontology/wiki" component={OntologyWiki} />
+                            <Route path="/open/ontology/info" render={(props) => <OntologyInfo {...props} ontology={this.props.ontology}/>} />
+                            <Route path="/open/ontology/wiki" render={(props) => <OntologyWiki {...props} ontology={this.props.ontology}/>} />
                             <Route path="/open/ontology/graphol" component={Graphol} />
                             <Route path="/open/ontology/mappings" component={LoadMappings} />
                             <Route path="/open/ontology/mapping" component={CurrentMapping} />

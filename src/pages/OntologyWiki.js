@@ -32,7 +32,7 @@ class OntologyWiki extends React.Component {
                     /> */}
                         
                     <SearchIndividuals/>
-                    <SearchTree/>
+                    <SearchTree ontology={this.props.ontology}/>
                     
                 </Sider>
                 <Layout>

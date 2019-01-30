@@ -13,17 +13,11 @@ class App extends Component {
     const Authorized = RenderAuthorized('admin');
     const noMatch = <LoginPage />;
 
-    const open = {
-      ontologies: ["ACI-1.1.4", "ISTAT-3.2.1"],
-      kgs: ["KG1"],
-      dss: ["DS1", "DS2"]
-    }
-
     return (
       <HashRouter>
         <div>
           <Authorized authority="admin" noMatch={noMatch}>
-            <MainLayout open={open} />
+            <MainLayout/>
           </Authorized>
         </div>
       </HashRouter>
