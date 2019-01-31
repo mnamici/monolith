@@ -19,6 +19,12 @@ class MainLayout extends React.Component {
     }
   }
 
+  componentWillMount() {
+    const mainState = JSON.parse(localStorage.getItem("mainState"))
+    this.setState(mainState)
+    
+  }
+
   onCollapse = (collapsed) => {
     this.setState((state) => ({
       collapsed: collapsed,
@@ -51,7 +57,6 @@ class MainLayout extends React.Component {
         dss: state.open.dss
       }
     }))
-
   }
 
   close(toClose) {
@@ -83,6 +88,7 @@ class MainLayout extends React.Component {
   }
 
   render() {
+    localStorage.setItem('mainState',JSON.stringify(this.state))
     return (
       <Layout style={{ minHeight: '100vh' }} >
         <Sider

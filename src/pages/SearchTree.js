@@ -39,8 +39,8 @@ class SearchTree extends React.Component {
     expandedKeys: [],
     searchValue: '',
     autoExpandParent: true,
-    data:[],
-    dataList:[]
+    data: [],
+    dataList: []
   }
 
   componentDidMount() {
@@ -53,10 +53,10 @@ class SearchTree extends React.Component {
   componentWillReceiveProps(props) {
     console.log(this.props)
     getOntologyVersionHierarchy(
-        props.ontology.name,
-        props.ontology.version,
-        this.loaded)
-}
+      props.ontology.name,
+      props.ontology.version,
+      this.loaded)
+  }
 
   loaded = (mastroData) => {
     const gData = [
@@ -148,7 +148,7 @@ class SearchTree extends React.Component {
       return <TreeNode key={item.key} title={title} />;
     });
     return (
-      <div>
+      <div style={{ overflow: 'auto' }}>
         <Search style={{ margin: '0px 8px 8px 0px' }} placeholder="Search for Entities" onChange={this.onChange} />
         <Tree
           onExpand={this.onExpand}

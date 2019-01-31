@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
-import SearchTree from './SearchTree';
+import SearchTree from './FastSearchTree';
 import SearchIndividuals from './SearchIndividuals';
 import ClassPage from './ClassPage';
 const { Content, Sider } = Layout;
@@ -20,7 +20,7 @@ class OntologyWiki extends React.Component {
         return (
             <Layout style={{ margin: '0px -12px 0px 0px' }}>
                 <Sider
-                    // width={200} 
+                    width={400} 
                     style={{ background: '#fff' }}
                     collapsed={this.state.collapsed}
                 >

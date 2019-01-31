@@ -1,0 +1,41 @@
+.checkbox-item {
+    display: none
+}
+
+.tag {
+    display: none
+}
+.dropdown-trigger {
+    margin-top: -8px;
+    border: none !important;
+    width: 100%;
+}
+
+.dropdown-trigger.arrow.top::after {
+    content: "" !important
+}
+
+.dropdown-trigger.arrow.bottom::after {
+    content: "" !important; /*for loading icon check https://stackoverflow.com/questions/19255296/is-there-a-way-to-use-svg-as-content-in-a-pseudo-element-before-or-after*/
+}
+
+.dropdown-trigger.arrow::after {
+    float: right;
+    margin-right: -3px !important;
+    margin-top: 4px
+}
+
+.tag-item {
+    margin: 0px !important
+}
+
+.search {
+    border-bottom: none !important;
+    color: #bfbfbf;
+    margin-left: -5px;
+    margin-top: 4px;
+}
+
+.dropdown {
+    width: 100%;
+}
