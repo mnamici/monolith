@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Popover } from 'antd';
 //import ClosableMenuItem from './ClosableMenuItem'
 
 const SubMenu = Menu.SubMenu;
@@ -19,7 +19,9 @@ class MainMenu extends React.Component {
                         activeStyle={{ fontWeight: "bold", color: "white" }}
                         style={{ color: 'rgba(255, 255, 255, 0.65)' }}
                     >
-                        {item.name + "-" + item.version}
+                        <Popover content={<small>{item.version}</small>}>
+                            {item.name}
+                        </Popover>
                     </NavLink>
                     <span style={{ float: "right" }} onClick={() => this.props.close(item)}>
                         <Icon type="close" style={{ color: 'rgba(255, 255, 255, 0.65)' }} />
@@ -30,7 +32,7 @@ class MainMenu extends React.Component {
     }
 
     render() {
-        const ontolgies = this.props.open.ontologies.map(item => this.getClosableMenuItem(item, "/open/ontology/info"));
+        const ontos = this.props.open.ontologies.map(item => this.getClosableMenuItem(item, "/open/ontology/info"));
         const kgs = this.props.open.kgs.map(item => this.getClosableMenuItem(item, "/kg"));
         const dss = this.props.open.dss.map(item => this.getClosableMenuItem(item, "/dataset"));
 
@@ -40,17 +42,25 @@ class MainMenu extends React.Component {
                 <SubMenu
                     key="ontology"
                     title={
-                        <NavLink to="/ontology" activeStyle={{ fontWeight: "bold", color: "white" }} style={{ color: 'rgba(255, 255, 255, 0.65)' }}>
+                        <NavLink 
+                            to="/ontology" 
+                            activeStyle={{ fontWeight: "bold", color: "white" }} 
+                            style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                        >
                             <span><Icon type="block" /><span>Ontology</span></span>
                         </NavLink>}
                 >
-                    {ontolgies}
+                    {ontos}
                 </SubMenu>
 
                 <SubMenu
                     key="kg"
                     title={
-                        <NavLink to="/kg" activeStyle={{ fontWeight: "bold", color: "white" }} style={{ color: 'rgba(255, 255, 255, 0.65)' }}>
+                        <NavLink 
+                            to="/kg" 
+                            activeStyle={{ fontWeight: "bold", color: "white" }} 
+                            style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                        >
                             <span><Icon type="deployment-unit" /><span>Knowledge Graph</span></span>
                         </NavLink>}
                 >
@@ -59,7 +69,11 @@ class MainMenu extends React.Component {
                 <SubMenu
                     key="dataset"
                     title={
-                        <NavLink to="/dataset" activeStyle={{ fontWeight: "bold", color: "white" }} style={{ color: 'rgba(255, 255, 255, 0.65)' }}>
+                        <NavLink 
+                            to="/dataset" 
+                            activeStyle={{ fontWeight: "bold", color: "white" }} 
+                            style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                        >
                             <span><Icon type="table" /><span>Dataset</span></span>
                         </NavLink>}
                 >
@@ -69,7 +83,11 @@ class MainMenu extends React.Component {
                 <SubMenu
                     key="admin"
                     title={
-                        <NavLink to="/admin" activeStyle={{ fontWeight: "bold", color: "white" }} style={{ color: 'rgba(255, 255, 255, 0.65)' }}>
+                        <NavLink 
+                            to="/admin" 
+                            activeStyle={{ fontWeight: "bold", color: "white" }} 
+                            style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                        >
                             <Icon type="user" />
                             <span>Administration</span>
                         </NavLink>}
@@ -77,7 +95,11 @@ class MainMenu extends React.Component {
                 <SubMenu
                     key="sett"
                     title={
-                        <NavLink to="/settings" activeStyle={{ fontWeight: "bold", color: "white" }} style={{ color: 'rgba(255, 255, 255, 0.65)' }}>
+                        <NavLink 
+                            to="/settings" 
+                            activeStyle={{ fontWeight: "bold", color: "white" }} 
+                            style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                        >
                             <Icon type="setting" />
                             <span>Settings</span>
                         </NavLink>
@@ -85,7 +107,11 @@ class MainMenu extends React.Component {
                 <SubMenu
                     key="help"
                     title={
-                        <NavLink to="/help" activeStyle={{ fontWeight: "bold", color: "white" }} style={{ color: 'rgba(255, 255, 255, 0.65)' }}>
+                        <NavLink 
+                            to="/help" 
+                            activeStyle={{ fontWeight: "bold", color: "white" }} 
+                            style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                        >
                             <Icon type="question-circle" />
                             <span>Help</span>
                         </NavLink>
@@ -93,7 +119,11 @@ class MainMenu extends React.Component {
                 <SubMenu
                     key="Logout"
                     title={
-                        <NavLink to="/logout" activeStyle={{ fontWeight: "bold", color: "white" }} style={{ color: 'rgba(255, 255, 255, 0.65)' }}>
+                        <NavLink 
+                            to="/logout" 
+                            activeStyle={{ fontWeight: "bold", color: "white" }} 
+                            style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                        >
                             <Icon type="logout" />
                             <span>Logout</span>
                         </NavLink>

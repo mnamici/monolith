@@ -15,8 +15,14 @@ class OntologyWiki extends React.Component {
           collapsed: !this.state.collapsed,
         });
       }
+
+    onHandle = (current) => {
+        this.setState({
+            current: current
+        })
+    }
     render() {
-        const contents = [<ClassPage/>];
+        const contents = [<ClassPage ontology={this.props.ontology} currentClass={this.state.current}/>];
         return (
             <Layout style={{ margin: '0px -12px 0px 0px' }}>
                 <Sider
@@ -32,7 +38,7 @@ class OntologyWiki extends React.Component {
                     /> */}
                         
                     <SearchIndividuals/>
-                    <SearchTree ontology={this.props.ontology}/>
+                    <SearchTree ontology={this.props.ontology} onHandle={this.onHandle}/>
                     
                 </Sider>
                 <Layout>

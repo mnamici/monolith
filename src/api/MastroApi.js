@@ -2,14 +2,18 @@ import { message } from 'antd'
 import axios from 'axios';
 
 import * as fakeData from './fakeData'
+import {graphol} from './ACIOpenData'
 
-const mastroUrl = 'http://192.168.0.59:8080/mws/rest/mwsx'
+const ips = ['192.168.0.59','82.48.138.112']
+var mastroUrl = 'http://'+ips[1]+':8080/mws/rest/mwsx'
+// mastroUrl = '/mws/rest/mwsx'
 const headers = {
-    'Authorization': 'Basic bWFzdHJvOmRhc2lsYWI='
+    'Access-Control-Allow-Origin': '*',
+    'Authorization': 'Basic bWFzdHJvOmRhc2lsYWI=',
 }
 
 
-const dev = true
+const local = false
 
 function reportError(msg) {
     console.error(msg)
@@ -17,7 +21,7 @@ function reportError(msg) {
 }
 
 export function getOntologies(callback) {
-    if (dev) return callback(fakeData.fakeDataGO);
+    if (local) return callback(fakeData.fakeDataGO);
     const url = mastroUrl + '/owlOntology'
     const method = 'GET'
     axios({
@@ -91,7 +95,7 @@ export function uploadFile(file, ontologyID, callback) {
 }
 
 export function getOntologyVersionInfo(name, version, callback) {
-    if (dev) return callback(fakeData.fakeDataOI);
+    if (local) return callback(fakeData.fakeDataOI);
     const url = mastroUrl + '/owlOntology/' + name + '/version/info'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
@@ -108,8 +112,30 @@ export function getOntologyVersionInfo(name, version, callback) {
 }
 
 export function getOntologyVersionHierarchy(name, version, callback) {
-    if (dev) return callback(fakeData.mastroData)
+    if (local) return callback(fakeData.mastroData)
     const url = mastroUrl + '/owlOntology/' + name + '/version/hierarchy'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: headers,
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url)
+    });
+}
+
+export function getGraphol(callback) {
+    if(local) return callback(graphol)
+}
+
+export function getClassPage(name, version, classID, callback) {
+    console.log(name, version, classID)
+    if(local) return callback(fakeData.classData)
+    const url = mastroUrl + '/owlOntology/' + name + '/version/alphabet/class/'+classID+'/logical'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
