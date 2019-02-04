@@ -13,7 +13,7 @@ class SearchIndividuals extends React.Component {
     
     return (
       <div>
-        <Search style={{ margin: '16px 8px 16px 0px' }} placeholder="Search for Individuals" onSearch={this.onSearch}/>
+        <Search style={this.props.style} placeholder="Search for Individuals" onSearch={this.onSearch}/>
       </div>
     );
   }

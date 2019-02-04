@@ -6,7 +6,7 @@ const Panel = Collapse.Panel;
 
 class CollapsibleList extends React.Component {
     render() {
-
+        if(this.props.list === null) return "";
         return (
             <div>
                 <Collapse defaultActiveKey="1">
@@ -19,14 +19,14 @@ class CollapsibleList extends React.Component {
                                     {Array.isArray(item)?
                                         item.map((e,i) => 
                                             <div style={{display:'inline'}} key={i}>
-                                                <Entity entity={e}/>
+                                                <Entity predicateType={this.props.predicateType} entity={e}/>
                                                 {item.length !== i+1 && ", "/*not last one*/} 
                                             </div>)
                                         :
                                         item.entityID === undefined ?
                                             <p style={{wordWrap:'break-word'}}>{item}</p>
                                             :
-                                            <Entity entity={item} />}
+                                            <Entity predicateType={this.props.predicateType} entity={item} />}
 
                                 </List.Item>
                             )}

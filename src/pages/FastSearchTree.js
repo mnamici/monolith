@@ -6,14 +6,14 @@ import '../css/FastSearchTree.css'
 
 import { getOntologyVersionHierarchy } from '../api/MastroApi'
 
-const predicateType = {
+export const predicateTypes = {
   c: "Classes",
   op: "Object Properties",
   dp: "Data Properties"
 }
 
 const renders = ["entityIRI", "entityID", "entityPrefixIRI", "entityRemainder", "entityLabel"]
-const render = renders[0]
+const render = renders[2]
 
 function convertData(node, arr, predicateType) {
 
@@ -53,9 +53,9 @@ export default class SearchTree extends React.Component {
   }
 
   onChange = (currentNode, selectedNodes) => {
-    if (currentNode.label !== predicateType.c && currentNode.label !== predicateType.op && currentNode.label !== predicateType.dp){
+    if (currentNode.label !== predicateTypes.c && currentNode.label !== predicateTypes.op && currentNode.label !== predicateTypes.dp){
       // console.log('onChange::', currentNode)
-      this.props.onHandle(currentNode.entityID)
+      this.props.onHandle(currentNode.entityID, currentNode.predicateType)
     }
       
   }
@@ -63,23 +63,23 @@ export default class SearchTree extends React.Component {
   loaded = (mastroData) => {
     const gData = [
       {
-        label: predicateType.c,
-        children: convertData(mastroData.hierarchyTree.classTree.children, [], predicateType.c)
+        label: predicateTypes.c,
+        children: convertData(mastroData.hierarchyTree.classTree.children, [], predicateTypes.c)
       },
       {
-        label: predicateType.op,
-        children: convertData(mastroData.hierarchyTree.objectPropertyTree.children, [], predicateType.op)
+        label: predicateTypes.op,
+        children: convertData(mastroData.hierarchyTree.objectPropertyTree.children, [], predicateTypes.op)
       },
       {
-        label: predicateType.dp,
-        children: convertData(mastroData.hierarchyTree.dataPropertyTree.children, [], predicateType.dp)
+        label: predicateTypes.dp,
+        children: convertData(mastroData.hierarchyTree.dataPropertyTree.children, [], predicateTypes.dp)
       }
     ]
     this.setState({ data: gData })
   }
 
   render() {
-    return <DropdownTreeSelect
+    return <DropdownTreeSelect 
       data={this.state.data}
       onChange={this.onChange}
       onAction={onAction}

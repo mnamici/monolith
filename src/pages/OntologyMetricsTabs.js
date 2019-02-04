@@ -28,7 +28,7 @@ class OntologyMetricsTabs extends React.Component {
                             {
                                 item.mapKey !== undefined ? // single tab pairs
                                     <MapItem mapKey={item.mapKey} mapValue={item.mapValue} /> :
-                                    <p>{item}</p> //single value
+                                    <p>{item.content}</p> //single value (descriptions)
                             }
                         </List.Item>
                     )}

@@ -107,14 +107,15 @@ class MainMenu extends React.Component {
                 <SubMenu
                     key="help"
                     title={
-                        <NavLink 
-                            to="/help" 
-                            activeStyle={{ fontWeight: "bold", color: "white" }} 
+                        <a 
+                            href="http://192.168.0.59:8080/mws/HelpPage" target="_blank" rel="noopener noreferrer"
+                            // to="/help" 
+                            // activeStyle={{ fontWeight: "bold", color: "white" }} 
                             style={{ color: 'rgba(255, 255, 255, 0.65)' }}
                         >
                             <Icon type="question-circle" />
                             <span>Help</span>
-                        </NavLink>
+                        </a>
                     } />
                 <SubMenu
                     key="Logout"

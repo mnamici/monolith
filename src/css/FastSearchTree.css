@@ -39,3 +39,9 @@
 .dropdown {
     width: 100%;
 }
+
+/* comment the following if show search in the sidebar of wiki ontology */
+.react-dropdown-tree-select {
+    margin-left: 10px;
+    width: 400px;
+}

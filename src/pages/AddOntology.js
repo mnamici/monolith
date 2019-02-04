@@ -21,7 +21,16 @@ class DrawerForm extends React.Component {
         this.props.rerender()
     };
 
+    validate(name) {
+        if(name === '')
+            return false;
+
+        return true;
+    }
+
     submit = () => {
+        if(!this.validate(this.props.form.getFieldValue('name'))) return;
+
         const ontology = {
             ontologyID: this.props.form.getFieldValue('name'),
             ontologyDescription:  this.props.form.getFieldValue('description'),
@@ -68,7 +77,7 @@ class DrawerForm extends React.Component {
                                     {getFieldDecorator('description', {
                                         rules: [
                                             {
-                                                required: true,
+                                                required: false,
                                                 message: 'please enter url description',
                                             },
                                         ],

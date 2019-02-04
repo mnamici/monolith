@@ -1,9 +1,10 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom'
 
 class Entity extends React.Component {
     render() {
         return (
-            <a href={"#class?q=" + this.props.entity.entityID}>{this.props.entity.entityRender}</a>
+            <NavLink to={"/open/ontology/wiki/"+this.props.predicateType+"/" + this.props.entity.entityID}>Sider{this.props.entity.entityPrefixIRI}</NavLink>
         )
     }
 }
