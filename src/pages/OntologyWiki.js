@@ -15,7 +15,7 @@ class OntologyWiki extends React.Component {
     };
 
     componentDidMount() {
-        // console.log("WM "+this.props.match.params.entityID)
+        // console.log("WM " + this.props.match.params.entityID, this.props.match.params.predicateType)
         this.setState({
             current: this.props.match.params.entityID,
             predicateType: this.props.match.params.predicateType,
@@ -23,7 +23,7 @@ class OntologyWiki extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        // console.log("RP "+props.match.params.entityID)
+        // console.log("RP " + props.match.params.entityID, props.match.params.predicateType)
         this.setState({
             current: props.match.params.entityID,
             predicateType: props.match.params.predicateType,
@@ -45,11 +45,15 @@ class OntologyWiki extends React.Component {
 
     }
     render() {
+        // console.log("RENDER: ",this.state)
         return (
             <Layout style={{ margin: '0px -12px 0px 0px' }}>
-                <Header style={{ backgroundColor: 'white', display: 'inline-flex' }}>
-                    <SearchIndividuals style={{ display: 'inherit' }} />
-                    <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
+                <Header style={{ backgroundColor: 'white', display:'flex', justifyContent: 'center', lineHeight:1.5}}>
+                    <div style={{ display: 'inline-flex'}}>
+                        <SearchIndividuals style={{ display: 'inherit' }} />
+                        <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
+                    </div>
+
 
                 </Header>
                 {/* <Sider
@@ -76,17 +80,17 @@ class OntologyWiki extends React.Component {
                                 this.state.current === undefined &&
                                 <h3 style={{ textAlign: 'center' }}>Search or select something</h3>
                             }
-                            <Route path="/open/ontology/wiki/:predicateType?/:entityID?" render={(props) => (
-                                this.state.current !== props.match.params.entityID ?
+                            <Route exact path="/open/ontology/wiki/:predicateType?/:entityID?" render={(props) => (
+                                this.state.current !== props.match.params.entityID && this.state.current !== undefined ?
                                     <Redirect to={"/open/ontology/wiki/" + this.state.predicateType + "/" + this.state.current} />
                                     : null
                                 // this.props.match.params.predicateType
                             )} />
-                            <Route path={"/open/ontology/wiki/" + predicateTypes.c + "/:entityID"} render={(props) => (
-                                <ClassPage {...props} ontology={this.props.ontology} currentClass={this.state.current} />
+                            <Route exact path={"/open/ontology/wiki/" + predicateTypes.c + "/:entityID"} render={(props) => (
+                                <ClassPage {...props} ontology={this.props.ontology} />
                             )} />
-                            <Route path={"/open/ontology/wiki/" + predicateTypes.op + "/:entityID"} render={(props) => (
-                                <ObjectPropertyPage {...props} ontology={this.props.ontology} currentClass={this.state.current} />
+                            <Route exact path={"/open/ontology/wiki/" + predicateTypes.op + "/:entityID"} render={(props) => (
+                                <ObjectPropertyPage {...props} ontology={this.props.ontology} />
                             )} />
                         </div>
                     </Content>

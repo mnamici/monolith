@@ -19,6 +19,7 @@ class OntologyMetricsTabs extends React.Component {
 
         const contentList = {};
         if (Array.isArray(data)) {
+            if(data.length === 0 ) return null
             for (let i = 0; i < tabList.length; i++) {
                 contentList[tabList[i].key] = <List
                     grid={{ gutter: 0, column: 1 }}

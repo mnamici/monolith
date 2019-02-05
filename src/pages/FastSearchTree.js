@@ -7,9 +7,10 @@ import '../css/FastSearchTree.css'
 import { getOntologyVersionHierarchy } from '../api/MastroApi'
 
 export const predicateTypes = {
-  c: "Classes",
-  op: "Object Properties",
-  dp: "Data Properties"
+  c: "class",
+  op: "objectProperty",
+  dp: "dataProperty",
+  i: "individuals"
 }
 
 const renders = ["entityIRI", "entityID", "entityPrefixIRI", "entityRemainder", "entityLabel"]
@@ -63,15 +64,15 @@ export default class SearchTree extends React.Component {
   loaded = (mastroData) => {
     const gData = [
       {
-        label: predicateTypes.c,
+        label: "Classes",
         children: convertData(mastroData.hierarchyTree.classTree.children, [], predicateTypes.c)
       },
       {
-        label: predicateTypes.op,
+        label: "Object Properties",
         children: convertData(mastroData.hierarchyTree.objectPropertyTree.children, [], predicateTypes.op)
       },
       {
-        label: predicateTypes.dp,
+        label: "Data Properties",
         children: convertData(mastroData.hierarchyTree.dataPropertyTree.children, [], predicateTypes.dp)
       }
     ]

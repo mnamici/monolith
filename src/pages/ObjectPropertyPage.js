@@ -1,35 +1,46 @@
 import React from 'react'
 import { Popover, List } from 'antd';
 import CollapsibleList from './CollapsibleList';
-import { getClassPage } from '../api/MastroApi';
+import { getObjectPropertyPage } from '../api/MastroApi';
 
 class ClassPage extends React.Component {
+    _isMounted = false;
     state = {
         data: {}
     }
 
     componentDidMount() {
+        this._isMounted = true;
         // console.log(this.props)
-        if (this.props.currentClass !== undefined)
-            getClassPage(
+        if (this.props.match.params.entityID !== undefined)
+            getObjectPropertyPage(
                 this.props.ontology.name,
                 this.props.ontology.version,
-                this.props.currentClass,
+                this.props.match.params.entityID,
                 this.loaded)
     }
 
     componentWillReceiveProps(props) {
         // console.log(props)
-        if (props.currentClass !== undefined)
-            getClassPage(props.ontology.name, props.ontology.version, props.currentClass, this.loaded)
+        if (props.match.params.entityID !== undefined)
+            getObjectPropertyPage(
+                props.ontology.name, 
+                props.ontology.version, 
+                props.match.params.entityID, 
+                this.loaded)
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
     }
 
     loaded = (data) => {
-        this.setState({ data: data })
+        this._isMounted && this.setState({ data: data })
     }
 
     render() {
-        if (this.state.data.currentEntity === undefined) return <h3 style={{ textAlign: 'center' }}>ERROR IN THE RESPONSE!</h3>
+        // console.log("OBJECT PROPERTY PAGE", this.props)
+        if (this.state.data.currentEntity === undefined) return null
         const components = [
 
             <CollapsibleList title="Equivalent Object Properties" list={this.state.data.equivalentObjectProperties} />,
@@ -44,11 +55,11 @@ class ClassPage extends React.Component {
             <CollapsibleList title="Object Property Individuals" list={this.state.data.objectPropertyIndividuals} />,
         ]
         return (
-            <div style={{ padding: 12 }}>
+            <div>
                 <div style={{ textAlign: 'center' }}>
-                    <h1 >{this.state.data.currentEntity.entityRender}</h1>
-                    <Popover content={this.state.data.iri.extendedIRI}>
-                        <a href={"#class?q=" + this.state.data.currentEntity.entityID}>{this.state.data.iri.shortIRI}</a>
+                    <h1 >{this.state.data.currentEntity.entityPrefixIRI}</h1>
+                    <Popover content={this.state.data.currentEntity.entityIRI}>
+                        <span>{this.state.data.currentEntity.entityPrefixIRI}</span>
                     </Popover>
                 </div>
                 <div style={{ padding: '16px 0px 16px 0px' }}>

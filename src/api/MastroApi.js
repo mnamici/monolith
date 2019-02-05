@@ -2,10 +2,10 @@ import { message } from 'antd'
 import axios from 'axios';
 
 import * as fakeData from './fakeData'
-import {graphol} from './ACIOpenData'
+import { graphol } from './ACIOpenData'
 
-const ips = ['192.168.0.59','82.48.138.112']
-var mastroUrl = 'http://'+ips[0]+':8080/mws/rest/mwsx'
+const ips = ['192.168.0.59', '82.48.138.112']
+var mastroUrl = 'http://' + ips[0] + ':8080/mws/rest/mwsx'
 // mastroUrl = '/mws/rest/mwsx'
 const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -31,7 +31,8 @@ export function getOntologies(callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url)
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
     });
 }
 
@@ -46,7 +47,8 @@ export function putOntology(ontology, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url)
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
     });
 }
 
@@ -58,9 +60,10 @@ export function deleteOntology(ontologyID, callback) {
         method: method,
         headers: headers,
     }).then(function (response) {
-        callback(response.data)
+        callback()
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url)
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
     });
 }
 
@@ -73,9 +76,10 @@ export function deleteOntologyVersion(ontologyID, version, callback) {
         data: version,
         headers: headers
     }).then(function (response) {
-        callback(response.data)
+        callback()
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url)
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
     });
 }
 
@@ -90,7 +94,8 @@ export function uploadFile(file, ontologyID, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url)
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
     });
 }
 
@@ -107,7 +112,8 @@ export function getOntologyVersionInfo(name, version, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url)
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
     });
 }
 
@@ -124,18 +130,19 @@ export function getOntologyVersionHierarchy(name, version, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url)
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
     });
 }
 
 export function getGraphol(callback) {
-    if(fakeCalls) return callback(graphol)
+    if (fakeCalls) return callback(graphol)
 }
 
 export function getClassPage(name, version, classID, callback) {
     // console.log(name, version, classID)
-    if(fakeCalls) return callback(fakeData.classData)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/alphabet/class/'+classID+'/logical'
+    if (fakeCalls) return callback(fakeData.classData)
+    const url = mastroUrl + '/owlOntology/' + name + '/version/alphabet/class/' + classID + '/logical'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -146,6 +153,25 @@ export function getClassPage(name, version, classID, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url)
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function getObjectPropertyPage(name, version, objectPropertyID, callback) {
+    if (fakeCalls) return callback({})
+    const url = mastroUrl + '/owlOntology/' + name + '/version/alphabet/objectProperty/' + objectPropertyID + '/logical'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: headers,
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
     });
 }

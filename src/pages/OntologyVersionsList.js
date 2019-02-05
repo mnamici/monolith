@@ -54,7 +54,7 @@ class OntologyVersionsList extends React.Component {
                                         }
                                         description={
                                             <Ellipsis>
-                                                {item.versionDescription}
+                                                {item.versionDescription[0].content}
                                             </Ellipsis>
                                         }
                                     />

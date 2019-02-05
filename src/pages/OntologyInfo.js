@@ -62,7 +62,7 @@ class OntologyInfo extends React.Component {
                     <a href={"#class?q="}>{this.props.ontology.version}</a>
                 </div>
                 <List
-                    grid={{ gutter: 12, column: 2 }}
+                    grid={{ gutter: 12, column: 1 }}
                     dataSource={elements}
                     renderItem={item => (
                         <List.Item>

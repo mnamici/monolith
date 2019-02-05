@@ -1,5 +1,24 @@
+.toggle {
+    font: normal normal normal 18px/1 "Material Icons";
+    color: #555;
+    white-space: pre;
+    margin-right: 4px;
+  }
+
 .checkbox-item {
     display: none
+}
+
+.toggle.collapsed::after {
+    cursor: pointer;
+    content: "\E5CF";
+    vertical-align: middle;
+}
+  
+.toggle.expanded::after {
+    cursor: pointer;
+    content: "\E5CE";
+    vertical-align: middle;
 }
 
 .tag {
