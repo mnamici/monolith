@@ -6,22 +6,14 @@ import '../css/FastSearchTree.css'
 
 import { getOntologyVersionHierarchy } from '../api/MastroApi'
 
-export const predicateTypes = {
-  c: "class",
-  op: "objectProperty",
-  dp: "dataProperty",
-  i: "individuals"
-}
-
-const renders = ["entityIRI", "entityID", "entityPrefixIRI", "entityRemainder", "entityLabel"]
-const render = renders[2]
+import { renderEntity, predicateTypes} from '../utils/utils'
 
 function convertData(node, arr, predicateType) {
 
   for (let item of node) {
     const children = convertData(item.children, [], predicateType)
     arr.push({
-      label: item.entity[render],
+      label: renderEntity(item.entity),
       entityID: item.entity.entityID,
       predicateType: predicateType,
       children: children
@@ -57,6 +49,11 @@ export default class SearchTree extends React.Component {
     if (currentNode.label !== predicateTypes.c && currentNode.label !== predicateTypes.op && currentNode.label !== predicateTypes.dp){
       // console.log('onChange::', currentNode)
       this.props.onHandle(currentNode.entityID, currentNode.predicateType)
+      //click away to close tree
+      var click = document.createEvent("MouseEvent")
+      click.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      document.getElementById("root").dispatchEvent(click)
+
     }
       
   }

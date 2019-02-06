@@ -38,8 +38,12 @@ class OntologyInfo extends React.Component {
     render() {
         const elements = [
             // <Card title="IRI">{this.state.data.ontologyIRI}</Card>,
-            <OntologyMetricsTabs titles={[{ key: "imports", tab: "Imports" }]} data={this.state.data.ontologyImports} />,
-            <OntologyMetricsTabs titles={[{ key: "pm", tab: "Prefixes" }]} data={this.state.data.ontologyPrefixManager} />,
+            // <OntologyMetricsTabs titles={[{ key: "imports", tab: "Imports" }]} data={this.state.data.ontologyImports} />,
+            <OntologyMetricsTabs titles={[
+                { key: "imports", tab: "Imports" },
+                { key: "pm", tab: "Prefixes" }
+            ]}
+                data={{ imports: this.state.data.ontologyImports, pm: this.state.data.ontologyPrefixManager }} />,
             <OntologyMetricsTabs titles={[{ key: "desc", tab: "Descriptions" }]} data={this.state.data.ontologyDescriptions} />,
             <OntologyMetricsTabs titles={[
                 { key: "metrics", tab: "Metrics" },
@@ -49,20 +53,19 @@ class OntologyInfo extends React.Component {
                 { key: "individualAxioms", tab: "Individual Axioms" },
                 { key: "annotationAxioms", tab: "Annotation Axioms" }
             ]}
-                data={this.state.data.ontologyMetrics}
-            />,
+                data={this.state.data.ontologyMetrics} />,
             <DownloadFile />
 
         ]
         return (
             <div>
-                <div style={{ textAlign: 'center', padding:16 }}>
+                <div style={{ textAlign: 'center', padding: 16 }}>
                     <h1 >{this.props.ontology.name}</h1>
                     <div><a href={"#class?q="}>{this.state.data.ontologyIRI}</a></div>
                     <a href={"#class?q="}>{this.props.ontology.version}</a>
                 </div>
                 <List
-                    grid={{ gutter: 12, column: 1 }}
+                    grid={{ gutter: 12, column: 2 }}
                     dataSource={elements}
                     renderItem={item => (
                         <List.Item>

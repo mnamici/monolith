@@ -1,11 +1,13 @@
 import React from 'react';
 import { Layout } from 'antd';
-import SearchTree, { predicateTypes } from './FastSearchTree';
+import SearchTree from './FastSearchTree';
 import SearchIndividuals from './SearchIndividuals';
 import ClassPage from './ClassPage';
 import ObjectPropertyPage from './ObjectPropertyPage';
 
 import { Route, Redirect } from 'react-router'
+
+import { predicateTypes } from '../utils/utils'
 
 const { Header, Content } = Layout;
 
@@ -47,13 +49,12 @@ class OntologyWiki extends React.Component {
     render() {
         // console.log("RENDER: ",this.state)
         return (
-            <Layout style={{ margin: '0px -12px 0px 0px' }}>
+            <Layout style={{ margin: '0px 0px 0px 0px' }}>
                 <Header style={{ backgroundColor: 'white', display:'flex', justifyContent: 'center', lineHeight:1.5}}>
                     <div style={{ display: 'inline-flex'}}>
                         <SearchIndividuals style={{ display: 'inherit' }} />
                         <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
                     </div>
-
 
                 </Header>
                 {/* <Sider
@@ -82,7 +83,7 @@ class OntologyWiki extends React.Component {
                             }
                             <Route exact path="/open/ontology/wiki/:predicateType?/:entityID?" render={(props) => (
                                 this.state.current !== props.match.params.entityID && this.state.current !== undefined ?
-                                    <Redirect to={"/open/ontology/wiki/" + this.state.predicateType + "/" + this.state.current} />
+                                    <Redirect push to={"/open/ontology/wiki/" + this.state.predicateType + "/" + this.state.current} />
                                     : null
                                 // this.props.match.params.predicateType
                             )} />

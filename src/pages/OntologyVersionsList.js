@@ -54,7 +54,7 @@ class OntologyVersionsList extends React.Component {
                                         }
                                         description={
                                             <Ellipsis>
-                                                {item.versionDescription[0].content}
+                                                {item.versionDescription[0] !== undefined ? item.versionDescription[0].content : ""}
                                             </Ellipsis>
                                         }
                                     />

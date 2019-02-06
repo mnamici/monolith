@@ -2,7 +2,8 @@ import React from 'react'
 import { Popover, List } from 'antd';
 import CollapsibleList from './CollapsibleList';
 import { getClassPage } from '../api/MastroApi';
-import { predicateTypes } from './FastSearchTree';
+
+import { renderEntity, predicateTypes } from '../utils/utils'
 
 class ClassPage extends React.Component {
     _isMounted = false;
@@ -42,7 +43,9 @@ class ClassPage extends React.Component {
 
     render() {
         // console.log("CLASS PAGE", this.props)
+
         if (this.state.data.currentEntity === undefined) return null
+
         const components = [
 
             <CollapsibleList title="Equivalent Classes" predicateType={predicateTypes.c} list={this.state.data.equivalentClasses} />,
@@ -57,7 +60,7 @@ class ClassPage extends React.Component {
         return (
             <div>
                 <div style={{ textAlign: 'center' }}>
-                    <h1 >{this.state.data.currentEntity.entityPrefixIRI}</h1>
+                    <h1 >{renderEntity(this.state.data.currentEntity)}</h1>
                     <Popover content={this.state.data.currentEntity.entityIRI}>
                         <span>{this.state.data.currentEntity.entityPrefixIRI}</span>
                     </Popover>
@@ -66,7 +69,7 @@ class ClassPage extends React.Component {
                     <CollapsibleList title="Descriptions" list={this.state.data.classDescriptions} />
                 </div>
                 <List
-                    grid={{ gutter: 16, column: 3 }}
+                    grid={{ gutter: 16, column: 4 }}
                     dataSource={components}
                     renderItem={item => (
                         <List.Item>

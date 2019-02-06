@@ -19,7 +19,7 @@ class OntologyMetricsTabs extends React.Component {
 
         const contentList = {};
         if (Array.isArray(data)) {
-            if(data.length === 0 ) return null
+            // if(data.length === 0 ) return null
             for (let i = 0; i < tabList.length; i++) {
                 contentList[tabList[i].key] = <List
                     grid={{ gutter: 0, column: 1 }}
@@ -57,12 +57,14 @@ class OntologyMetricsTabs extends React.Component {
         return (
             <div>
                 <Card
-                    style={{ width: '100%' }}
+                    style={{ width: '100%'}}
                     tabList={tabList}
                     activeTabKey={this.state.tabKey}
                     onTabChange={(key) => { this.onTabChange(key, 'tabKey'); }}
                 >
-                    {contentList[this.state.tabKey]}
+                    <div style={{ width: '100%', height: 150, overflow: 'auto' }}>
+                        {contentList[this.state.tabKey]}
+                    </div>
                 </Card>
             </div>
         );

@@ -5,7 +5,7 @@ import { getObjectPropertyPage } from '../api/MastroApi';
 
 import { renderEntity, predicateTypes } from '../utils/utils'
 
-class ObjectPropertyPage extends React.Component {
+class DataPropertyPage extends React.Component {
     _isMounted = false;
     state = {
         data: {}
@@ -95,4 +95,4 @@ class ObjectPropertyPage extends React.Component {
     }
 }
 
-export default ObjectPropertyPage;
+export default DataPropertyPage;
