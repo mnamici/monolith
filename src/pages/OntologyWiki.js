@@ -4,6 +4,7 @@ import SearchTree from './FastSearchTree';
 import SearchIndividuals from './SearchIndividuals';
 import ClassPage from './ClassPage';
 import ObjectPropertyPage from './ObjectPropertyPage';
+import DataPropertyPage from './DataPropertyPage';
 
 import { Route, Redirect } from 'react-router'
 
@@ -92,6 +93,9 @@ class OntologyWiki extends React.Component {
                             )} />
                             <Route exact path={"/open/ontology/wiki/" + predicateTypes.op + "/:entityID"} render={(props) => (
                                 <ObjectPropertyPage {...props} ontology={this.props.ontology} />
+                            )} />
+                            <Route exact path={"/open/ontology/wiki/" + predicateTypes.dp + "/:entityID"} render={(props) => (
+                                <DataPropertyPage {...props} ontology={this.props.ontology} />
                             )} />
                         </div>
                     </Content>

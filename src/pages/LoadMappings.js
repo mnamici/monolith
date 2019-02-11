@@ -3,33 +3,34 @@ import { NavLink } from 'react-router-dom'
 import { List, Card, Divider, Popover } from 'antd';
 import Ellipsis from 'ant-design-pro/lib/Ellipsis'
 import UploadFile from './UploadFile';
+import { getMappings, deleteMappingFile } from '../api/MastroApi';
 
-const data = [
 
-    {
-        "mappingID": "MAPPING 1",
-        "mappingDescription": "Wonderful mappings",
-        "mappingDate": "25/12/0",
-        "numAssertions": 20,
-        "numViews": 23,
-        "numKeyDependencies": 34,
-        "numInclusionDependencies": 34,
-        "numDenials": 34,
-    },
-    {
-        "mappingID": "MAPPING 2",
-        "mappingDescription": "Added some dependencies",
-        "mappingDate": "25/12/0122",
-        "numAssertions": 20,
-        "numViews": 23,
-        "numKeyDependencies": 12122134,
-        "numInclusionDependencies": 3212124,
-        "numDenials": 312124,
-    },
-
-]
 
 class LoadMappings extends React.Component {
+
+    state = {
+        data: []
+    }
+
+    componentDidMount() {
+        this.requestMappings()   
+    }
+
+    requestMappings() {
+        getMappings(
+            this.props.ontology.name, 
+            this.props.ontology.version, 
+            this.loaded)
+    }
+
+    loaded = (data) => {
+        if (data === undefined)
+            data = []
+        this.setState((state) => ({
+            data: data
+        }));
+    }
 
     render() {
         return (
@@ -38,7 +39,7 @@ class LoadMappings extends React.Component {
                 <List
                     rowKey="mappingsView"
                     grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
-                    dataSource={[...data, '']}
+                    dataSource={[...this.state.data, '']}
                     renderItem={item =>
                         item ? (
                             <List.Item key={item.mappingID}>
@@ -50,15 +51,15 @@ class LoadMappings extends React.Component {
                                             <p>{item.numKeyDependencies + item.numInclusionDependencies + item.numDenials + " dependencies"}</p>
                                         </div>
                                     } placement="bottom">
-                                        <a href={"#info?q=" + item.mappingID}>
+                                        <span>
                                             info
-                                        </a>
+                                        </span>
                                     </Popover>,
-                                    <a href={"#delete?q=" + item.mappingID} onClick={
-                                        () => console.log("Delete " + item.mappingID)
+                                    <span onClick={
+                                        () => deleteMappingFile(this.props.ontology.name, this.props.ontology.version, item.mappingID, this.requestMappings.bind(this))
                                     }>
                                         delete
-                                    </a>
+                                    </span>
                                 ]}>
                                     <Card.Meta key={item.mappingID}
                                         avatar={<img alt="" src={item.avatar} />}
@@ -82,7 +83,7 @@ class LoadMappings extends React.Component {
                             </List.Item>
                         ) : (
                                 <List.Item>
-                                    <UploadFile />
+                                    <UploadFile type='mapping' current={this.props.ontology}/>
                                     {/* <Button type="dashed" onClick={() => console.log("Add version of ontology")}>
                                         <Icon type="plus" />
                                         Add Ontology Version

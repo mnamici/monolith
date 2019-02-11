@@ -13,7 +13,7 @@ const headers = {
 }
 
 
-const fakeCalls = false
+const fakeCalls = true
 
 function reportError(msg) {
     console.error(msg)
@@ -83,7 +83,7 @@ export function deleteOntologyVersion(ontologyID, version, callback) {
     });
 }
 
-export function uploadFile(file, ontologyID, callback) {
+export function uploadOntologyFile(file, ontologyID, callback) {
     const url = mastroUrl + '/owlOntology/' + ontologyID
     const method = 'PUT'
     axios({
@@ -162,6 +162,77 @@ export function getObjectPropertyPage(name, version, objectPropertyID, callback)
     if (fakeCalls) return callback({})
     const url = mastroUrl + '/owlOntology/' + name + '/version/alphabet/objectProperty/' + objectPropertyID + '/logical'
     const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: headers,
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function getDataPropertyPage(name, version, dataPropertyID, callback) {
+    if (fakeCalls) return callback({})
+    const url = mastroUrl + '/owlOntology/' + name + '/version/alphabet/dataProperty/' + dataPropertyID + '/logical'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: headers,
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function getMappings(name, version, callback) {
+    if(fakeCalls) return callback(fakeData.mappings)
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: headers,
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function uploadMappingFile(name, version, file, callback) {
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping'
+    const method = 'PUT'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        data: file,
+        headers: headers,
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function deleteMappingFile(name, version, mapping, callback) {
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/'+ mapping
+    const method = 'DELETE'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
         url: url,

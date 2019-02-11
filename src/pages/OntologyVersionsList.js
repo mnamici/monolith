@@ -62,7 +62,7 @@ class OntologyVersionsList extends React.Component {
                             </List.Item>
                         ) : (
                                 <List.Item>
-                                    <UploadFile current={this.props.current} rerender={this.props.rerender}/>
+                                    <UploadFile current={this.props.current} rerender={this.props.rerender} type='owl'/>
                                     {/* <Button type="dashed" onClick={() => console.log("Add version of ontology")}>
                                         <Icon type="plus" />
                                         Add Ontology Version

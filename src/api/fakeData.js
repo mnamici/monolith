@@ -366,3 +366,28 @@ export const classData = {
         }
     ]
 }
+
+export const mappings = [
+
+    {
+        "mappingID": "MAPPING_1",
+        "mappingDescription": "Wonderful mappings",
+        "mappingDate": "25/12/0",
+        "numAssertions": 20,
+        "numViews": 23,
+        "numKeyDependencies": 34,
+        "numInclusionDependencies": 34,
+        "numDenials": 34,
+    },
+    {
+        "mappingID": "MAPPING_2",
+        "mappingDescription": "Added some dependencies",
+        "mappingDate": "25/12/0122",
+        "numAssertions": 20,
+        "numViews": 23,
+        "numKeyDependencies": 12122134,
+        "numInclusionDependencies": 3212124,
+        "numDenials": 312124,
+    },
+
+]

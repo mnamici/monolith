@@ -1,7 +1,7 @@
 import React from 'react'
 import { Popover, List } from 'antd';
 import CollapsibleList from './CollapsibleList';
-import { getObjectPropertyPage } from '../api/MastroApi';
+import { getDataPropertyPage } from '../api/MastroApi';
 
 import { renderEntity, predicateTypes } from '../utils/utils'
 
@@ -15,7 +15,7 @@ class DataPropertyPage extends React.Component {
         this._isMounted = true;
         // console.log(this.props)
         if (this.props.match.params.entityID !== undefined)
-            getObjectPropertyPage(
+            getDataPropertyPage(
                 this.props.ontology.name,
                 this.props.ontology.version,
                 this.props.match.params.entityID,
@@ -25,7 +25,7 @@ class DataPropertyPage extends React.Component {
     componentWillReceiveProps(props) {
         // console.log(props)
         if (props.match.params.entityID !== undefined)
-            getObjectPropertyPage(
+            getDataPropertyPage(
                 props.ontology.name,
                 props.ontology.version,
                 props.match.params.entityID,
@@ -44,30 +44,20 @@ class DataPropertyPage extends React.Component {
         // console.log("OBJECT PROPERTY PAGE", this.props)
         if (this.state.data.currentEntity === undefined) return null
 
-        let objectPropertyCharacteristics = []
+        let dataPropertyCharacteristics = []
 
-        this.state.data.objectPropertyFunctional && objectPropertyCharacteristics.push("Functional")
-        this.state.data.objectPropertyInverseFunctional && objectPropertyCharacteristics.push("Inverse Functional")
-        this.state.data.objectPropertyIrreflexive && objectPropertyCharacteristics.push("Irreflexive")
-        this.state.data.objectPropertyReflexive && objectPropertyCharacteristics.push("Reflexive")
-        this.state.data.objectPropertySymmetric && objectPropertyCharacteristics.push("Symmetric")
-        this.state.data.objectPropertyTransitive && objectPropertyCharacteristics.push("Transitive")
-        this.state.data.objectPropertyAsymmetric && objectPropertyCharacteristics.push("Asymmetric")
-
-        console.log(this.state.data)
-        console.log(objectPropertyCharacteristics)
+        this.state.data.dataPropertyFunctional && dataPropertyCharacteristics.push("Functional")
 
         const components = [
 
-            <CollapsibleList title="Equivalent Object Properties" predicateType={predicateTypes.op} list={this.state.data.equivalentObjectProperties} />,
-            <CollapsibleList title="Sub Object Properties" predicateType={predicateTypes.op} list={this.state.data.subObjectProperties} />,
-            <CollapsibleList title="Super Object Properties" predicateType={predicateTypes.op} list={this.state.data.superObjectProperties} />,
-            <CollapsibleList title="Disjoint Object Properties" predicateType={predicateTypes.op} list={this.state.data.disjointObjectProperties} />,
-            <CollapsibleList title="Inverse Object Properties" predicateType={predicateTypes.op} list={this.state.data.inverseObjectProperties} />,
-            <CollapsibleList title="Domain" predicateType={predicateTypes.c} list={this.state.data.objectPropertyDomain} />,
-            <CollapsibleList title="Range" predicateType={predicateTypes.c} list={this.state.data.objectPropertyRange} />,
-            <CollapsibleList title="Object Property Characteristics" list={objectPropertyCharacteristics} />,
-            <CollapsibleList title="Object Property Individuals" predicateType={predicateTypes.op} list={this.state.data.objectPropertyIndividuals} />,
+            <CollapsibleList title="Equivalent Data Properties" predicateType={predicateTypes.op} list={this.state.data.equivalentDataProperties} />,
+            <CollapsibleList title="Sub Data Properties" predicateType={predicateTypes.op} list={this.state.data.subDataProperties} />,
+            <CollapsibleList title="Super Data Properties" predicateType={predicateTypes.op} list={this.state.data.superDataProperties} />,
+            <CollapsibleList title="Disjoint Data Properties" predicateType={predicateTypes.op} list={this.state.data.disjointDataProperties} />,
+            <CollapsibleList title="Domain" predicateType={predicateTypes.c} list={this.state.data.dataPropertyDomain} />,
+            <CollapsibleList title="Range" predicateType={predicateTypes.c} list={this.state.data.dataPropertyRange} />,
+            <CollapsibleList title="Data Property Characteristics" list={dataPropertyCharacteristics} />,
+            <CollapsibleList title="Data Property Individuals" predicateType={predicateTypes.op} list={this.state.data.dataPropertyIndividuals} />,
         ]
         return (
             <div>
@@ -78,7 +68,7 @@ class DataPropertyPage extends React.Component {
                     </Popover>
                 </div>
                 <div style={{ padding: '16px 0px 16px 0px' }}>
-                    <CollapsibleList title="Descriptions" list={this.state.data.objectPropertyDescriptions} />
+                    <CollapsibleList title="Descriptions" list={this.state.data.dataPropertyDescriptions} />
                 </div>
                 <List
                     grid={{ gutter: 16, column: 4 }}

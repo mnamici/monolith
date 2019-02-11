@@ -54,9 +54,6 @@ class ObjectPropertyPage extends React.Component {
         this.state.data.objectPropertyTransitive && objectPropertyCharacteristics.push("Transitive")
         this.state.data.objectPropertyAsymmetric && objectPropertyCharacteristics.push("Asymmetric")
 
-        console.log(this.state.data)
-        console.log(objectPropertyCharacteristics)
-
         const components = [
 
             <CollapsibleList title="Equivalent Object Properties" predicateType={predicateTypes.op} list={this.state.data.equivalentObjectProperties} />,

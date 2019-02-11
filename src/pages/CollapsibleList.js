@@ -2,8 +2,6 @@ import React from 'react';
 import { List, Collapse } from 'antd';
 import Entity from './Entity'
 
-import { predicateTypes } from '../utils/utils'
-
 const Panel = Collapse.Panel;
 
 class CollapsibleList extends React.Component {
@@ -40,7 +38,7 @@ class CollapsibleList extends React.Component {
                                         :
                                         item.entityID === undefined ?
                                             item.property !== undefined ?
-                                                <Entity predicateType={predicateTypes.op} entity={item.property} />
+                                                <Entity predicateType={this.props.predicateType} entity={item.property} />
                                                 :
                                                 <p style={{ wordWrap: 'break-word' }}>{item}</p>
                                             :
