@@ -1,10 +1,10 @@
 import React from 'react';
 import { Layout } from 'antd';
-import SearchTree from './SearchTree'
+import SearchTree from './FastSearchTree'
 import AssertionsPage from './AssertionsPage'
 
 const {
-    Sider, Content,
+    Header, Content,
 } = Layout;
 
 class AssertionsPane extends React.Component {
@@ -22,13 +22,19 @@ class AssertionsPane extends React.Component {
     render() {
         return (
             <Layout >
-                <Sider
+             <Header style={{ backgroundColor: 'white', display:'flex', justifyContent: 'center', lineHeight:1.5}}>
+                    <div style={{ display: 'inline-flex'}}>
+                        <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
+                    </div>
+
+                </Header>
+                {/* <Sider
                     // width={200} 
                     style={{ background: '#fff' }}
                 >
-                    <SearchTree />
+                    <SearchTree ontology={this.props.ontology}/>
 
-                </Sider>
+                </Sider> */}
                 <Layout>
                     <Content >
                         <div style={{ padding: '0px 12px 0px 12px', background: '#fff', minHeight: '100%' }}>

@@ -7,7 +7,7 @@ export const predicateTypes = {
 
 
 const renders = ["entityIRI", "entityID", "entityPrefixIRI", "entityRemainder", "entityLabels"]
-const render = renders[4]
+const render = renders[3]
 
 const lang = ''
 

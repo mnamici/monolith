@@ -22,7 +22,7 @@ class MainLayout extends React.Component {
   componentWillMount() {
     const mainState = JSON.parse(localStorage.getItem("mainState"))
     this.setState(mainState)
-    
+
   }
 
   onCollapse = (collapsed) => {
@@ -40,14 +40,14 @@ class MainLayout extends React.Component {
     }
     const openOntologies = Array.from(this.state.open.ontologies)
     let found = false
-    for(let item of openOntologies)
-      if(item.name === current.name && item.version === current.version){
+    for (let item of openOntologies)
+      if (item.name === current.name && item.version === current.version) {
         found = true;
         break;
       }
 
     !found && openOntologies.push(current)
-    
+
     this.setState((state) => ({
       collapsed: state.collapsed,
       current: current,
@@ -62,7 +62,12 @@ class MainLayout extends React.Component {
   close(toClose) {
     let current = this.state.current
     const openOntologies = Array.from(this.state.open.ontologies)
-    const filtered = openOntologies.filter(item => (item.name !== toClose.name || item.version !== toClose.version))
+    let filtered
+    if (toClose.version !== undefined)
+      filtered = openOntologies.filter(item => (item.name !== toClose.name || item.version !== toClose.version))
+    else
+      filtered = openOntologies.filter(item => (item.name !== toClose.name))
+
     if (toClose.name === this.state.current.name && toClose.version === this.state.current.version) {
       current = filtered[0]
     }
@@ -88,7 +93,7 @@ class MainLayout extends React.Component {
   }
 
   render() {
-    localStorage.setItem('mainState',JSON.stringify(this.state))
+    localStorage.setItem('mainState', JSON.stringify(this.state))
     return (
       <Layout style={{ minHeight: '100vh' }} >
         <Sider
@@ -113,7 +118,8 @@ class MainLayout extends React.Component {
             <div style={{ padding: 24, background: '#fff' }}>
               <Route exact path="/" component={Home} />
 
-              <Route path="/ontology" render={(props) => <LoadOntologies {...props} open={this.openCurrent.bind(this)} />} />
+              <Route path="/ontology" render={(props) =>
+                <LoadOntologies {...props} open={this.openCurrent.bind(this)} close={this.close.bind(this)} />} />
               <Route path="/open/ontology" render={(props) => (
                 this.state.current === undefined ?
                   <Redirect to="/" /> :

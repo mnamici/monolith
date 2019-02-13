@@ -28,7 +28,7 @@ class LoadMappings extends React.Component {
         if (data === undefined)
             data = []
         this.setState((state) => ({
-            data: data
+            data: data.mappingList
         }));
     }
 
@@ -64,7 +64,7 @@ class LoadMappings extends React.Component {
                                     <Card.Meta key={item.mappingID}
                                         avatar={<img alt="" src={item.avatar} />}
                                         title={
-                                            <NavLink to="/open/ontology/mapping/info">
+                                            <NavLink to={"/open/ontology/mapping/info/"+item.mappingID}>
                                                 {item.mappingID}
                                             </NavLink>
                                         }
@@ -83,7 +83,7 @@ class LoadMappings extends React.Component {
                             </List.Item>
                         ) : (
                                 <List.Item>
-                                    <UploadFile type='mapping' current={this.props.ontology}/>
+                                    <UploadFile type='mapping' current={this.props.ontology} rerender={this.requestMappings.bind(this)}/>
                                     {/* <Button type="dashed" onClick={() => console.log("Add version of ontology")}>
                                         <Icon type="plus" />
                                         Add Ontology Version

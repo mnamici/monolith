@@ -50,7 +50,8 @@ class CurrentOntology extends React.Component {
                             <Route path="/open/ontology/graphol" component={Graphol} />
                             <Route path="/open/ontology/mappings" render={(props) => 
                                 <LoadMappings {...props} ontology={this.props.ontology}/>} />
-                            <Route path="/open/ontology/mapping" component={CurrentMapping} />
+                            <Route path="/open/ontology/mapping/:tab/:mappingID" render={(props) => 
+                                <CurrentMapping {...props} ontology={this.props.ontology}/>} />
                             <Route path="/open/ontology/endpoint" component={SPARQLEndpoint} />
                             
                         </div>

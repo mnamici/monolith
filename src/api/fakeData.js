@@ -143,7 +143,7 @@ export const classData = {
         }],
         entityType: 'Person',
     },
-    
+
     entityDiagrams: [
         {
             nodeID: 'n1223',
@@ -185,14 +185,14 @@ export const classData = {
     subClasses: [
         {
             entityIRI: 'http://www.example.com/Student',
-        entityID: 'Student',
-        entityPrefixIRI: ':Student',
-        entityRemainder: 'Student',
-        entityLabels: [{
-            lang: 'it',
-            content: 'Studenta'
-        }],
-        entityType: 'Student',
+            entityID: 'Student',
+            entityPrefixIRI: ':Student',
+            entityRemainder: 'Student',
+            entityLabels: [{
+                lang: 'it',
+                content: 'Studenta'
+            }],
+            entityType: 'Student',
         },
         {
             entityIRI: 'http://www.example.com/Professor',
@@ -209,27 +209,27 @@ export const classData = {
     superClasses: [
         {
             entityIRI: 'http://www.example.com/Mammifer',
-        entityID: 'Mammifer',
-        entityPrefixIRI: ':Mammifer',
-        entityRemainder: 'Mammifer',
-        entityLabels: [{
-            lang: 'it',
-            content: 'Mammifera'
-        }],
-        entityType: 'Mammifer',
+            entityID: 'Mammifer',
+            entityPrefixIRI: ':Mammifer',
+            entityRemainder: 'Mammifer',
+            entityLabels: [{
+                lang: 'it',
+                content: 'Mammifera'
+            }],
+            entityType: 'Mammifer',
         }
     ],
     disjointClasses: [
         {
             entityIRI: 'http://www.example.com/Dog',
-        entityID: 'Dog',
-        entityPrefixIRI: ':Dog',
-        entityRemainder: 'Dog',
-        entityLabels: [{
-            lang: 'it',
-            content: 'Doga'
-        }],
-        entityType: 'Dog',
+            entityID: 'Dog',
+            entityPrefixIRI: ':Dog',
+            entityRemainder: 'Dog',
+            entityLabels: [{
+                lang: 'it',
+                content: 'Doga'
+            }],
+            entityType: 'Dog',
         },
         {
             entityIRI: 'http://www.example.com/Pig',
@@ -246,87 +246,87 @@ export const classData = {
     objectProperties: [
         {
             entityIRI: 'http://www.example.com/livesIn',
-        entityID: 'livesIn',
-        entityPrefixIRI: ':livesIn',
-        entityRemainder: 'livesIn',
-        entityLabels: [{
-            lang: 'it',
-            content: 'livesIna'
-        }],
-        entityType: 'livesIn',
+            entityID: 'livesIn',
+            entityPrefixIRI: ':livesIn',
+            entityRemainder: 'livesIn',
+            entityLabels: [{
+                lang: 'it',
+                content: 'livesIna'
+            }],
+            entityType: 'livesIn',
         },
         {
             entityIRI: 'http://www.example.com/wasBornIn',
-        entityID: 'wasBornIn',
-        entityPrefixIRI: ':wasBornIn',
-        entityRemainder: 'wasBornIn',
-        entityLabels: [{
-            lang: 'it',
-            content: 'wasBornIna'
-        }],
-        entityType: 'wasBornIn',
+            entityID: 'wasBornIn',
+            entityPrefixIRI: ':wasBornIn',
+            entityRemainder: 'wasBornIn',
+            entityLabels: [{
+                lang: 'it',
+                content: 'wasBornIna'
+            }],
+            entityType: 'wasBornIn',
         }
     ],
     dataProperties: [
         {
             entityIRI: 'http://www.example.com/yearOfBirth',
-        entityID: 'yearOfBirth',
-        entityPrefixIRI: ':yearOfBirth',
-        entityRemainder: 'yearOfBirth',
-        entityLabels: [{
-            lang: 'it',
-            content: 'yearOfBirtha'
-        }],
-        entityType: 'yearOfBirth',
+            entityID: 'yearOfBirth',
+            entityPrefixIRI: ':yearOfBirth',
+            entityRemainder: 'yearOfBirth',
+            entityLabels: [{
+                lang: 'it',
+                content: 'yearOfBirtha'
+            }],
+            entityType: 'yearOfBirth',
         },
         {
             entityIRI: 'http://www.example.com/FemaleName',
-        entityID: 'FemaleName',
-        entityPrefixIRI: ':FemaleName',
-        entityRemainder: 'FemaleName',
-        entityLabels: [{
-            lang: 'it',
-            content: 'FemaleNamea'
-        }],
-        entityType: 'FemaleName',
+            entityID: 'FemaleName',
+            entityPrefixIRI: ':FemaleName',
+            entityRemainder: 'FemaleName',
+            entityLabels: [{
+                lang: 'it',
+                content: 'FemaleNamea'
+            }],
+            entityType: 'FemaleName',
         }
     ],
     disjointUnions: [
         [
             {
                 entityIRI: 'http://www.example.com/Male',
-        entityID: 'Male',
-        entityPrefixIRI: ':Male',
-        entityRemainder: 'Male',
-        entityLabels: [{
-            lang: 'it',
-            content: 'Malea'
-        }],
-        entityType: 'Male',
+                entityID: 'Male',
+                entityPrefixIRI: ':Male',
+                entityRemainder: 'Male',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'Malea'
+                }],
+                entityType: 'Male',
             },
             {
                 entityIRI: 'http://www.example.com/Female',
-        entityID: 'Female',
-        entityPrefixIRI: ':Female',
-        entityRemainder: 'Female',
-        entityLabels: [{
-            lang: 'it',
-            content: 'Femalea'
-        }],
-        entityType: 'Female',
+                entityID: 'Female',
+                entityPrefixIRI: ':Female',
+                entityRemainder: 'Female',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'Femalea'
+                }],
+                entityType: 'Female',
             }
         ],
         [
             {
                 entityIRI: 'http://www.example.com/Student',
-            entityID: 'Student',
-            entityPrefixIRI: ':Student',
-            entityRemainder: 'Student',
-            entityLabels: [{
-                lang: 'it',
-                content: 'Studenta'
-            }],
-            entityType: 'Student',
+                entityID: 'Student',
+                entityPrefixIRI: ':Student',
+                entityRemainder: 'Student',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'Studenta'
+                }],
+                entityType: 'Student',
             },
             {
                 entityIRI: 'http://www.example.com/Professor',
@@ -344,14 +344,14 @@ export const classData = {
     classIndividuals: [
         {
             entityIRI: 'http://www.example.com/Valerio',
-        entityID: 'Valerio',
-        entityPrefixIRI: ':Valerio',
-        entityRemainder: 'Valerio',
-        entityLabels: [{
-            lang: 'it',
-            content: 'Valerioa'
-        }],
-        entityType: 'Valerio',
+            entityID: 'Valerio',
+            entityPrefixIRI: ':Valerio',
+            entityRemainder: 'Valerio',
+            entityLabels: [{
+                lang: 'it',
+                content: 'Valerioa'
+            }],
+            entityType: 'Valerio',
         },
         {
             entityIRI: 'http://www.example.com/Marco',
@@ -367,10 +367,37 @@ export const classData = {
     ]
 }
 
-export const mappings = [
+export const mappings = {
+    mappingList: [
 
-    {
-        "mappingID": "MAPPING_1",
+        {
+            "mappingID": "MAPPING_1",
+            "mappingDescription": "Wonderful mappings",
+            "mappingDate": "25/12/0",
+            "numAssertions": 20,
+            "numViews": 23,
+            "numKeyDependencies": 34,
+            "numInclusionDependencies": 34,
+            "numDenials": 34,
+        },
+        {
+            "mappingID": "MAPPING_2",
+            "mappingDescription": "Added some dependencies",
+            "mappingDate": "25/12/0122",
+            "numAssertions": 20,
+            "numViews": 23,
+            "numKeyDependencies": 12122134,
+            "numInclusionDependencies": 3212124,
+            "numDenials": 312124,
+        },
+
+    ]
+}
+
+export const mappingInfo =
+{
+    mapping: {
+        "mappingID": "MAPPING 1",
         "mappingDescription": "Wonderful mappings",
         "mappingDate": "25/12/0",
         "numAssertions": 20,
@@ -379,15 +406,15 @@ export const mappings = [
         "numInclusionDependencies": 34,
         "numDenials": 34,
     },
-    {
-        "mappingID": "MAPPING_2",
-        "mappingDescription": "Added some dependencies",
-        "mappingDate": "25/12/0122",
-        "numAssertions": 20,
-        "numViews": 23,
-        "numKeyDependencies": 12122134,
-        "numInclusionDependencies": 3212124,
-        "numDenials": 312124,
-    },
-
-]
+    mappingDBConnections: [{
+        jdbcURL: 'jdbc:mysql://localhost/books',
+        dbUser: 'root',
+        dbPassword: '........'
+    }],
+    mappingTemplates: [
+        'http://www.obdasystems.com/books/q-{_}',
+        'http://www.obdasystems.com/books/s-{_}',
+        'http://www.obdasystems.com/books/s-{_}',
+        'http://www.obdasystems.com/books/d-{_}',
+    ]
+}

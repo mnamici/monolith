@@ -58,14 +58,19 @@ class LoadOntologies extends React.Component {
             <div>
                 {
                     this.state.current === 0 ?
-                        <OntologiesList data={this.state.data} next={this.next.bind(this)} rerender={this.requestOntologies.bind(this)}/> :
+                        <OntologiesList 
+                            data={this.state.data} 
+                            next={this.next.bind(this)} 
+                            rerender={this.requestOntologies.bind(this)}
+                            close={this.props.close}
+                            /> :
                         <OntologyVersionsList 
                             data={this.state.data} 
                             current={this.state.ontologyID} 
                             previous={this.prev.bind(this)} 
                             rerender={this.requestOntologies.bind(this)} 
                             open={this.props.open}
-
+                            close={this.props.close}
                             />
                 }
                 {

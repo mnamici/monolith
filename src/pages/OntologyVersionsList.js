@@ -7,6 +7,14 @@ import { deleteOntologyVersion } from '../api/MastroApi';
 
 class OntologyVersionsList extends React.Component {
 
+    delete(ontologyID, versionID) {
+        deleteOntologyVersion(ontologyID, versionID, this.props.rerender)
+        this.props.close({
+            name:ontologyID,
+            version: versionID
+        })
+    }
+
     render() {
         var list = [];
         for (let i = 0; i < this.props.data.length; i++) {
@@ -39,7 +47,7 @@ class OntologyVersionsList extends React.Component {
                                         </span>
                                     </Popover>,
                                     <span onClick={
-                                        () => deleteOntologyVersion(item.ontologyID, item.versionID, this.props.rerender)
+                                        () => this.delete(item.ontologyID, item.versionID)
                                     }>
                                         delete
                                     </span>

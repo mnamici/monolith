@@ -5,6 +5,13 @@ import AddOntology from './AddOntology';
 import { deleteOntology } from '../api/MastroApi';
 
 class OntologiesList extends React.Component {
+
+    delete(ontologyID) {
+        deleteOntology(ontologyID, this.props.rerender)
+        this.props.close({
+            name:ontologyID
+        })
+    }
    
     render() {
         return (
@@ -19,7 +26,7 @@ class OntologiesList extends React.Component {
                             <List.Item key={item.ontologyID}>
                                 <Card hoverable actions={[
                                     <span onClick={
-                                        () => deleteOntology(item.ontologyID, this.props.rerender)
+                                        () => this.delete(item.ontologyID)
                                     }>
                                         delete
                                     </span>

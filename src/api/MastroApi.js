@@ -37,6 +37,7 @@ export function getOntologies(callback) {
 }
 
 export function putOntology(ontology, callback) {
+    if (fakeCalls) return callback();
     const url = mastroUrl + '/owlOntology'
     const method = 'PUT'
     axios({
@@ -53,6 +54,7 @@ export function putOntology(ontology, callback) {
 }
 
 export function deleteOntology(ontologyID, callback) {
+    if (fakeCalls) return callback();
     const url = mastroUrl + '/owlOntology/' + ontologyID
     const method = 'DELETE'
     axios({
@@ -68,6 +70,7 @@ export function deleteOntology(ontologyID, callback) {
 }
 
 export function deleteOntologyVersion(ontologyID, version, callback) {
+    if (fakeCalls) return callback();
     const url = mastroUrl + '/owlOntology/' + ontologyID + '/version'
     const method = 'DELETE'
     axios({
@@ -84,6 +87,7 @@ export function deleteOntologyVersion(ontologyID, version, callback) {
 }
 
 export function uploadOntologyFile(file, ontologyID, callback) {
+    if (fakeCalls) return callback();
     const url = mastroUrl + '/owlOntology/' + ontologyID
     const method = 'PUT'
     axios({
@@ -195,7 +199,7 @@ export function getDataPropertyPage(name, version, dataPropertyID, callback) {
 }
 
 export function getMappings(name, version, callback) {
-    if(fakeCalls) return callback(fakeData.mappings)
+    if (fakeCalls) return callback(fakeData.mappings)
     const url = mastroUrl + '/owlOntology/' + name + '/version/mapping'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
@@ -213,6 +217,7 @@ export function getMappings(name, version, callback) {
 }
 
 export function uploadMappingFile(name, version, file, callback) {
+    if (fakeCalls) return callback();
     const url = mastroUrl + '/owlOntology/' + name + '/version/mapping'
     const method = 'PUT'
     const encodedVersion = version//encodeURIComponent(version)
@@ -231,8 +236,27 @@ export function uploadMappingFile(name, version, file, callback) {
 }
 
 export function deleteMappingFile(name, version, mapping, callback) {
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/'+ mapping
+    if (fakeCalls) return callback();
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping
     const method = 'DELETE'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: headers,
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function getMappingInfo(name, version, mapping, callback) {
+    if (fakeCalls) return callback(fakeData.mappingInfo)
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/info'
+    const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
         url: url,

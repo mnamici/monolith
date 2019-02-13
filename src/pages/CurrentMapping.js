@@ -10,30 +10,29 @@ const {
 } = Layout;
 
 class CurrentMapping extends React.Component {
-    
 
     render() {
 
-        const curr = [this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/')+1)]
+        const currTab = [this.props.match.params.tab]
         return (
             <Layout>
                 <Header style={{ background: '#fff' }}>
                     <Menu
-                    defaultSelectedKeys={curr}
+                        defaultSelectedKeys={currTab}
                         mode="horizontal"
                     >
                         <Menu.Item key="info">
-                            <NavLink to="/open/ontology/mapping/info">
+                            <NavLink to={"/open/ontology/mapping/info/"+this.props.match.params.mappingID} >
                                 Mapping Info
                             </NavLink>
                         </Menu.Item>
                         <Menu.Item key="assertions">
-                            <NavLink to="/open/ontology/mapping/assertions">
+                            <NavLink to={"/open/ontology/mapping/assertions/"+this.props.match.params.mappingID}>
                                 Assertions
                             </NavLink>
                         </Menu.Item>
                         <Menu.Item key="views">
-                            <NavLink to="/open/ontology/mapping/sqlViews">
+                            <NavLink to={"/open/ontology/mapping/sqlViews/"+this.props.match.params.mappingID}>
                                 SQL Views
                             </NavLink>
                         </Menu.Item>
@@ -43,8 +42,10 @@ class CurrentMapping extends React.Component {
                     </Menu>
                 </Header>
                 <Content style={{ background: '#fff' }}>
-                    <Route path="/open/ontology/mapping/info" component={MappingInfo} />
-                    <Route path="/open/ontology/mapping/assertions" component={AssertionsPane} />
+                    <Route path="/open/ontology/mapping/info/" render={(props) =>
+                        <MappingInfo {...props} ontology={this.props.ontology} mappingID={this.props.match.params.mappingID}/>} />
+                    <Route path="/open/ontology/mapping/assertions" render={(props) =>
+                        <AssertionsPane {...props} ontology={this.props.ontology} mappingID={this.props.match.params.mappingID}/>} />
                     <Route path="/open/ontology/mapping/sqlViews" component={SQLViewsPane} />
                 </Content>
             </Layout>

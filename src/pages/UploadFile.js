@@ -51,7 +51,7 @@ function beforeUpload(file) {
           fileName: file.name
         }
 
-        uploadMappingFile(this.props.current.name, this.props.current.version, json, this.props.current.version, () => {
+        uploadMappingFile(this.props.current.name, this.props.current.version, json, () => {
           message.success('upload successfully.');
           this.props.rerender()
           this.setState({ loading: false });
