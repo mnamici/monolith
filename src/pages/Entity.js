@@ -4,10 +4,12 @@ import { NavLink } from 'react-router-dom'
 import { renderEntity } from '../utils/utils'
 class Entity extends React.Component {
     render() {
-
+        let predicateType = this.props.predicateType
+        if (predicateType === undefined)
+            predicateType = this.props.entity.entityType
         return (
             <NavLink
-                to={"/open/ontology/wiki/" + this.props.predicateType + "/" + this.props.entity.entityID}>
+                to={"/open/ontology/wiki/" + predicateType + "/" + this.props.entity.entityID}>
                 {renderEntity(this.props.entity)}
             </NavLink>
         )

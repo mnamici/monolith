@@ -31,7 +31,7 @@ class CurrentMapping extends React.Component {
                                 Assertions
                             </NavLink>
                         </Menu.Item>
-                        <Menu.Item key="views">
+                        <Menu.Item key="sqlViews">
                             <NavLink to={"/open/ontology/mapping/sqlViews/"+this.props.match.params.mappingID}>
                                 SQL Views
                             </NavLink>
@@ -46,7 +46,8 @@ class CurrentMapping extends React.Component {
                         <MappingInfo {...props} ontology={this.props.ontology} mappingID={this.props.match.params.mappingID}/>} />
                     <Route path="/open/ontology/mapping/assertions" render={(props) =>
                         <AssertionsPane {...props} ontology={this.props.ontology} mappingID={this.props.match.params.mappingID}/>} />
-                    <Route path="/open/ontology/mapping/sqlViews" component={SQLViewsPane} />
+                    <Route path="/open/ontology/mapping/sqlViews" render={(props) =>
+                        <SQLViewsPane {...props} ontology={this.props.ontology} mappingID={this.props.match.params.mappingID}/>} />
                 </Content>
             </Layout>
 

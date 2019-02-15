@@ -67,8 +67,7 @@ class MainLayout extends React.Component {
       filtered = openOntologies.filter(item => (item.name !== toClose.name || item.version !== toClose.version))
     else
       filtered = openOntologies.filter(item => (item.name !== toClose.name))
-
-    if (toClose.name === this.state.current.name && toClose.version === this.state.current.version) {
+    if (this.state.current !== undefined && toClose.name === this.state.current.name && toClose.version === this.state.current.version) {
       current = filtered[0]
     }
     this.setState((state) => ({
@@ -95,18 +94,22 @@ class MainLayout extends React.Component {
   render() {
     localStorage.setItem('mainState', JSON.stringify(this.state))
     return (
-      <Layout style={{ minHeight: '100vh' }} >
+      <Layout style={{ height: '100vh' }} >
         <Sider
           collapsible
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
+
         >
-          <div className="logo" style={{ padding: 8 }}>
-            <NavLink to="/">
-              <img src={logo} alt="logo" />
-            </NavLink>
+          <div style={{position:'fixed'}}>
+            <div className="logo" style={{ padding: 8 }} >
+              <NavLink to="/">
+                <img src={logo} alt="logo" />
+              </NavLink>
+            </div>
+            <MainMenu collapsed={this.state.collapsed} open={this.state.open} current={this.state.current} setcurrent={this.setCurrent.bind(this)} close={this.close.bind(this)} />
+
           </div>
-          <MainMenu open={this.state.open} current={this.state.current} setcurrent={this.setCurrent.bind(this)} close={this.close.bind(this)} />
         </Sider>
         <Layout>
           {/* <Header style={{ background: '#fff', padding: 0 }} /> */}
@@ -120,7 +123,7 @@ class MainLayout extends React.Component {
 
               <Route path="/ontology" render={(props) =>
                 <LoadOntologies {...props} open={this.openCurrent.bind(this)} close={this.close.bind(this)} />} />
-              <Route path="/open/ontology" render={(props) => (
+              <Route path="/open/ontology/:menu" render={(props) => (
                 this.state.current === undefined ?
                   <Redirect to="/" /> :
                   <CurrentOntology {...props} ontology={this.state.current} />
@@ -132,7 +135,7 @@ class MainLayout extends React.Component {
               <Route path="/dataset" component={() => "DATASETS"} />
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
+          <Footer style={{ padding: 6, textAlign: 'center' }}>
             <a href="http://www.obdasystems.com" target="_blank" rel="noopener noreferrer">OBDA Systems ©2018</a>
           </Footer>
         </Layout>

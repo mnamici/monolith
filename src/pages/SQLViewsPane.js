@@ -1,38 +1,45 @@
 import React from 'react';
 import { Layout } from 'antd';
-import SearchList from './SearchList';
+import SearchList from './FastSearchList';
 import SQLViewsPage from './SQLViewsPage';
 
 const {
-    Sider, Content,
+    Header, Content,
 } = Layout;
 
 class SQLViewsPane extends React.Component {
     state = {
-        current: 'info',
+        current: null
     }
 
-    handleClick = (e) => {
-        console.log('click ', e);
+    onHandle = (viewID) => {
         this.setState({
-            current: e.key,
-        });
+            current: viewID,
+        })
     }
 
     render() {
         return (
             <Layout >
-                <Sider
+                <Header style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'center', lineHeight: 1.5 }}>
+                    <div style={{ display: 'inline-flex' }}>
+                        <SearchList ontology={this.props.ontology} mappingID={this.props.mappingID} onHandle={this.onHandle} />
+                    </div>
+
+                </Header>
+                {/* <Sider
                     // width={200} 
                     style={{ background: '#fff' }}
                 >
                     <SearchList />
 
-                </Sider>
+                </Sider> */}
                 <Layout>
                     <Content >
-                        <div style={{ padding: '0px 12px 0px 12px', background: '#fff', minHeight: '100%' }}>
-                            <SQLViewsPage />
+                        <div style={{ background: '#fff', minHeight: '100%' }}>
+                            {this.state.current !== null &&
+                                <SQLViewsPage ontology={this.props.ontology} mappingID={this.props.mappingID} viewID={this.state.current}/>
+                            }
                         </div>
                     </Content>
                 </Layout>

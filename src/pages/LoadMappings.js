@@ -73,11 +73,6 @@ class LoadMappings extends React.Component {
                                                 {item.mappingDescription}
                                             </Ellipsis>
                                         }
-                                        onClick={
-                                            () => {
-                                                console.log("Open Mapping page")
-                                            }
-                                        }
                                     />
                                 </Card>
                             </List.Item>

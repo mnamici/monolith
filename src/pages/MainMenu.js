@@ -32,12 +32,15 @@ class MainMenu extends React.Component {
     }
 
     render() {
+
         const ontos = this.props.open.ontologies.map(item => this.getClosableMenuItem(item, "/open/ontology/info"));
         const kgs = this.props.open.kgs.map(item => this.getClosableMenuItem(item, "/kg"));
         const dss = this.props.open.dss.map(item => this.getClosableMenuItem(item, "/dataset"));
 
+        const openSubMenus = !this.props.collapsed ? ["ontology",",kg","dataset"] : [] 
+        const selected = this.props.current === undefined ? [] :[this.props.current.name + "-" + this.props.current.version]
         return (
-            <Menu defaultSelectedKeys={["ontology"]} theme="dark" mode="inline">
+            <Menu defaultOpenKeys={openSubMenus} defaultSelectedKeys={selected} theme="dark" mode="inline">
 
                 <SubMenu
                     key="ontology"

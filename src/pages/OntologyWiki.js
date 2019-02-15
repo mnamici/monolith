@@ -50,11 +50,12 @@ class OntologyWiki extends React.Component {
     render() {
         // console.log("RENDER: ",this.state)
         return (
-            <Layout style={{ margin: '0px 0px 0px 0px' }}>
+            <Layout>
                 <Header style={{ backgroundColor: 'white', display:'flex', justifyContent: 'center', lineHeight:1.5}}>
                     <div style={{ display: 'inline-flex'}}>
-                        <SearchIndividuals style={{ display: 'inherit' }} />
                         <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
+                        <SearchIndividuals style={{ display: 'inherit' }} />
+                        
                     </div>
 
                 </Header>
@@ -76,11 +77,11 @@ class OntologyWiki extends React.Component {
                 </Sider> */}
                 <Layout>
                     <Content >
-                        <div style={{ padding: '0px 0px 0px 0px', background: '#fff', minHeight: '100%' }}>
+                        <div style={{background: '#fff', minHeight: '100%' }}>
                             {
                                 this.state.predicateType === undefined &&
                                 this.state.current === undefined &&
-                                <h3 style={{ textAlign: 'center' }}>Search or select something</h3>
+                                <h3 style={{ textAlign: 'center', marginBottom: 0 }}>Search or select something</h3>
                             }
                             <Route exact path="/open/ontology/wiki/:predicateType?/:entityID?" render={(props) => (
                                 this.state.current !== props.match.params.entityID && this.state.current !== undefined ?

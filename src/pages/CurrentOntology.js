@@ -22,13 +22,13 @@ class CurrentOntology extends React.Component {
     }
     render() {
         return (
-            <Layout style={{ margin: '0px -24px -10px -24px', minHeight: '100%' }}>
+            <Layout style={{ margin: '0px -24px -10px -24px', height: '100%' }}>
                 <Sider
                     // width={200} 
                     style={{ background: '#fff' }}
                     collapsed={this.state.collapsed}
                 >
-                    <OntologyMenu />
+                    <OntologyMenu select={this.props.match.params.menu}/>
                     <div>
                         <Icon
                             style={{ display: "inherit", cursor: "pointer", transition: "color .3s" }}
@@ -39,9 +39,9 @@ class CurrentOntology extends React.Component {
                     </div>
 
                 </Sider>
-                <Layout>
+                <Layout style={{ padding: '0px 12px 0px 12px', background: '#fff', height: '92vh' }}>
                     <Content >
-                        <div style={{ padding: '0px 12px 0px 12px', background: '#fff', minHeight: '100%' }}>
+                        <div >
 
                             <Route path="/open/ontology/info" render={(props) => 
                                 <OntologyInfo {...props} ontology={this.props.ontology}/>} />

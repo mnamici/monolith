@@ -3,27 +3,25 @@
     color: #555;
     white-space: pre;
     margin-right: 4px;
-  }
+    vertical-align: middle;
+}
 
 .checkbox-item {
     display: none
 }
 
 .toggle.collapsed::after {
-    cursor: pointer;
     content: "\E5CF";
-    vertical-align: middle;
 }
-  
+
 .toggle.expanded::after {
-    cursor: pointer;
     content: "\E5CE";
-    vertical-align: middle;
 }
 
 .tag {
     display: none
 }
+
 .dropdown-trigger {
     margin-top: -8px;
     border: none !important;
@@ -35,7 +33,8 @@
 }
 
 .dropdown-trigger.arrow.bottom::after {
-    content: "" !important; /*for loading icon check https://stackoverflow.com/questions/19255296/is-there-a-way-to-use-svg-as-content-in-a-pseudo-element-before-or-after*/
+    content: "" !important;
+    /*for loading icon check https://stackoverflow.com/questions/19255296/is-there-a-way-to-use-svg-as-content-in-a-pseudo-element-before-or-after*/
 }
 
 .dropdown-trigger.arrow::after {
@@ -50,17 +49,29 @@
 
 .search {
     border-bottom: none !important;
-    color: #bfbfbf;
-    margin-left: -5px;
+    color: black;
+    margin-left: -4px;
     margin-top: 4px;
+    width: 200px;
+}
+
+.search::placeholder {
+    color: #bfbfbf;
 }
 
 .dropdown {
     width: 100%;
 }
 
+.dropdown-content {
+    overflow: scroll;
+    max-height: 80vh;
+    max-width: 60vw;
+}
+
 /* comment the following if show search in the sidebar of wiki ontology */
+
 .react-dropdown-tree-select {
-    margin-left: 10px;
+    margin-right: 10px;
     width: 400px;
 }

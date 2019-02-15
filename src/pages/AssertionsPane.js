@@ -9,21 +9,20 @@ const {
 
 class AssertionsPane extends React.Component {
     state = {
-        current: 'info',
+        current: null
     }
 
-    handleClick = (e) => {
-        console.log('click ', e);
+    onHandle = (entityID) => {
         this.setState({
-            current: e.key,
-        });
+            current: entityID,
+        })
     }
 
     render() {
         return (
             <Layout >
-             <Header style={{ backgroundColor: 'white', display:'flex', justifyContent: 'center', lineHeight:1.5}}>
-                    <div style={{ display: 'inline-flex'}}>
+                <Header style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'center', lineHeight: 1.5 }}>
+                    <div style={{ display: 'inline-flex' }}>
                         <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
                     </div>
 
@@ -37,8 +36,13 @@ class AssertionsPane extends React.Component {
                 </Sider> */}
                 <Layout>
                     <Content >
-                        <div style={{ padding: '0px 12px 0px 12px', background: '#fff', minHeight: '100%' }}>
-                            <AssertionsPage />
+                        <div style={{ background: '#fff', minHeight: '100%' }}>
+                            {this.state.current !== null && 
+                                <AssertionsPage 
+                                    ontology={this.props.ontology} 
+                                    mappingID={this.props.mappingID}
+                                    current={this.state.current}
+                                    />}
                         </div>
                     </Content>
                 </Layout>

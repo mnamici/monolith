@@ -54,15 +54,14 @@ class OntologyInfo extends React.Component {
                 { key: "annotationAxioms", tab: "Annotation Axioms" }
             ]}
                 data={this.state.data.ontologyMetrics} />,
-            <DownloadFile />
 
         ]
         return (
             <div>
                 <div style={{ textAlign: 'center', padding: 16 }}>
                     <h1 >{this.props.ontology.name}</h1>
-                    <div><a href={"#class?q="}>{this.state.data.ontologyIRI}</a></div>
-                    <a href={"#class?q="}>{this.props.ontology.version}</a>
+                    <div><span>{this.state.data.ontologyIRI}</span></div>
+                    <span>{this.props.ontology.version}</span>
                 </div>
                 <List
                     grid={{ gutter: 12, column: 2 }}
@@ -73,6 +72,9 @@ class OntologyInfo extends React.Component {
                         </List.Item>
                     )}
                 />
+                 <div style={{ float: "right" }}>
+                    <DownloadFile />
+                </div>
 
             </div>
         );

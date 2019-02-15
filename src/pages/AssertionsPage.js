@@ -1,91 +1,61 @@
 import React from 'react';
-import { List, Card, Popover, Divider } from 'antd';
-import Entity from './Entity';
+import { Popover } from 'antd';
 import AssertionsList from './AssertionsList';
+import { getMappingAssertion } from '../api/MastroApi';
+import Entity from "./Entity";
 
-const data =
-    [
-        {
-            currentEntity: {
-                entityRender: 'Person',
-                entityID: 12
-            },
-            iri: {
-                shortIRI: 'obda:Person',
-                extendedIRI: 'http://www.example.com/#Person'
-            },
-            mappingHead: {
-                firstArg: 'http://www.example.com/person_{ssn}',
-            },
-            mappingDescription: 'Data from main table',
-            mappingBody: {
-                bodySelect: 'ssn',
-                bodyWhere: 'ssn is not null',
-                bodyFrom: [
-                    {
-                        sqlViewID: 'personsView',
-                        sqlViewDescription: 'Main table for persons',
-                        sqlViewCode: 'select ssn, birthDate, livesIn from persona_table'
-                    }
-                ]
-            }
-        },
-        {
-            currentEntity: {
-                entityRender: 'Person',
-                entityID: 12
-            },
-            iri: {
-                shortIRI: 'obda:Person',
-                extendedIRI: 'http://www.example.com/#Person'
-            },
-            mappingHead: {
-                firstArg: 'http://www.example.com/{person_name}-{surname}',
-            },
-            mappingDescription: 'Data from names and surnames tables',
-            mappingBody: {
-                bodySelect: 'namesView.person_name, surnameView.surname',
-                bodyWhere: 'namesView.person_id = surnameView.person_id',
-                bodyFrom: [
-                    {
-                        sqlViewID: 'namesView',
-                        sqlViewDescription: 'Main table for names',
-                        sqlViewCode: 'select person_id, person_name from names_table'
-                    },
-                    {
-                        sqlViewID: 'surnamesView',
-                        sqlViewDescription: 'Main table for surnames',
-                        sqlViewCode: 'select person_id, person_surname from surnames_table'
-                    },
-                ]
-            }
-        }
-    ]
 
 class AssertionsPage extends React.Component {
-    render() {
-        const elements = [
-            <Card title="Label"> <Entity entity={data[0].currentEntity} /> </Card>,
-            <Card title="IRI">
-                <Popover content={data[0].iri.extendedIRI}>
-                    <a href={"#class?q=" + data[0].currentEntity.entityID}>{data[0].iri.shortIRI}</a>
-                </Popover>
-            </Card>,
+    _isMounted = false;
+    state = {
+        data: null
+    }
 
-        ]
+    componentDidMount() {
+        this._isMounted = true;
+        // console.log(this.props)
+        if (this.props.current !== undefined)
+            getMappingAssertion(
+                this.props.ontology.name,
+                this.props.ontology.version,
+                this.props.mappingID,
+                this.props.current,
+                this.loaded)
+    }
+
+    componentWillReceiveProps(props) {
+        // console.log(props)
+        if (props.current !== undefined)
+            getMappingAssertion(
+                props.ontology.name,
+                props.ontology.version,
+                props.mappingID,
+                props.current,
+                this.loaded)
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
+    loaded = (data) => {
+        // console.log(data)
+        this._isMounted && this.setState({ data: data })
+    }
+
+    render() {
+        if (this.state.data === null) return null
         return (
             <div>
-                <List
-                    grid={{ gutter: 12, column: 2 }}
-                    dataSource={elements}
-                    renderItem={item => (
-                        <List.Item>
-                            {item}
-                        </List.Item>
-                    )}
-                />
-                <Divider children="Assertions"/>
-                <AssertionsList list={data} />
+                <div style={{ textAlign: 'center', padding: '16px 0px 16px 0px' }}>
+                    <h1><Entity entity={this.state.data[0].currentEntity} predicateType={this.state.data[0].currentEntity.entityType}/></h1>
+                    <Popover content={this.state.data[0].currentEntity.entityIRI}>
+                        <span>{this.state.data[0].currentEntity.entityPrefixIRI}</span>
+                    </Popover>
+                </div>
+
+
+                <AssertionsList list={this.state.data} />
             </div>
         );
     }

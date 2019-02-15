@@ -270,3 +270,58 @@ export function getMappingInfo(name, version, mapping, callback) {
         console.error(err)
     });
 }
+
+export function getMappingAssertion(name, version, mapping, entityID, callback) {
+    console.log("MASTRO CALL "+entityID)
+    if (fakeCalls) return callback(fakeData.assertions)
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/assertions/' + entityID
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: headers,
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function getMappingViews(name, version, mapping, callback) {
+    if (fakeCalls) return callback(fakeData.sqlViews)
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/views'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: headers,
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function getMappingView(name, version, mapping, viewID, callback) {
+    if (fakeCalls) return callback(fakeData.sqlView)
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/views/' + viewID
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: headers,
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
