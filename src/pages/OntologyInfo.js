@@ -54,7 +54,9 @@ class OntologyInfo extends React.Component {
                 { key: "annotationAxioms", tab: "Annotation Axioms" }
             ]}
                 data={this.state.data.ontologyMetrics} />,
-
+            <div style={{ height: 150, display: 'flex', justifyContent: 'center' }}>
+                <DownloadFile />
+            </div>
         ]
         return (
             <div>
@@ -72,9 +74,7 @@ class OntologyInfo extends React.Component {
                         </List.Item>
                     )}
                 />
-                 <div style={{ float: "right" }}>
-                    <DownloadFile />
-                </div>
+
 
             </div>
         );

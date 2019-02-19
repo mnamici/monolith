@@ -51,11 +51,11 @@ class OntologyWiki extends React.Component {
         // console.log("RENDER: ",this.state)
         return (
             <Layout>
-                <Header style={{ backgroundColor: 'white', display:'flex', justifyContent: 'center', lineHeight:1.5}}>
-                    <div style={{ display: 'inline-flex'}}>
+                <Header style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'center', lineHeight: 1.5 }}>
+                    <div style={{ display: 'inline-flex' }}>
                         <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
                         <SearchIndividuals style={{ display: 'inherit' }} />
-                        
+
                     </div>
 
                 </Header>
@@ -75,9 +75,9 @@ class OntologyWiki extends React.Component {
                     <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
 
                 </Sider> */}
-                <Layout>
+                <Layout >
                     <Content >
-                        <div style={{background: '#fff', minHeight: '100%' }}>
+                        <div style={{ height: '84vh', background: '#fff', overflowY: 'scroll', paddingRight: 12 }}>
                             {
                                 this.state.predicateType === undefined &&
                                 this.state.current === undefined &&

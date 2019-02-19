@@ -481,6 +481,138 @@ export const assertions =
                     },
                 ]
             }
+        },
+        {
+            currentEntity: {
+                entityIRI: 'http://www.example.com/Person',
+                entityID: 'Person',
+                entityPrefixIRI: ':Person',
+                entityRemainder: 'Person',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'Persona'
+                }],
+                entityType: 'class',
+            },
+            mappingHead: {
+                firstArg: 'http://www.example.com/{person_name}-{surname}',
+            },
+            mappingDescription: 'Data from names and surnames tables',
+            mappingBody: {
+                bodySelect: 'namesView.person_name, surnameView.surname',
+                bodyWhere: 'namesView.person_id = surnameView.person_id',
+                bodyFrom: [
+                    {
+                        sqlViewID: 'namesView',
+                        sqlViewDescription: 'Main table for names',
+                        sqlViewCode: 'select person_id, person_name from names_table'
+                    },
+                    {
+                        sqlViewID: 'surnamesView',
+                        sqlViewDescription: 'Main table for surnames',
+                        sqlViewCode: 'select person_id, person_surname from surnames_table'
+                    },
+                ]
+            }
+        },
+        {
+            currentEntity: {
+                entityIRI: 'http://www.example.com/Person',
+                entityID: 'Person',
+                entityPrefixIRI: ':Person',
+                entityRemainder: 'Person',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'Persona'
+                }],
+                entityType: 'class',
+            },
+            mappingHead: {
+                firstArg: 'http://www.example.com/{person_name}-{surname}',
+            },
+            mappingDescription: 'Data from names and surnames tables',
+            mappingBody: {
+                bodySelect: 'namesView.person_name, surnameView.surname',
+                bodyWhere: 'namesView.person_id = surnameView.person_id',
+                bodyFrom: [
+                    {
+                        sqlViewID: 'namesView',
+                        sqlViewDescription: 'Main table for names',
+                        sqlViewCode: 'select person_id, person_name from names_table'
+                    },
+                    {
+                        sqlViewID: 'surnamesView',
+                        sqlViewDescription: 'Main table for surnames',
+                        sqlViewCode: 'select person_id, person_surname from surnames_table'
+                    },
+                ]
+            }
+        },
+        {
+            currentEntity: {
+                entityIRI: 'http://www.example.com/Person',
+                entityID: 'Person',
+                entityPrefixIRI: ':Person',
+                entityRemainder: 'Person',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'Persona'
+                }],
+                entityType: 'class',
+            },
+            mappingHead: {
+                firstArg: 'http://www.example.com/{person_name}-{surname}',
+            },
+            mappingDescription: 'Data from names and surnames tables',
+            mappingBody: {
+                bodySelect: 'namesView.person_name, surnameView.surname',
+                bodyWhere: 'namesView.person_id = surnameView.person_id',
+                bodyFrom: [
+                    {
+                        sqlViewID: 'namesView',
+                        sqlViewDescription: 'Main table for names',
+                        sqlViewCode: 'select person_id, person_name from names_table'
+                    },
+                    {
+                        sqlViewID: 'surnamesView',
+                        sqlViewDescription: 'Main table for surnames',
+                        sqlViewCode: 'select person_id, person_surname from surnames_table'
+                    },
+                ]
+            }
+        },
+        {
+            currentEntity: {
+                entityIRI: 'http://www.example.com/Person',
+                entityID: 'Person',
+                entityPrefixIRI: ':Person',
+                entityRemainder: 'Person',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'Persona'
+                }],
+                entityType: 'class',
+            },
+            mappingHead: {
+                firstArg: 'http://www.example.com/{person_name}-{surname}',
+            },
+            mappingDescription: 'Data from names and surnames tables',
+            mappingBody: {
+                bodySelect: 'namesView.person_name, surnameView.surname',
+                bodyWhere: 'namesView.person_id = surnameView.person_id',
+                bodyFrom: [
+                    {
+                        sqlViewID: 'namesView',
+                        sqlViewDescription: 'Main table for names',
+                        sqlViewCode: 'select person_id, person_name from names_table'
+                    },
+                    {
+                        sqlViewID: 'surnamesView',
+                        sqlViewDescription: 'Main table for surnames',
+                        sqlViewCode: 'select person_id, person_surname from surnames_table'
+                    },
+                ]
+            }
         }
     ]
 
@@ -650,7 +782,7 @@ export const sqlViews = [
         sqlViewCode: 'select person_id, person_name from names_table'
     },
     {
-        sqlViewID: 'namesView5',
+        sqlViewID: 'longNameViewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
         sqlViewDescription: 'Main table for names',
         sqlViewCode: 'select person_id, person_name from names_table'
     },

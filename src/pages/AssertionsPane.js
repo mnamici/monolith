@@ -21,7 +21,7 @@ class AssertionsPane extends React.Component {
     render() {
         return (
             <Layout >
-                <Header style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'center', lineHeight: 1.5 }}>
+                <Header style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'center', lineHeight: 1.5, height: 32 }}>
                     <div style={{ display: 'inline-flex' }}>
                         <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
                     </div>
@@ -36,13 +36,13 @@ class AssertionsPane extends React.Component {
                 </Sider> */}
                 <Layout>
                     <Content >
-                        <div style={{ background: '#fff', minHeight: '100%' }}>
-                            {this.state.current !== null && 
-                                <AssertionsPage 
-                                    ontology={this.props.ontology} 
+                        <div style={{ height: 'calc(94vh - 110px)', background: '#fff', overflowY: 'scroll', paddingRight: 12 }}>
+                            {this.state.current !== null &&
+                                <AssertionsPage
+                                    ontology={this.props.ontology}
                                     mappingID={this.props.mappingID}
                                     current={this.state.current}
-                                    />}
+                                />}
                         </div>
                     </Content>
                 </Layout>

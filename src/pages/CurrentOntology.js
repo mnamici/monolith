@@ -22,7 +22,7 @@ class CurrentOntology extends React.Component {
     }
     render() {
         return (
-            <Layout style={{ margin: '0px -24px -10px -24px', height: '100%' }}>
+            <Layout style={{ margin: '0px -1vw -10vh -1vw'}}>
                 <Sider
                     // width={200} 
                     style={{ background: '#fff' }}
@@ -39,7 +39,7 @@ class CurrentOntology extends React.Component {
                     </div>
 
                 </Sider>
-                <Layout style={{ padding: '0px 12px 0px 12px', background: '#fff', height: '92vh' }}>
+                <Layout style={{ padding: '0px 0px 0px 1vw', background: '#fff', height: 'calc(95vh - 14px)' }}>
                     <Content >
                         <div >
 
@@ -52,7 +52,8 @@ class CurrentOntology extends React.Component {
                                 <LoadMappings {...props} ontology={this.props.ontology}/>} />
                             <Route path="/open/ontology/mapping/:tab/:mappingID" render={(props) => 
                                 <CurrentMapping {...props} ontology={this.props.ontology}/>} />
-                            <Route path="/open/ontology/endpoint" component={SPARQLEndpoint} />
+                            <Route path="/open/ontology/endpoint" render={(props) => 
+                                <SPARQLEndpoint {...props} ontology={this.props.ontology}/>} />
                             
                         </div>
                     </Content>

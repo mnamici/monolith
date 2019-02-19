@@ -24,7 +24,7 @@ class CollapsibleList extends React.Component {
                 <Collapse defaultActiveKey={this.props.title} aactiveKey={this.state.activeKey} onChange={this.onChange.bind(this)}>
                     <Panel header={this.props.title} key={this.props.title} showArrow={false} >
                         <List
-                            style={{ width: '100%', height: 150, overflow: 'auto' }}
+                            style={{ width: '100%', height: 140, overflow: 'auto' }}
                             grid={{ gutter: 0, column: 1 }}
                             dataSource={list}
                             renderItem={item => (

@@ -69,7 +69,7 @@ class ClassPage extends React.Component {
                     <CollapsibleList title="Descriptions" list={this.state.data.classDescriptions} />
                 </div>
                 <List
-                    grid={{ gutter: 16, column: 4 }}
+                    grid={{ gutter: 12, column: 4 }}
                     dataSource={components}
                     renderItem={item => (
                         <List.Item>

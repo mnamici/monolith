@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, NavLink, Redirect } from 'react-router-dom'
 import { Layout } from 'antd';
-import logo from '../logo_NEW.svg';
+import logo_scritta from '../scritta.svg';
+import logo from '../only_logo.svg';
 import MainMenu from './MainMenu'
 import Home from './Home'
 import LoadOntologies from './LoadOntologies'
@@ -101,10 +102,10 @@ class MainLayout extends React.Component {
           onCollapse={this.onCollapse}
 
         >
-          <div style={{position:'fixed'}}>
-            <div className="logo" style={{ padding: 8 }} >
+          <div style={{ position: 'fixed' }}>
+            <div className="logo" style={{ padding: 16, transition: 2 }} >
               <NavLink to="/">
-                <img src={logo} alt="logo" />
+                <img src={this.state.collapsed ? logo : logo_scritta} alt="logo" style={this.state.collapsed ? { maxHeight: 60 } : {}} />
               </NavLink>
             </div>
             <MainMenu collapsed={this.state.collapsed} open={this.state.open} current={this.state.current} setcurrent={this.setCurrent.bind(this)} close={this.close.bind(this)} />
@@ -113,12 +114,12 @@ class MainLayout extends React.Component {
         </Sider>
         <Layout>
           {/* <Header style={{ background: '#fff', padding: 0 }} /> */}
-          <Content style={{ margin: '16px 16px' }}>
+          <Content style={{ margin: '1vh 1vw 1vh 1vw' }}>
             {/* <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>User</Breadcrumb.Item>
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
             </Breadcrumb> */}
-            <div style={{ padding: 24, background: '#fff' }}>
+            <div style={{ padding: '1vh 1vw 1vh 1vw' , background: '#fff' }}>
               <Route exact path="/" component={Home} />
 
               <Route path="/ontology" render={(props) =>
@@ -135,7 +136,7 @@ class MainLayout extends React.Component {
               <Route path="/dataset" component={() => "DATASETS"} />
             </div>
           </Content>
-          <Footer style={{ padding: 6, textAlign: 'center' }}>
+          <Footer style={{ padding: '1vh', textAlign: 'center' }}>
             <a href="http://www.obdasystems.com" target="_blank" rel="noopener noreferrer">OBDA Systems ©2018</a>
           </Footer>
         </Layout>

@@ -43,7 +43,7 @@ class SQLViewsPage extends React.Component {
 
         ]
         return (
-            <div>
+            <div style={{paddingTop: 12}}>
                 <List
                     grid={{ gutter: 12, column: 1 }}
                     dataSource={elements}

@@ -36,7 +36,7 @@ class UploadFile extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{margin: 'auto'}}>
         <Button icon='download' onClick={this.download}>
           Download
         </Button>
