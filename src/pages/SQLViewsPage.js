@@ -30,9 +30,8 @@ class SQLViewsPage extends React.Component {
 
     render() {
         const data = this.state.data
-        if(data === null) return null
+        if (data === null) return null
         const elements = [
-            <Card title={data.sqlView.sqlViewID}>{data.sqlView.sqlViewDescription}</Card>,
             <Card title="Code">
                 <SyntaxHighlighter language='sql' style={docco}>
                     {sqlFormatter.format(data.sqlView.sqlViewCode)}
@@ -43,7 +42,11 @@ class SQLViewsPage extends React.Component {
 
         ]
         return (
-            <div style={{paddingTop: 12}}>
+            <div style={{ paddingTop: 12 }}>
+                <div style={{ textAlign: 'center', padding: 16 }}>
+                    <h1 >{data.sqlView.sqlViewID}</h1>
+                    <p>{data.sqlView.sqlViewDescription}</p>
+                </div>
                 <List
                     grid={{ gutter: 12, column: 1 }}
                     dataSource={elements}

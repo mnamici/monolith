@@ -54,12 +54,10 @@ class OntologyInfo extends React.Component {
                 { key: "annotationAxioms", tab: "Annotation Axioms" }
             ]}
                 data={this.state.data.ontologyMetrics} />,
-            <div style={{ height: 150, display: 'flex', justifyContent: 'center' }}>
-                <DownloadFile />
-            </div>
+
         ]
         return (
-            <div>
+            <div style={{paddingRight: '1vw'}}>
                 <div style={{ textAlign: 'center', padding: 16 }}>
                     <h1 >{this.props.ontology.name}</h1>
                     <div><span>{this.state.data.ontologyIRI}</span></div>
@@ -75,7 +73,9 @@ class OntologyInfo extends React.Component {
                     )}
                 />
 
-
+                <div style={{ display: 'flex' }}>
+                    <DownloadFile />
+                </div>
             </div>
         );
     }

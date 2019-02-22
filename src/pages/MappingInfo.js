@@ -48,7 +48,7 @@ class MappingInfo extends React.Component {
             <Card title="Templates"> {data.mappingTemplates.map((item, index) => <p key={index}>{item}</p>)} </Card>,
         ]
         return (
-            <div>
+            <div style={{paddingRight: '1vw'}}>
                 <div style={{ textAlign: 'center', padding: 16 }}>
                     <h1 >{data.mapping.mappingID}</h1>
                 </div>
@@ -61,7 +61,7 @@ class MappingInfo extends React.Component {
                         </List.Item>
                     )}
                 />
-                <div style={{ float: "right" }}>
+                <div style={{ display: 'flex' }}>
                     <DownloadFile />
                 </div>
 

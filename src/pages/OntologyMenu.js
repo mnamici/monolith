@@ -14,8 +14,8 @@ class OntologyMenu extends React.Component {
 
     componentWillReceiveProps(props) {
         let currMenu = [props.select]
-        if(currMenu[0] === 'mapping') currMenu = ['mappings']
-        this.setState({currMenu: currMenu})
+        if (currMenu[0] === 'mapping') currMenu = ['mappings']
+        this.setState({ currMenu: currMenu })
     }
 
     render() {
@@ -27,21 +27,23 @@ class OntologyMenu extends React.Component {
                         <span>Info</span>
                     </Link>
                 </MenuItem>
-                <SubMenu
+                {/* <SubMenu
                     key="doc"
                     title={<span><Icon type="book" /><span>Documentation</span></span>}
-                >
-                    <MenuItem key="wiki">
-                        <Link to="/open/ontology/wiki" >
-                            <span>Wiki</span>
-                        </Link>
-                    </MenuItem>
-                    <MenuItem key="graphol">
-                        <Link to="/open/ontology/graphol" >
-                            <span>Graphol</span>
-                        </Link>
-                    </MenuItem>
-                </SubMenu>
+                > */}
+                <MenuItem key="wiki">
+                    <Link to="/open/ontology/wiki" >
+                        <Icon type="book" />
+                        <span>Documentation</span>
+                    </Link>
+                </MenuItem>
+                <MenuItem key="graphol">
+                    <Link to="/open/ontology/graphol" >
+                        <Icon type="cluster" />
+                        <span>Graphol</span>
+                    </Link>
+                </MenuItem>
+                {/* </SubMenu> */}
                 <MenuItem key="mappings">
                     <Link to="/open/ontology/mappings" >
                         <Icon type="to-top" />
