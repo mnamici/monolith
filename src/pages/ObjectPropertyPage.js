@@ -71,7 +71,7 @@ class ObjectPropertyPage extends React.Component {
                 <div style={{ textAlign: 'center' }}>
                     <h1 >{renderEntity(this.state.data.currentEntity)}</h1>
                     <Popover content={this.state.data.currentEntity.entityIRI}>
-                        <span>{this.state.data.currentEntity.entityPrefixIRI}</span>
+                        <h3>{this.state.data.currentEntity.entityPrefixIRI}</h3>
                     </Popover>
                 </div>
                 <div style={{ padding: '16px 0px 16px 0px' }}>

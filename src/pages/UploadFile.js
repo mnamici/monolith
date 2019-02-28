@@ -18,6 +18,7 @@ function beforeUpload(file) {
     const validFormat = file.type === 'application/rdf+xml';
     if (!validFormat) {
       message.error('You can only upload OWL file!');
+      this.setState({ loading: false });
     }
 
     else {
@@ -28,9 +29,11 @@ function beforeUpload(file) {
           fileName: file.name
         }
 
-        uploadOntologyFile(json, this.props.current, () => {
-          message.success('upload successfully.');
-          this.props.rerender()
+        uploadOntologyFile(json, this.props.current, (success) => {
+          if (success) {
+            message.success('upload successfully.');
+            this.props.rerender()
+          }
           this.setState({ loading: false });
         })
       })
@@ -41,6 +44,7 @@ function beforeUpload(file) {
     const validFormat = file.type === 'text/xml';
     if (!validFormat) {
       message.error('You can only upload a mapping file! Found: ' + file.type);
+      this.setState({ loading: false });
     }
 
     else {
@@ -51,9 +55,11 @@ function beforeUpload(file) {
           fileName: file.name
         }
 
-        uploadMappingFile(this.props.current.name, this.props.current.version, json, () => {
-          message.success('upload successfully.');
-          this.props.rerender()
+        uploadMappingFile(this.props.current.name, this.props.current.version, json, (success) => {
+          if (success) {
+            message.success('upload successfully.');
+            this.props.rerender()
+          }
           this.setState({ loading: false });
         })
       })

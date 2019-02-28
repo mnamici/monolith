@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Menu, Icon } from 'antd';
 //import ClosableMenuItem from './ClosableMenuItem'
 
-const SubMenu = Menu.SubMenu;
+// const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 
 
@@ -20,7 +20,7 @@ class OntologyMenu extends React.Component {
 
     render() {
         return (
-            <Menu selectedKeys={this.state.currMenu} style={{ paddingTop: 0, minHeight: '90vh' }} theme="light" mode="vertical">
+            <Menu selectedKeys={this.state.currMenu} style={{background: 'transparent', paddingTop: 0, minHeight: '90vh' }} theme='dark' mode="vertical">
                 <MenuItem key="info" style={{ marginTop: 0 }}>
                     <Link to="/open/ontology/info" >
                         <Icon type="info" />

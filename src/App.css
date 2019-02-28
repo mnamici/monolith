@@ -1,28 +1,105 @@
 @import '~antd/dist/antd.css';
-
-.App {
-  text-align: center;
+@keyframes logo-open {
+  0% {
+    content: url(only_logo.svg);
+    max-height: 30px;
+  }
+  50% {
+    margin-left: -800px;
+    max-height: 30px;
+  }
+  100% {
+    content: url(scritta.svg);
+    max-height: 23px;
+    margin-left: 0px;
+  }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@keyframes logo-close {
+  0% {
+    content: url(scritta.svg);
+    max-height: 23px;
+  }
+  50% {
+    margin-left: -500px;
+    max-height: 23px;
+  }
+  100% {
+    content: url(only_logo.svg);
+    max-height: 30px;
+    margin-left: 0px;
+  }
+}
+
+.logo-open {
+  animation: logo-open 1.5s forwards ease-out;
+}
+
+.logo-closed {
+  animation: logo-close 1.5s forwards ease-out;
 }
 
 a {
-  color: rgb(97,148,195);
+  color: rgb(20, 33, 49);
 }
 
 .ant-menu-dark .ant-menu-item-selected {
-  background: rgb(97,148,195) !important
+  background: rgb(97, 148, 195) !important;
 }
 
-.logo {
-  transition: 5s
+.ant-layout {
+  background-color: rgb(10, 27, 45);
+}
+
+.ant-card, .ant-collapse-header, .ant-collapse-content, pre, .CodeMirror-scroll {
+  background-color: rgb(87, 102, 121) !important;
+}
+
+.ant-card-actions, .ant-btn, .ant-input, .search, .ant-popover-inner-content, .ant-popover-arrow, .ant-table-thead>tr>th, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-item, .ant-select-selection, .ant-tabs.ant-tabs-card > .ant-tabs-bar .ant-tabs-tab, .ant-layout-footer {
+  background-color: rgb(111, 131, 158)
+}
+
+.yasqe .CodeMirror-gutters {
+  background-color: transparent !important
+}
+
+.cm-variable-3, .cm-number {
+  color: #d0d096 !important;
+}
+
+.node {
+  color: rgb(97, 148, 195);
+}
+
+.ant-layout-sider-trigger {
+  height: calc(21px + 2vh);
+  line-height: calc(21px + 2vh);
+}
+
+h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-tabs-new-tab {
+  color: white !important;
+}
+
+.ant-table-row:hover {
+  color: black !important;
+  transition: 0s
+}
+
+.ant-select-selection-selected-value .mapping {
+  width: calc(158px - 1vw);
+}
+
+.mapping {
+  width: calc(178px - 1vw);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ant-collapse-content>.ant-collapse-content-box {
+  padding: 4px
+}
+
+.ant-list-item {
+  margin-bottom: 4px !important
 }

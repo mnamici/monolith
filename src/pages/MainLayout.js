@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, NavLink, Redirect } from 'react-router-dom'
 import { Layout } from 'antd';
-import logo_scritta from '../scritta.svg';
-import logo from '../only_logo.svg';
+// import logo_scritta from '../scritta.svg';
+// import logo from '../only_logo.svg';
 import MainMenu from './MainMenu'
 import Home from './Home'
 import LoadOntologies from './LoadOntologies'
@@ -103,12 +103,20 @@ class MainLayout extends React.Component {
 
         >
           <div style={{ position: 'fixed' }}>
-            <div className="logo" style={{ padding: 16, transition: 2 }} >
+            <div style={{ padding: 16 }} >
               <NavLink to="/">
-                <img src={this.state.collapsed ? logo : logo_scritta} alt="logo" style={this.state.collapsed ? { maxHeight: 60 } : {}} />
+                {/* <img src={this.state.collapsed ? logo : logo_scritta} alt="logo" style={this.state.collapsed ? { maxHeight: 60 } : {}} /> */}
+                <div className={this.state.collapsed ? 'logo-closed' : 'logo-open'} />
               </NavLink>
             </div>
-            <MainMenu collapsed={this.state.collapsed} open={this.state.open} current={this.state.current} setcurrent={this.setCurrent.bind(this)} close={this.close.bind(this)} />
+            <MainMenu
+              collapsed={this.state.collapsed}
+              open={this.state.open}
+              current={this.state.current}
+              setcurrent={this.setCurrent.bind(this)}
+              close={this.close.bind(this)}
+              logout={this.props.logout}
+            />
 
           </div>
         </Sider>
@@ -119,7 +127,7 @@ class MainLayout extends React.Component {
               <Breadcrumb.Item>User</Breadcrumb.Item>
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
             </Breadcrumb> */}
-            <div style={{ padding: '1vh 1vw 1vh 1vw' , background: '#fff' }}>
+            <div style={{ padding: '1vh 1vw 1vh 1vw' }}>
               <Route exact path="/" component={Home} />
 
               <Route path="/ontology" render={(props) =>

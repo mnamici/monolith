@@ -67,6 +67,7 @@
     overflow: scroll;
     max-height: 80vh;
     max-width: 40vw;
+    background-color: rgb(219,219,219) !important;
 }
 
 .infinite-scroll-component {

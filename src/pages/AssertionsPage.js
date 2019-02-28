@@ -50,7 +50,7 @@ class AssertionsPage extends React.Component {
                 <div style={{ textAlign: 'center', padding: '16px 0px 16px 0px' }}>
                     <h1><Entity entity={this.state.data[0].currentEntity} predicateType={this.state.data[0].currentEntity.entityType}/></h1>
                     <Popover content={this.state.data[0].currentEntity.entityIRI}>
-                        <span>{this.state.data[0].currentEntity.entityPrefixIRI}</span>
+                        <h3>{this.state.data[0].currentEntity.entityPrefixIRI}</h3>
                     </Popover>
                 </div>
 

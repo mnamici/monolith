@@ -16,10 +16,12 @@ class CurrentMapping extends React.Component {
         const currTab = [this.props.match.params.tab]
         return (
             <Layout>
-                <Header style={{ background: '#fff' }}>
+                <Header style={{ background: 'transparent' }}>
                     <Menu
+                        style={{ background: 'transparent' }}
                         defaultSelectedKeys={currTab}
                         mode="horizontal"
+                        theme='dark'
                     >
                         <Menu.Item key="info">
                             <NavLink to={"/open/ontology/mapping/info/"+this.props.match.params.mappingID} >
@@ -41,7 +43,7 @@ class CurrentMapping extends React.Component {
                         </Menu.Item> */}
                     </Menu>
                 </Header>
-                <Content style={{ background: '#fff' }}>
+                <Content style={{  }}>
                     <Route path="/open/ontology/mapping/info/" render={(props) =>
                         <MappingInfo {...props} ontology={this.props.ontology} mappingID={this.props.match.params.mappingID}/>} />
                     <Route path="/open/ontology/mapping/assertions" render={(props) =>

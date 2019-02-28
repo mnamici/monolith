@@ -4,20 +4,69 @@ import axios from 'axios';
 import * as fakeData from './fakeData'
 import { graphol } from './ACIOpenData'
 
-const ips = ['192.168.0.59', '82.48.138.112']
+const ips = ['192.168.0.59', '192.168.0.15']
 var mastroUrl = 'http://' + ips[0] + ':8080/mws/rest/mwsx'
 // mastroUrl = '/mws/rest/mwsx'
-const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Authorization': 'Basic bWFzdHJvOmRhc2lsYWI=',
-}
-
 
 const fakeCalls = true
 
 function reportError(msg) {
     console.error(msg)
     message.error(msg)
+}
+
+export function login(username, password, callback) {
+    if (fakeCalls) {
+        if (username === 'santaroni' && password === 'ronconelli') {
+            const h = {
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Basic ' + btoa(username + ':' + password)
+            }
+            localStorage.setItem('headers', JSON.stringify(h))
+            return callback();
+        }
+        else {
+            reportError('Wrong username or password');
+            return;
+        }
+    }
+    const url = mastroUrl + '/login'
+    const method = 'GET'
+    const h = {
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': 'Basic ' + btoa(username + ':' + password)
+    }
+    axios({
+        url: url,
+        method: method,
+        headers: h,
+    }).then(function (response) {
+        switch (response.status) {
+            case 200:
+                localStorage.setItem('headers', JSON.stringify(h))
+                localStorage.setItem('username', username)
+                callback(response.data)
+                break;
+            case 401:
+                reportError('Wrong username or password');
+                break;
+            default:
+                reportError('Error calling ' + method + ' ' + url);
+        }
+
+
+    }).catch(function (err) {
+        if(err.response === undefined) reportError('Error calling ' + method + ' ' + url);
+        else switch (err.response.status) {
+            case 401:
+                reportError('Wrong username or password');
+                break;
+            default:
+                reportError('Error calling ' + method + ' ' + url);
+                console.error(err)
+        }
+
+    });
 }
 
 export function getOntologies(callback) {
@@ -27,7 +76,7 @@ export function getOntologies(callback) {
     axios({
         url: url,
         method: method,
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -39,12 +88,12 @@ export function getOntologies(callback) {
 export function putOntology(ontology, callback) {
     if (fakeCalls) return callback();
     const url = mastroUrl + '/owlOntology'
-    const method = 'PUT'
+    const method = 'POST'
     axios({
         url: url,
         method: method,
         data: ontology,
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -60,7 +109,7 @@ export function deleteOntology(ontologyID, callback) {
     axios({
         url: url,
         method: method,
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback()
     }).catch(function (err) {
@@ -77,7 +126,7 @@ export function deleteOntologyVersion(ontologyID, version, callback) {
         url: url,
         method: method,
         data: version,
-        headers: headers
+        headers: JSON.parse(localStorage.getItem('headers'))
     }).then(function (response) {
         callback()
     }).catch(function (err) {
@@ -87,17 +136,18 @@ export function deleteOntologyVersion(ontologyID, version, callback) {
 }
 
 export function uploadOntologyFile(file, ontologyID, callback) {
-    if (fakeCalls) return callback();
+    if (fakeCalls) return callback(true);
     const url = mastroUrl + '/owlOntology/' + ontologyID
-    const method = 'PUT'
+    const method = 'POST'
     axios({
         url: url,
         method: method,
         data: file,
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
-        callback(response.data)
+        callback(true)
     }).catch(function (err) {
+        callback(false)
         reportError('Error calling ' + method + ' ' + url);
         console.error(err)
     });
@@ -112,7 +162,7 @@ export function getOntologyVersionInfo(name, version, callback) {
         url: url,
         method: method,
         params: { version: encodedVersion },
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -130,7 +180,7 @@ export function getOntologyVersionHierarchy(name, version, callback) {
         url: url,
         method: method,
         params: { version: encodedVersion },
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -153,7 +203,7 @@ export function getClassPage(name, version, classID, callback) {
         url: url,
         method: method,
         params: { version: encodedVersion },
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -171,7 +221,7 @@ export function getObjectPropertyPage(name, version, objectPropertyID, callback)
         url: url,
         method: method,
         params: { version: encodedVersion },
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -189,7 +239,7 @@ export function getDataPropertyPage(name, version, dataPropertyID, callback) {
         url: url,
         method: method,
         params: { version: encodedVersion },
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -207,7 +257,7 @@ export function getMappings(name, version, callback) {
         url: url,
         method: method,
         params: { version: encodedVersion },
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -217,7 +267,7 @@ export function getMappings(name, version, callback) {
 }
 
 export function uploadMappingFile(name, version, file, callback) {
-    if (fakeCalls) return callback();
+    if (fakeCalls) return callback(true);
     const url = mastroUrl + '/owlOntology/' + name + '/version/mapping'
     const method = 'PUT'
     const encodedVersion = version//encodeURIComponent(version)
@@ -226,10 +276,11 @@ export function uploadMappingFile(name, version, file, callback) {
         method: method,
         params: { version: encodedVersion },
         data: file,
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
-        callback(response.data)
+        callback(true)
     }).catch(function (err) {
+        callback(false)
         reportError('Error calling ' + method + ' ' + url);
         console.error(err)
     });
@@ -244,7 +295,7 @@ export function deleteMappingFile(name, version, mapping, callback) {
         url: url,
         method: method,
         params: { version: encodedVersion },
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -262,7 +313,7 @@ export function getMappingInfo(name, version, mapping, callback) {
         url: url,
         method: method,
         params: { version: encodedVersion },
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -272,7 +323,7 @@ export function getMappingInfo(name, version, mapping, callback) {
 }
 
 export function getMappingAssertion(name, version, mapping, entityID, callback) {
-    console.log("MASTRO CALL "+entityID)
+    console.log("MASTRO CALL " + entityID)
     if (fakeCalls) return callback(fakeData.assertions)
     const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/assertions/' + entityID
     const method = 'GET'
@@ -281,7 +332,7 @@ export function getMappingAssertion(name, version, mapping, entityID, callback) 
         url: url,
         method: method,
         params: { version: encodedVersion },
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -299,7 +350,7 @@ export function getMappingViews(name, version, mapping, callback) {
         url: url,
         method: method,
         params: { version: encodedVersion },
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
@@ -317,11 +368,15 @@ export function getMappingView(name, version, mapping, viewID, callback) {
         url: url,
         method: method,
         params: { version: encodedVersion },
-        headers: headers,
+        headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
         reportError('Error calling ' + method + ' ' + url);
         console.error(err)
     });
+}
+
+export function getQueryCatalog(name, version, callback){
+    return callback(fakeData.queryCatalog)
 }

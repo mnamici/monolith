@@ -10,9 +10,17 @@ class AddCloseTabs extends React.Component {
     this.newTabIndex = 0;
     const panes = props.panes;
     this.state = {
-      activeKey: panes[0].key,
+      activeKey: null,
       panes,
     };
+  }
+
+  componentWillReceiveProps(props) {
+    for(let i=0;i<props.catalog.length;i++)
+      if(props.catalog[i].queryID === props.open){
+        this.add(props.catalog[i])
+        break
+      }
   }
 
   onChange = (activeKey) => {
@@ -23,10 +31,11 @@ class AddCloseTabs extends React.Component {
     this[action](targetKey);
   }
 
-  add = () => {
+  add = (query) => {
     const panes = this.state.panes;
     const activeKey = `newTab${this.newTabIndex++}`;
-    panes.push({ title: 'New Tab', content: <MastroSPARQLTabPane num={activeKey}/>, key: activeKey });
+    const title = query.queryID !== undefined ? query.queryID : 'New Tab'
+    panes.push({ title: title, content: <MastroSPARQLTabPane num={activeKey} query={query}/>, key: activeKey });
     this.setState({ panes, activeKey });
   }
 
@@ -45,7 +54,7 @@ class AddCloseTabs extends React.Component {
     this.setState({ panes, activeKey });
   }
 
-  render() {
+  render() {  
     return (
       <Tabs
         onChange={this.onChange}

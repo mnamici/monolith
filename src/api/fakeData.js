@@ -787,3 +787,22 @@ export const sqlViews = [
         sqlViewCode: 'select person_id, person_name from names_table'
     },
 ]
+
+export const queryCatalog = [
+    {
+        queryID: 'q1',
+        queryDescription: 'Take all the cars',
+        queryCode: 'prefix : <cicciopuccio> \nselect ?x where { ?x a :Car }'
+    },
+    {
+        queryID: 'q2',
+        queryDescription: 'Take all the bars',
+        queryCode: 'prefix : <cicciopuccio> \nselect ?x where { ?x a :Bar }'
+    },
+    {
+        queryID: 'q3',
+        queryDescription: 'Take all the zars',
+        queryCode: 'prefix : <cicciopuccio> \nselect ?x where { ?x a :Zar }'
+    }
+]
+

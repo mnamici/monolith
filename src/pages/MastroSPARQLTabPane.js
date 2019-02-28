@@ -43,6 +43,7 @@ class MastroSPARQLTabPane extends React.Component {
                     showQueryButton: false
                 }
             });
+        this.props.query.queryCode !== undefined && this.yasqe.setValue(this.props.query.queryCode)
         this.yasqe.refresh();
     }
 
@@ -50,6 +51,7 @@ class MastroSPARQLTabPane extends React.Component {
         this.yasqe.refresh();
     }
     render() {
+
         const elements = [
             <div>
                 <Button.Group style={{ marginRight: 8 }}>
@@ -63,13 +65,13 @@ class MastroSPARQLTabPane extends React.Component {
             </div>,
             <Progress percent={status.percentage} />,
             <div id={"sparql_" + this.props.num} />,
-            <TextArea placeholder="Description" autosize />,
-            <p>{status.numResults} results</p>,
+            <TextArea placeholder="Description" autosize value={this.props.query.queryDescription} />,
+            <p className='results'>{status.numResults} results</p>,
             <Results />,
             <QueryExecutionReport status={status} />,
         ]
         return (
-            <div style={{margin:12}}>
+            <div style={{ margin: 12 }}>
                 <List
                     grid={{ gutter: 8, column: 1 }}
                     dataSource={elements}

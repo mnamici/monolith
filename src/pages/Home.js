@@ -41,7 +41,7 @@ const dataDataset = [
 class Home extends React.Component {
   render() {
     return (
-      <div style={{ height: 'calc(94vh - 14px)', overflowX: 'hidden', overflowY: 'auto' }}>
+      <div style={{ height: 'calc(94vh - 21px)', overflowX: 'hidden', overflowY: 'auto' }}>
         <img src={logo} alt="logo" style={{maxHeight: 100}}/>
         <LastLoadedList title="Last Loaded Ontologies" data={dataOntologies} path="/open/ontology/info" />
         <LastLoadedList title="Last Loaded Knowledge Graphs" data={dataKG} path="/kg" />

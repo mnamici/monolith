@@ -25,13 +25,13 @@ class CurrentOntology extends React.Component {
             <Layout style={{ margin: '0px -1vw -10vh -1vw'}}>
                 <Sider
                     // width={200} 
-                    style={{ background: '#fff' }}
+                    style={{ background: 'transparent' }}
                     collapsed={this.state.collapsed}
                 >
                     <OntologyMenu select={this.props.match.params.menu}/>
                     <div>
                         <Icon
-                            style={{ display: "inherit", cursor: "pointer", transition: "color .3s" }}
+                            style={{ display: "inherit", cursor: "pointer", color: 'white' }}
                             theme="filled"
                             type={this.state.collapsed ? 'caret-right' : 'caret-left'}
                             onClick={this.toggle}
@@ -39,7 +39,7 @@ class CurrentOntology extends React.Component {
                     </div>
 
                 </Sider>
-                <Layout style={{ padding: '0px 0px 0px 1vw', background: '#fff', height: 'calc(95vh - 14px)' }}>
+                <Layout style={{ padding: '0px 0px 0px 1vw', height: 'calc(95vh - 21px)' }}>
                     <Content >
                         <div >
 
@@ -52,7 +52,7 @@ class CurrentOntology extends React.Component {
                                 <LoadMappings {...props} ontology={this.props.ontology}/>} />
                             <Route path="/open/ontology/mapping/:tab/:mappingID" render={(props) => 
                                 <CurrentMapping {...props} ontology={this.props.ontology}/>} />
-                            <Route path="/open/ontology/endpoint" render={(props) => 
+                            <Route path="/open/ontology/endpoint/:queryID?" render={(props) => 
                                 <SPARQLEndpoint {...props} ontology={this.props.ontology}/>} />
                             
                         </div>

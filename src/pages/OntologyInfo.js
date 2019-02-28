@@ -60,8 +60,8 @@ class OntologyInfo extends React.Component {
             <div style={{paddingRight: '1vw'}}>
                 <div style={{ textAlign: 'center', padding: 16 }}>
                     <h1 >{this.props.ontology.name}</h1>
-                    <div><span>{this.state.data.ontologyIRI}</span></div>
-                    <span>{this.props.ontology.version}</span>
+                    <div><h3>{this.state.data.ontologyIRI}</h3></div>
+                    <h3>{this.props.ontology.version}</h3>
                 </div>
                 <List
                     grid={{ gutter: 12, column: 2 }}

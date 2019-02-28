@@ -21,7 +21,7 @@ class SQLViewsPane extends React.Component {
     render() {
         return (
             <Layout >
-                <Header style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'center', lineHeight: 1.5, height: 32 }}>
+                <Header style={{ backgroundColor: 'transparent', display: 'flex', justifyContent: 'center', lineHeight: 1.5, height: 32 }}>
                     <div style={{ display: 'inline-flex' }}>
                         <SearchList ontology={this.props.ontology} mappingID={this.props.mappingID} onHandle={this.onHandle} />
                     </div>
@@ -36,7 +36,7 @@ class SQLViewsPane extends React.Component {
                 </Sider> */}
                 <Layout>
                     <Content >
-                        <div style={{ height: 'calc(94vh - 110px)', background: '#fff', overflowY: 'scroll', paddingRight: 12 }}>
+                        <div style={{ height: 'calc(94vh - 110px)', overflowY: 'scroll', paddingRight: 12 }}>
                             {this.state.current !== null &&
                                 <SQLViewsPage ontology={this.props.ontology} mappingID={this.props.mappingID} viewID={this.state.current}/>
                             }

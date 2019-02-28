@@ -10,7 +10,7 @@ class OntologyVersionsList extends React.Component {
     delete(ontologyID, versionID) {
         deleteOntologyVersion(ontologyID, versionID, this.props.rerender)
         this.props.close({
-            name:ontologyID,
+            name: ontologyID,
             version: versionID
         })
     }
@@ -52,25 +52,23 @@ class OntologyVersionsList extends React.Component {
                                         delete
                                     </span>
                                 ]}>
-                                    <Card.Meta key={item.versionID}
-                                        avatar={<img alt="" src={item.avatar} />}
-                                        title={
-                                            <NavLink to={"/open/ontology/info/"} onClick={() => this.props.open(item.ontologyID,item.versionID)}>
-                                                {item.ontologyID + "-" + item.versionID}
-                                            </NavLink>
-
-                                        }
-                                        description={
-                                            <Ellipsis>
-                                                {item.versionDescription[0] !== undefined ? item.versionDescription[0].content : ""}
-                                            </Ellipsis>
-                                        }
-                                    />
+                                    <NavLink to={"/open/ontology/info/"} onClick={() => this.props.open(item.ontologyID, item.versionID)}>
+                                        <Card.Meta key={item.versionID}
+                                            avatar={<img alt="" src={item.avatar} />}
+                                            title={
+                                                item.ontologyID + "-" + item.versionID
+                                            }
+                                            description={
+                                                <Ellipsis>
+                                                    {item.versionDescription[0] !== undefined ? item.versionDescription[0].content : ""}
+                                                </Ellipsis>
+                                            }
+                                        /></NavLink>
                                 </Card>
                             </List.Item>
                         ) : (
                                 <List.Item>
-                                    <UploadFile current={this.props.current} rerender={this.props.rerender} type='owl'/>
+                                    <UploadFile current={this.props.current} rerender={this.props.rerender} type='owl' />
                                     {/* <Button type="dashed" onClick={() => console.log("Add version of ontology")}>
                                         <Icon type="plus" />
                                         Add Ontology Version

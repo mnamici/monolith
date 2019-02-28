@@ -36,7 +36,7 @@ class DrawerForm extends React.Component {
             ontologyDescription:  this.props.form.getFieldValue('description'),
             ontologyVersions: [],
             ontologyOwner: {
-                name: "ciccio",
+                name: localStorage.getItem('username'),
                 roles: null
             }
         }

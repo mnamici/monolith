@@ -37,8 +37,8 @@ class MainMenu extends React.Component {
         const kgs = this.props.open.kgs.map(item => this.getClosableMenuItem(item, "/kg"));
         const dss = this.props.open.dss.map(item => this.getClosableMenuItem(item, "/dataset"));
 
-        const openSubMenus = !this.props.collapsed ? ["ontology",",kg","dataset"] : [] 
-        const selected = this.props.current === undefined ? [] :[this.props.current.name + "-" + this.props.current.version]
+        const openSubMenus = !this.props.collapsed ? ["ontology", ",kg", "dataset"] : []
+        const selected = this.props.current === undefined ? [] : [this.props.current.name + "-" + this.props.current.version]
         return (
             <Menu defaultOpenKeys={openSubMenus} defaultSelectedKeys={selected} theme="dark" mode="inline">
 
@@ -83,55 +83,47 @@ class MainMenu extends React.Component {
                     {dss}
                 </SubMenu>
                 {/* <Menu.Divider/> */}
-                <SubMenu
-                    key="admin"
-                    title={
-                        <NavLink
-                            to="/admin"
-                            activeStyle={{ fontWeight: "bold", color: "white" }}
-                            style={{ color: 'rgba(255, 255, 255, 0.65)' }}
-                        >
-                            <Icon type="user" />
-                            <span>Administration</span>
-                        </NavLink>}
-                />
-                <SubMenu
-                    key="sett"
-                    title={
-                        <NavLink
-                            to="/settings"
-                            activeStyle={{ fontWeight: "bold", color: "white" }}
-                            style={{ color: 'rgba(255, 255, 255, 0.65)' }}
-                        >
-                            <Icon type="setting" />
-                            <span>Settings</span>
-                        </NavLink>
-                    } />
-                <SubMenu
-                    key="help"
-                    title={
-                        <a
-                            href="http://192.168.0.59:8080/mws/HelpPage" target="_blank" rel="noopener noreferrer"
-                            // to="/help" 
-                            // activeStyle={{ fontWeight: "bold", color: "white" }} 
-                            style={{ color: 'rgba(255, 255, 255, 0.65)' }}
-                        >
-                            <Icon type="question-circle" />
-                            <span>Help</span>
-                        </a>
-                    } />
-                <SubMenu
-                    key="Logout"
-                    title={
-                        <NavLink
-                            to="/logout"
-                            activeStyle={{ fontWeight: "bold", color: "white" }}
-                            style={{ color: 'rgba(255, 255, 255, 0.65)' }}
-                        >
-                            <Icon type="logout" />
-                            <span>Logout</span>
-                        </NavLink>
-                    } />
+                <MenuItem key="admin">
+                    <NavLink
+                        to="/admin"
+                        activeStyle={{ fontWeight: "bold", color: "white" }}
+                        style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                    >
+                        <Icon type="user" />
+                        <span>Administration</span>
+                    </NavLink>
+                </MenuItem>
+
+                <MenuItem key="sett">
+                    <NavLink
+                        to="/settings"
+                        activeStyle={{ fontWeight: "bold", color: "white" }}
+                        style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                    >
+                        <Icon type="setting" />
+                        <span>Settings</span>
+                    </NavLink>
+                </MenuItem>
+                <MenuItem key="help">
+                    <a
+                        href="http://192.168.0.59:8080/mws/HelpPage" target="_blank" rel="noopener noreferrer"
+                        // to="/help" 
+                        // activeStyle={{ fontWeight: "bold", color: "white" }} 
+                        style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                    >
+                        <Icon type="question-circle" />
+                        <span>Help</span>
+                    </a>
+                </MenuItem>
+                <MenuItem key="Logout">
+                    <div
+                        style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                        onClick={this.props.logout}
+                    >
+                        <Icon type="logout" />
+                        <span>Logout</span>
+                    </div>
+                </MenuItem>
             </Menu>
         )
     }

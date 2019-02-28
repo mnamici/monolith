@@ -46,7 +46,7 @@ export default class SearchTree extends React.Component {
   }
 
   onChange = (currentNode, selectedNodes) => {
-    if (currentNode.label !== predicateTypes.c && currentNode.label !== predicateTypes.op && currentNode.label !== predicateTypes.dp){
+    if (currentNode._depth !== 0){
       // console.log('onChange::', currentNode)
       this.props.onHandle(currentNode.entityID, currentNode.predicateType)
       //click away to close tree

@@ -45,7 +45,7 @@ class SQLViewsPage extends React.Component {
             <div style={{ paddingTop: 12 }}>
                 <div style={{ textAlign: 'center', padding: 16 }}>
                     <h1 >{data.sqlView.sqlViewID}</h1>
-                    <p>{data.sqlView.sqlViewDescription}</p>
+                    <h3>{data.sqlView.sqlViewDescription}</h3>
                 </div>
                 <List
                     grid={{ gutter: 12, column: 1 }}

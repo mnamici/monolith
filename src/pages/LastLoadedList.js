@@ -12,13 +12,11 @@ class LastLoadedList extends React.Component {
                     dataSource={this.props.data}
                     renderItem={item => (
                         <List.Item>
-                            <Card title={
-                                <NavLink to={this.props.path}>
-                                    {item.title}
-                                </NavLink>}
-                            >
-                                {item.description}
-                            </Card>
+                            <NavLink to={this.props.path}>
+                                <Card title={item.title}>
+                                    {item.description}
+                                </Card>
+                            </NavLink>}
                         </List.Item>
                     )}
                 />

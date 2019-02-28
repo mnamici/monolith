@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button } from 'antd';
+import { login } from '../api/MastroApi'
 
 const FormItem = Form.Item;
 
@@ -8,7 +9,8 @@ class NormalLoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
+        login(values.userName, values.password, this.props.login);
       }
     });
   }
@@ -31,15 +33,17 @@ class NormalLoginForm extends React.Component {
             <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
           )}
         </FormItem>
-        <FormItem>
-          {getFieldDecorator('remember', {
+        <FormItem style={{textAlign: 'center'}}>
+          {/* {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true,
           })(
             <Checkbox>Remember me</Checkbox>
-          )}
-          <a className="login-form-forgot" href="http://www.obdasystems.com">Forgot password</a>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          )} */}
+          <a className="login-form-forgot" href="http://www.obdasystems.com" style={{color: 'white'}}>Forgot password</a>
+        </FormItem>
+        <FormItem style={{textAlign: 'center'}}>
+          <Button type="primary" htmlType="submit" >
             Log in
           </Button>
         </FormItem>

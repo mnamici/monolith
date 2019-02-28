@@ -14,13 +14,13 @@ class LoadMappings extends React.Component {
     }
 
     componentDidMount() {
-        this.requestMappings()   
+        this.requestMappings()
     }
 
     requestMappings() {
         getMappings(
-            this.props.ontology.name, 
-            this.props.ontology.version, 
+            this.props.ontology.name,
+            this.props.ontology.version,
             this.loaded)
     }
 
@@ -61,24 +61,21 @@ class LoadMappings extends React.Component {
                                         delete
                                     </span>
                                 ]}>
-                                    <Card.Meta key={item.mappingID}
-                                        avatar={<img alt="" src={item.avatar} />}
-                                        title={
-                                            <NavLink to={"/open/ontology/mapping/info/"+item.mappingID}>
-                                                {item.mappingID}
-                                            </NavLink>
-                                        }
-                                        description={
-                                            <Ellipsis>
-                                                {item.mappingDescription}
-                                            </Ellipsis>
-                                        }
-                                    />
+                                    <NavLink to={"/open/ontology/mapping/info/" + item.mappingID}>
+                                        <Card.Meta key={item.mappingID}
+                                            avatar={<img alt="" src={item.avatar} />}
+                                            title={item.mappingID}
+                                            description={
+                                                <Ellipsis>
+                                                    {item.mappingDescription}
+                                                </Ellipsis>
+                                            }
+                                        /> </NavLink>
                                 </Card>
                             </List.Item>
                         ) : (
                                 <List.Item>
-                                    <UploadFile type='mapping' current={this.props.ontology} rerender={this.requestMappings.bind(this)}/>
+                                    <UploadFile type='mapping' current={this.props.ontology} rerender={this.requestMappings.bind(this)} />
                                     {/* <Button type="dashed" onClick={() => console.log("Add version of ontology")}>
                                         <Icon type="plus" />
                                         Add Ontology Version
