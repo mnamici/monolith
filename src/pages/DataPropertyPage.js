@@ -1,9 +1,9 @@
 import React from 'react'
-import { Popover, List } from 'antd';
-import CollapsibleList from './CollapsibleList';
+import { Card, Popover, List } from 'antd';
 import { getDataPropertyPage } from '../api/MastroApi';
 
 import { renderEntity, predicateTypes } from '../utils/utils'
+import ListItem from './ListItem';
 
 class DataPropertyPage extends React.Component {
     _isMounted = false;
@@ -50,14 +50,30 @@ class DataPropertyPage extends React.Component {
 
         const components = [
 
-            <CollapsibleList title="Equivalent Data Properties" predicateType={predicateTypes.op} list={this.state.data.equivalentDataProperties} />,
-            <CollapsibleList title="Sub Data Properties" predicateType={predicateTypes.op} list={this.state.data.subDataProperties} />,
-            <CollapsibleList title="Super Data Properties" predicateType={predicateTypes.op} list={this.state.data.superDataProperties} />,
-            <CollapsibleList title="Disjoint Data Properties" predicateType={predicateTypes.op} list={this.state.data.disjointDataProperties} />,
-            <CollapsibleList title="Domain" predicateType={predicateTypes.c} list={this.state.data.dataPropertyDomain} />,
-            <CollapsibleList title="Range" predicateType={predicateTypes.c} list={this.state.data.dataPropertyRange} />,
-            <CollapsibleList title="Data Property Characteristics" list={dataPropertyCharacteristics} />,
-            <CollapsibleList title="Data Property Individuals" predicateType={predicateTypes.op} list={this.state.data.dataPropertyIndividuals} />,
+            <Card title="Equivalent Data Properties" >
+                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.equivalentDataProperties} />
+            </Card>,
+            <Card title="Sub Data Properties" >
+                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.subDataProperties} />
+            </Card>,
+            <Card title="Super Data Properties" >
+                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.superDataProperties} />
+            </Card>,
+            <Card title="Disjoint Data Properties" >
+                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.disjointDataProperties} />
+            </Card>,
+            <Card title="Domain" >
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.dataPropertyDomain} />
+            </Card>,
+            <Card title="Range" >
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.dataPropertyRange} />
+            </Card>,
+            <Card title="Data Property Characteristics" >
+                <ListItem data={dataPropertyCharacteristics} />
+            </Card>,
+            <Card title="Data Property Individuals" >
+                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.dataPropertyIndividuals} />
+            </Card>,
         ]
         return (
             <div>
@@ -68,7 +84,7 @@ class DataPropertyPage extends React.Component {
                     </Popover>
                 </div>
                 <div style={{ padding: '16px 0px 16px 0px' }}>
-                    <CollapsibleList title="Descriptions" list={this.state.data.dataPropertyDescriptions} />
+                    <Card title="Descriptions" data={this.state.data.dataPropertyDescriptions} />
                 </div>
                 <List
                     grid={{ gutter: 16, column: 4 }}

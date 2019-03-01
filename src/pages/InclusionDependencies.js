@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, Card, } from 'antd';
-import MapItem from './MapItem';
+import InclusionDependency from './InclusionDependency';
 
 class InclusionDependencies extends React.Component {
     render() {
@@ -14,11 +14,7 @@ class InclusionDependencies extends React.Component {
                         renderItem={item => (
                             <List.Item>
                                 <Card>
-                                    <MapItem mapKey={<b>Included</b>} mapValue={<b>Including</b>} key="h"/>
-                                    <MapItem mapKey={<u>{item.includedView.sqlViewID}</u>} mapValue={<u>{item.includingView.sqlViewID}</u>} key="v"/>
-                                    {item.inclusionMap.map((e, i) =>
-                                        <MapItem mapKey={e.leftHandTerm} mapValue={e.rightHandTerm} key={i}/>
-                                    )}
+                                    <InclusionDependency incDep={item}/>
                                 </Card>
                             </List.Item>
                         )}

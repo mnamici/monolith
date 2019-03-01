@@ -2,8 +2,9 @@ import React from 'react';
 import { List, Card } from 'antd';
 
 import DownloadFile from './DownloadFile'
-import MapItem from './MapItem';
 import { getMappingInfo } from '../api/MastroApi';
+import ListMapItem from './ListMapItem';
+import ListItem from './ListItem';
 
 
 class MappingInfo extends React.Component {
@@ -37,21 +38,35 @@ class MappingInfo extends React.Component {
     }
 
     render() {
-        const data = this.state.data;
+        const data = this.state.data
+        const db = [
+            {
+                mapKey: "URL",
+                mapValue: data.mappingDBConnections[0].jdbcURL
+            },
+            {
+                mapKey: "User",
+                mapValue: data.mappingDBConnections[0].dbUser
+            },
+            {
+                mapKey: "Password",
+                mapValue: data.mappingDBConnections[0].dbPassword
+            },
+        ]
         const elements = [
-            <Card title="Description"> {data.mapping.mappingDescription} </Card>,
             <Card title="Database">
-                <MapItem mapKey="URL" mapValue={data.mappingDBConnections[0].jdbcURL} />
-                <MapItem mapKey="User" mapValue={data.mappingDBConnections[0].dbUser} />
-                <MapItem mapKey="Password" mapValue={data.mappingDBConnections[0].dbPassword} />
+                <ListMapItem data={db} />
             </Card>,
-            <Card title="Templates"> {data.mappingTemplates.map((item, index) => <p key={index}>{item}</p>)} </Card>,
+            <Card title="Templates">
+                <ListItem data={data.mappingTemplates} />
+            </Card>,
         ]
         return (
-            <div style={{paddingRight: '1vw'}}>
+            <div style={{ paddingRight: '1vw' }}>
                 <div style={{ textAlign: 'center', padding: 16 }}>
                     <h1 >{data.mapping.mappingID}</h1>
                 </div>
+                <Card title="Description"> {data.mapping.mappingDescription} </Card>,
                 <List
                     grid={{ gutter: 12, column: 2 }}
                     dataSource={elements}
@@ -61,7 +76,7 @@ class MappingInfo extends React.Component {
                         </List.Item>
                     )}
                 />
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex', paddingTop: 12 }}>
                     <DownloadFile />
                 </div>
 

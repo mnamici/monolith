@@ -65,7 +65,7 @@ class MastroSPARQLTabPane extends React.Component {
             </div>,
             <Progress percent={status.percentage} />,
             <div id={"sparql_" + this.props.num} />,
-            <TextArea placeholder="Description" autosize value={this.props.query.queryDescription} />,
+            <TextArea style={{margin: '12px 0px 4px 0px'}} placeholder="Description" autosize defaultValue={this.props.query.queryDescription} />,
             <p className='results'>{status.numResults} results</p>,
             <Results />,
             <QueryExecutionReport status={status} />,

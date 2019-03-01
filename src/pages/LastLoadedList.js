@@ -13,8 +13,8 @@ class LastLoadedList extends React.Component {
                     renderItem={item => (
                         <List.Item>
                             <NavLink to={this.props.path}>
-                                <Card title={item.title}>
-                                    {item.description}
+                                <Card hoverable >
+                                    <Card.Meta avatar={item.icon} title={item.title} description={item.description} />
                                 </Card>
                             </NavLink>}
                         </List.Item>

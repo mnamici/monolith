@@ -14,7 +14,7 @@ class Dependencies extends React.Component {
 
         return (
             <div>
-                <Collapse defaultActiveKey="1">
+                <Collapse defaultActiveKey="0">
                     <Panel header="Dependencies" key="1">
                         <List
                             grid={{ gutter: 12, column: 1 }}

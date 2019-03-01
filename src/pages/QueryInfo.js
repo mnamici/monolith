@@ -1,16 +1,36 @@
 import React from 'react'
 import { Card } from 'antd';
-import MapItem from './MapItem';
+import ListMapItem from './ListMapItem';
 
 class QueryInfo extends React.Component {
     render() {
+
+        const data = [
+            {
+                mapKey: 'Ontology rewritings',
+                mapValue: this.props.status.numOntologyRewritings
+            },
+            {
+                mapKey: 'High level unfolded queries',
+                mapValue: this.props.status.numHighLevelQueries
+            },
+            {
+                mapKey: 'Optimized queries',
+                mapValue: this.props.status.numOptimizedQueries
+            },
+            {
+                mapKey: 'Low level unfolded queries',
+                mapValue: this.props.status.numLowLevelQueries
+            },
+            {
+                mapKey: 'Total execution time (ms)',
+                mapValue: this.props.status.executionTime
+            },
+        ]
+
         return (
             <Card title="Info">
-                <MapItem mapKey='Ontology rewritings' mapValue={this.props.status.numOntologyRewritings} />
-                <MapItem mapKey='High level unfolded queries' mapValue={this.props.status.numHighLevelQueries} />
-                <MapItem mapKey='Optimized queries' mapValue={this.props.status.numOptimizedQueries} />
-                <MapItem mapKey='Low level unfolded queries' mapValue={this.props.status.numLowLevelQueries} />
-                <MapItem mapKey='Total execution time (ms)' mapValue={this.props.status.executionTime} />
+                <ListMapItem data={data} />
             </Card>
         );
     }

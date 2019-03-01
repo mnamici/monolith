@@ -1,7 +1,7 @@
 import React from 'react'
 import { List, Card, Popover } from 'antd';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
+import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
 import sqlFormatter from 'sql-formatter'
 const https = require('https');
 
@@ -92,7 +92,7 @@ class ViewRewritings extends React.Component {
                                         <p>{item.numResults + " results in "+item.time+" ms."}</p>
                                     </div>
                                 }>
-                                <SyntaxHighlighter language='sql' style={docco}>
+                                <SyntaxHighlighter language='sql' style={darcula}>
                                     {sqlFormatter.format(item.query)}
                                 </SyntaxHighlighter>
                             </Popover>

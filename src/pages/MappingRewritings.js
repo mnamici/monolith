@@ -1,7 +1,7 @@
 import React from 'react'
 import { List, Card } from 'antd';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
+import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
 import sqlFormatter from 'sql-formatter'
 const https = require('https');
 
@@ -75,7 +75,7 @@ class MappingRewritings extends React.Component {
                     loading={this.state.loading}
                     renderItem={item => (
                         <List.Item>
-                            <SyntaxHighlighter language='sql' style={docco}>
+                            <SyntaxHighlighter language='sql' style={darcula}>
                                 {sqlFormatter.format(item)}
                             </SyntaxHighlighter>
                         </List.Item>

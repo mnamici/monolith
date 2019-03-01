@@ -1,9 +1,9 @@
 import React from 'react'
-import { Popover, List } from 'antd';
-import CollapsibleList from './CollapsibleList';
+import { Card, Popover, List } from 'antd';
 import { getClassPage } from '../api/MastroApi';
 
 import { renderEntity, predicateTypes } from '../utils/utils'
+import ListItem from './ListItem';
 
 class ClassPage extends React.Component {
     _isMounted = false;
@@ -26,8 +26,8 @@ class ClassPage extends React.Component {
         // console.log(props)
         if (props.match.params.entityID !== undefined)
             getClassPage(
-                props.ontology.name, 
-                props.ontology.version, 
+                props.ontology.name,
+                props.ontology.version,
                 props.match.params.entityID,
                 this.loaded)
     }
@@ -47,15 +47,30 @@ class ClassPage extends React.Component {
         if (this.state.data.currentEntity === undefined) return null
 
         const components = [
-
-            <CollapsibleList title="Equivalent Classes" predicateType={predicateTypes.c} list={this.state.data.equivalentClasses} />,
-            <CollapsibleList title="Sub Classes" predicateType={predicateTypes.c} list={this.state.data.subClasses} />,
-            <CollapsibleList title="Super Classes" predicateType={predicateTypes.c} list={this.state.data.superClasses} />,
-            <CollapsibleList title="Disjoint Classes" predicateType={predicateTypes.c} list={this.state.data.disjointClasses} />,
-            <CollapsibleList title="Object Properties" predicateType={predicateTypes.op} list={this.state.data.objectPropertiesParticipations} />,
-            <CollapsibleList title="Data Properties" predicateType={predicateTypes.dp} list={this.state.data.dataPropertiesParticipations} />,
-            <CollapsibleList title="Disjoint Unions" predicateType={predicateTypes.c} list={this.state.data.disjointUnions} />,
-            <CollapsibleList title="Individuals" predicateType={predicateTypes.i} list={this.state.data.classIndividuals} />,
+            <Card title="Equivalent Classes">
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.equivalentClasses} />
+            </Card>,
+            <Card title="Sub Classes">
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.subClasses} />
+            </Card>,
+            <Card title="Super Classes">
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.superClasses} />
+            </Card>,
+            <Card title="Disjoint Classes">
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.disjointClasses} />
+            </Card>,
+            <Card title="Object Properties">
+                <ListItem partecipation predicateType={predicateTypes.op} data={this.state.data.objectPropertiesParticipations} />
+            </Card>,
+            <Card title="Data Properties">
+                <ListItem partecipation predicateType={predicateTypes.dp} data={this.state.data.dataPropertiesParticipations} />
+            </Card>,
+            <Card title="Disjoint Unions">
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.disjointUnions} />
+            </Card>,
+            <Card title="Individuals">
+                <ListItem entity predicateType={predicateTypes.i} data={this.state.data.classIndividuals} />
+            </Card>,
         ]
         return (
             <div>
@@ -66,7 +81,9 @@ class ClassPage extends React.Component {
                     </Popover>
                 </div>
                 <div style={{ padding: '16px 0px 16px 0px' }}>
-                    <CollapsibleList title="Descriptions" list={this.state.data.classDescriptions} />
+                    <Card title="Descriptions">
+                        <ListItem data={this.state.data.classDescriptions} />
+                    </Card>,
                 </div>
                 <List
                     grid={{ gutter: 12, column: 4 }}

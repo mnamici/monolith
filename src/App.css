@@ -1,4 +1,6 @@
 @import '~antd/dist/antd.css';
+/* LOGO ANIMATION */
+
 @keyframes logo-open {
   0% {
     content: url(only_logo.svg);
@@ -39,55 +41,20 @@
   animation: logo-close 1.5s forwards ease-out;
 }
 
-a {
-  color: rgb(20, 33, 49);
-}
-
-.ant-menu-dark .ant-menu-item-selected {
-  background: rgb(97, 148, 195) !important;
-}
-
-.ant-layout {
-  background-color: rgb(10, 27, 45);
-}
-
-.ant-card, .ant-collapse-header, .ant-collapse-content, pre, .CodeMirror-scroll {
-  background-color: rgb(87, 102, 121) !important;
-}
-
-.ant-card-actions, .ant-btn, .ant-input, .search, .ant-popover-inner-content, .ant-popover-arrow, .ant-table-thead>tr>th, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-item, .ant-select-selection, .ant-tabs.ant-tabs-card > .ant-tabs-bar .ant-tabs-tab, .ant-layout-footer {
-  background-color: rgb(111, 131, 158)
-}
-
-.yasqe .CodeMirror-gutters {
-  background-color: transparent !important
-}
-
-.cm-variable-3, .cm-number {
-  color: #d0d096 !important;
-}
-
-.node {
-  color: rgb(97, 148, 195);
-}
+/* EXPAND MAIN MENU BUTTON */
 
 .ant-layout-sider-trigger {
   height: calc(21px + 2vh);
   line-height: calc(21px + 2vh);
 }
 
-h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-tabs-new-tab {
-  color: white !important;
-}
-
-.ant-table-row:hover {
-  color: black !important;
-  transition: 0s
-}
+/* RESIZE MAPPING SELECTED TO CORRECTLY SHOW POP UP */
 
 .ant-select-selection-selected-value .mapping {
   width: calc(158px - 1vw);
 }
+
+/* SHOW ELLIPSIS IF MAPPING NAME TOO LONG */
 
 .mapping {
   width: calc(178px - 1vw);
@@ -96,10 +63,119 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-tabs-new-t
   white-space: nowrap;
 }
 
+/* REDUCE ANT COLLAPSE PADDING */
+
 .ant-collapse-content>.ant-collapse-content-box {
   padding: 4px
 }
 
+/* REDUCE ANT LIST MARGIN */
+
 .ant-list-item {
   margin-bottom: 4px !important
+}
+
+/* ROUND POPOVER */
+
+.ant-popover-inner-content {
+  border-radius: 4px
+}
+
+/* WORD WRAP IN TABLE CELLS*/
+
+td {
+  white-space: normal !important;
+}
+
+/* LINK COLOR */
+
+a {
+  color: rgb(20, 33, 49);
+}
+
+/* MENU SELECTION */
+
+.ant-menu-dark .ant-menu-item-selected {
+  background: rgb(97, 148, 195) !important;
+}
+
+/* MAIN BACKGROUND */
+
+.ant-layout {
+  background-color: rgb(10, 27, 45);
+}
+
+/* COMPONENTS BACKGROUND */
+
+.ant-card, .ant-collapse-content, .ant-popover-inner-content, .ant-popover-arrow {
+  background-color: rgb(87, 102, 121) !important;
+}
+
+/* TITLES AND BUTTONS BACKGROUND */
+
+.ant-card-actions, .ant-btn, .ant-input, .search, .ant-table-thead>tr>th, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-item, .ant-select-selection, .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab, .ant-layout-footer, .ant-card-head, .ant-collapse-header {
+  background-color: rgb(136, 148, 163)
+}
+
+/* NODE IN FAST SEARCH TREE COLOR */
+
+.node {
+  color: rgb(97, 148, 195);
+}
+
+/* TEXT COLOR */
+
+h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-tabs-new-tab {
+  color: white !important;
+}
+
+/* TEXT COLOR IN SELECTION OF TABLE ROWS */
+
+.ant-table-row:hover {
+  color: black !important;
+  transition: 0s
+}
+
+/* YASQUE */
+
+/* MAIN BACKGROUND */
+
+.yasqe .CodeMirror {
+  background-color: rgb(136, 148, 163) !important
+}
+
+/* LINE NUMBER COLUMN */
+
+.yasqe .CodeMirror-gutters {
+  background-color: rgb(87, 102, 121) !important;
+}
+
+/* KEYWORDS */
+
+.cm-keyword {
+  color: rgb(127, 73, 189) !important
+}
+
+/* IRI */
+
+.cm-variable-3, .cm-number {
+  color: #834b2a !important;
+}
+
+/* VARIABLES */
+
+.cm-atom {
+  color: rgb(42, 21, 230) !important
+}
+
+/* PREFIXED PREDICATE */
+
+.cm-string-2 {
+  color: rgb(228, 189, 13) !important
+}
+
+/* MATCHIN BRACKET */
+
+.yasqe div.CodeMirror span.CodeMirror-matchingbracket {
+  color: rgb(184, 228, 118) !important
 }

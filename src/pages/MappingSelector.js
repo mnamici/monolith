@@ -29,8 +29,7 @@ class MappingSelector extends React.Component {
         const mappings = this.props.mappings.map(item => this.getOptions(item));
         return (
             <Select
-                style={{ width: 'calc(200px - 1vw)' }}
-                size="large"
+                style={{ width: 'calc(200px - 1vw)', paddingBottom: 4 }}
                 defaultValue={
                     this.props.mappings[0].mappingID
                 }

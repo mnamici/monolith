@@ -1,9 +1,9 @@
 import React from 'react'
-import { Popover, List } from 'antd';
-import CollapsibleList from './CollapsibleList';
+import { Card, Popover, List } from 'antd';
 import { getObjectPropertyPage } from '../api/MastroApi';
 
 import { renderEntity, predicateTypes } from '../utils/utils'
+import ListItem from './ListItem';
 
 class ObjectPropertyPage extends React.Component {
     _isMounted = false;
@@ -56,16 +56,35 @@ class ObjectPropertyPage extends React.Component {
 
         const components = [
 
-            <CollapsibleList title="Equivalent Object Properties" predicateType={predicateTypes.op} list={this.state.data.equivalentObjectProperties} />,
-            <CollapsibleList title="Sub Object Properties" predicateType={predicateTypes.op} list={this.state.data.subObjectProperties} />,
-            <CollapsibleList title="Super Object Properties" predicateType={predicateTypes.op} list={this.state.data.superObjectProperties} />,
-            <CollapsibleList title="Disjoint Object Properties" predicateType={predicateTypes.op} list={this.state.data.disjointObjectProperties} />,
-            <CollapsibleList title="Inverse Object Properties" predicateType={predicateTypes.op} list={this.state.data.inverseObjectProperties} />,
-            <CollapsibleList title="Domain" predicateType={predicateTypes.c} list={this.state.data.objectPropertyDomain} />,
-            <CollapsibleList title="Range" predicateType={predicateTypes.c} list={this.state.data.objectPropertyRange} />,
-            <CollapsibleList title="Object Property Characteristics" list={objectPropertyCharacteristics} />,
-            <CollapsibleList title="Object Property Individuals" predicateType={predicateTypes.op} list={this.state.data.objectPropertyIndividuals} />,
+            <Card title="Equivalent Object Properties" >
+                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.equivalentObjectProperties} />
+            </Card>,
+            <Card title="Sub Object Properties" >
+                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.subObjectProperties} />
+            </Card>,
+            <Card title="Super Object Properties" >
+                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.superObjectProperties} />
+            </Card>,
+            <Card title="Disjoint Object Properties" >
+                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.disjointObjectProperties} />
+            </Card>,
+            <Card title="Inverse Object Properties" >
+                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.inverseObjectProperties} />
+            </Card>,
+            <Card title="Domain" >
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.objectPropertyDomain} />
+            </Card>,
+            <Card title="Range" >
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.objectPropertyRange} />
+            </Card>,
+            <Card title="Object Property Characteristics" >
+                <ListItem data={objectPropertyCharacteristics} />
+            </Card>,
+            <Card title="Object Property Individuals" >
+                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.objectPropertyIndividuals} />
+            </Card>,
         ]
+
         return (
             <div>
                 <div style={{ textAlign: 'center' }}>
@@ -75,7 +94,9 @@ class ObjectPropertyPage extends React.Component {
                     </Popover>
                 </div>
                 <div style={{ padding: '16px 0px 16px 0px' }}>
-                    <CollapsibleList title="Descriptions" list={this.state.data.objectPropertyDescriptions} />
+                    <Card title="Descriptions">
+                        <ListItem  data={this.state.data.objectPropertyDescriptions} />
+                    </Card>
                 </div>
                 <List
                     grid={{ gutter: 16, column: 4 }}

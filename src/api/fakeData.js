@@ -78,7 +78,7 @@ export const fakeDataOI = {
     ontologyDescriptions: [
         "First descritpion",
         "Second descritpion",
-        "Last descritpion"
+        "Last descritpion: this time it is very long because i have to test long descriptions. Everything start when i was 4 years old. My mother blamed to brun the table. It was not a brand new table but my mother was very affectionated to it. It was not my fault, and my brother's neither, so I started thinking about "
     ],
     ontologyMetrics: {
         metrics: [{
