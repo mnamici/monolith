@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Card, Popover } from 'antd';
+import { Table, Popover } from 'antd';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
 import sqlFormatter from 'sql-formatter'
@@ -77,29 +77,30 @@ class ViewRewritings extends React.Component {
 
     }
     render() {
+        let data = []
+        for (let i = 0; i < this.state.data.length; i++) {
+            const item = this.state.data[i]
+            data.push({
+                key: i,
+                value: <Popover content={
+                    <div>
+                        <p>{item.numResults + " results in " + item.time + " ms."}</p>
+                    </div>
+                }>
+                    <SyntaxHighlighter language='sql' style={darcula}>
+                        {sqlFormatter.format(item.query)}
+                    </SyntaxHighlighter>
+                </Popover>
+            })
+        }
         return (
-            <Card title="Mapping Rewritings">
-                <List
-                    itemLayout="vertical"
-                    size='large'
-                    pagination={this.state.pagination}
-                    dataSource={this.state.data}
-                    loading={this.state.loading}
-                    renderItem={item => (
-                        <List.Item>
-                            <Popover content={
-                                    <div>
-                                        <p>{item.numResults + " results in "+item.time+" ms."}</p>
-                                    </div>
-                                }>
-                                <SyntaxHighlighter language='sql' style={darcula}>
-                                    {sqlFormatter.format(item.query)}
-                                </SyntaxHighlighter>
-                            </Popover>
-                        </List.Item>
-                    )}
-                />
-            </Card>
+            <Table
+                columns={[{ dataIndex: 'value' }]}
+                showHeader={false}
+                pagination={this.state.pagination}
+                dataSource={data}
+                loading={this.state.loading}
+            />
         )
     }
 }

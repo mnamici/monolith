@@ -1,9 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { List, Card, Divider, Popover } from 'antd';
-import Ellipsis from 'ant-design-pro/lib/Ellipsis'
 import UploadFile from './UploadFile';
-import { getMappings, deleteMappingFile } from '../api/MastroApi';
+import { getMappings, downloadMappingFile, deleteMappingFile } from '../api/MastroApi';
+import { saveFileInfo } from '../utils/utils';
 
 
 
@@ -56,6 +56,11 @@ class LoadMappings extends React.Component {
                                         </span>
                                     </Popover>,
                                     <span onClick={
+                                        () => downloadMappingFile(this.props.ontology.name, this.props.ontology.version, item.mappingID, saveFileInfo)
+                                    }>
+                                        download
+                                    </span>,
+                                    <span onClick={
                                         () => deleteMappingFile(this.props.ontology.name, this.props.ontology.version, item.mappingID, this.requestMappings.bind(this))
                                     }>
                                         delete
@@ -65,11 +70,7 @@ class LoadMappings extends React.Component {
                                         <Card.Meta key={item.mappingID}
                                             avatar={<img alt="" src={item.avatar} />}
                                             title={item.mappingID}
-                                            description={
-                                                <Ellipsis>
-                                                    {item.mappingDescription}
-                                                </Ellipsis>
-                                            }
+                                            description={item.mappingDescription}
                                         /> </NavLink>
                                 </Card>
                             </List.Item>

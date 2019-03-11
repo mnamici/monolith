@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Card } from 'antd';
+import { Table } from 'antd';
 
 const https = require('https');
 
@@ -23,7 +23,7 @@ class OntologyRewritings extends React.Component {
         // this.fetch(1);
 
         //test mastro results
-        this.setState({data:data});
+        this.setState({ data: data });
     }
 
     handleChange = (page) => {
@@ -63,21 +63,21 @@ class OntologyRewritings extends React.Component {
 
     }
     render() {
+        let data = []
+        for (let i = 0; i < this.state.data.length; i++) {
+            data.push({
+                key: i,
+                value: this.state.data[i],
+            })
+        }
         return (
-            <Card title="Ontology Rewritings">
-                <List
-                    itemLayout="vertical"
-                    size='large'
-                    pagination={this.state.pagination}
-                    dataSource={this.state.data}
-                    loading={this.state.loading}
-                    renderItem={item => (
-                        <List.Item>
-                            {item}
-                        </List.Item>
-                    )}
-                />
-            </Card>
+            <Table
+                columns={[{ dataIndex: 'value' }]}
+                showHeader={false}
+                pagination={this.state.pagination}
+                dataSource={data}
+                loading={this.state.loading}
+            />
         )
     }
 }

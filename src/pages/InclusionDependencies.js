@@ -7,20 +7,17 @@ class InclusionDependencies extends React.Component {
 
         return (
             <div>
-                <Card title="Inclusion Dependencies">
-                    <List
-                        grid={{ gutter: 4, column: 1 }}
-                        dataSource={this.props.ids}
-                        renderItem={item => (
-                            <List.Item>
-                                <Card>
-                                    <InclusionDependency incDep={item}/>
-                                </Card>
-                            </List.Item>
-                        )}
-                    />
-
-                </Card>
+                <List
+                    grid={{ gutter: 4, column: 1 }}
+                    dataSource={this.props.ids}
+                    renderItem={item => (
+                        <List.Item>
+                            <Card>
+                                <InclusionDependency incDep={item} />
+                            </Card>
+                        </List.Item>
+                    )}
+                />
             </div>
         );
     }

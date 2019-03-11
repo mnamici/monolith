@@ -50,28 +50,28 @@ class DataPropertyPage extends React.Component {
 
         const components = [
 
-            <Card title="Equivalent Data Properties" >
+            <Card className='dataPropertyCard' title="Equivalent Data Properties" >
                 <ListItem entity predicateType={predicateTypes.op} data={this.state.data.equivalentDataProperties} />
             </Card>,
-            <Card title="Sub Data Properties" >
+            <Card className='dataPropertyCard' title="Sub Data Properties" >
                 <ListItem entity predicateType={predicateTypes.op} data={this.state.data.subDataProperties} />
             </Card>,
-            <Card title="Super Data Properties" >
+            <Card className='dataPropertyCard' title="Super Data Properties" >
                 <ListItem entity predicateType={predicateTypes.op} data={this.state.data.superDataProperties} />
             </Card>,
-            <Card title="Disjoint Data Properties" >
+            <Card className='dataPropertyCard' title="Disjoint Data Properties" >
                 <ListItem entity predicateType={predicateTypes.op} data={this.state.data.disjointDataProperties} />
             </Card>,
-            <Card title="Domain" >
+            <Card className='dataPropertyCard' title="Domain" >
                 <ListItem entity predicateType={predicateTypes.c} data={this.state.data.dataPropertyDomain} />
             </Card>,
-            <Card title="Range" >
+            <Card className='dataPropertyCard' title="Range" >
                 <ListItem entity predicateType={predicateTypes.c} data={this.state.data.dataPropertyRange} />
             </Card>,
-            <Card title="Data Property Characteristics" >
+            <Card className='dataPropertyCard' title="Data Property Characteristics" >
                 <ListItem data={dataPropertyCharacteristics} />
             </Card>,
-            <Card title="Data Property Individuals" >
+            <Card className='dataPropertyCard' title="Data Property Individuals" >
                 <ListItem entity predicateType={predicateTypes.op} data={this.state.data.dataPropertyIndividuals} />
             </Card>,
         ]
@@ -83,8 +83,8 @@ class DataPropertyPage extends React.Component {
                         <h3>{this.state.data.currentEntity.entityPrefixIRI}</h3>
                     </Popover>
                 </div>
-                <div style={{ padding: '16px 0px 16px 0px' }}>
-                    <Card title="Descriptions" data={this.state.data.dataPropertyDescriptions} />
+                <div style={{ padding: '0px' }}>
+                    <Card title="Descriptions" data={this.state.data.dataPropertyDescriptions} className='description'/>
                 </div>
                 <List
                     grid={{ gutter: 16, column: 4 }}

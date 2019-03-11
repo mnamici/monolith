@@ -1,20 +1,23 @@
 import React from 'react';
 import LastLoadedList from './LastLoadedList'
 import MainMenuDescriptions from './MainMenuDescriptions'
-import logo  from '../scritta.svg'
+import logo from '../scritta.svg'
 
 const dataOntologies = [
   {
-    title: 'ACI-1.0',
-    description: 'First version of ACI ontology'
+    ontologyID: 'ACI',
+    versionID: '1.0',
+    ontologyDescription: 'First version of ACI ontology'
   },
   {
-    title: 'ISTAT-1.0',
-    description: 'First version of ISTAT ontology'
+    ontologyID: 'ISTAT',
+    versionID: '1.0',
+    ontologyDescription: 'First version of ISTAT ontology'
   },
   {
-    title: 'ACI-121.0',
-    description: 'Last version of ACI ontology'
+    ontologyID: 'ACI',
+    versionID: '121.0',
+    ontologyDescription: 'Last version of ACI ontology'
   },
 ];
 
@@ -41,11 +44,23 @@ const dataDataset = [
 class Home extends React.Component {
   render() {
     return (
-      <div style={{ height: 'calc(94vh - 21px)', overflowX: 'hidden', overflowY: 'auto' }}>
-        <img src={logo} alt="logo" style={{maxHeight: 100}}/>
-        <LastLoadedList title="Last Loaded Ontologies" data={dataOntologies} path="/open/ontology/info" />
-        <LastLoadedList title="Last Loaded Knowledge Graphs" data={dataKG} path="/kg" />
-        <LastLoadedList title="Last Loaded Datasets" data={dataDataset} path="/dataset" />
+      <div style={{ height: 'calc(96vh - 21px)', overflowX: 'hidden', overflowY: 'auto' }}>
+        <img src={logo} alt="logo" style={{ maxHeight: 100 }} />
+        <LastLoadedList
+          ontology title="Last Loaded Ontologies"
+          data={dataOntologies}
+          path="/open/ontology/info"
+          open={this.props.openOntology} />
+        <LastLoadedList
+          title="Last Loaded Knowledge Graphs"
+          data={dataKG}
+          path="/kg"
+          open={() => null} />
+        <LastLoadedList
+          title="Last Loaded Datasets"
+          data={dataDataset}
+          path="/dataset"
+          open={() => null} />
         <MainMenuDescriptions />
       </div>
     );

@@ -16,8 +16,23 @@ class AddCloseTabs extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    for(let i=0;i<props.catalog.length;i++)
-      if(props.catalog[i].queryID === props.open){
+    if (props.panes.length === 0) {
+      const panes = []
+      const activeKey = `newTab${this.newTabIndex++}`;
+      const title = 'New Tab'
+      panes.push({
+        title: title,
+        content: <MastroSPARQLTabPane
+          ontology={props.ontology}
+          mappings={props.mappings}
+          num={activeKey}
+          query={{}} />,
+        key: activeKey
+      });
+      this.setState({ panes, activeKey });
+    }
+    for (let i = 0; i < props.catalog.length; i++)
+      if (props.catalog[i].queryID === props.open) {
         this.add(props.catalog[i])
         break
       }
@@ -34,8 +49,16 @@ class AddCloseTabs extends React.Component {
   add = (query) => {
     const panes = this.state.panes;
     const activeKey = `newTab${this.newTabIndex++}`;
-    const title = query.queryID !== undefined ? query.queryID : 'New Tab'
-    panes.push({ title: title, content: <MastroSPARQLTabPane num={activeKey} query={query}/>, key: activeKey });
+    const title = query.queryID || 'New Tab'
+    panes.push({
+      title: title,
+      content: <MastroSPARQLTabPane
+        ontology={this.props.ontology}
+        mappings={this.props.mappings}
+        num={activeKey}
+        query={query} />,
+      key: activeKey
+    });
     this.setState({ panes, activeKey });
   }
 
@@ -51,10 +74,11 @@ class AddCloseTabs extends React.Component {
     if (lastIndex >= 0 && activeKey === targetKey) {
       activeKey = panes[lastIndex].key;
     }
+
     this.setState({ panes, activeKey });
   }
 
-  render() {  
+  render() {
     return (
       <Tabs
         onChange={this.onChange}

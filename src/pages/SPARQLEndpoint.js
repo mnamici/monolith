@@ -2,7 +2,6 @@ import React from 'react';
 import { Layout } from 'antd';
 import AddCloseTabs from './AddCloseTabs';
 import QueryCatalog from './QueryCatalog';
-import MappingSelector from './MappingSelector';
 import { getQueryCatalog, getMappings } from '../api/MastroApi'
 
 const {
@@ -14,18 +13,18 @@ class SPARQLEndpoint extends React.Component {
         catalog: [],
         mappings: [],
         current: null,
-        panes : []
+        panes: []
     }
-    
-       componentDidMount() {
-        this.requestCatalog()   
-        this.requestMappings()   
+
+    componentDidMount() {
+        this.requestCatalog()
+        this.requestMappings()
     }
 
     requestCatalog() {
         getQueryCatalog(
             this.props.ontology.name,
-            this.props.ontology.version,            
+            this.props.ontology.version,
             this.loadedCatalog)
     }
 
@@ -39,8 +38,8 @@ class SPARQLEndpoint extends React.Component {
 
     requestMappings() {
         getMappings(
-            this.props.ontology.name, 
-            this.props.ontology.version, 
+            this.props.ontology.name,
+            this.props.ontology.version,
             this.loadedMappings)
     }
 
@@ -52,26 +51,35 @@ class SPARQLEndpoint extends React.Component {
         }));
     }
 
-    handleClick = (e) => {
-        console.log('click ', e);
+    setCurrent = (current) => {
         this.setState({
-            current: e.key,
+            current: current,
         });
     }
 
     render() {
         return (
-            <Layout >
+            <Layout style={{height: 'calc(98vh - 21px)'}}>
                 <Sider
-                    style={{ background: 'none' }}
-                > 
-                    <MappingSelector ontology={this.props.ontology} mappings={this.state.mappings}/>
-                    <QueryCatalog ontology={this.props.ontology} catalog={this.state.catalog}/>
+                    style={{ background: '#000c17' }}
+                >
+                    <QueryCatalog
+                        ontology={this.props.ontology}
+                        mappings={this.state.mappings}
+                        catalog={this.state.catalog} 
+                        open={this.setCurrent}
+                        />
+                    {/* <MappingSelector ontology={this.props.ontology} mappings={this.state.mappings}/> */}
                 </Sider>
                 <Layout>
                     <Content >
-                        <div style={{ marginLeft:0, background: 'none', minHeight: '100%' }}>
-                            <AddCloseTabs panes={this.state.panes} catalog={this.state.catalog} open={this.props.match.params.queryID}/>
+                        <div className='SPARQLTab' style={{ minHeight: '100%' }}>
+                            <AddCloseTabs
+                                ontology={this.props.ontology}
+                                mappings={this.state.mappings}
+                                panes={this.state.panes}
+                                catalog={this.state.catalog}
+                                open={this.state.current} />
                         </div>
                     </Content>
                 </Layout>

@@ -11,7 +11,7 @@ class MappingInfo extends React.Component {
 
     state = {
         data: {
-            mapping: {},
+            mapping: { mappingDescription: "" },
             mappingDBConnections: [{}],
             mappingTemplates: []
         }
@@ -54,10 +54,10 @@ class MappingInfo extends React.Component {
             },
         ]
         const elements = [
-            <Card title="Database">
+            <Card className='mappingCard' title="Database">
                 <ListMapItem data={db} />
             </Card>,
-            <Card title="Templates">
+            <Card className='mappingCard' title="Templates">
                 <ListItem data={data.mappingTemplates} />
             </Card>,
         ]
@@ -66,7 +66,9 @@ class MappingInfo extends React.Component {
                 <div style={{ textAlign: 'center', padding: 16 }}>
                     <h1 >{data.mapping.mappingID}</h1>
                 </div>
-                <Card title="Description"> {data.mapping.mappingDescription} </Card>,
+                <Card title="Description" className='description'>
+                    <ListItem data={[data.mapping.mappingDescription]} />
+                </Card>,
                 <List
                     grid={{ gutter: 12, column: 2 }}
                     dataSource={elements}
@@ -77,7 +79,7 @@ class MappingInfo extends React.Component {
                     )}
                 />
                 <div style={{ display: 'flex', paddingTop: 12 }}>
-                    <DownloadFile />
+                    <DownloadFile ontology={this.props.ontology} mapping={this.props.mappingID} />
                 </div>
 
             </div>

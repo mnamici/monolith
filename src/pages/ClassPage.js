@@ -47,28 +47,28 @@ class ClassPage extends React.Component {
         if (this.state.data.currentEntity === undefined) return null
 
         const components = [
-            <Card title="Equivalent Classes">
+            <Card className='classCard' title="Equivalent Classes">
                 <ListItem entity predicateType={predicateTypes.c} data={this.state.data.equivalentClasses} />
             </Card>,
-            <Card title="Sub Classes">
+            <Card className='classCard' title="Sub Classes">
                 <ListItem entity predicateType={predicateTypes.c} data={this.state.data.subClasses} />
             </Card>,
-            <Card title="Super Classes">
+            <Card className='classCard' title="Super Classes">
                 <ListItem entity predicateType={predicateTypes.c} data={this.state.data.superClasses} />
             </Card>,
-            <Card title="Disjoint Classes">
+            <Card className='classCard' title="Disjoint Classes">
                 <ListItem entity predicateType={predicateTypes.c} data={this.state.data.disjointClasses} />
             </Card>,
-            <Card title="Object Properties">
+            <Card className='classCard' title="Object Properties">
                 <ListItem partecipation predicateType={predicateTypes.op} data={this.state.data.objectPropertiesParticipations} />
             </Card>,
-            <Card title="Data Properties">
+            <Card className='classCard' title="Data Properties">
                 <ListItem partecipation predicateType={predicateTypes.dp} data={this.state.data.dataPropertiesParticipations} />
             </Card>,
-            <Card title="Disjoint Unions">
-                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.disjointUnions} />
+            <Card className='classCard' title="Disjoint Unions">
+                <ListItem union predicateType={predicateTypes.c} data={this.state.data.disjointUnions} />
             </Card>,
-            <Card title="Individuals">
+            <Card className='classCard' title="Individuals">
                 <ListItem entity predicateType={predicateTypes.i} data={this.state.data.classIndividuals} />
             </Card>,
         ]
@@ -80,20 +80,22 @@ class ClassPage extends React.Component {
                         <h3>{this.state.data.currentEntity.entityPrefixIRI}</h3>
                     </Popover>
                 </div>
-                <div style={{ padding: '16px 0px 16px 0px' }}>
-                    <Card title="Descriptions">
-                        <ListItem data={this.state.data.classDescriptions} />
-                    </Card>,
+                <div>
+                    <div style={{ padding: '0px' }}>
+                        <Card title="Descriptions" className='description'>
+                            <ListItem data={this.state.data.classDescriptions} />
+                        </Card>,
+                    </div>
+                    <List
+                        grid={{ gutter: 12, column: 4 }}
+                        dataSource={components}
+                        renderItem={item => (
+                            <List.Item>
+                                {item}
+                            </List.Item>
+                        )}
+                    />
                 </div>
-                <List
-                    grid={{ gutter: 12, column: 4 }}
-                    dataSource={components}
-                    renderItem={item => (
-                        <List.Item>
-                            {item}
-                        </List.Item>
-                    )}
-                />
             </div>
 
         );

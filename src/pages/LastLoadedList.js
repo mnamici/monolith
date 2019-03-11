@@ -12,11 +12,14 @@ class LastLoadedList extends React.Component {
                     dataSource={this.props.data}
                     renderItem={item => (
                         <List.Item>
-                            <NavLink to={this.props.path}>
+                            <NavLink to={this.props.path} onClick={() => this.props.open(item.ontologyID, item.versionID)}>
                                 <Card hoverable >
-                                    <Card.Meta avatar={item.icon} title={item.title} description={item.description} />
+                                    <Card.Meta
+                                        avatar={item.icon}
+                                        title={this.props.ontology?item.ontologyID + '-' + item.versionID:item.title} 
+                                        description={this.props.ontology?item.ontologyDescription: item.description} />
                                 </Card>
-                            </NavLink>}
+                            </NavLink>
                         </List.Item>
                     )}
                 />

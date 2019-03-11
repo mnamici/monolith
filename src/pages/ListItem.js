@@ -5,10 +5,9 @@ import Entity from './Entity';
 class ListItem extends React.Component {
     render() {
         if (this.props.data === undefined || this.props.data === null) return null
-        let dataIndex = 'key'
+        let dataIndex = 'value'
         var data = []
         if (this.props.entity) {
-            dataIndex = 'value'
             for (let i = 0; i < this.props.data.length; i++) {
                 data.push({
                     key: this.props.data[i].entityID,
@@ -18,7 +17,6 @@ class ListItem extends React.Component {
 
         }
         else if (this.props.partecipation) {
-            dataIndex = 'value'
             for (let i = 0; i < this.props.data.length; i++) {
                 data.push({
                     key: this.props.data[i].property.entityID,
@@ -26,17 +24,32 @@ class ListItem extends React.Component {
                 })
             }
         }
+        else if (this.props.union) {
+            for (let i = 0; i < this.props.data.length; i++) {
+                data.push({
+                    key: this.props.data[i][0].entityID + '_' + this.props.data[i][1].entityID,
+                    value: <div>
+                        <Entity predicateType={this.props.predicateType} entity={this.props.data[i][0]} />
+                        <br/>
+                        <Entity predicateType={this.props.predicateType} entity={this.props.data[i][1]} />
+                    </div>
+                })
+            }
+        }
         // string
         else {
             for (let i = 0; i < this.props.data.length; i++) {
                 data.push({
-                    key: this.props.data[i],
+                    key: i,
+                    value: this.props.data[i],
                 })
             }
 
         }
-        return (
 
+        // console.log(data)
+
+        return (
             <Table
                 columns={[{ dataIndex: dataIndex }]}
                 showHeader={false}

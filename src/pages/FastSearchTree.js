@@ -6,7 +6,7 @@ import '../css/FastSearchTree.css'
 
 import { getOntologyVersionHierarchy } from '../api/MastroApi'
 
-import { renderEntity, predicateTypes} from '../utils/utils'
+import { renderEntity, predicateTypes } from '../utils/utils'
 
 function convertData(node, arr, predicateType) {
 
@@ -20,7 +20,13 @@ function convertData(node, arr, predicateType) {
     })
   }
 
-  return arr;
+  return arr.sort(function (a, b) {
+    var x = a.label.toLowerCase();
+    var y = b.label.toLowerCase();
+    if (x < y) { return -1; }
+    if (x > y) { return 1; }
+    return 0;
+  });
 }
 
 const onAction = ({ action, node }) => {
@@ -46,7 +52,7 @@ export default class SearchTree extends React.Component {
   }
 
   onChange = (currentNode, selectedNodes) => {
-    if (currentNode._depth !== 0){
+    if (currentNode._depth !== 0) {
       // console.log('onChange::', currentNode)
       this.props.onHandle(currentNode.entityID, currentNode.predicateType)
       //click away to close tree
@@ -55,7 +61,22 @@ export default class SearchTree extends React.Component {
       document.getElementById("root").dispatchEvent(click)
 
     }
-      
+    // toggle expand and collapse clicking on Classes Object Properties adn Data Properties labels
+    else {
+      for (let node of document.getElementsByClassName('toggle collapsed')) {
+        if (node.nextElementSibling.title === currentNode.label) {
+          node.click()
+          return;
+        }
+      }
+      for (let node of document.getElementsByClassName('toggle expanded')) {
+        if (node.nextElementSibling.title === currentNode.label) {
+          node.click()
+          return;
+        }
+      }
+    }
+
   }
 
   loaded = (mastroData) => {
@@ -77,7 +98,7 @@ export default class SearchTree extends React.Component {
   }
 
   render() {
-    return <DropdownTreeSelect 
+    return <DropdownTreeSelect
       data={this.state.data}
       onChange={this.onChange}
       onAction={onAction}

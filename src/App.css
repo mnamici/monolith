@@ -1,5 +1,11 @@
 @import '~antd/dist/antd.css';
-/* LOGO ANIMATION */
+/***************************
+*                          *
+*                          *
+*          LOGO            *
+*                          *
+*                          *
+****************************/
 
 @keyframes logo-open {
   0% {
@@ -41,6 +47,18 @@
   animation: logo-close 1.5s forwards ease-out;
 }
 
+/***************************
+*                          *
+*                          *
+*          SIZES           *
+*                          *
+*                          *
+****************************/
+
+h1 {
+  font-size: 2em;
+}
+
 /* EXPAND MAIN MENU BUTTON */
 
 .ant-layout-sider-trigger {
@@ -51,13 +69,13 @@
 /* RESIZE MAPPING SELECTED TO CORRECTLY SHOW POP UP */
 
 .ant-select-selection-selected-value .mapping {
-  width: calc(158px - 1vw);
+  width: calc(118px - 1vw);
 }
 
 /* SHOW ELLIPSIS IF MAPPING NAME TOO LONG */
 
 .mapping {
-  width: calc(178px - 1vw);
+  width: calc(148px - 1vw);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -87,10 +105,105 @@ td {
   white-space: normal !important;
 }
 
+/* REDUCE PADDING OF CONTENTS*/
+
+.ant-table-tbody>tr>td, .ant-card-wider-padding .ant-card-body, .ant-card-contain-tabs .ant-card-body {
+  padding: 4px
+}
+
+/* REDUCE PADDING OF TITLES*/
+
+.ant-card-head-title, .ant-tabs-large>.ant-tabs-bar .ant-tabs-tab {
+  padding: 8px 0px
+}
+
+/* REDUCE SPACE IN TABS */
+
+.ant-tabs-nav .ant-tabs-tab {
+  margin-right: 16px
+}
+
+/* KEEP CARDS AND TABBED CARDS LOOK THE SAME */
+
+.ant-card-head {
+  min-height: unset;
+}
+
+/* KEEP CARDS AND TABBED CARDS LOOK THE SAME */
+
+.ant-card-wider-padding .ant-card-head {
+  padding: 0px 24px;
+}
+
+/* FIX HEIGHT OF CARDS IN WIKI ETC */
+
+.classCard .ant-card-body, .objectPropertyCard .ant-card-body, .dataPropertyCard .ant-card-body, .mappingCard .ant-card-body {
+  height: 150px;
+  overflow: auto;
+  padding: 4px;
+}
+
+.description .ant-card-body {
+  max-height: 280px;
+  min-height: 100px;
+  overflow: auto;
+  padding: 4px;
+}
+
+/***************************
+*                          *
+*                          *
+*          COLORS          *
+*                          *
+*                          *
+****************************/
+
+/* SPARQL TAB COLORS */
+
+.ant-menu-dark .ant-menu-item-selected.catalogQuery {
+  background-color: transparent !important;
+  color: unset
+}
+
+.ant-switch-checked, .ant-progress-success-bg, .ant-progress-bg {
+  background-color: #6194c3;
+}
+
+.ant-btn-primary {
+  border-color: #fff;
+}
+
+.ant-btn-primary:hover {
+  color: #fff;
+  background-color: #6194c3;
+  border-color: #6194c3;
+}
+
+.ant-btn-danger {
+  color: #aa2d2f;
+}
+
+.ant-btn-danger:hover {
+  color: #fff;
+  background-color: #aa2d2f;
+  border-color: #2e0001;
+}
+
+/* pre COLOR */
+
+pre {
+  background: none !important;
+  margin-bottom: 0px
+}
+
 /* LINK COLOR */
 
 a {
-  color: rgb(20, 33, 49);
+  color: rgb(201, 208, 219);
+}
+
+a:hover {
+  color: rgb(244, 248, 255);
 }
 
 /* MENU SELECTION */
@@ -107,14 +220,50 @@ a {
 
 /* COMPONENTS BACKGROUND */
 
-.ant-card, .ant-collapse-content, .ant-popover-inner-content, .ant-popover-arrow {
+.ant-card, .ant-collapse-content, .ant-layout-footer {
   background-color: rgb(87, 102, 121) !important;
+}
+
+.ant-popover-inner-content, .ant-popover-arrow {
+  background-color: rgb(43, 43, 43);
+  color: white
 }
 
 /* TITLES AND BUTTONS BACKGROUND */
 
-.ant-card-actions, .ant-btn, .ant-input, .search, .ant-table-thead>tr>th, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-item, .ant-select-selection, .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab, .ant-layout-footer, .ant-card-head, .ant-collapse-header {
+.ant-card-actions, .ant-btn, .ant-input, .search, .ant-table-thead>tr>th, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-item, .ant-select-selection, .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab, .ant-card-head, .ant-collapse-header, .ant-checkbox-inner {
   background-color: rgb(136, 148, 163)
+}
+
+.ant-tabs-nav-scroll {
+  background-color: rgb(136, 148, 163);
+  min-height: 40px;
+}
+
+.ant-tabs-extra-content {
+  background-color: rgb(136, 148, 163);
+  padding-right: 20px;
+  padding-top: 6px;
+  vertical-align: middle;
+  line-height: 34px;
+}
+
+.ant-btn-loading {
+  opacity: 0.85;
+}
+
+/* TABLE ROWS */
+
+.ant-table-tbody>tr:hover:not(.ant-table-expanded-row)>td, .ant-tabs-new-tab, .ant-select-dropdown-menu-item {
+  background-color: #7a818b;
+}
+
+.ant-tabs.ant-tabs-card>.ant-tabs-bar {
+  border-color: transparent
+}
+
+.ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab {
+  border-color: transparent
 }
 
 /* NODE IN FAST SEARCH TREE COLOR */
@@ -125,18 +274,44 @@ a {
 
 /* TEXT COLOR */
 
-h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-tabs-new-tab {
-  color: white !important;
+h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-tabs-new-tab, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-tabs-nav .ant-tabs-tab-active {
+  color: rgba(255, 255, 255, 0.85) !important;
 }
 
-/* TEXT COLOR IN SELECTION OF TABLE ROWS */
-
-.ant-table-row:hover {
-  color: black !important;
-  transition: 0s
+.ant-tabs-nav .ant-tabs-tab:hover {
+  color: rgba(255, 255, 255, 0.55);
 }
 
-/* YASQUE */
+.ant-tabs-ink-bar {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab-active, .SPARQLTab {
+  /* background-color: rgb(10, 27, 45); */
+  background-color: rgb(19, 27, 44);
+  border-radius: 0px;
+  color: white
+}
+
+.ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab .ant-tabs-close-x {
+  color: white
+}
+
+.ant-card-bordered {
+  border: 1px solid transparent
+}
+
+.ant-card-bordered:hover {
+  border: 1px solid white
+}
+
+/**************************
+*                         *
+*                         *
+*          YASQE          *
+*                         *
+*                         *
+***************************/
 
 /* MAIN BACKGROUND */
 
@@ -178,4 +353,21 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-tabs-new-t
 
 .yasqe div.CodeMirror span.CodeMirror-matchingbracket {
   color: rgb(184, 228, 118) !important
+}
+
+/* ERRORS */
+
+.parseErrorIcon>svg>g {
+  fill: #aa2d2f;
+}
+
+.yasqe .cm-invalidchar, .yasqe .cm-s-default .cm-error {
+  color: #aa2d2f !important;
+}
+
+.yasqe span.cm-error {
+  border-bottom: 2px dotted #aa2d2f !important;
+  border-bottom-width: 2px;
+  border-bottom-style: dotted;
+  border-bottom-color: #aa2d2f !important;
 }

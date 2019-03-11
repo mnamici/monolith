@@ -1,12 +1,17 @@
 import React from 'react';
-import { Select, Popover } from 'antd';
+import { Select, Popover, Button, } from 'antd';
 
 const Option = Select.Option;
 
 class MappingSelector extends React.Component {
+    state = {
+        enabledStart: true,
+        loading: false,
+        selected: this.props.mappings[0] !== undefined && this.props.mappings[0].mappingID
+    }
 
-    handleChange(value) {
-        console.log(`selected ${value}`);
+    onSelection(value) {
+        this.setState({ selected: value.mappingID })
     }
 
     getOptions(item) {
@@ -24,18 +29,43 @@ class MappingSelector extends React.Component {
         </Option>
     }
 
+    disableStart(e) {
+        this.setState({ enabledStart: !e.target.checked })
+    }
+
+    start() {
+        console.log('STARTin')
+        this.setState({ loading: true })
+    }
+
     render() {
         if (this.props.mappings[0] === undefined) return null
         const mappings = this.props.mappings.map(item => this.getOptions(item));
         return (
-            <Select
-                style={{ width: 'calc(200px - 1vw)', paddingBottom: 4 }}
-                defaultValue={
-                    this.props.mappings[0].mappingID
-                }
-                onChange={this.handleChange}>
-                {mappings}
-            </Select>
+            <div styles={this.props.style}>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center', width: 'calc(200px - 1vw)' }}>
+                    <Button
+                        style={{ backgroundColor: '#151e30', border: 'unset', margin: 1 }}
+                        type='primary'
+                        disabled={!this.state.enabledStart}
+                        shape='circle'
+                        icon='play-circle'
+                        loading={this.state.loading}
+                        onClick={this.start.bind(this)}
+                    />
+                    <Select
+                        style={{ paddingRight: 4 }}
+                        defaultValue={
+                            this.props.mappings[0].mappingID
+                        }
+                        onChange={this.onSelection.bind(this)}>
+                        {mappings}
+                    </Select>
+                </div>
+                {/* <Checkbox style={{}} onChange={this.disableStart.bind(this)}>autostart</Checkbox> */}
+            </div>
+
+
         )
     }
 }

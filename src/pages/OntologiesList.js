@@ -1,6 +1,5 @@
 import React from 'react';
 import { List, Card, Divider } from 'antd';
-import Ellipsis from 'ant-design-pro/lib/Ellipsis'
 import AddOntology from './AddOntology';
 import { deleteOntology } from '../api/MastroApi';
 
@@ -9,10 +8,10 @@ class OntologiesList extends React.Component {
     delete(ontologyID) {
         deleteOntology(ontologyID, this.props.rerender)
         this.props.close({
-            name:ontologyID
+            name: ontologyID
         })
     }
-   
+
     render() {
         return (
             <div>
@@ -34,11 +33,7 @@ class OntologiesList extends React.Component {
                                     <Card.Meta key={item.ontologyID}
                                         avatar={<img alt="" src={item.avatar} />}
                                         title={item.ontologyID}
-                                        description={
-                                            <Ellipsis>
-                                                {item.ontologyDescription}
-                                            </Ellipsis>
-                                        }
+                                        description={item.ontologyDescription}
                                         onClick={
                                             () => {
                                                 this.props.next(item.ontologyID);
@@ -49,7 +44,7 @@ class OntologiesList extends React.Component {
                             </List.Item>
                         ) : (
                                 <List.Item>
-                                    <AddOntology rerender={this.props.rerender}/>
+                                    <AddOntology rerender={this.props.rerender} />
                                 </List.Item>
                             )
                     }

@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
 import { List, Card, Divider, Popover } from 'antd';
-import Ellipsis from 'ant-design-pro/lib/Ellipsis'
 import UploadFile from './UploadFile';
-import { deleteOntologyVersion } from '../api/MastroApi';
+import { downloadOntologyFile, deleteOntologyVersion } from '../api/MastroApi';
+import { saveFileInfo } from '../utils/utils';
 
 class OntologyVersionsList extends React.Component {
 
@@ -47,6 +47,11 @@ class OntologyVersionsList extends React.Component {
                                         </span>
                                     </Popover>,
                                     <span onClick={
+                                        () => downloadOntologyFile(item.ontologyID, item.versionID, saveFileInfo)
+                                    }>
+                                        download
+                                    </span>,
+                                    <span onClick={
                                         () => this.delete(item.ontologyID, item.versionID)
                                     }>
                                         delete
@@ -58,11 +63,7 @@ class OntologyVersionsList extends React.Component {
                                             title={
                                                 item.ontologyID + "-" + item.versionID
                                             }
-                                            description={
-                                                <Ellipsis>
-                                                    {item.versionDescription[0] !== undefined ? item.versionDescription[0].content : ""}
-                                                </Ellipsis>
-                                            }
+                                            description={item.versionDescription[0] !== undefined ? item.versionDescription[0].content : ""}
                                         /></NavLink>
                                 </Card>
                             </List.Item>

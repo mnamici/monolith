@@ -127,8 +127,9 @@ class MainLayout extends React.Component {
               <Breadcrumb.Item>User</Breadcrumb.Item>
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
             </Breadcrumb> */}
-            <div style={{ padding: '1vh 1vw 1vh 1vw' }}>
-              <Route exact path="/" component={Home} />
+            <div style={{ padding: '0px' }}>
+              <Route exact path="/" render={(props) =>
+                <Home {...props} openOntology={this.openCurrent.bind(this)} />} />
 
               <Route path="/ontology" render={(props) =>
                 <LoadOntologies {...props} open={this.openCurrent.bind(this)} close={this.close.bind(this)} />} />
@@ -144,7 +145,7 @@ class MainLayout extends React.Component {
               <Route path="/dataset" component={() => "DATASETS"} />
             </div>
           </Content>
-          <Footer style={{ padding: '1vh', textAlign: 'center' }}>
+          <Footer style={{ padding: '1px', textAlign: 'center' }}>
             <a href="http://www.obdasystems.com" target="_blank" rel="noopener noreferrer">OBDA Systems ©2018</a>
           </Footer>
         </Layout>

@@ -1,12 +1,12 @@
 import React from 'react';
-import { List, Divider } from 'antd'
+import { Card, List, Divider } from 'antd'
 import AssertionsList from './AssertionsList';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
 import sqlFormatter from 'sql-formatter'
 import Dependencies from './Dependencies'
 import { getMappingView } from '../api/MastroApi';
-
+import ListMapItem from './ListMapItem'
 
 
 class SQLViewsPage extends React.Component {
@@ -31,22 +31,33 @@ class SQLViewsPage extends React.Component {
     render() {
         const data = this.state.data
         if (data === null) return null
+
+        const first = [
+            {
+                mapKey: "Description",
+                mapValue: data.sqlView.sqlViewDescription
+            },
+            {
+                mapKey: "Body",
+                mapValue: <SyntaxHighlighter language='sql' style={darcula}>
+                              {sqlFormatter.format(data.sqlView.sqlViewCode)}
+                          </SyntaxHighlighter>
+            },
+        ]
         const elements = [
-            <SyntaxHighlighter language='sql' style={darcula}>
-                {sqlFormatter.format(data.sqlView.sqlViewCode)}
-            </SyntaxHighlighter>,
+            <Card title={data.sqlView.sqlViewID} >
+                <ListMapItem data={first} />
+            </Card>,
             <Divider>{"Mapping Assertions"}</Divider>,
             <AssertionsList entity list={data.mappingAssertions} />,
+            <Divider>{'Dependencies'}</Divider>,
             <Dependencies dependencies={data.mappingDependencies} />
 
         ]
+
+
         return (
             <div style={{ paddingTop: 12 }}>
-                <div style={{ textAlign: 'center', padding: 16 }}>
-                    <h1 >{data.sqlView.sqlViewID}</h1>
-
-                </div>
-                <h3>{data.sqlView.sqlViewDescription}</h3>
                 <List
                     grid={{ gutter: 12, column: 1 }}
                     dataSource={elements}

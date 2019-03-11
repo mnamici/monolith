@@ -1,7 +1,7 @@
 export const fakeDataGO = [
     {
         "ontologyID": "FIRST",
-        "ontologyDescription": "Description for ontology FIRST",
+        "ontologyDescription": "Description for ontology FIRST, loooooooooooooooooooooooooooooo oooooooooooooooooooooooooooooooooooooong oooooooooooooooooooooooooooooooooooooong oooooooooooooooooooooooooooooooooooooong oooooooooooooooooooooooooooooooooooooong",
         "ontologyVersions": [
             {
                 "ontologyID": "FIRST",
@@ -78,7 +78,7 @@ export const fakeDataOI = {
     ontologyDescriptions: [
         "First descritpion",
         "Second descritpion",
-        "Last descritpion: this time it is very long because i have to test long descriptions. Everything start when i was 4 years old. My mother blamed to brun the table. It was not a brand new table but my mother was very affectionated to it. It was not my fault, and my brother's neither, so I started thinking about "
+        "Last descritpion: this time it is very long because i have to test long descriptions. Everything start when i was 4 years old. My mother blamed to brun the table. It was not a brand new table but my mother was very affectionated to it. It was not my fault, and my brother's neither, so I started thinking how to solve the question. \nThere was a fish bowl on the table and it ws very well lightened by the sun. I stare at the bowl, I stare at the fish, I stare at the bowl... EUREKA! The bowl act as a magnifing glass and burn the table. I went to tell my mother my discover, but first she didn't believe me because the fish in the bowl was still alive and not boiled. When my father came back home, I told the explaination of the fact to him trying to explain that the water act as a magnifying glass and does not become hot in this kind of work. \nFinally he listen to my point, the mystery was solved."
     ],
     ontologyMetrics: {
         metrics: [{
@@ -155,8 +155,8 @@ export const classData = {
         }
     ],
     classDescriptions: [
-        "Females are beautiful! YEEEEEEEEEEEEEEEEEEEEEEEEEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHH!!! YUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY YUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
-        "Females are evil"
+        "Persons are beautiful! YEEEEEEEEEEEEEEEEEEEEEEEEEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHH!!! YUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY YUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUPPYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+        "Persons are evil"
     ],
     equivalentClasses: [
         {
@@ -243,52 +243,61 @@ export const classData = {
             entityType: 'Pig',
         }
     ],
-    objectProperties: [
+    objectPropertiesParticipations: [
         {
-            entityIRI: 'http://www.example.com/livesIn',
-            entityID: 'livesIn',
-            entityPrefixIRI: ':livesIn',
-            entityRemainder: 'livesIn',
-            entityLabels: [{
-                lang: 'it',
-                content: 'livesIna'
-            }],
-            entityType: 'livesIn',
+            property: {
+                entityIRI: 'http://www.example.com/livesIn',
+                entityID: 'livesIn',
+                entityPrefixIRI: ':livesIn',
+                entityRemainder: 'livesIn',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'livesIna'
+                }],
+                entityType: 'livesIn',
+            }
         },
         {
-            entityIRI: 'http://www.example.com/wasBornIn',
-            entityID: 'wasBornIn',
-            entityPrefixIRI: ':wasBornIn',
-            entityRemainder: 'wasBornIn',
-            entityLabels: [{
-                lang: 'it',
-                content: 'wasBornIna'
-            }],
-            entityType: 'wasBornIn',
+            property: {
+                entityIRI: 'http://www.example.com/wasBornIn',
+                entityID: 'wasBornIn',
+                entityPrefixIRI: ':wasBornIn',
+                entityRemainder: 'wasBornIn',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'wasBornIna'
+                }],
+                entityType: 'wasBornIn',
+            }
         }
     ],
-    dataProperties: [
+    dataPropertiesParticipations: [
         {
-            entityIRI: 'http://www.example.com/yearOfBirth',
-            entityID: 'yearOfBirth',
-            entityPrefixIRI: ':yearOfBirth',
-            entityRemainder: 'yearOfBirth',
-            entityLabels: [{
-                lang: 'it',
-                content: 'yearOfBirtha'
-            }],
-            entityType: 'yearOfBirth',
+            property: {
+
+                entityIRI: 'http://www.example.com/yearOfBirth',
+                entityID: 'yearOfBirth',
+                entityPrefixIRI: ':yearOfBirth',
+                entityRemainder: 'yearOfBirth',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'yearOfBirtha'
+                }],
+                entityType: 'yearOfBirth',
+            }
         },
         {
-            entityIRI: 'http://www.example.com/FemaleName',
-            entityID: 'FemaleName',
-            entityPrefixIRI: ':FemaleName',
-            entityRemainder: 'FemaleName',
-            entityLabels: [{
-                lang: 'it',
-                content: 'FemaleNamea'
-            }],
-            entityType: 'FemaleName',
+            property: {
+                entityIRI: 'http://www.example.com/FemaleName',
+                entityID: 'FemaleName',
+                entityPrefixIRI: ':FemaleName',
+                entityRemainder: 'FemaleName',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'FemaleNamea'
+                }],
+                entityType: 'FemaleName',
+            }
         }
     ],
     disjointUnions: [
@@ -409,12 +418,12 @@ export const mappingInfo =
     mappingDBConnections: [{
         jdbcURL: 'jdbc:mysql://localhost/books',
         dbUser: 'root',
-        dbPassword: '........'
+        dbPassword: 'verySecretPassword'
     }],
     mappingTemplates: [
         'http://www.obdasystems.com/books/q-{_}',
         'http://www.obdasystems.com/books/s-{_}',
-        'http://www.obdasystems.com/books/s-{_}',
+        'http://www.obdasystems.com/books/s2-{_}',
         'http://www.obdasystems.com/books/d-{_}',
     ]
 }
@@ -482,138 +491,6 @@ export const assertions =
                 ]
             }
         },
-        {
-            currentEntity: {
-                entityIRI: 'http://www.example.com/Person',
-                entityID: 'Person',
-                entityPrefixIRI: ':Person',
-                entityRemainder: 'Person',
-                entityLabels: [{
-                    lang: 'it',
-                    content: 'Persona'
-                }],
-                entityType: 'class',
-            },
-            mappingHead: {
-                firstArg: 'http://www.example.com/{person_name}-{surname}',
-            },
-            mappingDescription: 'Data from names and surnames tables',
-            mappingBody: {
-                bodySelect: 'namesView.person_name, surnameView.surname',
-                bodyWhere: 'namesView.person_id = surnameView.person_id',
-                bodyFrom: [
-                    {
-                        sqlViewID: 'namesView',
-                        sqlViewDescription: 'Main table for names',
-                        sqlViewCode: 'select person_id, person_name from names_table'
-                    },
-                    {
-                        sqlViewID: 'surnamesView',
-                        sqlViewDescription: 'Main table for surnames',
-                        sqlViewCode: 'select person_id, person_surname from surnames_table'
-                    },
-                ]
-            }
-        },
-        {
-            currentEntity: {
-                entityIRI: 'http://www.example.com/Person',
-                entityID: 'Person',
-                entityPrefixIRI: ':Person',
-                entityRemainder: 'Person',
-                entityLabels: [{
-                    lang: 'it',
-                    content: 'Persona'
-                }],
-                entityType: 'class',
-            },
-            mappingHead: {
-                firstArg: 'http://www.example.com/{person_name}-{surname}',
-            },
-            mappingDescription: 'Data from names and surnames tables',
-            mappingBody: {
-                bodySelect: 'namesView.person_name, surnameView.surname',
-                bodyWhere: 'namesView.person_id = surnameView.person_id',
-                bodyFrom: [
-                    {
-                        sqlViewID: 'namesView',
-                        sqlViewDescription: 'Main table for names',
-                        sqlViewCode: 'select person_id, person_name from names_table'
-                    },
-                    {
-                        sqlViewID: 'surnamesView',
-                        sqlViewDescription: 'Main table for surnames',
-                        sqlViewCode: 'select person_id, person_surname from surnames_table'
-                    },
-                ]
-            }
-        },
-        {
-            currentEntity: {
-                entityIRI: 'http://www.example.com/Person',
-                entityID: 'Person',
-                entityPrefixIRI: ':Person',
-                entityRemainder: 'Person',
-                entityLabels: [{
-                    lang: 'it',
-                    content: 'Persona'
-                }],
-                entityType: 'class',
-            },
-            mappingHead: {
-                firstArg: 'http://www.example.com/{person_name}-{surname}',
-            },
-            mappingDescription: 'Data from names and surnames tables',
-            mappingBody: {
-                bodySelect: 'namesView.person_name, surnameView.surname',
-                bodyWhere: 'namesView.person_id = surnameView.person_id',
-                bodyFrom: [
-                    {
-                        sqlViewID: 'namesView',
-                        sqlViewDescription: 'Main table for names',
-                        sqlViewCode: 'select person_id, person_name from names_table'
-                    },
-                    {
-                        sqlViewID: 'surnamesView',
-                        sqlViewDescription: 'Main table for surnames',
-                        sqlViewCode: 'select person_id, person_surname from surnames_table'
-                    },
-                ]
-            }
-        },
-        {
-            currentEntity: {
-                entityIRI: 'http://www.example.com/Person',
-                entityID: 'Person',
-                entityPrefixIRI: ':Person',
-                entityRemainder: 'Person',
-                entityLabels: [{
-                    lang: 'it',
-                    content: 'Persona'
-                }],
-                entityType: 'class',
-            },
-            mappingHead: {
-                firstArg: 'http://www.example.com/{person_name}-{surname}',
-            },
-            mappingDescription: 'Data from names and surnames tables',
-            mappingBody: {
-                bodySelect: 'namesView.person_name, surnameView.surname',
-                bodyWhere: 'namesView.person_id = surnameView.person_id',
-                bodyFrom: [
-                    {
-                        sqlViewID: 'namesView',
-                        sqlViewDescription: 'Main table for names',
-                        sqlViewCode: 'select person_id, person_name from names_table'
-                    },
-                    {
-                        sqlViewID: 'surnamesView',
-                        sqlViewDescription: 'Main table for surnames',
-                        sqlViewCode: 'select person_id, person_surname from surnames_table'
-                    },
-                ]
-            }
-        }
     ]
 
 export const sqlView =
@@ -791,7 +668,7 @@ export const sqlViews = [
 export const queryCatalog = [
     {
         queryID: 'q1',
-        queryDescription: 'Take all the cars',
+        queryDescription: 'Take all the cars, \n and have a drive',
         queryCode: 'prefix : <cicciopuccio> \nselect ?x where { ?x a :Car }'
     },
     {

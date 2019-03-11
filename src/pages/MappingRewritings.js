@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Card } from 'antd';
+import { Table } from 'antd';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
 import sqlFormatter from 'sql-formatter'
@@ -65,23 +65,23 @@ class MappingRewritings extends React.Component {
 
     }
     render() {
+        let data = []
+        for (let i = 0; i < this.state.data.length; i++) {
+            data.push({
+                key: i,
+                value: <SyntaxHighlighter language='sql' style={darcula}>
+                    {sqlFormatter.format(this.state.data[i])}
+                </SyntaxHighlighter>,
+            })
+        }
         return (
-            <Card title="Mapping Rewritings">
-                <List
-                    itemLayout="vertical"
-                    size='large'
-                    pagination={this.state.pagination}
-                    dataSource={this.state.data}
-                    loading={this.state.loading}
-                    renderItem={item => (
-                        <List.Item>
-                            <SyntaxHighlighter language='sql' style={darcula}>
-                                {sqlFormatter.format(item)}
-                            </SyntaxHighlighter>
-                        </List.Item>
-                    )}
-                />
-            </Card>
+            <Table
+                columns={[{ dataIndex: 'value' }]}
+                showHeader={false}
+                pagination={this.state.pagination}
+                dataSource={data}
+                loading={this.state.loading}
+            />
         )
     }
 }

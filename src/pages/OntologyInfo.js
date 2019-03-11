@@ -64,7 +64,7 @@ class OntologyInfo extends React.Component {
                 </div>
                 <div style={{ paddingBottom: 12 }}>
                     {/* <OntologyMetricsTabs titles={[{ key: "desc", tab: "Descriptions" }]} data={this.state.data.ontologyDescriptions} /> */}
-                    <Card title='Descriptions'>
+                    <Card title='Descriptions' className='description'>
                         <ListItem data={this.state.data.ontologyDescriptions} />
                     </Card>
                 </div>
@@ -79,7 +79,8 @@ class OntologyInfo extends React.Component {
                 />
 
                 <div style={{ display: 'flex', paddingTop: 12 }}>
-                    <DownloadFile />
+                    <DownloadFile ontology={this.props.ontology}
+                    />
                 </div>
             </div>
         );

@@ -36,7 +36,7 @@ class AssertionsPane extends React.Component {
                 </Sider> */}
                 <Layout>
                     <Content >
-                        <div style={{ height: 'calc(94vh - 110px)', overflowY: 'scroll', paddingRight: 12 }}>
+                        <div style={{ height: 'calc(96vh - 96px)', overflowY: 'scroll', paddingRight: 12 }}>
                             {this.state.current !== null &&
                                 <AssertionsPage
                                     ontology={this.props.ontology}

@@ -39,7 +39,7 @@ class CurrentOntology extends React.Component {
                     </div>
 
                 </Sider>
-                <Layout style={{ padding: '0px 0px 0px 1vw', height: 'calc(95vh - 21px)' }}>
+                <Layout style={{ padding: '0px 0px 0px 0px' }}>
                     <Content >
                         <div >
 

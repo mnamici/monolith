@@ -56,7 +56,7 @@ export function login(username, password, callback) {
 
 
     }).catch(function (err) {
-        if(err.response === undefined) reportError('Error calling ' + method + ' ' + url);
+        if (err.response === undefined) reportError('Error calling ' + method + ' ' + url);
         else switch (err.response.status) {
             case 401:
                 reportError('Wrong username or password');
@@ -146,6 +146,25 @@ export function uploadOntologyFile(file, ontologyID, callback) {
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(true)
+    }).catch(function (err) {
+        callback(false)
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function downloadOntologyFile(name, version, callback) {
+    if (fakeCalls) { console.log(name, version, callback); return }
+    const url = mastroUrl + '/owlOntology/' + name + '/version'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
     }).catch(function (err) {
         callback(false)
         reportError('Error calling ' + method + ' ' + url);
@@ -286,6 +305,24 @@ export function uploadMappingFile(name, version, file, callback) {
     });
 }
 
+export function downloadMappingFile(name, version, mapping, callback) {
+    if (fakeCalls) { console.log(name, version, mapping, callback); return }
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
 export function deleteMappingFile(name, version, mapping, callback) {
     if (fakeCalls) return callback();
     const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping
@@ -377,6 +414,6 @@ export function getMappingView(name, version, mapping, viewID, callback) {
     });
 }
 
-export function getQueryCatalog(name, version, callback){
+export function getQueryCatalog(name, version, callback) {
     return callback(fakeData.queryCatalog)
 }

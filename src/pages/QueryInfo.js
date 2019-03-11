@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card } from 'antd';
 import ListMapItem from './ListMapItem';
+import DownloadFile from './DownloadFile'
 
 class QueryInfo extends React.Component {
     render() {
@@ -29,9 +29,12 @@ class QueryInfo extends React.Component {
         ]
 
         return (
-            <Card title="Info">
+            <div>
                 <ListMapItem data={data} />
-            </Card>
+                <div style={{ display: 'flex', paddingTop: 4 }}>
+                    <DownloadFile />
+                </div>
+            </div>
         );
     }
 }
