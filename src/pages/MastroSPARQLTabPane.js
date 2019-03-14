@@ -8,31 +8,22 @@ import { Input } from 'antd';
 import Results from './ResultsTable'
 import QueryExecutionReport from './QueryExecutionReport';
 import MappingSelector from './MappingSelector'
-
+import { startQuery, getQueryStatus, startNewQuery, putInQueryCatalog } from '../api/MastroApi';
 
 const { TextArea } = Input;
 
-const status = {
-    status: 'Running',
-    percentage: 82,
-    numOntologyRewritings: 2,
-    numHighLevelQueries: 133,
-    numOptimizedQueries: 21,
-    numLowLevelQueries: 21,
-    executionTime: 1248,
-    numResults: 1204871245097
-}
+
 
 class MastroSPARQLTabPane extends React.Component {
     state = {
-        current: 'info',
+        loading: false,
+        selectedMappingID: this.props.mappings[0] !== undefined && this.props.mappings[0].mappingID,
+        status: {},
+        interval: 0,
     }
 
-    handleClick = (e) => {
-        console.log('click ', e);
-        this.setState({
-            current: e.key,
-        });
+    componentWillUnmount() {
+        this.stopPolling()
     }
 
     componentDidMount() {
@@ -52,30 +43,87 @@ class MastroSPARQLTabPane extends React.Component {
     componentDidUpdate() {
         this.yasqe.refresh();
     }
+
+    onSelectMapping(value) {
+        this.setState({ selectedMapping: value })
+    }
+
+    start() {
+        if (!this.props.new)
+            startQuery(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.props.query.queryID, this.startPolling.bind(this))
+        else {
+            startNewQuery(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.props.query, this.startPolling.bind(this))
+        }
+        this.setState({ showResults: true, loading: true })
+    }
+
+    stop() {
+        this.stopPolling()
+    }
+
+    polling() {
+        getQueryStatus(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.state.executionID, this.checkStatus.bind(this))
+    }
+
+    startPolling(executionID) {
+        this.setState({ executionID: executionID, interval: setInterval(this.polling.bind(this), 1000) })
+    }
+
+    stopPolling() {
+        clearInterval(this.state.interval)
+        this.setState({ loading: false })
+    }
+
+    checkStatus(status) {
+        this.setState({ status: status })
+        if (status.percentage === 100) {
+            this.stopPolling()
+        }
+    }
+
+    save() {
+        putInQueryCatalog(this.props.ontology.name, this.props.ontology.version, this.props.query, () => { })
+    }
+
     render() {
 
         const elements = [
-            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                <MappingSelector ontology={this.props.ontology} mappings={this.props.mappings}/>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                <MappingSelector
+                    ontology={this.props.ontology}
+                    mappings={this.props.mappings}
+                    onSelection={this.onSelectMapping.bind(this)}
+                    selected={this.state.selectedMappingID} />
                 <Button.Group style={{ margin: '0px 10px' }}>
-                    <Button type="primary" icon="play-circle">Run</Button>
-                    <Button type="danger" icon="stop">Stop</Button>
+                    <Button
+                        type="primary"
+                        icon="play-circle"
+                        loading={this.state.loading}
+                        onClick={this.start.bind(this)}>Run</Button>
+                    <Button type="danger" icon="stop" onClick={this.stop.bind(this)}>Stop</Button>
                 </Button.Group>
-                <Button type='primary' style={{ marginRight: 10 }} icon="save">Store in catalog</Button>
-                <Popover content='Toggle Resoning'>
+                <Button type='primary' style={{ marginRight: 10 }} icon="save" onClick={this.save.bind(this)}>Store in catalog</Button>
+                <Popover content='Toggle Reasoning'>
                     <Switch defaultChecked />
                 </Popover>
-            
+
 
 
             </div>,
-            <Progress percent={status.percentage} />,
+            <Progress percent={this.state.status.percentage} />,
             <div id={"sparql_" + this.props.num} />,
             <TextArea style={{ margin: '12px 0px 4px 0px' }} placeholder="Description" autosize defaultValue={this.props.query.queryDescription} />,
-            <p className='results'>{status.numResults} results</p>,
-            <Results />,
-            <QueryExecutionReport status={status} />,
         ]
+
+        if (this.state.showResults) {
+            elements.push(
+                <Results ontology={this.props.ontology}
+                    mappingID={this.state.selectedMappingID}
+                    executionID={this.state.executionID}
+                    numberOfResults={this.state.status.numResults} />,
+                <QueryExecutionReport status={this.state.status} />)
+        }
+
         return (
             <div style={{ margin: '0px 8px 0px 8px' }}>
                 <List

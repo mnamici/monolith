@@ -1,9 +1,10 @@
 import React from 'react';
-import { Tabs } from 'antd';
+import { Tabs, Icon } from 'antd';
 import MastroSPARQLTabPane from './MastroSPARQLTabPane'
 
 const TabPane = Tabs.TabPane;
 
+const newQueryID = 'new_'
 class AddCloseTabs extends React.Component {
   constructor(props) {
     super(props);
@@ -18,15 +19,18 @@ class AddCloseTabs extends React.Component {
   componentWillReceiveProps(props) {
     if (props.panes.length === 0) {
       const panes = []
-      const activeKey = `newTab${this.newTabIndex++}`;
-      const title = 'New Tab'
+      this.newTabIndex++;
+      const activeKey = newQueryID + this.newTabIndex
+      const title = newQueryID + this.newTabIndex
       panes.push({
-        title: title,
+        title: <span><Icon type='file'/>{title}</span>,
         content: <MastroSPARQLTabPane
           ontology={props.ontology}
           mappings={props.mappings}
           num={activeKey}
-          query={{}} />,
+          query={{}} 
+          new  
+          />,
         key: activeKey
       });
       this.setState({ panes, activeKey });
@@ -48,15 +52,18 @@ class AddCloseTabs extends React.Component {
 
   add = (query) => {
     const panes = this.state.panes;
-    const activeKey = `newTab${this.newTabIndex++}`;
-    const title = query.queryID || 'New Tab'
+    this.newTabIndex++
+    const activeKey = newQueryID + this.newTabIndex
+    const title = query.queryID || newQueryID + this.newTabIndex
     panes.push({
-      title: title,
+      title: <span><Icon type='file'/>{title}</span>,
       content: <MastroSPARQLTabPane
         ontology={this.props.ontology}
         mappings={this.props.mappings}
         num={activeKey}
-        query={query} />,
+        query={query} 
+        new  
+        />,
       key: activeKey
     });
     this.setState({ panes, activeKey });

@@ -44,7 +44,8 @@ class AssertionsPage extends React.Component {
     }
 
     render() {
-        if (this.state.data === null) return null
+        // console.log(this.state.data)
+        if (this.state.data === null || this.state.data.length === 0) return null
         return (
             <div>
                 <div style={{ textAlign: 'center', padding: '16px 0px 16px 0px' }}>

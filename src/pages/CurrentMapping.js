@@ -30,7 +30,7 @@ class CurrentMapping extends React.Component {
                         </Menu.Item>
                         <Menu.Item key="assertions">
                             <NavLink to={"/open/ontology/mapping/assertions/"+this.props.match.params.mappingID}>
-                                Assertions
+                                Ontology Mappings
                             </NavLink>
                         </Menu.Item>
                         <Menu.Item key="sqlViews">
@@ -43,7 +43,7 @@ class CurrentMapping extends React.Component {
                         </Menu.Item> */}
                     </Menu>
                 </Header>
-                <Content style={{  }}>
+                <Content style={{ }}>
                     <Route path="/open/ontology/mapping/info/" render={(props) =>
                         <MappingInfo {...props} ontology={this.props.ontology} mappingID={this.props.match.params.mappingID}/>} />
                     <Route path="/open/ontology/mapping/assertions" render={(props) =>

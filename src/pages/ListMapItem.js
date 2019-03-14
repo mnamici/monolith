@@ -8,7 +8,7 @@ class ListMapItem extends React.Component {
         return (
 
             <Table
-                columns={[{ dataIndex: 'mapKey' }, { dataIndex: 'mapValue' }]}
+                columns={[{ dataIndex: 'mapKey', width: 200 }, { dataIndex: 'mapValue' }]}
                 rowKey={record => record.mapKey}
                 showHeader={false}
                 pagination={false}

@@ -82,7 +82,7 @@ class ClassPage extends React.Component {
                 </div>
                 <div>
                     <div style={{ padding: '0px' }}>
-                        <Card title="Descriptions" className='description'>
+                        <Card title="Description" className='description'>
                             <ListItem data={this.state.data.classDescriptions} />
                         </Card>,
                     </div>

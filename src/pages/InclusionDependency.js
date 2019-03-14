@@ -3,6 +3,7 @@ import { Table } from 'antd';
 
 class InclusionDependency extends React.Component {
     render() {
+        if(this.props.incDep.inclusionMap === null ) return null
         let data = []
 
         for (let item of this.props.incDep.inclusionMap){

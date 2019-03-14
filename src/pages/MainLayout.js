@@ -145,7 +145,7 @@ class MainLayout extends React.Component {
               <Route path="/dataset" component={() => "DATASETS"} />
             </div>
           </Content>
-          <Footer style={{ padding: '1px', textAlign: 'center' }}>
+          <Footer style={{ padding: '2px', textAlign: 'center' }}>
             <a href="http://www.obdasystems.com" target="_blank" rel="noopener noreferrer">OBDA Systems ©2018</a>
           </Footer>
         </Layout>

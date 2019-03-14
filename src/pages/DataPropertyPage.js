@@ -84,7 +84,7 @@ class DataPropertyPage extends React.Component {
                     </Popover>
                 </div>
                 <div style={{ padding: '0px' }}>
-                    <Card title="Descriptions" data={this.state.data.dataPropertyDescriptions} className='description'/>
+                    <Card title="Description" data={this.state.data.dataPropertyDescriptions} className='description'/>
                 </div>
                 <List
                     grid={{ gutter: 16, column: 4 }}

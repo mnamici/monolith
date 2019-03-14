@@ -52,7 +52,7 @@
     color: #555;
     margin-left: -4px;
     margin-top: 4px;
-    width: 200px;
+    width: 378px;
 }
 
 .search::placeholder {
@@ -68,6 +68,8 @@
     max-height: 80vh;
     max-width: 40vw;
     background-color: rgb(219,219,219) !important;
+    min-width: 376px;
+    min-height: 300px;
 }
 
 .infinite-scroll-component {
@@ -81,3 +83,7 @@
     margin-right: 10px;
     width: 400px;
 }
+
+.react-dropdown-tree-select .dropdown .dropdown-content {
+    z-index: 100 !important;
+  }

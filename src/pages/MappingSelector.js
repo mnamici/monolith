@@ -1,5 +1,6 @@
 import React from 'react';
 import { Select, Popover, Button, } from 'antd';
+import { startMastro, getMastroStatus } from '../api/MastroApi';
 
 const Option = Select.Option;
 
@@ -7,11 +8,11 @@ class MappingSelector extends React.Component {
     state = {
         enabledStart: true,
         loading: false,
-        selected: this.props.mappings[0] !== undefined && this.props.mappings[0].mappingID
+        interval: 0,
     }
 
-    onSelection(value) {
-        this.setState({ selected: value.mappingID })
+    componentWillUnmount() {
+        this.stopPolling()
     }
 
     getOptions(item) {
@@ -34,31 +35,62 @@ class MappingSelector extends React.Component {
     }
 
     start() {
-        console.log('STARTin')
+        startMastro(this.props.ontology.name, this.props.ontology.version, this.props.selected, this.startPolling.bind(this))
         this.setState({ loading: true })
+    }
+
+    stop() {
+        this.stopPolling()
+    }
+
+    polling() {
+        getMastroStatus(this.props.ontology.name, this.props.ontology.version, this.props.selected, this.checkStatus.bind(this))
+    }
+
+    startPolling() {
+        this.setState({ interval: setInterval(this.polling.bind(this), 1000) })
+    }
+
+    stopPolling() {
+        clearInterval(this.state.interval)
+        this.setState({ loading: false })
+    }
+
+    checkStatus(status) {
+        if (status.status === 'ERROR') {
+            this.stopPolling()
+        }
+
+        if (status.status === 'RUNNING') {
+            this.setState({ enabledStart: false })
+            this.stopPolling()
+        }
     }
 
     render() {
         if (this.props.mappings[0] === undefined) return null
         const mappings = this.props.mappings.map(item => this.getOptions(item));
         return (
-            <div styles={this.props.style}>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center', width: 'calc(200px - 1vw)' }}>
-                    <Button
-                        style={{ backgroundColor: '#151e30', border: 'unset', margin: 1 }}
-                        type='primary'
-                        disabled={!this.state.enabledStart}
-                        shape='circle'
-                        icon='play-circle'
-                        loading={this.state.loading}
-                        onClick={this.start.bind(this)}
-                    />
+            <div>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
+                    <Popover content='Start reasoner' placement='left'>
+                        <Button
+                            style={{ margin: 1 }}
+                            type='primary'
+                            disabled={!this.state.enabledStart}
+                            shape='circle'
+                            icon='thunderbolt'
+                            loading={this.state.loading}
+                            onClick={this.start.bind(this)}
+                        />
+                    </Popover>
                     <Select
-                        style={{ paddingRight: 4 }}
+                        style={{ paddingLeft: 4 }}
                         defaultValue={
                             this.props.mappings[0].mappingID
                         }
-                        onChange={this.onSelection.bind(this)}>
+                        onChange={this.props.onSelection}
+                        disabled={!this.state.enabledStart}>
                         {mappings}
                     </Select>
                 </div>

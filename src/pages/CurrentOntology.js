@@ -22,16 +22,16 @@ class CurrentOntology extends React.Component {
     }
     render() {
         return (
-            <Layout style={{ margin: '0px -1vw -10vh -1vw'}}>
+            <Layout style={{ margin: '-1vh -1vw -10vh -1vw'}}>
                 <Sider
                     // width={200} 
-                    style={{ background: 'transparent' }}
+                    className='ontologyMenu'
                     collapsed={this.state.collapsed}
                 >
                     <OntologyMenu select={this.props.match.params.menu}/>
                     <div>
                         <Icon
-                            style={{ display: "inherit", cursor: "pointer", color: 'white' }}
+                            style={{ display: "inherit", cursor: "pointer", color: 'white', padding: 4 }}
                             theme="filled"
                             type={this.state.collapsed ? 'caret-right' : 'caret-left'}
                             onClick={this.toggle}
@@ -39,7 +39,7 @@ class CurrentOntology extends React.Component {
                     </div>
 
                 </Sider>
-                <Layout style={{ padding: '0px 0px 0px 0px' }}>
+                <Layout style={{ paddingLeft: '1vw', }}>
                     <Content >
                         <div >
 

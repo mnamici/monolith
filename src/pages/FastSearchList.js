@@ -43,7 +43,7 @@ export default class SearchTree extends React.Component {
 
   onChange = (currentNode, selectedNodes) => {
     // console.log('onChange::', currentNode)
-    this.props.onHandle(currentNode.entityID, currentNode.predicateType)
+    this.props.onHandle(currentNode.label)
     //click away to close tree
     var click = document.createEvent("MouseEvent")
     click.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);

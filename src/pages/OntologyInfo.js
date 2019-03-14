@@ -37,26 +37,38 @@ class OntologyInfo extends React.Component {
     }
 
     render() {
+        let metriscAxioms = {}
+
+        if (this.state.data.ontologyMetrics !== undefined) {
+            let axioms = []
+            axioms.push(...this.state.data.ontologyMetrics.classAxioms)
+            axioms.push(...this.state.data.ontologyMetrics.objectPropertyAxioms)
+            axioms.push(...this.state.data.ontologyMetrics.dataPropertyAxioms)
+            axioms.push(...this.state.data.ontologyMetrics.individualAxioms)
+            axioms.push(...this.state.data.ontologyMetrics.annotationAxioms)
+            
+            metriscAxioms = {
+                metrics: this.state.data.ontologyMetrics.metrics,
+                axioms: axioms
+            }
+        }
+        
+
         const elements = [
             <OntologyMetricsTabs titles={[
-                { key: "imports", tab: "Imports" },
-                { key: "pm", tab: "Prefixes" }
+                { key: "pm", tab: "Prefixes" }, { key: "imports", tab: "Imports" },
             ]}
                 data={{ imports: this.state.data.ontologyImports, pm: this.state.data.ontologyPrefixManager }} />,
             <OntologyMetricsTabs titles={[
                 { key: "metrics", tab: "Metrics" },
-                { key: "classAxioms", tab: "Class Axioms" },
-                { key: "objectPropertyAxioms", tab: "Object Properties Axioms" },
-                { key: "dataPropertyAxioms", tab: "Data Properties Axioms" },
-                { key: "individualAxioms", tab: "Individual Axioms" },
-                { key: "annotationAxioms", tab: "Annotation Axioms" }
+                { key: "axioms", tab: "Axioms" },
             ]}
-                data={this.state.data.ontologyMetrics} />,
+                data={metriscAxioms} />,
 
         ]
-        
+
         return (
-            <div style={{ paddingRight: '1vw' }}>
+            <div style={{ paddingRight: '1vw' }} >
                 <div style={{ textAlign: 'center', padding: 16 }}>
                     <h1 >{this.props.ontology.name}</h1>
                     <div><h3>{this.state.data.ontologyIRI}</h3></div>
@@ -64,8 +76,8 @@ class OntologyInfo extends React.Component {
                 </div>
                 <div style={{ paddingBottom: 12 }}>
                     {/* <OntologyMetricsTabs titles={[{ key: "desc", tab: "Descriptions" }]} data={this.state.data.ontologyDescriptions} /> */}
-                    <Card title='Descriptions' className='description'>
-                        <ListItem data={this.state.data.ontologyDescriptions} />
+                    <Card title='Description' className='description'>
+                        <ListItem label data={this.state.data.ontologyDescriptions} />
                     </Card>
                 </div>
                 <List
@@ -82,7 +94,7 @@ class OntologyInfo extends React.Component {
                     <DownloadFile ontology={this.props.ontology}
                     />
                 </div>
-            </div>
+            </div >
         );
     }
 }

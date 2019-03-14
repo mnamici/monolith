@@ -6,6 +6,9 @@ import ListMapItem from './ListMapItem';
 
 class Assertion extends React.Component {
     render() {
+        const head = this.props.assertion.mappingHead.secondArg !== null ?
+            this.props.assertion.mappingHead.firstArg+', '+this.props.assertion.mappingHead.secondArg:
+            this.props.assertion.mappingHead.firstArg;
         const data = [
             {
                 mapKey: "Description",
@@ -13,7 +16,7 @@ class Assertion extends React.Component {
             },
             {
                 mapKey: "Head",
-                mapValue: <code>{this.props.assertion.mappingHead.firstArg}</code>
+                mapValue: <code>{head}</code>
             },
             {
                 mapKey: "Body",
@@ -21,7 +24,7 @@ class Assertion extends React.Component {
             },
         ]
         return (
-            <Card title={this.props.entity === true &&
+            <Card className='mappingAssertion' title={this.props.entity === true &&
                 <Entity entity={this.props.assertion.currentEntity} />
             } >
                 <ListMapItem data={data} />

@@ -13,6 +13,7 @@ class SQLViewsPane extends React.Component {
     }
 
     onHandle = (viewID) => {
+        console.log(viewID)
         this.setState({
             current: viewID,
         })
@@ -36,7 +37,7 @@ class SQLViewsPane extends React.Component {
                 </Sider> */}
                 <Layout>
                     <Content >
-                        <div style={{ height: 'calc(96vh - 96px)', overflowY: 'scroll', paddingRight: 12 }}>
+                        <div style={{ height: 'calc(94vh - 96px)', overflowY: 'scroll', paddingRight: 12 }}>
                             {this.state.current !== null &&
                                 <SQLViewsPage ontology={this.props.ontology} mappingID={this.props.mappingID} viewID={this.state.current}/>
                             }

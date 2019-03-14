@@ -59,7 +59,7 @@ class SPARQLEndpoint extends React.Component {
 
     render() {
         return (
-            <Layout style={{height: 'calc(98vh - 21px)'}}>
+            <Layout style={{minHeight: 'calc(100vh - 25px)', marginLeft: '-1vw'}}>
                 <Sider
                     style={{ background: '#000c17' }}
                 >

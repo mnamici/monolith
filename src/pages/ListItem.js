@@ -30,11 +30,20 @@ class ListItem extends React.Component {
                     key: this.props.data[i][0].entityID + '_' + this.props.data[i][1].entityID,
                     value: <div>
                         <Entity predicateType={this.props.predicateType} entity={this.props.data[i][0]} />
-                        <br/>
+                        <br />
                         <Entity predicateType={this.props.predicateType} entity={this.props.data[i][1]} />
                     </div>
                 })
             }
+        }
+        else if (this.props.label) {
+            for (let i = 0; i < this.props.data.length; i++) {
+                data.push({
+                    key: i,
+                    value: this.props.data[i].content,
+                })
+            }
+
         }
         // string
         else {

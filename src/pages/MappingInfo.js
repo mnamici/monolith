@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Card } from 'antd';
+import { List, Card, Icon } from 'antd';
 
 import DownloadFile from './DownloadFile'
 import { getMappingInfo } from '../api/MastroApi';
@@ -13,7 +13,8 @@ class MappingInfo extends React.Component {
         data: {
             mapping: { mappingDescription: "" },
             mappingDBConnections: [{}],
-            mappingTemplates: []
+            mappingTemplates: [],
+            showPassword: false
         }
     }
 
@@ -50,7 +51,13 @@ class MappingInfo extends React.Component {
             },
             {
                 mapKey: "Password",
-                mapValue: data.mappingDBConnections[0].dbPassword
+                mapValue: <div>
+                    <span>{this.state.showPassword ? data.mappingDBConnections[0].dbPassword : '......'}</span>
+                    <Icon
+                        type={this.state.showPassword ? 'eye-invisible' : 'eye'}
+                        style={{ float: 'right' }}
+                        onClick={() => this.setState((state) => state.showPassword = !state.showPassword)} />
+                </div>
             },
         ]
         const elements = [

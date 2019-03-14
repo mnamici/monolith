@@ -81,7 +81,7 @@ class OntologyWiki extends React.Component {
                             {
                                 this.state.predicateType === undefined &&
                                 this.state.current === undefined &&
-                                <h3 style={{ textAlign: 'center', marginBottom: 0 }}>Search or select something</h3>
+                                <h3 style={{ textAlign: 'center', marginBottom: 0 }}>Search or select an entity</h3>
                             }
                             <Route exact path="/open/ontology/wiki/:predicateType?/:entityID?" render={(props) => (
                                 this.state.current !== props.match.params.entityID && this.state.current !== undefined ?

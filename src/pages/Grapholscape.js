@@ -31,7 +31,7 @@ class Graphol extends React.Component {
 
     render() {
         return (
-            <div style={{ borderRadius: 10, border: 'solid white 10px' }}>
+            <div style={{ borderRadius: 10, border: 'solid white 10px', background: 'white' }}>
                 <div id="grapholscape-container" style={{ position: "relative", height: "90vh" }} />
             </div>
         )

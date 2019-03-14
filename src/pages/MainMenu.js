@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
-import { Menu, Icon, Popover } from 'antd';
+import { Menu, Icon } from 'antd';
 //import ClosableMenuItem from './ClosableMenuItem'
 
 const SubMenu = Menu.SubMenu;
@@ -12,21 +12,21 @@ class MainMenu extends React.Component {
     getClosableMenuItem(item, path) {
         return (
             <MenuItem key={item.name + "-" + item.version}>
-                <Popover content={<small>{item.version}</small>} placement='right'>
-                    <div>
-                        <NavLink
-                            to={path}
-                            onClick={() => this.props.setcurrent(item)}
-                            activeStyle={{ fontWeight: "bold", color: "white" }}
-                            style={{ color: 'rgba(255, 255, 255, 0.75)' }}
-                        >
-                            {item.name}
-                        </NavLink>
-                        <span style={{ float: "right" }} onClick={() => this.props.close(item)}>
-                            <Icon type="close" style={{ color: 'rgba(255, 255, 255, 0.75)' }} />
-                        </span>
-                    </div>
-                </Popover>
+                {/* <Popover content={<small>{item.version}</small>} placement='right'> */}
+                <div>
+                    <NavLink
+                        to={path}
+                        onClick={() => this.props.setcurrent(item)}
+                        activeStyle={{ fontWeight: "bold", color: "white" }}
+                        style={{ color: 'rgba(255, 255, 255, 0.75)' }}
+                    >
+                        {item.name + " " + item.version.split("/").pop()}
+                    </NavLink>
+                    <span style={{ float: "right" }} onClick={() => this.props.close(item)}>
+                        <Icon type="close" style={{ color: 'rgba(255, 255, 255, 0.75)' }} />
+                    </span>
+                </div>
+                {/* </Popover> */}
             </MenuItem>
         );
     }

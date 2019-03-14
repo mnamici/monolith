@@ -24,6 +24,15 @@ class SQLViewsPage extends React.Component {
             this.loaded)
     }
 
+    componentWillReceiveProps(props) {
+        getMappingView(
+            props.ontology.name,
+            props.ontology.version,
+            props.mappingID,
+            props.viewID,
+            this.loaded)
+    }
+
     loaded = (data) => {
         this.setState({ data: data })
     }
@@ -40,15 +49,15 @@ class SQLViewsPage extends React.Component {
             {
                 mapKey: "Body",
                 mapValue: <SyntaxHighlighter language='sql' style={darcula}>
-                              {sqlFormatter.format(data.sqlView.sqlViewCode)}
-                          </SyntaxHighlighter>
+                    {sqlFormatter.format(data.sqlView.sqlViewCode)}
+                </SyntaxHighlighter>
             },
         ]
         const elements = [
-            <Card title={data.sqlView.sqlViewID} >
+            <Card className='mappingAssertion' title={data.sqlView.sqlViewID} >
                 <ListMapItem data={first} />
             </Card>,
-            <Divider>{"Mapping Assertions"}</Divider>,
+            <Divider>{"Ontology Mappings"}</Divider>,
             <AssertionsList entity list={data.mappingAssertions} />,
             <Divider>{'Dependencies'}</Divider>,
             <Dependencies dependencies={data.mappingDependencies} />

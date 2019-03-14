@@ -62,20 +62,20 @@ h1 {
 /* EXPAND MAIN MENU BUTTON */
 
 .ant-layout-sider-trigger {
-  height: calc(21px + 2vh);
-  line-height: calc(21px + 2vh);
+  height: 25px;
+  line-height: 25px;
 }
 
 /* RESIZE MAPPING SELECTED TO CORRECTLY SHOW POP UP */
 
 .ant-select-selection-selected-value .mapping {
-  width: calc(118px - 1vw);
+  width: calc(318px - 1vw);
 }
 
 /* SHOW ELLIPSIS IF MAPPING NAME TOO LONG */
 
 .mapping {
-  width: calc(148px - 1vw);
+  width: calc(348px - 1vw);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -91,12 +91,6 @@ h1 {
 
 .ant-list-item {
   margin-bottom: 4px !important
-}
-
-/* ROUND POPOVER */
-
-.ant-popover-inner-content {
-  border-radius: 4px
 }
 
 /* WORD WRAP IN TABLE CELLS*/
@@ -135,12 +129,25 @@ td {
   padding: 0px 24px;
 }
 
+.ant-card-body {
+  height: 160px;
+  overflow: auto;
+}
+
+.mappingAssertion > .ant-card-body{
+  height: unset
+}
 /* FIX HEIGHT OF CARDS IN WIKI ETC */
 
 .classCard .ant-card-body, .objectPropertyCard .ant-card-body, .dataPropertyCard .ant-card-body, .mappingCard .ant-card-body {
   height: 150px;
   overflow: auto;
   padding: 4px;
+}
+
+.ant-table-placeholder {
+  padding: 0px;
+  border: unset
 }
 
 .description .ant-card-body {
@@ -220,11 +227,12 @@ a:hover {
 
 /* COMPONENTS BACKGROUND */
 
-.ant-card, .ant-collapse-content, .ant-layout-footer {
+.ant-card, .ant-collapse-content, .ant-layout-footer, .ant-drawer-header, .ant-drawer-wrapper-body, .ant-table-placeholder {
   background-color: rgb(87, 102, 121) !important;
 }
 
 .ant-popover-inner-content, .ant-popover-arrow {
+  border-color: rgb(43, 43, 43) !important;
   background-color: rgb(43, 43, 43);
   color: white
 }
@@ -275,8 +283,14 @@ a:hover {
 /* TEXT COLOR */
 
 h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-tabs-new-tab, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-tabs-nav .ant-tabs-tab-active {
-  color: rgba(255, 255, 255, 0.85) !important;
+  color: rgba(255, 255, 255, 0.75) !important;
 }
+
+/* ROW COLOR */
+
+.ant-table-tbody > tr > td {
+  border-color:  rgba(28, 48, 66, 0.80);
+ }
 
 .ant-tabs-nav .ant-tabs-tab:hover {
   color: rgba(255, 255, 255, 0.55);
@@ -286,9 +300,9 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-tabs-new-t
   background-color: rgba(255, 255, 255, 0.85);
 }
 
-.ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab-active, .SPARQLTab {
+.ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab-active, .SPARQLTab, .ontologyMenu {
   /* background-color: rgb(10, 27, 45); */
-  background-color: rgb(19, 27, 44);
+  background-color: #00214086;
   border-radius: 0px;
   color: white
 }

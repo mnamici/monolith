@@ -75,8 +75,8 @@ class LoadOntologies extends React.Component {
                 }
                 {
                     this.state.current > 0 && (
-                        <Button style={{ marginLeft: 8 }} onClick={this.prev}>
-                            Previous
+                        <Button style={{ marginTop: 8 }} onClick={this.prev}>
+                            Back
                         </Button>
                     )
                 }

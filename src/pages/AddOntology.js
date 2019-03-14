@@ -94,7 +94,6 @@ class DrawerForm extends React.Component {
                             width: '100%',
                             borderTop: '1px solid #e9e9e9',
                             padding: '10px 16px',
-                            background: '#fff',
                             textAlign: 'right',
                         }}
                     >

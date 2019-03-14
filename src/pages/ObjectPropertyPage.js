@@ -55,7 +55,15 @@ class ObjectPropertyPage extends React.Component {
         this.state.data.objectPropertyAsymmetric && objectPropertyCharacteristics.push("Asymmetric")
 
         const components = [
-
+            <Card className='objectPropertyCard' title="Domain" >
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.objectPropertyDomain} />
+            </Card>,
+            <Card className='objectPropertyCard' title="Range" >
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.objectPropertyRange} />
+            </Card>,
+            <Card className='objectPropertyCard' title="Object Property Characteristics" >
+                <ListItem data={objectPropertyCharacteristics} />
+            </Card>,
             <Card className='objectPropertyCard' title="Equivalent Object Properties" >
                 <ListItem entity predicateType={predicateTypes.op} data={this.state.data.equivalentObjectProperties} />
             </Card>,
@@ -71,15 +79,6 @@ class ObjectPropertyPage extends React.Component {
             <Card className='objectPropertyCard' title="Inverse Object Properties" >
                 <ListItem entity predicateType={predicateTypes.op} data={this.state.data.inverseObjectProperties} />
             </Card>,
-            <Card className='objectPropertyCard' title="Domain" >
-                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.objectPropertyDomain} />
-            </Card>,
-            <Card className='objectPropertyCard' title="Range" >
-                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.objectPropertyRange} />
-            </Card>,
-            <Card className='objectPropertyCard' title="Object Property Characteristics" >
-                <ListItem data={objectPropertyCharacteristics} />
-            </Card>,
             <Card className='objectPropertyCard' title="Object Property Individuals" >
                 <ListItem entity predicateType={predicateTypes.op} data={this.state.data.objectPropertyIndividuals} />
             </Card>,
@@ -93,9 +92,9 @@ class ObjectPropertyPage extends React.Component {
                         <h3>{this.state.data.currentEntity.entityPrefixIRI}</h3>
                     </Popover>
                 </div>
-                <div style={{ padding: '0px' }}>
-                    <Card title="Descriptions" className='description'>
-                        <ListItem  data={this.state.data.objectPropertyDescriptions} />
+                <div style={{ paddingBottom: '16px' }}>
+                    <Card title="Description" className='description'>
+                        <ListItem data={this.state.data.objectPropertyDescriptions} />
                     </Card>
                 </div>
                 <List
