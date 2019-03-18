@@ -90,7 +90,7 @@ class MappingSelector extends React.Component {
                             this.props.mappings[0].mappingID
                         }
                         onChange={this.props.onSelection}
-                        disabled={!this.state.enabledStart}>
+                        disabled={this.state.loading || !this.state.enabledStart}>
                         {mappings}
                     </Select>
                 </div>

@@ -120,12 +120,14 @@ class MastroSPARQLTabPane extends React.Component {
                 <Results ontology={this.props.ontology}
                     mappingID={this.state.selectedMappingID}
                     executionID={this.state.executionID}
-                    numberOfResults={this.state.status.numResults} />,
+                    numberOfResults={this.state.status.numResults}
+                    running={this.state.loading}
+                />,
                 <QueryExecutionReport status={this.state.status} />)
         }
 
         return (
-            <div style={{ margin: '0px 8px 0px 8px' }}>
+            <div style={{ padding: '0px 12px 8px 8px', height: 'calc(100vh - 81px)', overflow: 'auto' }}>
                 <List
                     grid={{ gutter: 8, column: 1 }}
                     dataSource={elements}

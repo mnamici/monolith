@@ -76,9 +76,9 @@ export const fakeDataOI = {
         mapValue: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
     }],
     ontologyDescriptions: [
-        {content: "First descritpion"},
-        {content: "Second descritpion"},
-        {content: "Last descritpion: this time it is very long because i have to test long descriptions. Everything start when i was 4 years old. My mother blamed to brun the table. It was not a brand new table but my mother was very affectionated to it. It was not my fault, and my brother's neither, so I started thinking how to solve the question. \nThere was a fish bowl on the table and it ws very well lightened by the sun. I stare at the bowl, I stare at the fish, I stare at the bowl... EUREKA! The bowl act as a magnifing glass and burn the table. I went to tell my mother my discover, but first she didn't believe me because the fish in the bowl was still alive and not boiled. When my father came back home, I told the explaination of the fact to him trying to explain that the water act as a magnifying glass and does not become hot in this kind of work. \nFinally he listen to my point, the mystery was solved."}
+        { content: "First descritpion" },
+        { content: "Second descritpion" },
+        { content: "Last descritpion: this time it is very long because i have to test long descriptions. Everything start when i was 4 years old. My mother blamed to brun the table. It was not a brand new table but my mother was very affectionated to it. It was not my fault, and my brother's neither, so I started thinking how to solve the question. \nThere was a fish bowl on the table and it ws very well lightened by the sun. I stare at the bowl, I stare at the fish, I stare at the bowl... EUREKA! The bowl act as a magnifing glass and burn the table. I went to tell my mother my discover, but first she didn't believe me because the fish in the bowl was still alive and not boiled. When my father came back home, I told the explaination of the fact to him trying to explain that the water act as a magnifying glass and does not become hot in this kind of work. \nFinally he listen to my point, the mystery was solved." }
     ],
     ontologyMetrics: {
         metrics: [{
@@ -723,4 +723,40 @@ export const results = {
         ]
     ]
 
+}
+
+var fakeInit = 0;
+
+export const status = () => {
+    fakeInit++;
+    if (fakeInit > 3) fakeInit = 0;
+    return { status: fakeInit === 3 ? 'RUNNING' : 'LOADING' }
+}
+
+export const queryStatus = () => {
+    fakeInit++;
+    if (fakeInit > 3) fakeInit = 0;
+    return {
+        status: 'Running',
+        percentage: fakeInit === 3 ? 100 : fakeInit * 33,
+        numOntologyRewritings: 2,
+        numHighLevelQueries: 133,
+        numOptimizedQueries: 21,
+        numLowLevelQueries: 21,
+        executionTime: 1248,
+        numResults: 1204871245097
+    }
+}
+
+// simulate results loading
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export async function queryResults(callback) {
+    await sleep(10);
+    for (let i = 0; i < fakeInit; i++) {
+        results.results.push(...results.results)
+    }
+    callback(results)
 }

@@ -8,7 +8,7 @@ const ips = ['192.168.0.59', '192.168.0.15']
 var mastroUrl = 'http://' + ips[0] + ':8080/mws/rest/mwsx'
 // mastroUrl = '/mws/rest/mwsx'
 
-const fakeCalls = true
+const fakeCalls = false
 
 function reportError(msg) {
     console.error(msg)
@@ -480,16 +480,9 @@ export function startMastro(name, version, mapping, callback) {
     });
 }
 
-var fakeInit = 0;
+
 export function getMastroStatus(name, version, mapping, callback) {
-    if (fakeCalls) {
-        const status = {
-            status: fakeInit === 3 ? 'RUNNING' : 'LOADING'
-        }
-        fakeInit++;
-        if (fakeInit > 3) fakeInit = 0;
-        return callback(status)
-    }
+    if (fakeCalls) { return callback(fakeData.status()) }
     const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/instance'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
@@ -544,21 +537,7 @@ export function startQuery(name, version, mapping, queryID, callback) {
 }
 
 export function getQueryStatus(name, version, mapping, queryID, callback) {
-    if (fakeCalls) {
-        const status = {
-            status: 'Running',
-            percentage: fakeInit === 3 ? 100 : fakeInit * 33,
-            numOntologyRewritings: 2,
-            numHighLevelQueries: 133,
-            numOptimizedQueries: 21,
-            numLowLevelQueries: 21,
-            executionTime: 1248,
-            numResults: 1204871245097
-        }
-        fakeInit++;
-        if (fakeInit > 3) fakeInit = 0;
-        return callback(status)
-    }
+    if (fakeCalls) { return callback(fakeData.queryStatus()) }
     const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + queryID + '/status'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
@@ -573,23 +552,23 @@ export function getQueryStatus(name, version, mapping, queryID, callback) {
         reportError('Error calling ' + method + ' ' + url);
         console.error(err)
     });
-
-
-}
-// simulate results loading
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function sleepFunc(callback) {
-    await sleep(2000);
-    callback(fakeData.results)
-}
-
-
-export function getQueryResults(name, version, mapping, executionID, page, callback) {
-    console.log(name, version, mapping, executionID, page, callback)
-    if (fakeCalls) {
-        return sleepFunc(callback)
-    }
+export function getQueryResults(name, version, mapping, executionID, page, pageSize, callback) {
+    // console.log(name, version, mapping, executionID, page, pageSize, callback)
+    if (fakeCalls) { return fakeData.queryResults(callback) }
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/results'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion, pagesize: pageSize, pagenumber: page },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
 }

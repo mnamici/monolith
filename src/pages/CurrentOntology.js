@@ -22,7 +22,7 @@ class CurrentOntology extends React.Component {
     }
     render() {
         return (
-            <Layout style={{ margin: '-1vh -1vw -10vh -1vw'}}>
+            <Layout style={{ margin: '-1vh -1vw', height: 'calc(100vh - 25px)'}}>
                 <Sider
                     // width={200} 
                     className='ontologyMenu'

@@ -34,6 +34,7 @@ class QueryExecutionReport extends React.Component {
         return (
             <div>
                 <Card
+                    className='queryExecutionReport'
                     style={{ width: '100%' }}
                     tabList={tabList}
                     activeTabKey={this.state.tabKey}

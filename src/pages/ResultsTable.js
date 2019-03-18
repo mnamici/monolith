@@ -9,12 +9,26 @@ class Results extends React.Component {
     state = {
         headTerms: [],
         data: [],
-        pagination: { current: 1 },
+        pagination: { current: 1, defaultPageSize: 10 },
         loading: false,
+        interval: 0,
     };
 
     componentDidMount() {
-        this.fetch(1);
+        this.startPolling()
+    }
+
+    componentWillUnmount() {
+        this.stopPolling()
+    }
+
+    startPolling() {
+        this.setState({ interval: setInterval(this.polling, 1000), loading: true })
+    }
+
+    stopPolling() {
+        clearInterval(this.state.interval)
+        this.setState({ loading: false })
     }
 
     convertData(results) {
@@ -27,7 +41,7 @@ class Results extends React.Component {
             object['url'] = i;
             data.push(object);
         }
-        this.setState({headTerms: results.headTerms, data: data, loading: false });
+        this.setState({ headTerms: results.headTerms, data: data, loading: this.state.loading && results.results.length < this.state.pagination.defaultPageSize });
     }
 
     handleTableChange = (pagination, filters, sorter) => {
@@ -36,18 +50,22 @@ class Results extends React.Component {
         this.setState({
             pagination: pager,
         });
-        this.fetch(pager.current);
+        this.polling();
     }
 
-    fetch = (page) => {
-        this.setState({ loading: true });
-        getQueryResults(
-            this.props.ontology.name,
-            this.props.ontology.version,
-            this.props.mapping,
-            this.props.executionID,
-            page,
-            this.convertData.bind(this))
+    polling = () => {
+        if (this.props.running)
+            getQueryResults(
+                this.props.ontology.name,
+                this.props.ontology.version,
+                this.props.mapping,
+                this.props.executionID,
+                this.state.pagination.current,
+                this.state.pagination.defaultPageSize,
+                this.convertData.bind(this))
+        else {
+            this.stopPolling()
+        }
         // https.get(fakeDataUrl + '?page=' + page, (resp) => {
         //     let data = '';
 
@@ -75,13 +93,13 @@ class Results extends React.Component {
     }
 
     render() {
-        
+
         const columns = this.state.headTerms.map(item => ({ title: item, dataIndex: item }));
         return (
             <div>
                 <p className='results'>{this.props.numberOfResults} results</p>
                 <Table
-                    style={{minHeight: 200}}
+                    style={{ minHeight: 200 }}
                     columns={columns}
                     rowKey={record => record.url}
                     dataSource={this.state.data}
@@ -89,7 +107,7 @@ class Results extends React.Component {
                     loading={this.state.loading}
                     onChange={this.handleTableChange}
                 />
-            </div> 
+            </div>
         );
     }
 }

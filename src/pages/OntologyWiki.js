@@ -51,7 +51,7 @@ class OntologyWiki extends React.Component {
         // console.log("RENDER: ",this.state)
         return (
             <Layout>
-                <Header style={{ backgroundColor: 'transparent', display: 'flex', justifyContent: 'center', lineHeight: 1.5 }}>
+                <Header style={{ backgroundColor: 'transparent', display: 'flex', justifyContent: 'center', lineHeight: 1.5, paddingTop:16 }}>
                     <div style={{ display: 'inline-flex' }}>
                         <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
                         <SearchIndividuals style={{ display: 'inherit' }} />
