@@ -1,5 +1,5 @@
 {
-  "name": "hockety",
+  "name": "monolith",
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
@@ -21,6 +21,7 @@
     "react-scripts": "^2.1.8",
     "react-syntax-highlighter": "^10.1.2",
     "sql-formatter": "^2.3.2",
+    "typescript": "^3.3.3333",
     "yasgui-yasqe": "^2.11.22"
   },
   "scripts": {
