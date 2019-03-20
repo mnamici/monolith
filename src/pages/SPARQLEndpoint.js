@@ -10,10 +10,9 @@ const {
 
 class SPARQLEndpoint extends React.Component {
     state = {
-        catalog: [],
-        mappings: [],
-        current: null,
-        panes: []
+        catalog: undefined,
+        mappings: undefined,
+        open: null,
     }
 
     componentDidMount() {
@@ -51,9 +50,9 @@ class SPARQLEndpoint extends React.Component {
         }));
     }
 
-    setCurrent = (current) => {
+    open = (open) => {
         this.setState({
-            current: current,
+            open: open,
         });
     }
 
@@ -67,7 +66,8 @@ class SPARQLEndpoint extends React.Component {
                         ontology={this.props.ontology}
                         mappings={this.state.mappings}
                         catalog={this.state.catalog} 
-                        open={this.setCurrent}
+                        open={this.open}
+                        refreshCatalog={this.requestCatalog.bind(this)}
                         />
                     {/* <MappingSelector ontology={this.props.ontology} mappings={this.state.mappings}/> */}
                 </Sider>
@@ -77,9 +77,10 @@ class SPARQLEndpoint extends React.Component {
                             <AddCloseTabs
                                 ontology={this.props.ontology}
                                 mappings={this.state.mappings}
-                                panes={this.state.panes}
                                 catalog={this.state.catalog}
-                                open={this.state.current} />
+                                open={this.state.open} 
+                                refreshCatalog={this.requestCatalog.bind(this)}
+                                />
                         </div>
                     </Content>
                 </Layout>

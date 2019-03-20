@@ -5,6 +5,8 @@ import { getQueryResults } from '../api/MastroApi';
 
 // const fakeDataUrl = "https://swapi.co/api/people/"
 
+const POLLING_TIME = 1000;
+
 class Results extends React.Component {
     state = {
         headTerms: [],
@@ -18,12 +20,18 @@ class Results extends React.Component {
         this.startPolling()
     }
 
+    componentWillReceiveProps(props) {
+        const pagination = { ...this.state.pagination };
+        pagination.total = props.numberOfResults;
+        this.setState({pagination: pagination})
+    }
+
     componentWillUnmount() {
         this.stopPolling()
     }
 
     startPolling() {
-        this.setState({ interval: setInterval(this.polling, 1000), loading: true })
+        this.setState({ interval: setInterval(this.polling, POLLING_TIME), loading: true })
     }
 
     stopPolling() {
@@ -50,7 +58,14 @@ class Results extends React.Component {
         this.setState({
             pagination: pager,
         });
-        this.polling();
+        getQueryResults(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            this.props.mappingID,
+            this.props.executionID,
+            pager.current,
+            this.state.pagination.defaultPageSize,
+            this.convertData.bind(this))
     }
 
     polling = () => {
@@ -58,7 +73,7 @@ class Results extends React.Component {
             getQueryResults(
                 this.props.ontology.name,
                 this.props.ontology.version,
-                this.props.mapping,
+                this.props.mappingID,
                 this.props.executionID,
                 this.state.pagination.current,
                 this.state.pagination.defaultPageSize,
@@ -93,7 +108,6 @@ class Results extends React.Component {
     }
 
     render() {
-
         const columns = this.state.headTerms.map(item => ({ title: item, dataIndex: item }));
         return (
             <div>

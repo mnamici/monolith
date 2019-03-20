@@ -3,83 +3,48 @@ import { Table, Popover } from 'antd';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
 import sqlFormatter from 'sql-formatter'
-const https = require('https');
+import { getViewRewritings } from '../api/MastroApi';
 
-const fakeDataUrl = "https://swapi.co/api/people/"
+const POLLING_TIME = 1000;
 
-const data = [
-    {
-        query: "select person_name from person_table",
-        numResults: 12,
-        time: 121234
-    },
-    {
-        query: "select person_name from names_table",
-        numResults: 212,
-        time: 121232334
-    },
-    {
-        query: "select person_name from other_table",
-        numResults: 142,
-        time: 55555
-    }
-]
-
-class ViewRewritings extends React.Component {
+export default class ViewRewritings extends React.Component {
     state = {
         data: [],
-        pagination: { current: 1, onChange: (page) => this.handleChange(page) },
+        pagination: { current: 1, defaultPageSize: 10, size: 'small' },
         loading: false,
+        interval: 0
     };
 
     componentDidMount() {
-        //fetch from server
-        // this.fetch(1);
-
-        //test mastro results
-        this.setState({ data: data });
+        this.startPolling()
     }
 
-    handleChange = (page) => {
-        const pager = { ...this.state.pagination };
-        pager.current = page;
-        this.setState({
-            pagination: pager,
-        });
-        this.fetch(pager.current);
+    componentWillUnmount() {
+        this.stopPolling()
     }
 
-    fetch = (page) => {
-        this.setState({ loading: true });
-        https.get(fakeDataUrl + '?page=' + page, (resp) => {
-            let data = '';
-
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                const res = JSON.parse(data);
-                const pagination = { ...this.state.pagination };
-                pagination.total = res.count;
-                this.setState({
-                    loading: false,
-                    data: res.results.map(item => item.name),
-                    pagination: pagination
-                });
-            });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-
+    startPolling() {
+        getViewRewritings(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            this.props.mappingID,
+            this.props.executionID,
+            this.state.pagination.current,
+            this.state.pagination.defaultPageSize,
+            this.convertData.bind(this))
+        if (this.props.running)
+            this.setState({ interval: setInterval(this.polling, POLLING_TIME), loading: true })
     }
-    render() {
+
+    stopPolling() {
+        clearInterval(this.state.interval)
+        this.setState({ loading: false })
+    }
+
+    convertData(results) {
         let data = []
-        for (let i = 0; i < this.state.data.length; i++) {
-            const item = this.state.data[i]
+        for (let i = 0; i < results.length; i++) {
+            const item = results[i]
             data.push({
                 key: i,
                 value: <Popover content={
@@ -93,16 +58,61 @@ class ViewRewritings extends React.Component {
                 </Popover>
             })
         }
+        this.setState({ data: data, loading: this.state.loading && results.length < this.state.pagination.defaultPageSize });
+    }
+
+    handleTableChange = (pagination, filters, sorter) => {
+        const pager = { ...this.state.pagination };
+        pager.current = pagination.current;
+        this.setState({
+            pagination: pager,
+        });
+        getViewRewritings(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            this.props.mappingID,
+            this.props.executionID,
+            pager.current,
+            this.state.pagination.defaultPageSize,
+            this.convertData.bind(this))
+    }
+
+    polling = () => {
+        if (this.props.running)
+            getViewRewritings(
+                this.props.ontology.name,
+                this.props.ontology.version,
+                this.props.mappingID,
+                this.props.executionID,
+                this.state.pagination.current,
+                this.state.pagination.defaultPageSize,
+                this.convertData.bind(this))
+        else {
+            this.stopPolling()
+        }
+    }
+
+    handleChange = (page) => {
+        const pager = { ...this.state.pagination };
+        pager.current = page;
+        this.setState({
+            pagination: pager,
+        });
+        this.fetch(pager.current);
+    }
+
+
+    render() {
+        console.log(this.state.data)
         return (
             <Table
                 columns={[{ dataIndex: 'value' }]}
                 showHeader={false}
                 pagination={this.state.pagination}
-                dataSource={data}
+                dataSource={this.state.data}
                 loading={this.state.loading}
+                onChange={this.handleTableChange}
             />
         )
     }
 }
-
-export default ViewRewritings;

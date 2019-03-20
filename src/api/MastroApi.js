@@ -8,7 +8,7 @@ const ips = ['192.168.0.59', '192.168.0.15']
 var mastroUrl = 'http://' + ips[0] + ':8080/mws/rest/mwsx'
 // mastroUrl = '/mws/rest/mwsx'
 
-const fakeCalls = false
+const fakeCalls = true
 
 function reportError(msg) {
     console.error(msg)
@@ -17,18 +17,9 @@ function reportError(msg) {
 
 export function login(username, password, callback) {
     if (fakeCalls) {
-        if (username === 'santaroni' && password === 'ronconelli') {
-            const h = {
-                'Access-Control-Allow-Origin': '*',
-                // 'Authorization': 'Basic ' + btoa(username + ':' + password)
-            }
-            localStorage.setItem('headers', JSON.stringify(h))
-            return callback();
-        }
-        else {
-            reportError('Wrong username or password');
-            return;
-        }
+        try { fakeData.fakeLogin(username, password, callback) }
+        catch (err) { reportError(err.message) }
+        return
     }
     const url = mastroUrl + '/login'
     const method = 'GET'
@@ -430,6 +421,26 @@ export function getQueryCatalog(name, version, callback) {
         params: { version: encodedVersion },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
+        callback(response.data.queryCatalog || [])
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function putInQueryCatalog(name, version, query, callback) {
+    console.log(name, version, query, callback)
+    if (fakeCalls) return callback(fakeData.queryCatalog)
+    const url = mastroUrl + '/owlOntology/' + name + '/version/query'
+    const method = 'POST'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        data: query,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
         callback()
         if (response.data === 1)
             throw ErrorEvent()
@@ -439,16 +450,16 @@ export function getQueryCatalog(name, version, callback) {
     });
 }
 
-export function putInQueryCatalog(name, version, query, callback) {
+export function deleteFromQueryCatalog(name, version, queryID, callback) {
+    console.log(name, version, queryID, callback)
     if (fakeCalls) return callback(fakeData.queryCatalog)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/querycatalog'
-    const method = 'GET'
+    const url = mastroUrl + '/owlOntology/' + name + '/version/query/' + queryID
+    const method = 'DELETE'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
         url: url,
         method: method,
-        params: { version: encodedVersion },
-        data: query,
+        data: encodedVersion ,
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback()
@@ -499,7 +510,8 @@ export function getMastroStatus(name, version, mapping, callback) {
     });
 }
 
-export function startNewQuery(name, version, mapping, query, callback) {
+export function startNewQuery(name, version, mapping, query, reasoning, callback) {
+    // console.log(name, version, mapping, query, reasoning, callback)
     if (fakeCalls) return callback('pippoQuery')
     const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/start'
     const method = 'POST'
@@ -507,7 +519,7 @@ export function startNewQuery(name, version, mapping, query, callback) {
     axios({
         url: url,
         method: method,
-        params: { version: encodedVersion },
+        params: { version: encodedVersion, reasoning: reasoning },
         data: query,
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
@@ -518,7 +530,7 @@ export function startNewQuery(name, version, mapping, query, callback) {
     });
 }
 
-export function startQuery(name, version, mapping, queryID, callback) {
+export function startQuery(name, version, mapping, queryID, reasoning, callback) {
     if (fakeCalls) return callback('pippoQuery')
     const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + queryID + '/start'
     const method = 'POST'
@@ -526,6 +538,7 @@ export function startQuery(name, version, mapping, queryID, callback) {
     axios({
         url: url,
         method: method,
+        params: { reasoning: reasoning },
         data: encodedVersion,
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
@@ -555,7 +568,6 @@ export function getQueryStatus(name, version, mapping, queryID, callback) {
 }
 
 export function getQueryResults(name, version, mapping, executionID, page, pageSize, callback) {
-    // console.log(name, version, mapping, executionID, page, pageSize, callback)
     if (fakeCalls) { return fakeData.queryResults(callback) }
     const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/results'
     const method = 'GET'
@@ -567,6 +579,60 @@ export function getQueryResults(name, version, mapping, executionID, page, pageS
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function getOntologyRewritings(name, version, mapping, executionID, page, pageSize, callback) {
+    if (fakeCalls) { return callback(fakeData.ontoRews) }
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/ontologyRewritings'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion, pagesize: pageSize, pagenumber: page },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data.ontologyRewritings)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function getMappingRewritings(name, version, mapping, executionID, page, pageSize, callback) {
+    if (fakeCalls) { return callback(fakeData.mapRews) }
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/mappingRewritings'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion, pagesize: pageSize, pagenumber: page },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data.mappingRewritings)
+    }).catch(function (err) {
+        reportError('Error calling ' + method + ' ' + url);
+        console.error(err)
+    });
+}
+
+export function getViewRewritings(name, version, mapping, executionID, page, pageSize, callback) {
+    if (fakeCalls) { return callback(fakeData.viewRews) }
+    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/viewRewritings'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion, pagesize: pageSize, pagenumber: page },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data.viewRewritings)
     }).catch(function (err) {
         reportError('Error calling ' + method + ' ' + url);
         console.error(err)

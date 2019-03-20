@@ -287,7 +287,7 @@ a:hover {
 
 /* TEXT COLOR */
 
-h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-tabs-new-tab, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-tabs-nav .ant-tabs-tab-active, .ant-pagination-item-ellipsis {
+h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-tabs-new-tab, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-tabs-nav .ant-tabs-tab-active, .ant-pagination-item-ellipsis, .ant-progress-text {
   color: rgba(255, 255, 255, 0.75) !important;
 }
 

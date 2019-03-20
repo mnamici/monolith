@@ -1,3 +1,17 @@
+export function fakeLogin(username, password, callback) {
+    if (username === 'santaroni' && password === 'ronconelli') {
+        const h = {
+            'Access-Control-Allow-Origin': '*',
+            // 'Authorization': 'Basic ' + btoa(username + ':' + password)
+        }
+        localStorage.setItem('headers', JSON.stringify(h))
+        return callback();
+    }
+    else {
+        throw Error('Wrong username or password');
+    }
+}
+
 export const fakeDataGO = [
     {
         "ontologyID": "FIRST",
@@ -734,10 +748,10 @@ export const status = () => {
 }
 
 export const queryStatus = () => {
-    fakeInit++;
+    fakeInit += 0.5;
     if (fakeInit > 3) fakeInit = 0;
     return {
-        status: 'Running',
+        status: fakeInit === 3 ? 'FINISHED' : 'Running',
         percentage: fakeInit === 3 ? 100 : fakeInit * 33,
         numOntologyRewritings: 2,
         numHighLevelQueries: 133,
@@ -754,9 +768,40 @@ function sleep(ms) {
 }
 
 export async function queryResults(callback) {
-    await sleep(10);
-    for (let i = 0; i < fakeInit; i++) {
-        results.results.push(...results.results)
-    }
+    await sleep(100);
+    if (fakeInit === 1)
+        for (let i = 0; i < 5; i++) {
+            results.results.push(...results.results)
+        }
     callback(results)
 }
+
+export const ontoRews = [
+    "select ?x ?y ?z where {?x ?y ?z}",
+    "select ?x ?y ?z where {?x owl:topObjectProperty ?z}",
+    "select ?x ?y ?z where {?x owl:topDataProperty ?z}"
+]
+
+export const mapRews = [
+    "select x from view_01",
+    "select y from view_01",
+    "select z from view_01",
+]
+
+export const viewRews = [
+    {
+        query: "select person_name from person_table",
+        numResults: 12,
+        time: 121234
+    },
+    {
+        query: "select person_name from names_table",
+        numResults: 212,
+        time: 121232334
+    },
+    {
+        query: "select person_name from other_table",
+        numResults: 142,
+        time: 55555
+    }
+]

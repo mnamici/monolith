@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Button, Progress, List, Popover } from 'antd';
+import { Switch, Button, Progress, List, Popover, Modal } from 'antd';
 import YASQE from 'yasgui-yasqe'
 import '../css/yasqe.min.css'
 import { Input } from 'antd';
@@ -12,7 +12,7 @@ import { startQuery, getQueryStatus, startNewQuery, putInQueryCatalog } from '..
 
 const { TextArea } = Input;
 
-
+const POLLING_TIME = 1000
 
 class MastroSPARQLTabPane extends React.Component {
     state = {
@@ -20,6 +20,9 @@ class MastroSPARQLTabPane extends React.Component {
         selectedMappingID: this.props.mappings[0] !== undefined && this.props.mappings[0].mappingID,
         status: {},
         interval: 0,
+        modalVisible: false,
+        modalConfirmLoading: false,
+        reasoning: true
     }
 
     componentWillUnmount() {
@@ -27,6 +30,8 @@ class MastroSPARQLTabPane extends React.Component {
     }
 
     componentDidMount() {
+        this.setState({ oldQueryID: this.props.query.queryID, newQueryID: this.props.query.queryID })
+        this.changeDescription({ target: { value: this.props.query.queryDescription } })
         this.yasqe = YASQE(document.getElementById('sparql_' + this.props.num),
             {
                 // Disable share link
@@ -44,15 +49,49 @@ class MastroSPARQLTabPane extends React.Component {
         this.yasqe.refresh();
     }
 
+    showModal = () => {
+        this.setState({
+            modalVisible: true,
+        });
+    }
+    handleOk = () => {
+        this.setState({
+            modalConfirmLoading: true,
+        });
+        this.save()
+    }
+    handleCancel = () => {
+        this.setState({
+            modalVisible: false,
+        });
+    }
+
     onSelectMapping(value) {
         this.setState({ selectedMapping: value })
     }
 
     start() {
         if (!this.props.new)
-            startQuery(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.props.query.queryID, this.startPolling.bind(this))
+            startQuery(
+                this.props.ontology.name,
+                this.props.ontology.version,
+                this.state.selectedMappingID,
+                this.state.oldQueryID,
+                this.state.reasoning,
+                this.startPolling.bind(this))
         else {
-            startNewQuery(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.props.query, this.startPolling.bind(this))
+            const query = {
+                queryID: this.state.oldQueryID,
+                queryDescription: this.state.queryDescription || '',
+                queryCode: this.yasqe.getValue()
+            }
+            startNewQuery(
+                this.props.ontology.name,
+                this.props.ontology.version,
+                this.state.selectedMappingID,
+                query,
+                this.state.reasoning,
+                this.startPolling.bind(this))
         }
         this.setState({ showResults: true, loading: true })
     }
@@ -66,7 +105,7 @@ class MastroSPARQLTabPane extends React.Component {
     }
 
     startPolling(executionID) {
-        this.setState({ executionID: executionID, interval: setInterval(this.polling.bind(this), 1000) })
+        this.setState({ executionID: executionID, interval: setInterval(this.polling.bind(this), POLLING_TIME) })
     }
 
     stopPolling() {
@@ -76,17 +115,41 @@ class MastroSPARQLTabPane extends React.Component {
 
     checkStatus(status) {
         this.setState({ status: status })
-        if (status.percentage === 100) {
+        if (status.status === 'FINISHED') {
             this.stopPolling()
         }
     }
 
     save() {
-        putInQueryCatalog(this.props.ontology.name, this.props.ontology.version, this.props.query, () => { })
+        const query = {
+            queryID: this.state.newQueryID,
+            queryDescription: this.state.queryDescription || '',
+            queryCode: this.yasqe.getValue()
+        }
+        putInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
+            this.props.renameTab(this.state.oldQueryID, this.state.newQueryID)
+            this.setState({
+                modalVisible: false,
+                modalConfirmLoading: false,
+                oldQueryID: this.state.newQueryID
+            })
+            this.props.renameTab(this.state.oldQueryID, this.state.newQueryID)
+        })
+    }
+
+    changeQueryID = (e) => {
+        this.setState({ newQueryID: e.target.value })
+    }
+
+    changeDescription = (e) => {
+        this.setState({ queryDescription: e.target.value })
+    }
+
+    toggleReasoning = () => {
+        this.setState({reasoning: !this.state.reasoning})
     }
 
     render() {
-
         const elements = [
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <MappingSelector
@@ -102,9 +165,24 @@ class MastroSPARQLTabPane extends React.Component {
                         onClick={this.start.bind(this)}>Run</Button>
                     <Button type="danger" icon="stop" onClick={this.stop.bind(this)}>Stop</Button>
                 </Button.Group>
-                <Button type='primary' style={{ marginRight: 10 }} icon="save" onClick={this.save.bind(this)}>Store in catalog</Button>
+                <Button
+                    type='primary'
+                    style={{ marginRight: 10 }}
+                    icon="save"
+                    onClick={this.showModal}
+                >
+                    Store in catalog
+                </Button>
+                <Modal title="Title"
+                    visible={this.state.modalVisible}
+                    onOk={this.handleOk}
+                    confirmLoading={this.state.modalConfirmLoading}
+                    onCancel={this.handleCancel}
+                >
+                    <Input placeholder='Specify query ID' value={this.state.newQueryID} onChange={this.changeQueryID} />
+                </Modal>
                 <Popover content='Toggle Reasoning'>
-                    <Switch defaultChecked />
+                    <Switch checked={this.state.reasoning} onClick={this.toggleReasoning}/>
                 </Popover>
 
 
@@ -112,18 +190,30 @@ class MastroSPARQLTabPane extends React.Component {
             </div>,
             <Progress percent={this.state.status.percentage} />,
             <div id={"sparql_" + this.props.num} />,
-            <TextArea style={{ margin: '12px 0px 4px 0px' }} placeholder="Description" autosize defaultValue={this.props.query.queryDescription} />,
+            <TextArea
+                style={{ margin: '12px 0px 4px 0px' }}
+                placeholder="Description"
+                autosize
+                value={this.state.queryDescription}
+                onChange={this.changeDescription}
+            />,
         ]
 
         if (this.state.showResults) {
             elements.push(
-                <Results ontology={this.props.ontology}
+                <Results
+                    ontology={this.props.ontology}
                     mappingID={this.state.selectedMappingID}
                     executionID={this.state.executionID}
                     numberOfResults={this.state.status.numResults}
                     running={this.state.loading}
                 />,
-                <QueryExecutionReport status={this.state.status} />)
+                <QueryExecutionReport
+                    ontology={this.props.ontology}
+                    mappingID={this.state.selectedMappingID}
+                    executionID={this.state.executionID}
+                    running={this.state.loading}
+                    status={this.state.status} />)
         }
 
         return (

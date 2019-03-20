@@ -9,28 +9,29 @@ class AddCloseTabs extends React.Component {
   constructor(props) {
     super(props);
     this.newTabIndex = 0;
-    const panes = props.panes;
     this.state = {
       activeKey: null,
-      panes,
+      panes: [],
     };
   }
 
   componentWillReceiveProps(props) {
-    if (props.panes.length === 0) {
+    if (props.mappings === undefined || props.catalog === undefined) return
+    if (this.state.panes.length === 0) {
       const panes = []
       this.newTabIndex++;
       const activeKey = newQueryID + this.newTabIndex
       const title = newQueryID + this.newTabIndex
       panes.push({
-        title: <span><Icon type='file'/>{title}</span>,
+        title: <span key={title}><Icon type='file' />{title}</span>,
         content: <MastroSPARQLTabPane
           ontology={props.ontology}
           mappings={props.mappings}
           num={activeKey}
-          query={{}} 
-          new  
-          />,
+          query={{ queryID: title }}
+          new
+          renameTab={this.renameTab}
+        />,
         key: activeKey
       });
       this.setState({ panes, activeKey });
@@ -50,22 +51,48 @@ class AddCloseTabs extends React.Component {
     this[action](targetKey);
   }
 
+  renameTab = (oldTitle, newTitle) => {
+    let panes = [...this.state.panes]
+    for (let pane of panes) {
+      if (pane.title.key === oldTitle) {
+        pane.title = <span key={newTitle}><Icon type='file' />{newTitle}</span>
+      }
+    }
+    this.setState({ panes: panes })
+    this.props.refreshCatalog()
+  }
+
   add = (query) => {
     const panes = this.state.panes;
     this.newTabIndex++
     const activeKey = newQueryID + this.newTabIndex
     const title = query.queryID || newQueryID + this.newTabIndex
-    panes.push({
-      title: <span><Icon type='file'/>{title}</span>,
-      content: <MastroSPARQLTabPane
-        ontology={this.props.ontology}
-        mappings={this.props.mappings}
-        num={activeKey}
-        query={query} 
-        new  
+    if (query.queryID !== undefined)
+      panes.push({
+        title: <span key={title}><Icon type='file' />{title}</span>,
+        content: <MastroSPARQLTabPane
+          ontology={this.props.ontology}
+          mappings={this.props.mappings}
+          num={activeKey}
+          query={query}
+          renameTab={this.renameTab}
         />,
-      key: activeKey
-    });
+        key: activeKey
+      });
+    else {
+      panes.push({
+        title: <span key={title}><Icon type='file' />{title}</span>,
+        content: <MastroSPARQLTabPane
+          ontology={this.props.ontology}
+          mappings={this.props.mappings}
+          num={activeKey}
+          query={{ queryID: title }}
+          new
+          renameTab={this.renameTab}
+        />,
+        key: activeKey
+      });
+    }
     this.setState({ panes, activeKey });
   }
 
@@ -76,10 +103,17 @@ class AddCloseTabs extends React.Component {
       if (pane.key === targetKey) {
         lastIndex = i - 1;
       }
+      if (lastIndex === -1) {
+        lastIndex = 0;
+      }
     });
     const panes = this.state.panes.filter(pane => pane.key !== targetKey);
-    if (lastIndex >= 0 && activeKey === targetKey) {
+    if (panes.length > 0 && activeKey === targetKey) {
       activeKey = panes[lastIndex].key;
+    }
+
+    if (panes.length === 0) {
+      this.newTabIndex = 0
     }
 
     this.setState({ panes, activeKey });

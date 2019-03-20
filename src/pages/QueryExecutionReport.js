@@ -26,9 +26,23 @@ class QueryExecutionReport extends React.Component {
 
         const contentList = {
             qi: <QueryInfo status={this.props.status} />,
-            or: <OntologyRewritings />,
-            mr: <MappingRewritings />,
-            vr: <ViewRewritings />,
+            or: <OntologyRewritings
+                ontology={this.props.ontology}
+                mappingID={this.props.mappingID}
+                executionID={this.props.executionID}
+                running={this.props.running} />,
+            mr: <MappingRewritings
+                ontology={this.props.ontology}
+                mappingID={this.props.mappingID}
+                executionID={this.props.executionID}
+                running={this.props.running}
+            />,
+            vr: <ViewRewritings
+                ontology={this.props.ontology}
+                mappingID={this.props.mappingID}
+                executionID={this.props.executionID}
+                running={this.props.running}
+            />,
         }
 
         return (

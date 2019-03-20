@@ -1,31 +1,84 @@
 import React from 'react'
 import { Table } from 'antd';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
-import sqlFormatter from 'sql-formatter'
-const https = require('https');
+import { getMappingRewritings } from '../api/MastroApi';
 
-const fakeDataUrl = "https://swapi.co/api/people/"
-
-const data = [
-    "select x from view_01",
-    "select y from view_01",
-    "select z from view_01",
-]
+const POLLING_TIME = 1000;
 
 class MappingRewritings extends React.Component {
     state = {
         data: [],
-        pagination: { current: 1, onChange: (page) => this.handleChange(page) },
+        pagination: { current: 1, defaultPageSize: 10, size: 'small' },
         loading: false,
+        interval: 0
     };
 
     componentDidMount() {
-        //fetch from server
-        // this.fetch(1);
+        this.startPolling()
+    }
 
-        //test mastro results
-        this.setState({ data: data });
+    componentWillUnmount() {
+        this.stopPolling()
+    }
+
+    startPolling() {
+        getMappingRewritings(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            this.props.mappingID,
+            this.props.executionID,
+            this.state.pagination.current,
+            this.state.pagination.defaultPageSize,
+            this.convertData.bind(this))
+        if (this.props.running)
+            this.setState({ interval: setInterval(this.polling, POLLING_TIME), loading: true })
+    }
+
+    stopPolling() {
+        clearInterval(this.state.interval)
+        this.setState({ loading: false })
+    }
+
+    convertData(results) {
+        console.log(results)
+        let data = []
+        for (let i = 0; i < results.length; i++) {
+            data.push({
+                key: i,
+                value: results[i],
+            })
+        }
+        this.setState({ data: data, loading: this.state.loading && results.length < this.state.pagination.defaultPageSize });
+    }
+
+    handleTableChange = (pagination, filters, sorter) => {
+        const pager = { ...this.state.pagination };
+        pager.current = pagination.current;
+        this.setState({
+            pagination: pager,
+        });
+        getMappingRewritings(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            this.props.mappingID,
+            this.props.executionID,
+            pager.current,
+            this.state.pagination.defaultPageSize,
+            this.convertData.bind(this))
+    }
+
+    polling = () => {
+        if (this.props.running)
+            getMappingRewritings(
+                this.props.ontology.name,
+                this.props.ontology.version,
+                this.props.mappingID,
+                this.props.executionID,
+                this.state.pagination.current,
+                this.state.pagination.defaultPageSize,
+                this.convertData.bind(this))
+        else {
+            this.stopPolling()
+        }
     }
 
     handleChange = (page) => {
@@ -37,50 +90,17 @@ class MappingRewritings extends React.Component {
         this.fetch(pager.current);
     }
 
-    fetch = (page) => {
-        this.setState({ loading: true });
-        https.get(fakeDataUrl + '?page=' + page, (resp) => {
-            let data = '';
 
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                const res = JSON.parse(data);
-                const pagination = { ...this.state.pagination };
-                pagination.total = res.count;
-                this.setState({
-                    loading: false,
-                    data: res.results.map(item => item.name),
-                    pagination: pagination
-                });
-            });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-
-    }
     render() {
-        let data = []
-        for (let i = 0; i < this.state.data.length; i++) {
-            data.push({
-                key: i,
-                value: <SyntaxHighlighter language='sql' style={darcula}>
-                    {sqlFormatter.format(this.state.data[i])}
-                </SyntaxHighlighter>,
-            })
-        }
+        console.log(this.state.data)
         return (
             <Table
                 columns={[{ dataIndex: 'value' }]}
                 showHeader={false}
                 pagination={this.state.pagination}
-                dataSource={data}
+                dataSource={this.state.data}
                 loading={this.state.loading}
+                onChange={this.handleTableChange}
             />
         )
     }
