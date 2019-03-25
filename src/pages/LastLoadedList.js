@@ -2,7 +2,7 @@ import React from 'react';
 import { List, Card, Divider } from 'antd';
 import { NavLink } from 'react-router-dom'
 
-class LastLoadedList extends React.Component {
+export default class LastLoadedList extends React.Component {
     render() {
         return (
             <div>
@@ -27,5 +27,3 @@ class LastLoadedList extends React.Component {
         );
     }
 }
-
-export default LastLoadedList;

@@ -4,21 +4,23 @@ import axios from 'axios';
 import * as fakeData from './fakeData'
 import { graphol } from './ACIOpenData'
 
-const ips = ['192.168.0.59', '192.168.0.15']
-var mastroUrl = 'http://' + ips[0] + ':8080/mws/rest/mwsx'
+// const ips = ['192.168.0.59', '192.168.0.15']
+// var mastroUrl = 'http://' + ips[0] + ':8080/mws/rest/mwsx'
 // mastroUrl = '/mws/rest/mwsx'
 
-const fakeCalls = true
+const fakeCalls = false
 
 function reportError(msg) {
     console.error(msg)
     message.error(msg)
 }
 
-export function login(username, password, callback) {
+export function login(username, password, mastroUrl, callback) {
     if (fakeCalls) {
         try { fakeData.fakeLogin(username, password, callback) }
-        catch (err) { reportError(err.message) }
+        catch (err) {
+            reportError(err.message)
+        }
         return
     }
     const url = mastroUrl + '/login'
@@ -40,24 +42,27 @@ export function login(username, password, callback) {
                         'x-monolith-session-id': response.headers['x-monolith-session-id']
                     }))
                 localStorage.setItem('username', username)
+                localStorage.setItem('mastroUrl', mastroUrl)
                 callback(response.data)
                 break;
             case 401:
                 reportError('Wrong username or password');
                 break;
             default:
-                reportError('Error calling ' + method + ' ' + url);
+                reportError('Error');
         }
 
 
     }).catch(function (err) {
-        if (err.response === undefined) reportError('Error calling ' + method + ' ' + url);
+        if (err.response === undefined)
+            reportError(err.response === undefined ? 'No message provided' : err.response.data);
         else switch (err.response.status) {
             case 401:
                 reportError('Wrong username or password');
                 break;
             default:
-                reportError('Error calling ' + method + ' ' + url);
+                if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+                reportError(err.response === undefined ? 'No message provided' : err.response.data);
                 console.error(err)
         }
 
@@ -66,7 +71,7 @@ export function login(username, password, callback) {
 
 export function getOntologies(callback) {
     if (fakeCalls) return callback(fakeData.fakeDataGO);
-    const url = mastroUrl + '/owlOntology'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology'
     const method = 'GET'
     axios({
         url: url,
@@ -75,14 +80,15 @@ export function getOntologies(callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function putOntology(ontology, callback) {
     if (fakeCalls) return callback();
-    const url = mastroUrl + '/owlOntology'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology'
     const method = 'POST'
     axios({
         url: url,
@@ -92,14 +98,15 @@ export function putOntology(ontology, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function deleteOntology(ontologyID, callback) {
     if (fakeCalls) return callback();
-    const url = mastroUrl + '/owlOntology/' + ontologyID
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + ontologyID
     const method = 'DELETE'
     axios({
         url: url,
@@ -108,14 +115,15 @@ export function deleteOntology(ontologyID, callback) {
     }).then(function (response) {
         callback()
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function deleteOntologyVersion(ontologyID, version, callback) {
     if (fakeCalls) return callback();
-    const url = mastroUrl + '/owlOntology/' + ontologyID + '/version'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + ontologyID + '/version'
     const method = 'DELETE'
     axios({
         url: url,
@@ -125,14 +133,15 @@ export function deleteOntologyVersion(ontologyID, version, callback) {
     }).then(function (response) {
         callback()
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function uploadOntologyFile(file, ontologyID, callback) {
     if (fakeCalls) return callback(true);
-    const url = mastroUrl + '/owlOntology/' + ontologyID
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + ontologyID
     const method = 'POST'
     axios({
         url: url,
@@ -143,14 +152,15 @@ export function uploadOntologyFile(file, ontologyID, callback) {
         callback(true)
     }).catch(function (err) {
         callback(false)
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function downloadOntologyFile(name, version, callback) {
     if (fakeCalls) { console.log(name, version, callback); return }
-    const url = mastroUrl + '/owlOntology/' + name + '/version'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -162,14 +172,15 @@ export function downloadOntologyFile(name, version, callback) {
         callback(response.data)
     }).catch(function (err) {
         callback(false)
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getOntologyVersionInfo(name, version, callback) {
     if (fakeCalls) return callback(fakeData.fakeDataOI);
-    const url = mastroUrl + '/owlOntology/' + name + '/version/info'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/info'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -180,14 +191,15 @@ export function getOntologyVersionInfo(name, version, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getOntologyVersionHierarchy(name, version, callback) {
     if (fakeCalls) return callback(fakeData.mastroData)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/hierarchy'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/hierarchy'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -198,7 +210,8 @@ export function getOntologyVersionHierarchy(name, version, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
@@ -208,9 +221,8 @@ export function getGraphol(callback) {
 }
 
 export function getClassPage(name, version, classID, callback) {
-    // console.log(name, version, classID)
     if (fakeCalls) return callback(fakeData.classData)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/alphabet/class/' + classID + '/logical'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/alphabet/class/' + classID + '/logical'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -221,14 +233,15 @@ export function getClassPage(name, version, classID, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getObjectPropertyPage(name, version, objectPropertyID, callback) {
     if (fakeCalls) return callback({})
-    const url = mastroUrl + '/owlOntology/' + name + '/version/alphabet/objectProperty/' + objectPropertyID + '/logical'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/alphabet/objectProperty/' + objectPropertyID + '/logical'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -239,14 +252,15 @@ export function getObjectPropertyPage(name, version, objectPropertyID, callback)
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getDataPropertyPage(name, version, dataPropertyID, callback) {
     if (fakeCalls) return callback({})
-    const url = mastroUrl + '/owlOntology/' + name + '/version/alphabet/dataProperty/' + dataPropertyID + '/logical'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/alphabet/dataProperty/' + dataPropertyID + '/logical'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -257,14 +271,15 @@ export function getDataPropertyPage(name, version, dataPropertyID, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getMappings(name, version, callback) {
     if (fakeCalls) return callback(fakeData.mappings)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -275,14 +290,15 @@ export function getMappings(name, version, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function uploadMappingFile(name, version, file, callback) {
     if (fakeCalls) return callback(true);
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping'
     const method = 'POST'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -295,14 +311,15 @@ export function uploadMappingFile(name, version, file, callback) {
         callback(true)
     }).catch(function (err) {
         callback(false)
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function downloadMappingFile(name, version, mapping, callback) {
     if (fakeCalls) { console.log(name, version, mapping, callback); return }
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -313,14 +330,15 @@ export function downloadMappingFile(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function deleteMappingFile(name, version, mapping, callback) {
     if (fakeCalls) return callback();
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping
     const method = 'DELETE'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -331,14 +349,15 @@ export function deleteMappingFile(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getMappingInfo(name, version, mapping, callback) {
     if (fakeCalls) return callback(fakeData.mappingInfo)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/info'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/info'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -349,15 +368,15 @@ export function getMappingInfo(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getMappingAssertion(name, version, mapping, entityID, callback) {
-    // console.log("MASTRO CALL " + entityID)
     if (fakeCalls) return callback(fakeData.assertions)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/assertions/' + entityID
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/assertions/' + entityID
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -368,14 +387,15 @@ export function getMappingAssertion(name, version, mapping, entityID, callback) 
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getMappingViews(name, version, mapping, callback) {
     if (fakeCalls) return callback(fakeData.sqlViews)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/views'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/views'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -386,15 +406,15 @@ export function getMappingViews(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data.sqlViews)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getMappingView(name, version, mapping, viewID, callback) {
-    console.log(name, version, mapping, viewID, callback)
     if (fakeCalls) return callback(fakeData.sqlView)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/views/' + viewID
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/views/' + viewID
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -405,14 +425,15 @@ export function getMappingView(name, version, mapping, viewID, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getQueryCatalog(name, version, callback) {
     if (fakeCalls) return callback(fakeData.queryCatalog)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/querycatalog'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/querycatalog'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -423,15 +444,15 @@ export function getQueryCatalog(name, version, callback) {
     }).then(function (response) {
         callback(response.data.queryCatalog || [])
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function putInQueryCatalog(name, version, query, callback) {
-    console.log(name, version, query, callback)
     if (fakeCalls) return callback(fakeData.queryCatalog)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/query'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/query'
     const method = 'POST'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -445,35 +466,36 @@ export function putInQueryCatalog(name, version, query, callback) {
         if (response.data === 1)
             throw ErrorEvent()
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function deleteFromQueryCatalog(name, version, queryID, callback) {
-    console.log(name, version, queryID, callback)
     if (fakeCalls) return callback(fakeData.queryCatalog)
-    const url = mastroUrl + '/owlOntology/' + name + '/version/query/' + queryID
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/query/' + queryID
     const method = 'DELETE'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
         url: url,
         method: method,
-        data: encodedVersion ,
+        data: encodedVersion,
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback()
         if (response.data === 1)
             throw ErrorEvent()
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function startMastro(name, version, mapping, callback) {
     if (fakeCalls) return callback()
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/instance'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/instance'
     const method = 'POST'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -486,7 +508,29 @@ export function startMastro(name, version, mapping, callback) {
         if (response.data === 1)
             throw ErrorEvent()
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
+        console.error(err)
+    });
+}
+
+export function stopMastro(name, version, mapping, callback) {
+    if (fakeCalls) return callback()
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/instance'
+    const method = 'DELETE'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        data: encodedVersion,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback()
+        if (response.data === 1)
+            throw ErrorEvent()
+    }).catch(function (err) {
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
@@ -494,7 +538,7 @@ export function startMastro(name, version, mapping, callback) {
 
 export function getMastroStatus(name, version, mapping, callback) {
     if (fakeCalls) { return callback(fakeData.status()) }
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/instance'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/instance'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -505,15 +549,15 @@ export function getMastroStatus(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function startNewQuery(name, version, mapping, query, reasoning, callback) {
-    // console.log(name, version, mapping, query, reasoning, callback)
     if (fakeCalls) return callback('pippoQuery')
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/start'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/start'
     const method = 'POST'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -525,14 +569,15 @@ export function startNewQuery(name, version, mapping, query, reasoning, callback
     }).then(function (response) {
         callback(response.data.executionId)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function startQuery(name, version, mapping, queryID, reasoning, callback) {
     if (fakeCalls) return callback('pippoQuery')
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + queryID + '/start'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + queryID + '/start'
     const method = 'POST'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -544,14 +589,15 @@ export function startQuery(name, version, mapping, queryID, reasoning, callback)
     }).then(function (response) {
         callback(response.data.executionId)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
-export function getQueryStatus(name, version, mapping, queryID, callback) {
+export function getQueryStatus(name, version, mapping, queryID, callback, errorCall) {
     if (fakeCalls) { return callback(fakeData.queryStatus()) }
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + queryID + '/status'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + queryID + '/status'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -562,14 +608,16 @@ export function getQueryStatus(name, version, mapping, queryID, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
+        errorCall()
     });
 }
 
-export function getQueryResults(name, version, mapping, executionID, page, pageSize, callback) {
+export function getQueryResults(name, version, mapping, executionID, page, pageSize, callback, errorCall) {
     if (fakeCalls) { return fakeData.queryResults(callback) }
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/results'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/results'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -580,14 +628,16 @@ export function getQueryResults(name, version, mapping, executionID, page, pageS
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
+        errorCall()
     });
 }
 
 export function getOntologyRewritings(name, version, mapping, executionID, page, pageSize, callback) {
     if (fakeCalls) { return callback(fakeData.ontoRews) }
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/ontologyRewritings'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/ontologyRewritings'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -598,14 +648,15 @@ export function getOntologyRewritings(name, version, mapping, executionID, page,
     }).then(function (response) {
         callback(response.data.ontologyRewritings)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getMappingRewritings(name, version, mapping, executionID, page, pageSize, callback) {
     if (fakeCalls) { return callback(fakeData.mapRews) }
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/mappingRewritings'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/mappingRewritings'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -616,14 +667,15 @@ export function getMappingRewritings(name, version, mapping, executionID, page, 
     }).then(function (response) {
         callback(response.data.mappingRewritings)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }
 
 export function getViewRewritings(name, version, mapping, executionID, page, pageSize, callback) {
     if (fakeCalls) { return callback(fakeData.viewRews) }
-    const url = mastroUrl + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/viewRewritings'
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/viewRewritings'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -634,7 +686,27 @@ export function getViewRewritings(name, version, mapping, executionID, page, pag
     }).then(function (response) {
         callback(response.data.viewRewritings)
     }).catch(function (err) {
-        reportError('Error calling ' + method + ' ' + url);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
+        console.error(err)
+    });
+}
+
+export function downloadQueryResults(name, version, mapping, executionID, callback) {
+    if (fakeCalls) { return fakeData.queryResults(callback) }
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/exportFile'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+        reportError(err.response === undefined ? 'No message provided' : err.response.data);
         console.error(err)
     });
 }

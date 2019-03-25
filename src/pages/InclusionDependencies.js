@@ -2,7 +2,7 @@ import React from 'react';
 import { List, Card, } from 'antd';
 import InclusionDependency from './InclusionDependency';
 
-class InclusionDependencies extends React.Component {
+export default class InclusionDependencies extends React.Component {
     render() {
 
         return (
@@ -22,5 +22,3 @@ class InclusionDependencies extends React.Component {
         );
     }
 }
-
-export default InclusionDependencies;

@@ -1,11 +1,10 @@
 import React from 'react'
 import { Card, Popover, List } from 'antd';
 import { getObjectPropertyPage } from '../api/MastroApi';
-
 import { renderEntity, predicateTypes } from '../utils/utils'
 import ListItem from './ListItem';
 
-class ObjectPropertyPage extends React.Component {
+export default class ObjectPropertyPage extends React.Component {
     _isMounted = false;
     state = {
         data: {}
@@ -112,4 +111,3 @@ class ObjectPropertyPage extends React.Component {
     }
 }
 
-export default ObjectPropertyPage;

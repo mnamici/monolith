@@ -5,7 +5,7 @@ import { getDataPropertyPage } from '../api/MastroApi';
 import { renderEntity, predicateTypes } from '../utils/utils'
 import ListItem from './ListItem';
 
-class DataPropertyPage extends React.Component {
+export default class DataPropertyPage extends React.Component {
     _isMounted = false;
     state = {
         data: {}
@@ -101,4 +101,3 @@ class DataPropertyPage extends React.Component {
     }
 }
 
-export default DataPropertyPage;

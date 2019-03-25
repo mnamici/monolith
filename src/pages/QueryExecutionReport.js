@@ -5,7 +5,7 @@ import OntologyRewritings from './OntologyRewritings';
 import MappingRewritings from './MappingRewritings';
 import ViewRewritings from './ViewRewritings';
 
-class QueryExecutionReport extends React.Component {
+export default class QueryExecutionReport extends React.Component {
     state = {
         tabKey: 'qi',
     }
@@ -60,5 +60,3 @@ class QueryExecutionReport extends React.Component {
         );
     }
 }
-
-export default QueryExecutionReport;

@@ -5,7 +5,7 @@ import { getMappingAssertion } from '../api/MastroApi';
 import Entity from "./Entity";
 
 
-class AssertionsPage extends React.Component {
+export default class AssertionsPage extends React.Component {
     _isMounted = false;
     state = {
         data: null
@@ -61,5 +61,3 @@ class AssertionsPage extends React.Component {
         );
     }
 }
-
-export default AssertionsPage;

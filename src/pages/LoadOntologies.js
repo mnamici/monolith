@@ -3,7 +3,8 @@ import { Button } from 'antd'
 import OntologiesList from './OntologiesList'
 import OntologyVersionsList from './OntologyVersionsList'
 import { getOntologies } from '../api/MastroApi'
-class LoadOntologies extends React.Component {
+
+export default class LoadOntologies extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -83,5 +84,3 @@ class LoadOntologies extends React.Component {
             </div>);
     }
 }
-
-export default LoadOntologies;

@@ -3,7 +3,7 @@ import { List, Card, Divider } from 'antd';
 import AddOntology from './AddOntology';
 import { deleteOntology } from '../api/MastroApi';
 
-class OntologiesList extends React.Component {
+export default class OntologiesList extends React.Component {
 
     delete(ontologyID) {
         deleteOntology(ontologyID, this.props.rerender)
@@ -53,5 +53,3 @@ class OntologiesList extends React.Component {
         );
     }
 }
-
-export default OntologiesList;

@@ -4,7 +4,7 @@ import MappingBody from './MappingBody';
 import Entity from './Entity'
 import ListMapItem from './ListMapItem';
 
-class Assertion extends React.Component {
+export default class Assertion extends React.Component {
     render() {
         const head = this.props.assertion.mappingHead.secondArg !== null ?
             this.props.assertion.mappingHead.firstArg+', '+this.props.assertion.mappingHead.secondArg:
@@ -32,5 +32,3 @@ class Assertion extends React.Component {
         );
     }
 }
-
-export default Assertion;

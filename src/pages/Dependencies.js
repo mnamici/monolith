@@ -6,9 +6,7 @@ import KeyDependencies from './KeyDependencies';
 import InclusionDependencies from './InclusionDependencies';
 import Denials from './Denials';
 
-
-
-class Dependencies extends React.Component {
+export default class Dependencies extends React.Component {
     state = {
         tabKey: 'kds',
     }
@@ -45,5 +43,3 @@ class Dependencies extends React.Component {
         );
     }
 }
-
-export default Dependencies;

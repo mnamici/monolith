@@ -5,7 +5,7 @@ import UploadFile from './UploadFile';
 import { downloadOntologyFile, deleteOntologyVersion } from '../api/MastroApi';
 import { saveFileInfo } from '../utils/utils';
 
-class OntologyVersionsList extends React.Component {
+export default class OntologyVersionsList extends React.Component {
 
     delete(ontologyID, versionID) {
         deleteOntologyVersion(ontologyID, versionID, this.props.rerender)
@@ -82,5 +82,3 @@ class OntologyVersionsList extends React.Component {
         );
     }
 }
-
-export default OntologyVersionsList;

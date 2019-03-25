@@ -14,7 +14,7 @@ const { TextArea } = Input;
 
 const POLLING_TIME = 1000
 
-class MastroSPARQLTabPane extends React.Component {
+export default class MastroSPARQLTabPane extends React.Component {
     state = {
         loading: false,
         selectedMappingID: this.props.mappings[0] !== undefined && this.props.mappings[0].mappingID,
@@ -30,7 +30,7 @@ class MastroSPARQLTabPane extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({ oldQueryID: this.props.query.queryID, newQueryID: this.props.query.queryID })
+        this.setState({ oldQueryID: this.props.query.queryID, newQueryID: this.props.query.queryID, new: this.props.new })
         this.changeDescription({ target: { value: this.props.query.queryDescription } })
         this.yasqe = YASQE(document.getElementById('sparql_' + this.props.num),
             {
@@ -71,7 +71,7 @@ class MastroSPARQLTabPane extends React.Component {
     }
 
     start() {
-        if (!this.props.new)
+        if (!this.state.new)
             startQuery(
                 this.props.ontology.name,
                 this.props.ontology.version,
@@ -93,7 +93,7 @@ class MastroSPARQLTabPane extends React.Component {
                 this.state.reasoning,
                 this.startPolling.bind(this))
         }
-        this.setState({ showResults: true, loading: true })
+
     }
 
     stop() {
@@ -105,7 +105,7 @@ class MastroSPARQLTabPane extends React.Component {
     }
 
     startPolling(executionID) {
-        this.setState({ executionID: executionID, interval: setInterval(this.polling.bind(this), POLLING_TIME) })
+        this.setState({ executionID: executionID, interval: setInterval(this.polling.bind(this), POLLING_TIME), showResults: true, loading: true })
     }
 
     stopPolling() {
@@ -118,6 +118,10 @@ class MastroSPARQLTabPane extends React.Component {
         if (status.status === 'FINISHED') {
             this.stopPolling()
         }
+    }
+
+    manageError() {
+        this.stopPolling()
     }
 
     save() {
@@ -146,45 +150,46 @@ class MastroSPARQLTabPane extends React.Component {
     }
 
     toggleReasoning = () => {
-        this.setState({reasoning: !this.state.reasoning})
+        this.setState({ reasoning: !this.state.reasoning })
     }
 
     render() {
         const elements = [
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <MappingSelector
                     ontology={this.props.ontology}
                     mappings={this.props.mappings}
                     onSelection={this.onSelectMapping.bind(this)}
                     selected={this.state.selectedMappingID} />
-                <Button.Group style={{ margin: '0px 10px' }}>
+                <div>
+                    <Button.Group style={{ margin: '0px 10px' }}>
+                        <Button
+                            type="primary"
+                            icon="play-circle"
+                            loading={this.state.loading}
+                            onClick={this.start.bind(this)}>Run</Button>
+                        <Button type="danger" icon="stop" onClick={this.stop.bind(this)}>Stop</Button>
+                    </Button.Group>
                     <Button
-                        type="primary"
-                        icon="play-circle"
-                        loading={this.state.loading}
-                        onClick={this.start.bind(this)}>Run</Button>
-                    <Button type="danger" icon="stop" onClick={this.stop.bind(this)}>Stop</Button>
-                </Button.Group>
-                <Button
-                    type='primary'
-                    style={{ marginRight: 10 }}
-                    icon="save"
-                    onClick={this.showModal}
-                >
-                    Store in catalog
+                        type='primary'
+                        style={{ marginRight: 10 }}
+                        icon="save"
+                        onClick={this.showModal}
+                    >
+                        Store in catalog
                 </Button>
-                <Modal title="Title"
-                    visible={this.state.modalVisible}
-                    onOk={this.handleOk}
-                    confirmLoading={this.state.modalConfirmLoading}
-                    onCancel={this.handleCancel}
-                >
-                    <Input placeholder='Specify query ID' value={this.state.newQueryID} onChange={this.changeQueryID} />
-                </Modal>
-                <Popover content='Toggle Reasoning'>
-                    <Switch checked={this.state.reasoning} onClick={this.toggleReasoning}/>
-                </Popover>
-
+                    <Modal title="Insert query ID"
+                        visible={this.state.modalVisible}
+                        onOk={this.handleOk}
+                        confirmLoading={this.state.modalConfirmLoading}
+                        onCancel={this.handleCancel}
+                    >
+                        <Input placeholder='Specify query ID' value={this.state.newQueryID} onChange={this.changeQueryID} />
+                    </Modal>
+                    <Popover content='Toggle Reasoning'>
+                        <Switch checked={this.state.reasoning} onClick={this.toggleReasoning} />
+                    </Popover>
+                </div>
 
 
             </div>,
@@ -232,5 +237,3 @@ class MastroSPARQLTabPane extends React.Component {
     }
 }
 
-
-export default MastroSPARQLTabPane;

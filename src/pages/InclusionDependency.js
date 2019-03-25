@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'antd';
 
-class InclusionDependency extends React.Component {
+export default class InclusionDependency extends React.Component {
     render() {
         if(this.props.incDep.inclusionMap === null ) return null
         let data = []
@@ -27,5 +27,3 @@ class InclusionDependency extends React.Component {
             );
     }
 }
-
-export default InclusionDependency;

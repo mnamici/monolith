@@ -1,12 +1,11 @@
 import React from 'react';
 import { List, Card } from 'antd';
-
 import OntologyMetricsTabs from './OntologyMetricsTabs'
 import DownloadFile from './DownloadFile'
 import { getOntologyVersionInfo } from '../api/MastroApi';
 import ListItem from './ListItem';
 
-class OntologyInfo extends React.Component {
+export default class OntologyInfo extends React.Component {
     constructor(props) {
         super(props)
         this.state = { data: {} }
@@ -46,13 +45,13 @@ class OntologyInfo extends React.Component {
             axioms.push(...this.state.data.ontologyMetrics.dataPropertyAxioms)
             axioms.push(...this.state.data.ontologyMetrics.individualAxioms)
             axioms.push(...this.state.data.ontologyMetrics.annotationAxioms)
-            
+
             metriscAxioms = {
                 metrics: this.state.data.ontologyMetrics.metrics,
                 axioms: axioms
             }
         }
-        
+
 
         const elements = [
             <OntologyMetricsTabs titles={[
@@ -94,9 +93,7 @@ class OntologyInfo extends React.Component {
                     <DownloadFile ontology={this.props.ontology}
                     />
                 </div>
-            </div >
+            </div>
         );
     }
 }
-
-export default OntologyInfo;

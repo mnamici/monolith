@@ -2,7 +2,7 @@ import React from 'react';
 import { List } from 'antd';
 import Assertion from './Assertion';
 
-class AssertionsList extends React.Component {
+export default class AssertionsList extends React.Component {
     render() {
 
         return (
@@ -21,5 +21,3 @@ class AssertionsList extends React.Component {
         );
     }
 }
-
-export default AssertionsList;

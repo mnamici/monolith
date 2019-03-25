@@ -10,7 +10,7 @@ import CurrentMapping from './CurrentMapping';
 import Graphol from './Grapholscape';
 
 const { Content, Sider } = Layout;
-class CurrentOntology extends React.Component {
+export default class CurrentOntology extends React.Component {
     state = {
         collapsed: true,
     };
@@ -62,5 +62,3 @@ class CurrentOntology extends React.Component {
         );
     }
 }
-
-export default CurrentOntology;

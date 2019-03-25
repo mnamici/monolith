@@ -4,7 +4,7 @@ import Entity from './Entity'
 
 const Panel = Collapse.Panel;
 
-class CollapsibleList extends React.Component {
+export default class CollapsibleList extends React.Component {
     state = { activeKey: [] }
 
     componentWillReceiveProps(props) {
@@ -54,5 +54,3 @@ class CollapsibleList extends React.Component {
         );
     }
 }
-
-export default CollapsibleList;

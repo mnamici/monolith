@@ -4,7 +4,7 @@ import { getMappingRewritings } from '../api/MastroApi';
 
 const POLLING_TIME = 1000;
 
-class MappingRewritings extends React.Component {
+export default class MappingRewritings extends React.Component {
     state = {
         data: [],
         pagination: { current: 1, defaultPageSize: 10, size: 'small' },
@@ -105,5 +105,3 @@ class MappingRewritings extends React.Component {
         )
     }
 }
-
-export default MappingRewritings;

@@ -47,7 +47,7 @@ export default class ViewRewritings extends React.Component {
             const item = results[i]
             data.push({
                 key: i,
-                value: <Popover content={
+                value: <Popover placement='left' content={
                     <div>
                         <p>{item.numResults + " results in " + item.time + " ms."}</p>
                     </div>

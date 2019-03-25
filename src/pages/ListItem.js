@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 import Entity from './Entity';
 
-class ListItem extends React.Component {
+export default class ListItem extends React.Component {
     render() {
         if (this.props.data === undefined || this.props.data === null) return null
         let dataIndex = 'value'
@@ -68,5 +68,3 @@ class ListItem extends React.Component {
         );
     }
 }
-
-export default ListItem;

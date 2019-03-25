@@ -2,7 +2,7 @@ import React from 'react';
 import LoginForm from './LoginForm'
 import logo from '../scritta.svg'
 
-class LoginPage extends React.Component {
+export default class LoginPage extends React.Component {
 
   render() {
     return (
@@ -14,5 +14,3 @@ class LoginPage extends React.Component {
     );
   }
 }
-
-export default LoginPage;

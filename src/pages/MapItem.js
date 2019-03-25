@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'antd';
 
 
-class MapItem extends React.Component {
+export default class MapItem extends React.Component {
     render() {
         return (
             <Row>
@@ -12,5 +12,3 @@ class MapItem extends React.Component {
         );
     }
 }
-
-export default MapItem;

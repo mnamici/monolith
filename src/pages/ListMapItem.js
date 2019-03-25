@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'antd';
 
-class ListMapItem extends React.Component {
+export default class ListMapItem extends React.Component {
     render() {
         if(this.props.data === undefined) return null
 
@@ -17,5 +17,3 @@ class ListMapItem extends React.Component {
         );
     }
 }
-
-export default ListMapItem;

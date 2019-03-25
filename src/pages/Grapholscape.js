@@ -5,7 +5,7 @@ import '../lib/grapholscape/style/style.css'
 import '../lib/material-icons/MaterialIcons.css'
 import { getGraphol } from '../api/MastroApi.js';
 
-class Graphol extends React.Component {
+export default class Graphol extends React.Component {
     componentDidMount() {
         getGraphol(this.loaded)
     }
@@ -37,5 +37,3 @@ class Graphol extends React.Component {
         )
     }
 }
-
-export default Graphol;

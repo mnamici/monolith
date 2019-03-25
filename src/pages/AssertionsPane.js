@@ -7,7 +7,7 @@ const {
     Header, Content,
 } = Layout;
 
-class AssertionsPane extends React.Component {
+export default class AssertionsPane extends React.Component {
     state = {
         current: null
     }
@@ -51,5 +51,3 @@ class AssertionsPane extends React.Component {
     }
 }
 
-
-export default AssertionsPane;

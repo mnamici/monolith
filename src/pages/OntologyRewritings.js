@@ -4,7 +4,7 @@ import { getOntologyRewritings } from '../api/MastroApi';
 
 const POLLING_TIME = 1000;
 
-class OntologyRewritings extends React.Component {
+export default class OntologyRewritings extends React.Component {
     state = {
         data: [],
         pagination: { current: 1, defaultPageSize: 10, size: 'small' },
@@ -104,5 +104,3 @@ class OntologyRewritings extends React.Component {
         )
     }
 }
-
-export default OntologyRewritings;

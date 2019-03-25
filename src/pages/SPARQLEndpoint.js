@@ -8,7 +8,7 @@ const {
     Sider, Content,
 } = Layout;
 
-class SPARQLEndpoint extends React.Component {
+export default class SPARQLEndpoint extends React.Component {
     state = {
         catalog: undefined,
         mappings: undefined,
@@ -89,5 +89,3 @@ class SPARQLEndpoint extends React.Component {
     }
 }
 
-
-export default SPARQLEndpoint;

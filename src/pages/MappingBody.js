@@ -4,10 +4,10 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
 import sqlFormatter from 'sql-formatter'
 
-class MappingBody extends React.Component {
+export default class MappingBody extends React.Component {
     render() {
         const from = this.props.body.bodyFrom.map((e, i) =>
-            <Popover content={
+            <Popover placement='right' content={
                 <SyntaxHighlighter language='sql' style={darcula}>
                     {sqlFormatter.format(e.sqlViewCode)}
                 </SyntaxHighlighter>} key={i}>
@@ -29,5 +29,3 @@ class MappingBody extends React.Component {
         );
     }
 }
-
-export default MappingBody;

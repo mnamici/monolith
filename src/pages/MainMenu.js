@@ -7,7 +7,7 @@ const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 
 
-class MainMenu extends React.Component {
+export default class MainMenu extends React.Component {
 
     getClosableMenuItem(item, path) {
         return (
@@ -128,5 +128,3 @@ class MainMenu extends React.Component {
         )
     }
 }
-
-export default MainMenu;

@@ -5,7 +5,7 @@ const https = require('https');
 
 const fakeDataUrl = "https://swapi.co/api/people/"
 
-class Results extends React.Component {
+export default class Results extends React.Component {
     state = {
         "results": [],
         "currentPage": 0,
@@ -66,5 +66,3 @@ class Results extends React.Component {
             showFilter={true} showSettings={true} />
     }
 }
-
-export default Results;

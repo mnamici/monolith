@@ -2,7 +2,7 @@ import React from 'react'
 import ListMapItem from './ListMapItem';
 import DownloadFile from './DownloadFile'
 
-class QueryInfo extends React.Component {
+export default class QueryInfo extends React.Component {
     render() {
 
         const data = [
@@ -38,5 +38,3 @@ class QueryInfo extends React.Component {
         );
     }
 }
-
-export default QueryInfo;

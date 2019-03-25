@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import { downloadOntologyFile, downloadMappingFile } from '../api/MastroApi';
 import { saveFileInfo } from '../utils/utils'
 
-class DownloadFile extends React.Component {
+export default class DownloadFile extends React.Component {
   state = {
     loading: false,
   };
@@ -26,5 +26,3 @@ class DownloadFile extends React.Component {
     );
   }
 }
-
-export default DownloadFile;

@@ -12,7 +12,7 @@ import { predicateTypes } from '../utils/utils'
 
 const { Header, Content } = Layout;
 
-class OntologyWiki extends React.Component {
+export default class OntologyWiki extends React.Component {
     state = {
         collapsed: false,
     };
@@ -105,5 +105,3 @@ class OntologyWiki extends React.Component {
         );
     }
 }
-
-export default OntologyWiki;

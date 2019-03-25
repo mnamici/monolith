@@ -10,7 +10,7 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values);
-        login(values.userName, values.password, this.props.login);
+        login(values.userName, values.password, values.mastroUrl, this.props.login);
       }
     });
   }
@@ -33,16 +33,24 @@ class NormalLoginForm extends React.Component {
             <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
           )}
         </FormItem>
-        <FormItem style={{textAlign: 'center'}}>
+        <FormItem>
+          {getFieldDecorator('mastroUrl', {
+            initialValue: localStorage.getItem('mastroUrl'),
+            rules: [{ required: true, message: 'Please input Mastro Location!' }],
+          })(
+            <Input prefix={<Icon type="medium" style={{ color: 'rgba(0,0,0,.25)' }} />} type="medium" placeholder="Mastro URL" />
+          )}
+        </FormItem>
+        <FormItem style={{ textAlign: 'center' }}>
           {/* {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true,
           })(
             <Checkbox>Remember me</Checkbox>
           )} */}
-          <a className="login-form-forgot" href="http://www.obdasystems.com" style={{color: 'white'}}>Forgot password</a>
+          <a className="login-form-forgot" href="http://www.obdasystems.com" style={{ color: 'white' }}>Forgot password</a>
         </FormItem>
-        <FormItem style={{textAlign: 'center'}}>
+        <FormItem style={{ textAlign: 'center' }}>
           <Button type="primary" htmlType="submit" >
             Log in
           </Button>

@@ -9,7 +9,7 @@ const https = require('https');
 
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 
-class Results extends React.Component {
+export default class Results extends React.Component {
     state = {
         data: [],
         loading: false,
@@ -99,5 +99,3 @@ class Results extends React.Component {
         );
     }
 }
-
-export default Results;

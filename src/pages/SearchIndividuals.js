@@ -3,7 +3,7 @@ import {Input } from 'antd';
 
 const Search = Input.Search;
 
-class SearchIndividuals extends React.Component {
+export default class SearchIndividuals extends React.Component {
   
   onSearch = (e) => {
     console.log(`Searched ${e}`)
@@ -18,5 +18,3 @@ class SearchIndividuals extends React.Component {
     );
   }
 }
-
-export default SearchIndividuals;

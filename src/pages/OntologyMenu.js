@@ -1,13 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import { Menu, Icon } from 'antd';
-//import ClosableMenuItem from './ClosableMenuItem'
 
-// const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 
 
-class OntologyMenu extends React.Component {
+export default class OntologyMenu extends React.Component {
     state = {
         currMenu: ['info']
     }
@@ -77,5 +75,3 @@ class OntologyMenu extends React.Component {
         )
     }
 }
-
-export default OntologyMenu;

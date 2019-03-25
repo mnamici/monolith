@@ -5,9 +5,7 @@ import UploadFile from './UploadFile';
 import { getMappings, downloadMappingFile, deleteMappingFile } from '../api/MastroApi';
 import { saveFileInfo } from '../utils/utils';
 
-
-
-class LoadMappings extends React.Component {
+export default class LoadMappings extends React.Component {
 
     state = {
         data: []
@@ -89,5 +87,3 @@ class LoadMappings extends React.Component {
         );
     }
 }
-
-export default LoadMappings;

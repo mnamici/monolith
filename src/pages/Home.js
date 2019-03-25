@@ -2,6 +2,7 @@ import React from 'react';
 import LastLoadedList from './LastLoadedList'
 import MainMenuDescriptions from './MainMenuDescriptions'
 import logo from '../scritta.svg'
+import { isChrome } from '../utils/utils';
 
 const dataOntologies = [
   {
@@ -41,11 +42,12 @@ const dataDataset = [
 ];
 
 
-class Home extends React.Component {
+export default class Home extends React.Component {
   render() {
+
     return (
       <div style={{ height: 'calc(96vh - 21px)', overflowX: 'hidden', overflowY: 'auto' }}>
-        <img src={logo} alt="logo" style={{ maxHeight: 100 }} />
+        <div style={{ display: 'flex', justifyContent: 'center' }}><img src={logo} alt="logo" style={isChrome ? { height: 100 } : { maxHeight: 100 }} /></div>
         <LastLoadedList
           ontology title="Last Loaded Ontologies"
           data={dataOntologies}
@@ -66,5 +68,3 @@ class Home extends React.Component {
     );
   }
 }
-
-export default Home;

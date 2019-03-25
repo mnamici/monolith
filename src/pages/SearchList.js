@@ -55,7 +55,7 @@ const getParentKey = (key, tree) => {
   return parentKey;
 };
 
-class SearchList extends React.Component {
+export default class SearchList extends React.Component {
   state = {
     expandedKeys: [],
     searchValue: '',
@@ -120,5 +120,3 @@ class SearchList extends React.Component {
     );
   }
 }
-
-export default SearchList;

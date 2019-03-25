@@ -7,13 +7,12 @@ const {
     Header, Content,
 } = Layout;
 
-class SQLViewsPane extends React.Component {
+export default class SQLViewsPane extends React.Component {
     state = {
         current: null
     }
 
     onHandle = (viewID) => {
-        console.log(viewID)
         this.setState({
             current: viewID,
         })
@@ -48,6 +47,3 @@ class SQLViewsPane extends React.Component {
         );
     }
 }
-
-
-export default SQLViewsPane;

@@ -4,7 +4,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
 import sqlFormatter from 'sql-formatter'
 
-class Denials extends React.Component {
+export default class Denials extends React.Component {
     render() {
         if (this.props.dens === undefined || this.props.dens === null) return null
         let dataIndex = 'value'
@@ -31,5 +31,3 @@ class Denials extends React.Component {
         );
     }
 }
-
-export default Denials;

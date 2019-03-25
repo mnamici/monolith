@@ -5,7 +5,7 @@ import MastroSPARQLTabPane from './MastroSPARQLTabPane'
 const TabPane = Tabs.TabPane;
 
 const newQueryID = 'new_'
-class AddCloseTabs extends React.Component {
+export default class AddCloseTabs extends React.Component {
   constructor(props) {
     super(props);
     this.newTabIndex = 0;
@@ -23,7 +23,7 @@ class AddCloseTabs extends React.Component {
       const activeKey = newQueryID + this.newTabIndex
       const title = newQueryID + this.newTabIndex
       panes.push({
-        title: <span key={title}><Icon type='file' />{title}</span>,
+        title: <span key={title}><Icon type='file' />{title+"*"}</span>,
         content: <MastroSPARQLTabPane
           ontology={props.ontology}
           mappings={props.mappings}
@@ -81,7 +81,7 @@ class AddCloseTabs extends React.Component {
       });
     else {
       panes.push({
-        title: <span key={title}><Icon type='file' />{title}</span>,
+        title: <span key={title}><Icon type='file' />{title+"*"}</span>,
         content: <MastroSPARQLTabPane
           ontology={this.props.ontology}
           mappings={this.props.mappings}
@@ -132,5 +132,3 @@ class AddCloseTabs extends React.Component {
     );
   }
 }
-
-export default AddCloseTabs;

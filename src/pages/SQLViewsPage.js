@@ -9,7 +9,7 @@ import { getMappingView } from '../api/MastroApi';
 import ListMapItem from './ListMapItem'
 
 
-class SQLViewsPage extends React.Component {
+export default class SQLViewsPage extends React.Component {
 
     state = {
         data: null
@@ -80,5 +80,3 @@ class SQLViewsPage extends React.Component {
         );
     }
 }
-
-export default SQLViewsPage;

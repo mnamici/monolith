@@ -7,7 +7,7 @@ import ListMapItem from './ListMapItem';
 import ListItem from './ListItem';
 
 
-class MappingInfo extends React.Component {
+export default class MappingInfo extends React.Component {
 
     state = {
         data: {
@@ -93,5 +93,3 @@ class MappingInfo extends React.Component {
         );
     }
 }
-
-export default MappingInfo;

@@ -23,7 +23,7 @@ const data = [
     },
 ];
 
-class MainMenuDescriptions extends React.Component {
+export default class MainMenuDescriptions extends React.Component {
     render() {
         
         return (
@@ -46,5 +46,3 @@ class MainMenuDescriptions extends React.Component {
         );
     }
 }
-
-export default MainMenuDescriptions;

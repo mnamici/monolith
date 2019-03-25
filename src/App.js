@@ -6,7 +6,7 @@ import LoginPage from './pages/LoginPage'
 import MainLayout from './pages/MainLayout'
 import { Layout } from 'antd';
 
-class App extends Component {
+export default class App extends Component {
 
   state = { logged: localStorage.getItem('headers') !== null ? true : false }
 
@@ -32,4 +32,3 @@ class App extends Component {
   }
 }
 
-export default App;

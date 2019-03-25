@@ -9,7 +9,7 @@ const {
     Header, Content,
 } = Layout;
 
-class CurrentMapping extends React.Component {
+export default class CurrentMapping extends React.Component {
 
     render() {
 
@@ -56,5 +56,3 @@ class CurrentMapping extends React.Component {
         );
     }
 }
-
-export default CurrentMapping;

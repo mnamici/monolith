@@ -5,7 +5,7 @@ import { getClassPage } from '../api/MastroApi';
 import { renderEntity, predicateTypes } from '../utils/utils'
 import ListItem from './ListItem';
 
-class ClassPage extends React.Component {
+export default class ClassPage extends React.Component {
     _isMounted = false;
     state = {
         data: {}
@@ -102,4 +102,3 @@ class ClassPage extends React.Component {
     }
 }
 
-export default ClassPage;

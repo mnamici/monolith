@@ -1,17 +1,22 @@
 import React from 'react'
-import { Table } from 'antd';
-import { getQueryResults } from '../api/MastroApi';
+import { Table, Button } from 'antd';
+import { getQueryResults, downloadQueryResults } from '../api/MastroApi';
+import { saveFileInfo } from '../utils/utils'
+
 // const https = require('https');
 
 // const fakeDataUrl = "https://swapi.co/api/people/"
 
 const POLLING_TIME = 1000;
 
-class Results extends React.Component {
+export default class Results extends React.Component {
     state = {
         headTerms: [],
         data: [],
-        pagination: { current: 1, defaultPageSize: 10 },
+        pagination: {
+            current: 1,
+            defaultPageSize: 10,
+        },
         loading: false,
         interval: 0,
     };
@@ -21,13 +26,32 @@ class Results extends React.Component {
     }
 
     componentWillReceiveProps(props) {
+        this.polling()
         const pagination = { ...this.state.pagination };
         pagination.total = props.numberOfResults;
-        this.setState({pagination: pagination})
+        this.setState({ pagination: pagination })
     }
 
     componentWillUnmount() {
         this.stopPolling()
+    }
+
+    showTotal(total) {
+        return <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignContent: 'center' }}>
+            <Button icon='download' onClick={this.downloadResults}>
+                Download Results
+            </Button>
+            <p style={{ margin: '0px 8px' }} className='results'>{total} results</p>
+        </div>
+    }
+
+    downloadResults = () => {
+        downloadQueryResults(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            this.props.mappingID,
+            this.props.executionID,
+            saveFileInfo)
     }
 
     startPolling() {
@@ -65,7 +89,8 @@ class Results extends React.Component {
             this.props.executionID,
             pager.current,
             this.state.pagination.defaultPageSize,
-            this.convertData.bind(this))
+            this.convertData.bind(this),
+            this.stopPolling.bind(this))
     }
 
     polling = () => {
@@ -77,7 +102,8 @@ class Results extends React.Component {
                 this.props.executionID,
                 this.state.pagination.current,
                 this.state.pagination.defaultPageSize,
-                this.convertData.bind(this))
+                this.convertData.bind(this),
+                this.stopPolling.bind(this))
         else {
             this.stopPolling()
         }
@@ -111,7 +137,12 @@ class Results extends React.Component {
         const columns = this.state.headTerms.map(item => ({ title: item, dataIndex: item }));
         return (
             <div>
-                <p className='results'>{this.props.numberOfResults} results</p>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 8}}>
+                    <Button ghost icon='download' shape="circle" onClick={this.downloadResults}>
+                        {/* Download Results */}
+                    </Button>
+                    <span style={{paddingLeft: 8}} className='results'>{this.props.numberOfResults} results</span>
+                </div>
                 <Table
                     style={{ minHeight: 200 }}
                     columns={columns}
@@ -125,5 +156,3 @@ class Results extends React.Component {
         );
     }
 }
-
-export default Results;

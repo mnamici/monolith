@@ -39,3 +39,5 @@ export function saveFileInfo(body) {
     document.body.removeChild(element);
 
 }
+
+export const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);

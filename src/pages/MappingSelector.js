@@ -1,10 +1,10 @@
 import React from 'react';
 import { Select, Popover, Button, } from 'antd';
-import { startMastro, getMastroStatus } from '../api/MastroApi';
+import { startMastro, stopMastro, getMastroStatus } from '../api/MastroApi';
 
 const Option = Select.Option;
 
-class MappingSelector extends React.Component {
+export default class MappingSelector extends React.Component {
     state = {
         enabledStart: true,
         loading: false,
@@ -35,8 +35,15 @@ class MappingSelector extends React.Component {
     }
 
     start() {
-        startMastro(this.props.ontology.name, this.props.ontology.version, this.props.selected, this.startPolling.bind(this))
-        this.setState({ loading: true })
+        if (this.state.enabledStart) {
+            startMastro(this.props.ontology.name, this.props.ontology.version, this.props.selected, this.startPolling.bind(this))
+            this.setState({ loading: true })
+        }
+        else {
+            stopMastro(this.props.ontology.name, this.props.ontology.version, this.props.selected, () => {
+                this.setState({ enabledStart: true })
+            })
+        }
     }
 
     stop() {
@@ -73,13 +80,12 @@ class MappingSelector extends React.Component {
         return (
             <div>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
-                    <Popover content='Start reasoner' placement='left'>
+                    <Popover content={(this.state.enabledStart ? 'Start' : 'Stop')+' Mastro Reasoner'} placement='left'>
                         <Button
                             style={{ margin: 1 }}
-                            type='primary'
-                            disabled={!this.state.enabledStart}
                             shape='circle'
-                            icon='thunderbolt'
+                            ghost
+                            icon={this.state.enabledStart ? 'medium' : 'stop'}
                             loading={this.state.loading}
                             onClick={this.start.bind(this)}
                         />
@@ -101,5 +107,3 @@ class MappingSelector extends React.Component {
         )
     }
 }
-
-export default MappingSelector;

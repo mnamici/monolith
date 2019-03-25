@@ -69,7 +69,7 @@ function beforeUpload(file) {
   return false;
 }
 
-class UploadFile extends React.Component {
+export default class UploadFile extends React.Component {
   state = {
     loading: false,
   };
@@ -87,5 +87,3 @@ class UploadFile extends React.Component {
     );
   }
 }
-
-export default UploadFile;

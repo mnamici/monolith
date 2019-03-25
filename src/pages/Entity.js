@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
-
 import { renderEntity } from '../utils/utils'
-class Entity extends React.Component {
+
+export default class Entity extends React.Component {
     render() {
         let predicateType = this.props.predicateType
         if (predicateType === undefined)
@@ -15,5 +15,3 @@ class Entity extends React.Component {
         )
     }
 }
-
-export default Entity;

@@ -9,7 +9,7 @@ import LoadOntologies from './LoadOntologies'
 import CurrentOntology from './CurrentOntology';
 const { Content, Footer, Sider } = Layout;
 
-class MainLayout extends React.Component {
+export default class MainLayout extends React.Component {
   state = {
     collapsed: true,
     current: {},
@@ -153,5 +153,3 @@ class MainLayout extends React.Component {
     );
   }
 }
-
-export default MainLayout;
