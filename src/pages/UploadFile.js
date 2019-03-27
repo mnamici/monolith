@@ -1,23 +1,14 @@
 import React from 'react';
 import { Upload, Icon, message, Button } from 'antd';
 import { uploadOntologyFile, uploadMappingFile } from '../api/MastroApi';
-
-function getBase64(file, callback) {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => {
-    let index = reader.result.indexOf('base64,')
-    let base64 = reader.result.substr(index + 'base64,'.length)
-    callback(base64)
-  });
-  reader.readAsDataURL(file);
-}
+import { getBase64 } from '../utils/utils'
 
 function beforeUpload(file) {
   this.setState({ loading: true });
   if (this.props.type === 'owl') {
-    const validFormat = file.type === 'application/rdf+xml';
+    const validFormat = file.type === 'application/rdf+xml' || 'text/xml';
     if (!validFormat) {
-      message.error('You can only upload OWL file!');
+      message.error('You can only upload OWL file! Found '+file.type);
       this.setState({ loading: false });
     }
 
@@ -25,7 +16,7 @@ function beforeUpload(file) {
       getBase64(file, (file64) => {
         let json = {
           content: file64,
-          fileType: ".owl",
+          fileType: file.type === 'application/rdf+xml' ? ".owl" : '.graphol',
           fileName: file.name
         }
 

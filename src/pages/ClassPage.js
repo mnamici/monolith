@@ -81,10 +81,10 @@ export default class ClassPage extends React.Component {
                     </Popover>
                 </div>
                 <div>
-                    <div style={{ padding: '0px' }}>
+                    <div style={{ paddingBottom: '16px' }}>
                         <Card title="Description" className='description'>
                             <ListItem data={this.state.data.classDescriptions} />
-                        </Card>,
+                        </Card>
                     </div>
                     <List
                         grid={{ gutter: 12, column: 4 }}

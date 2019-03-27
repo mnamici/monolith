@@ -83,7 +83,7 @@ export default class DataPropertyPage extends React.Component {
                         <h3>{this.state.data.currentEntity.entityPrefixIRI}</h3>
                     </Popover>
                 </div>
-                <div style={{ padding: '0px' }}>
+                <div style={{ paddingBottom: '16px' }}>
                     <Card title="Description" data={this.state.data.dataPropertyDescriptions} className='description'/>
                 </div>
                 <List

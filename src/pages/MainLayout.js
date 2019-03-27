@@ -7,6 +7,7 @@ import MainMenu from './MainMenu'
 import Home from './Home'
 import LoadOntologies from './LoadOntologies'
 import CurrentOntology from './CurrentOntology';
+import Settings from './Settings';
 const { Content, Footer, Sider } = Layout;
 
 export default class MainLayout extends React.Component {
@@ -140,9 +141,9 @@ export default class MainLayout extends React.Component {
               )
               } />
 
-
               <Route path="/kg" component={() => "KNOWLEDGE GRAPHS"} />
               <Route path="/dataset" component={() => "DATASETS"} />
+              <Route path="/settings" component={() => <Settings />} />
             </div>
           </Content>
           <Footer style={{ padding: '2px', textAlign: 'center' }}>

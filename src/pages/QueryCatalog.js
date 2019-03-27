@@ -1,18 +1,49 @@
 import React from 'react';
-import { Menu, Icon, Button } from 'antd';
-import { deleteFromQueryCatalog } from '../api/MastroApi';
+import { Menu, Icon, Button, Upload, message } from 'antd';
+import { deleteFromQueryCatalog, downloadQueryCatalog, uploadQueryCatalog } from '../api/MastroApi';
+import { saveFileInfo, getBase64 } from '../utils/utils';
 
 const MenuItem = Menu.Item;
 
 export default class QueryCatalog extends React.Component {
 
     downloadCatalog = () => {
-        console.log("DOWNLOAD")
+        downloadQueryCatalog(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            saveFileInfo
+        )
     }
 
-    uploadCatalog = () => {
-        console.log("UPLOAD")
+    beforeUpload(file) {
+        const validFormat = file.type === 'application/json';
+        if (!validFormat) {
+            message.error('You can only upload json files!');
+        }
+
+        else {
+            getBase64(file, (file64) => {
+                let json = {
+                    content: file64,
+                    fileType: ".owl",
+                    fileName: file.name
+                }
+
+                uploadQueryCatalog(
+                    this.props.ontology.name,
+                    this.props.ontology.version,
+                    json,
+                    (success) => {
+                        if (success) {
+                            message.success('upload successfully.');
+                            this.props.refreshCatalog()
+                        }
+                    })
+            })
+        }
+        return false;
     }
+
 
     getClosableMenuItem(item) {
         return (
@@ -37,10 +68,14 @@ export default class QueryCatalog extends React.Component {
     render() {
         return (
             <div>
-                <h3 style={{ display: 'flex', justifyContent: 'center', paddingTop: 8, marginBottom: 0 }}>Query Catalog</h3>
-                <div style={{ display: 'flex', justifyContent: 'space-around', margin: 8 }}>
-                    <Button ghost shape='circle' icon='download' onClick={this.downloadCatalog}/>
-                    <Button ghost shape='circle' icon='upload' onClick={this.uploadCatalog}/>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: 8, }}>
+                    <h3 style={{ marginBottom: 0 }}>Query Catalog</h3>
+                    <div>
+                        <Button style={{ margin: '0px 4px' }} ghost size='small' shape='circle' icon='download' onClick={this.downloadCatalog} />
+                        <Upload beforeUpload={this.beforeUpload.bind(this)} fileList={[]}>
+                            <Button ghost size='small' shape='circle' icon='upload' />
+                        </Upload>
+                    </div>
                 </div>
                 <Menu style={{ backgroundColor: 'transparent', minHeight: 'calc(100vh - 97px)' }} theme='dark' mode="inline">
                     {this.props.catalog && this.props.catalog.map(item => this.getClosableMenuItem(item.queryID))}

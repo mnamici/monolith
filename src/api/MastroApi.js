@@ -10,6 +10,16 @@ import { graphol } from './ACIOpenData'
 
 const fakeCalls = false
 
+function manageError(err) {
+    if(err.response === undefined)
+        reportError('No message provided');
+    else {
+        reportError(err.response.data);
+        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
+    }
+    console.error(err)
+}
+
 function reportError(msg) {
     console.error(msg)
     message.error(msg)
@@ -61,9 +71,7 @@ export function login(username, password, mastroUrl, callback) {
                 reportError('Wrong username or password');
                 break;
             default:
-                if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-                reportError(err.response === undefined ? 'No message provided' : err.response.data);
-                console.error(err)
+                manageError(err)
         }
 
     });
@@ -80,9 +88,7 @@ export function getOntologies(callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -98,9 +104,7 @@ export function putOntology(ontology, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -115,9 +119,7 @@ export function deleteOntology(ontologyID, callback) {
     }).then(function (response) {
         callback()
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -133,9 +135,7 @@ export function deleteOntologyVersion(ontologyID, version, callback) {
     }).then(function (response) {
         callback()
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -152,9 +152,7 @@ export function uploadOntologyFile(file, ontologyID, callback) {
         callback(true)
     }).catch(function (err) {
         callback(false)
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -172,9 +170,7 @@ export function downloadOntologyFile(name, version, callback) {
         callback(response.data)
     }).catch(function (err) {
         callback(false)
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -191,9 +187,7 @@ export function getOntologyVersionInfo(name, version, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -210,9 +204,7 @@ export function getOntologyVersionHierarchy(name, version, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -233,9 +225,7 @@ export function getClassPage(name, version, classID, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -252,9 +242,7 @@ export function getObjectPropertyPage(name, version, objectPropertyID, callback)
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -271,9 +259,7 @@ export function getDataPropertyPage(name, version, dataPropertyID, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -290,9 +276,7 @@ export function getMappings(name, version, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -311,9 +295,7 @@ export function uploadMappingFile(name, version, file, callback) {
         callback(true)
     }).catch(function (err) {
         callback(false)
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -330,9 +312,7 @@ export function downloadMappingFile(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -349,9 +329,7 @@ export function deleteMappingFile(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -368,9 +346,7 @@ export function getMappingInfo(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -387,9 +363,7 @@ export function getMappingAssertion(name, version, mapping, entityID, callback) 
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -406,9 +380,7 @@ export function getMappingViews(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data.sqlViews)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -425,9 +397,7 @@ export function getMappingView(name, version, mapping, viewID, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -444,9 +414,42 @@ export function getQueryCatalog(name, version, callback) {
     }).then(function (response) {
         callback(response.data.queryCatalog || [])
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
+    });
+}
+
+export function downloadQueryCatalog(name, version, callback) {
+    if (fakeCalls) return callback(fakeData.queryCatalog)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/querycatalog/export'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function uploadQueryCatalog(name, version, file, callback) {
+    if (fakeCalls) return callback(fakeData.queryCatalog)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/querycatalog/import'
+    const method = 'POST'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion, additive: true },
+        data: file,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
     });
 }
 
@@ -466,9 +469,7 @@ export function putInQueryCatalog(name, version, query, callback) {
         if (response.data === 1)
             throw ErrorEvent()
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -487,9 +488,7 @@ export function deleteFromQueryCatalog(name, version, queryID, callback) {
         if (response.data === 1)
             throw ErrorEvent()
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -508,9 +507,7 @@ export function startMastro(name, version, mapping, callback) {
         if (response.data === 1)
             throw ErrorEvent()
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -529,9 +526,7 @@ export function stopMastro(name, version, mapping, callback) {
         if (response.data === 1)
             throw ErrorEvent()
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -549,9 +544,7 @@ export function getMastroStatus(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -569,9 +562,7 @@ export function startNewQuery(name, version, mapping, query, reasoning, callback
     }).then(function (response) {
         callback(response.data.executionId)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -589,9 +580,7 @@ export function startQuery(name, version, mapping, queryID, reasoning, callback)
     }).then(function (response) {
         callback(response.data.executionId)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -608,9 +597,7 @@ export function getQueryStatus(name, version, mapping, queryID, callback, errorC
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
         errorCall()
     });
 }
@@ -628,9 +615,7 @@ export function getQueryResults(name, version, mapping, executionID, page, pageS
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
         errorCall()
     });
 }
@@ -648,9 +633,7 @@ export function getOntologyRewritings(name, version, mapping, executionID, page,
     }).then(function (response) {
         callback(response.data.ontologyRewritings)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -667,9 +650,7 @@ export function getMappingRewritings(name, version, mapping, executionID, page, 
     }).then(function (response) {
         callback(response.data.mappingRewritings)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -686,9 +667,7 @@ export function getViewRewritings(name, version, mapping, executionID, page, pag
     }).then(function (response) {
         callback(response.data.viewRewritings)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
 
@@ -705,8 +684,6 @@ export function downloadQueryResults(name, version, mapping, executionID, callba
     }).then(function (response) {
         callback(response.data)
     }).catch(function (err) {
-        if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
-        reportError(err.response === undefined ? 'No message provided' : err.response.data);
-        console.error(err)
+        manageError(err)
     });
 }
