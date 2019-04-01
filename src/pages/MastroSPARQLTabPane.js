@@ -8,7 +8,7 @@ import { Input } from 'antd';
 import Results from './ResultsTable'
 import QueryExecutionReport from './QueryExecutionReport';
 import MappingSelector from './MappingSelector'
-import { startQuery, getQueryStatus, startNewQuery, putInQueryCatalog } from '../api/MastroApi';
+import { startQuery, getQueryStatus, startNewQuery, postInQueryCatalog, putInQueryCatalog } from '../api/MastroApi';
 
 const { TextArea } = Input;
 
@@ -17,7 +17,7 @@ const POLLING_TIME = 1000
 export default class MastroSPARQLTabPane extends React.Component {
     state = {
         loading: false,
-        selectedMappingID: this.props.mappings[0] !== undefined && this.props.mappings[0].mappingID,
+        selectedMappingID: null,
         status: {},
         interval: 0,
         modalVisible: false,
@@ -30,7 +30,12 @@ export default class MastroSPARQLTabPane extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({ oldQueryID: this.props.query.queryID, newQueryID: this.props.query.queryID, new: this.props.new })
+        this.setState({
+            oldQueryID: this.props.query.queryID,
+            newQueryID: this.props.query.queryID,
+            new: this.props.new,
+            selectedMappingID: this.props.mappings[0] !== undefined && this.props.mappings[0].mappingID
+        })
         this.changeDescription({ target: { value: this.props.query.queryDescription } })
         this.yasqe = YASQE(document.getElementById('sparql_' + this.props.num),
             {
@@ -54,20 +59,53 @@ export default class MastroSPARQLTabPane extends React.Component {
             modalVisible: true,
         });
     }
+
+    showOverwriteModal = () => {
+        this.setState({
+            overwirteModalVisible: true,
+        });
+    }
+
     handleOk = () => {
         this.setState({
             modalConfirmLoading: true,
         });
         this.save()
     }
+
+    handleOkOverwrite = () => {
+        const query = {
+            queryID: this.state.newQueryID,
+            queryDescription: this.state.queryDescription || '',
+            queryCode: this.yasqe.getValue()
+        }
+        putInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
+            this.props.renameTab(this.state.oldQueryID, this.state.newQueryID)
+            this.setState({
+                modalVisible: false,
+                overwirteModalVisible: false,
+                modalConfirmLoading: false,
+                oldQueryID: this.state.newQueryID
+            })
+        })
+    }
+
     handleCancel = () => {
         this.setState({
             modalVisible: false,
+            modalConfirmLoading: false
+        });
+    }
+
+    handleCancelOverwrite = () => {
+        this.setState({
+            overwirteModalVisible: false,
+            modalConfirmLoading: false
         });
     }
 
     onSelectMapping(value) {
-        this.setState({ selectedMapping: value })
+        this.setState({ selectedMappingID: value })
     }
 
     start() {
@@ -130,15 +168,34 @@ export default class MastroSPARQLTabPane extends React.Component {
             queryDescription: this.state.queryDescription || '',
             queryCode: this.yasqe.getValue()
         }
-        putInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
-            this.props.renameTab(this.state.oldQueryID, this.state.newQueryID)
-            this.setState({
-                modalVisible: false,
-                modalConfirmLoading: false,
-                oldQueryID: this.state.newQueryID
+
+        const alreadyInCatalog = this.props.catalog.filter(query => query.queryID === this.state.newQueryID).length === 1
+
+        if (alreadyInCatalog) {
+            this.showOverwriteModal()
+        }
+
+        else if (this.props.new) {
+            postInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
+                this.props.renameTab(this.state.oldQueryID, this.state.newQueryID, true)
+                this.setState({
+                    modalVisible: false,
+                    modalConfirmLoading: false,
+                    oldQueryID: this.state.newQueryID
+                })
+
             })
-            this.props.renameTab(this.state.oldQueryID, this.state.newQueryID)
-        })
+        }
+        else {
+            putInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
+                this.props.renameTab(this.state.oldQueryID, this.state.newQueryID)
+                this.setState({
+                    modalVisible: false,
+                    modalConfirmLoading: false,
+                    oldQueryID: this.state.newQueryID
+                })
+            })
+        }
     }
 
     changeQueryID = (e) => {
@@ -161,8 +218,19 @@ export default class MastroSPARQLTabPane extends React.Component {
                     mappings={this.props.mappings}
                     onSelection={this.onSelectMapping.bind(this)}
                     selected={this.state.selectedMappingID} />
+            </div>,
+            <Progress percent={this.state.status.percentage} />,
+            <div id={"sparql_" + this.props.num} />,
+            <TextArea
+                style={{ margin: '12px 0px 12px 0px' }}
+                placeholder="Description"
+                autosize
+                value={this.state.queryDescription}
+                onChange={this.changeDescription}
+            />,
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div>
-                    <Button.Group style={{ margin: '0px 10px' }}>
+                    <Button.Group>
                         <Button
                             type="primary"
                             icon="play-circle"
@@ -170,38 +238,19 @@ export default class MastroSPARQLTabPane extends React.Component {
                             onClick={this.start.bind(this)}>Run</Button>
                         <Button type="danger" icon="stop" onClick={this.stop.bind(this)}>Stop</Button>
                     </Button.Group>
-                    <Button
-                        type='primary'
-                        style={{ marginRight: 10 }}
-                        icon="save"
-                        onClick={this.showModal}
-                    >
-                        Store in catalog
-                </Button>
-                    <Modal title="Insert query ID"
-                        visible={this.state.modalVisible}
-                        onOk={this.handleOk}
-                        confirmLoading={this.state.modalConfirmLoading}
-                        onCancel={this.handleCancel}
-                    >
-                        <Input placeholder='Specify query ID' value={this.state.newQueryID} onChange={this.changeQueryID} />
-                    </Modal>
+                    <span style={{ padding: '0px 10px', color: 'rgb(255, 255, 255, 0.75)' }}>Reasoning</span>
                     <Popover content='Toggle Reasoning'>
                         <Switch checked={this.state.reasoning} onClick={this.toggleReasoning} />
                     </Popover>
                 </div>
-
-
-            </div>,
-            <Progress percent={this.state.status.percentage} />,
-            <div id={"sparql_" + this.props.num} />,
-            <TextArea
-                style={{ margin: '12px 0px 4px 0px' }}
-                placeholder="Description"
-                autosize
-                value={this.state.queryDescription}
-                onChange={this.changeDescription}
-            />,
+                <Button
+                    type='primary'
+                    icon="save"
+                    onClick={this.showModal}
+                >
+                    Store in catalog
+                </Button>
+            </div>
         ]
 
         if (this.state.showResults) {
@@ -232,6 +281,21 @@ export default class MastroSPARQLTabPane extends React.Component {
                         </List.Item>
                     )}
                 />
+                <Modal title="Insert query ID"
+                    visible={this.state.modalVisible}
+                    onOk={this.handleOk}
+                    confirmLoading={this.state.modalConfirmLoading}
+                    onCancel={this.handleCancel}
+                >
+                    <Input placeholder='Specify query ID' value={this.state.newQueryID} onChange={this.changeQueryID} />
+                </Modal>
+                <Modal
+                    visible={this.state.overwirteModalVisible}
+                    onOk={this.handleOkOverwrite}
+                    onCancel={this.handleCancelOverwrite}
+                >
+                    Overwrite query?
+                </Modal>
             </div>
         );
     }

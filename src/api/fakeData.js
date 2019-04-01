@@ -739,7 +739,7 @@ export const results = {
 
 }
 
-var fakeInit = 0;
+var fakeInit = 1;
 
 export const status = () => {
     fakeInit++;

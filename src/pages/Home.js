@@ -5,39 +5,39 @@ import logo from '../scritta.svg'
 import { isChrome } from '../utils/utils';
 
 const dataOntologies = [
-  {
-    ontologyID: 'ACI',
-    versionID: '1.0',
-    ontologyDescription: 'First version of ACI ontology'
-  },
-  {
-    ontologyID: 'ISTAT',
-    versionID: '1.0',
-    ontologyDescription: 'First version of ISTAT ontology'
-  },
-  {
-    ontologyID: 'ACI',
-    versionID: '121.0',
-    ontologyDescription: 'Last version of ACI ontology'
-  },
+  // {
+  //   ontologyID: 'ACI',
+  //   versionID: '1.0',
+  //   ontologyDescription: 'First version of ACI ontology'
+  // },
+  // {
+  //   ontologyID: 'ISTAT',
+  //   versionID: '1.0',
+  //   ontologyDescription: 'First version of ISTAT ontology'
+  // },
+  // {
+  //   ontologyID: 'ACI',
+  //   versionID: '121.0',
+  //   ontologyDescription: 'Last version of ACI ontology'
+  // },
 ];
 
 const dataKG = [
-  {
-    title: 'KG1',
-    description: 'First version of ACI knowledge graph'
-  },
+  // {
+  //   title: 'KG1',
+  //   description: 'First version of ACI knowledge graph'
+  // },
 ];
 
 const dataDataset = [
-  {
-    title: 'DS1',
-    description: 'First version of ACI dataset'
-  },
-  {
-    title: 'DS2',
-    description: 'Second version of ACI dataset'
-  },
+  // {
+  //   title: 'DS1',
+  //   description: 'First version of ACI dataset'
+  // },
+  // {
+  //   title: 'DS2',
+  //   description: 'Second version of ACI dataset'
+  // },
 
 ];
 
@@ -48,21 +48,21 @@ export default class Home extends React.Component {
     return (
       <div style={{ height: 'calc(96vh - 21px)', overflowX: 'hidden', overflowY: 'auto' }}>
         <div style={{ display: 'flex', justifyContent: 'center' }}><img src={logo} alt="logo" style={isChrome ? { height: 100 } : { maxHeight: 100 }} /></div>
-        <LastLoadedList
+        {dataOntologies.length !== 0 && <LastLoadedList
           ontology title="Last Loaded Ontologies"
           data={dataOntologies}
           path="/open/ontology/info"
-          open={this.props.openOntology} />
-        <LastLoadedList
+          open={this.props.openOntology} />}
+        {dataKG.length !== 0 && <LastLoadedList
           title="Last Loaded Knowledge Graphs"
           data={dataKG}
           path="/kg"
-          open={() => null} />
-        <LastLoadedList
+          open={() => null} />}
+        {dataDataset.length !== 0 && <LastLoadedList
           title="Last Loaded Datasets"
           data={dataDataset}
           path="/dataset"
-          open={() => null} />
+          open={() => null} />}
         <MainMenuDescriptions />
       </div>
     );

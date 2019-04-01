@@ -93,7 +93,7 @@ export default class ObjectPropertyPage extends React.Component {
                 </div>
                 <div style={{ paddingBottom: '16px' }}>
                     <Card title="Description" className='description'>
-                        <ListItem data={this.state.data.objectPropertyDescriptions} />
+                        <ListItem label data={this.state.data.objectPropertyDescriptions} />
                     </Card>
                 </div>
                 <List

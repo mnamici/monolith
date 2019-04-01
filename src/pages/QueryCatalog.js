@@ -49,8 +49,8 @@ export default class QueryCatalog extends React.Component {
         return (
             <MenuItem className='catalogQuery' key={item}>
                 {/* <Link to={'/open/ontology/endpoint/' + item}> */}
-                <div>
-                    <span style={{ width: 150 }} onClick={() => this.props.open(item)}>{item}</span>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <div style={{ textOverflow: 'ellipsis', overflow: 'hidden' }} onClick={() => this.props.open(item)}>{item}</div>
                     <span style={{ float: "right" }} onClick={() => deleteFromQueryCatalog(
                         this.props.ontology.name,
                         this.props.ontology.version,

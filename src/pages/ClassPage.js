@@ -83,7 +83,7 @@ export default class ClassPage extends React.Component {
                 <div>
                     <div style={{ paddingBottom: '16px' }}>
                         <Card title="Description" className='description'>
-                            <ListItem data={this.state.data.classDescriptions} />
+                            <ListItem label data={this.state.data.classDescriptions} />
                         </Card>
                     </div>
                     <List

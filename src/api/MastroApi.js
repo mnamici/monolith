@@ -11,7 +11,7 @@ import { graphol } from './ACIOpenData'
 const fakeCalls = false
 
 function manageError(err) {
-    if(err.response === undefined)
+    if (err.response === undefined)
         reportError('No message provided');
     else {
         reportError(err.response.data);
@@ -453,10 +453,30 @@ export function uploadQueryCatalog(name, version, file, callback) {
     });
 }
 
-export function putInQueryCatalog(name, version, query, callback) {
+export function postInQueryCatalog(name, version, query, callback) {
     if (fakeCalls) return callback(fakeData.queryCatalog)
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/query'
     const method = 'POST'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        data: query,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback()
+        if (response.data === 1)
+            throw ErrorEvent()
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function putInQueryCatalog(name, version, query, callback) {
+    if (fakeCalls) return callback(fakeData.queryCatalog)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/query/' + query.queryID
+    const method = 'PUT'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
         url: url,
@@ -532,7 +552,7 @@ export function stopMastro(name, version, mapping, callback) {
 
 
 export function getMastroStatus(name, version, mapping, callback) {
-    if (fakeCalls) { return callback(fakeData.status()) }
+    if (fakeCalls) { return callback(fakeData.status(), mapping) }
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/instance'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
@@ -542,7 +562,7 @@ export function getMastroStatus(name, version, mapping, callback) {
         params: { version: encodedVersion },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
-        callback(response.data)
+        callback(response.data, mapping)
     }).catch(function (err) {
         manageError(err)
     });

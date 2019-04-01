@@ -13,15 +13,17 @@ export default class MainMenu extends React.Component {
         return (
             <MenuItem key={item.name + "-" + item.version}>
                 {/* <Popover content={<small>{item.version}</small>} placement='right'> */}
-                <div>
-                    <NavLink
-                        to={path}
-                        onClick={() => this.props.setcurrent(item)}
-                        activeStyle={{ fontWeight: "bold", color: "white" }}
-                        style={{ color: 'rgba(255, 255, 255, 0.75)' }}
-                    >
-                        {item.name + " " + item.version.split("/").pop()}
-                    </NavLink>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <div style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                        <NavLink
+                            to={path}
+                            onClick={() => this.props.setcurrent(item)}
+                            activeStyle={{ fontWeight: "bold", color: "white" }}
+                            style={{ color: 'rgba(255, 255, 255, 0.75)' }}
+                        >
+                            {item.name + " " + item.version.split("/").pop()}
+                        </NavLink>
+                    </div>
                     <span style={{ float: "right" }} onClick={() => this.props.close(item)}>
                         <Icon type="close" style={{ color: 'rgba(255, 255, 255, 0.75)' }} />
                     </span>
@@ -39,6 +41,9 @@ export default class MainMenu extends React.Component {
 
         const openSubMenus = !this.props.collapsed ? ["ontology", ",kg", "dataset"] : []
         const selected = this.props.current === undefined ? [] : [this.props.current.name + "-" + this.props.current.version]
+
+        const mastroUrl = localStorage.getItem('mastroUrl')
+        const helpUrl = mastroUrl.substring(0, mastroUrl.length - 9) + "HelpPage"
         return (
             <Menu defaultOpenKeys={openSubMenus} selectedKeys={selected} theme="dark" mode="inline">
 
@@ -106,7 +111,7 @@ export default class MainMenu extends React.Component {
                 </MenuItem>
                 <MenuItem key="help">
                     <a
-                        href="http://192.168.0.59:8080/mws/HelpPage" target="_blank" rel="noopener noreferrer"
+                        href={helpUrl} target="_blank" rel="noopener noreferrer"
                         // to="/help" 
                         // activeStyle={{ fontWeight: "bold", color: "white" }} 
                         style={{ color: 'rgba(255, 255, 255, 0.75)' }}

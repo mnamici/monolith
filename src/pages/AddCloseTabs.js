@@ -27,6 +27,7 @@ export default class AddCloseTabs extends React.Component {
         content: <MastroSPARQLTabPane
           ontology={props.ontology}
           mappings={props.mappings}
+          catalog={props.catalog}
           num={activeKey}
           query={{ queryID: title }}
           new
@@ -51,7 +52,7 @@ export default class AddCloseTabs extends React.Component {
     this[action](targetKey);
   }
 
-  renameTab = (oldTitle, newTitle) => {
+  renameTab = (oldTitle, newTitle, ref) => {
     let panes = [...this.state.panes]
     for (let pane of panes) {
       if (pane.title.key === oldTitle) {
@@ -59,7 +60,7 @@ export default class AddCloseTabs extends React.Component {
       }
     }
     this.setState({ panes: panes })
-    this.props.refreshCatalog()
+    if(ref) this.props.refreshCatalog()
   }
 
   add = (query) => {
@@ -73,6 +74,7 @@ export default class AddCloseTabs extends React.Component {
         content: <MastroSPARQLTabPane
           ontology={this.props.ontology}
           mappings={this.props.mappings}
+          catalog={this.props.catalog}
           num={activeKey}
           query={query}
           renameTab={this.renameTab}
@@ -85,6 +87,7 @@ export default class AddCloseTabs extends React.Component {
         content: <MastroSPARQLTabPane
           ontology={this.props.ontology}
           mappings={this.props.mappings}
+          catalog={this.props.catalog}
           num={activeKey}
           query={{ queryID: title }}
           new

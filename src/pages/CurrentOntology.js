@@ -8,6 +8,7 @@ import LoadMappings from './LoadMappings';
 import SPARQLEndpoint from './SPARQLEndpoint';
 import CurrentMapping from './CurrentMapping';
 import Graphol from './Grapholscape';
+import UnderConstruction from './UnderConstruction';
 
 const { Content, Sider } = Layout;
 export default class CurrentOntology extends React.Component {
@@ -54,7 +55,7 @@ export default class CurrentOntology extends React.Component {
                                 <CurrentMapping {...props} ontology={this.props.ontology}/>} />
                             <Route path="/open/ontology/endpoint/:queryID?" render={(props) => 
                                 <SPARQLEndpoint {...props} ontology={this.props.ontology}/>} />
-                            
+                            <Route path="/open/ontology/dataQuality" component={() => <UnderConstruction />} />
                         </div>
                     </Content>
                 </Layout>

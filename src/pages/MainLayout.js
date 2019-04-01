@@ -8,11 +8,12 @@ import Home from './Home'
 import LoadOntologies from './LoadOntologies'
 import CurrentOntology from './CurrentOntology';
 import Settings from './Settings';
+import UnderConstruction from './UnderConstruction';
 const { Content, Footer, Sider } = Layout;
 
 export default class MainLayout extends React.Component {
   state = {
-    collapsed: true,
+    collapsed: false,
     current: {},
     open: {
       ontologies: [],
@@ -141,8 +142,9 @@ export default class MainLayout extends React.Component {
               )
               } />
 
-              <Route path="/kg" component={() => "KNOWLEDGE GRAPHS"} />
-              <Route path="/dataset" component={() => "DATASETS"} />
+              <Route path="/kg" component={() => <UnderConstruction />} />
+              <Route path="/dataset" component={() => <UnderConstruction />} />
+              <Route path="/admin" component={() => <UnderConstruction />} />
               <Route path="/settings" component={() => <Settings />} />
             </div>
           </Content>

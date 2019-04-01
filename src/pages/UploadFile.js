@@ -5,10 +5,11 @@ import { getBase64 } from '../utils/utils'
 
 function beforeUpload(file) {
   this.setState({ loading: true });
+  console.log(file)
   if (this.props.type === 'owl') {
-    const validFormat = file.type === 'application/rdf+xml' || 'text/xml';
+    const validFormat = file.name.endsWith('.owl') || file.name.endsWith('.graphol')
     if (!validFormat) {
-      message.error('You can only upload OWL file! Found '+file.type);
+      message.error('You can only upload OWL or GRAPHOL file! Found '+file.type);
       this.setState({ loading: false });
     }
 
@@ -16,7 +17,7 @@ function beforeUpload(file) {
       getBase64(file, (file64) => {
         let json = {
           content: file64,
-          fileType: file.type === 'application/rdf+xml' ? ".owl" : '.graphol',
+          fileType: file.name.endsWith('.owl') ? ".owl" : '.graphol',
           fileName: file.name
         }
 

@@ -22,7 +22,7 @@ export default class App extends Component {
   render() {
     return (
       <HashRouter>
-        <Layout style={{ height: '100vh' }}>
+        <Layout>
             {this.state.logged ? 
               <MainLayout logout={this.logout.bind(this)}/> : 
               <LoginPage login={this.login.bind(this)} />}
