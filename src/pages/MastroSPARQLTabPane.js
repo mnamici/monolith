@@ -22,7 +22,8 @@ export default class MastroSPARQLTabPane extends React.Component {
         interval: 0,
         modalVisible: false,
         modalConfirmLoading: false,
-        reasoning: true
+        reasoning: true,
+        enableRun: false
     }
 
     componentWillUnmount() {
@@ -104,8 +105,9 @@ export default class MastroSPARQLTabPane extends React.Component {
         });
     }
 
-    onSelectMapping(value) {
-        this.setState({ selectedMappingID: value })
+    onSelectMapping(value, enableRun) {
+    console.log(value, enableRun) 
+        this.setState({ selectedMappingID: value, enableRun: enableRun })
     }
 
     start() {
@@ -235,8 +237,16 @@ export default class MastroSPARQLTabPane extends React.Component {
                             type="primary"
                             icon="play-circle"
                             loading={this.state.loading}
-                            onClick={this.start.bind(this)}>Run</Button>
-                        <Button type="danger" icon="stop" onClick={this.stop.bind(this)}>Stop</Button>
+                            onClick={this.start.bind(this)}
+                            disabled={!this.state.enableRun}
+                        >
+                            Run</Button>
+                        <Button
+                            type="danger"
+                            icon="stop"
+                            onClick={this.stop.bind(this)}
+                            disabled={this.state.enableRun}
+                        >Stop</Button>
                     </Button.Group>
                     <span style={{ padding: '0px 10px', color: 'rgb(255, 255, 255, 0.75)' }}>Reasoning</span>
                     <Popover content='Toggle Reasoning'>

@@ -7,7 +7,7 @@ import { getGraphol } from '../api/MastroApi.js';
 
 export default class Graphol extends React.Component {
     componentDidMount() {
-        getGraphol(this.loaded)
+        getGraphol(this.props.ontology.name, this.props.ontology.version, this.loaded)
     }
 
     loaded = (body) => {

@@ -208,8 +208,21 @@ export function getOntologyVersionHierarchy(name, version, callback) {
     });
 }
 
-export function getGraphol(callback) {
+export function getGraphol(name, version, callback) {
     if (fakeCalls) return callback(graphol)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/graphol'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(atob(response.data.content))
+    }).catch(function (err) {
+        manageError(err)
+    });
 }
 
 export function getClassPage(name, version, classID, callback) {
@@ -564,7 +577,7 @@ export function getMastroStatus(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data, mapping)
     }).catch(function (err) {
-        manageError(err)
+        // manageError(err)
     });
 }
 

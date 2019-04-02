@@ -95,6 +95,7 @@ export default class AddCloseTabs extends React.Component {
         />,
         key: activeKey
       });
+      this.props.openF(null)
     }
     this.setState({ panes, activeKey });
   }

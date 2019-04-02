@@ -58,17 +58,17 @@ export default class SPARQLEndpoint extends React.Component {
 
     render() {
         return (
-            <Layout style={{minHeight: 'calc(100vh - 25px)', marginLeft: '-1vw'}}>
+            <Layout style={{ minHeight: 'calc(100vh - 25px)', marginLeft: '-1vw' }}>
                 <Sider
                     style={{ background: '#000c17' }}
                 >
                     <QueryCatalog
                         ontology={this.props.ontology}
                         mappings={this.state.mappings}
-                        catalog={this.state.catalog} 
+                        catalog={this.state.catalog}
                         open={this.open}
                         refreshCatalog={this.requestCatalog.bind(this)}
-                        />
+                    />
                     {/* <MappingSelector ontology={this.props.ontology} mappings={this.state.mappings}/> */}
                 </Sider>
                 <Layout>
@@ -78,9 +78,10 @@ export default class SPARQLEndpoint extends React.Component {
                                 ontology={this.props.ontology}
                                 mappings={this.state.mappings}
                                 catalog={this.state.catalog}
-                                open={this.state.open} 
+                                open={this.state.open}
+                                openF={this.open}
                                 refreshCatalog={this.requestCatalog.bind(this)}
-                                />
+                            />
                         </div>
                     </Content>
                 </Layout>

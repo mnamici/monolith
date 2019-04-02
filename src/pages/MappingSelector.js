@@ -87,10 +87,16 @@ export default class MappingSelector extends React.Component {
         }
     }
 
+    select = (value) => {
+        const enableStart = !this.state.runningMappingIDs.includes(this.props.selected);
+        this.props.onSelection(value, enableStart)
+    }
+
     render() {
         if (this.props.mappings[0] === undefined) return null
         const mappings = this.props.mappings.map(item => this.getOptions(item));
         const disableStart = this.state.runningMappingIDs.includes(this.props.selected);
+        // this.props.onSelection(this.props.selected, !disableStart)
         return (
             <div>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
@@ -100,7 +106,7 @@ export default class MappingSelector extends React.Component {
                         defaultValue={
                             this.props.mappings[0].mappingID
                         }
-                        onChange={this.props.onSelection}
+                        onChange={this.select}
                         disabled={this.state.loading}>
                         {mappings}
                     </Select>
