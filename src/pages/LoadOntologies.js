@@ -17,7 +17,7 @@ export default class LoadOntologies extends React.Component {
     }
 
     componentDidMount() {
-        this.requestOntologies()   
+        this.requestOntologies()
     }
 
     requestOntologies() {
@@ -56,23 +56,23 @@ export default class LoadOntologies extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{ height: 'calc(100vh - 25px)', overflow: 'auto' }}>
                 {
                     this.state.current === 0 ?
-                        <OntologiesList 
-                            data={this.state.data} 
-                            next={this.next.bind(this)} 
+                        <OntologiesList
+                            data={this.state.data}
+                            next={this.next.bind(this)}
                             rerender={this.requestOntologies.bind(this)}
                             close={this.props.close}
-                            /> :
-                        <OntologyVersionsList 
-                            data={this.state.data} 
-                            current={this.state.ontologyID} 
-                            previous={this.prev.bind(this)} 
-                            rerender={this.requestOntologies.bind(this)} 
+                        /> :
+                        <OntologyVersionsList
+                            data={this.state.data}
+                            current={this.state.ontologyID}
+                            previous={this.prev.bind(this)}
+                            rerender={this.requestOntologies.bind(this)}
                             open={this.props.open}
                             close={this.props.close}
-                            />
+                        />
                 }
                 {
                     this.state.current > 0 && (

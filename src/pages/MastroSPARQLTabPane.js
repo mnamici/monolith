@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Button, Progress, List, Popover, Modal } from 'antd';
+import { Switch, Button, Progress, List, Popover, Modal, message } from 'antd';
 import YASQE from 'yasgui-yasqe'
 import '../css/yasqe.min.css'
 import { Input } from 'antd';
@@ -8,7 +8,16 @@ import { Input } from 'antd';
 import Results from './ResultsTable'
 import QueryExecutionReport from './QueryExecutionReport';
 import MappingSelector from './MappingSelector'
-import { startQuery, getQueryStatus, startNewQuery, postInQueryCatalog, putInQueryCatalog } from '../api/MastroApi';
+import {
+    startMastro as startMastroAPI,
+    stopMastro as stopMastroAPI,
+    getMastroStatus,
+    startQuery,
+    getQueryStatus,
+    startNewQuery,
+    postInQueryCatalog,
+    putInQueryCatalog
+} from '../api/MastroApi';
 
 const { TextArea } = Input;
 
@@ -16,27 +25,38 @@ const POLLING_TIME = 1000
 
 export default class MastroSPARQLTabPane extends React.Component {
     state = {
+        modalVisible: false,
+        modalConfirmLoading: false,
+        reasoning: true,
+        enableRun: false,
+        // QUERY STATUS
         loading: false,
         selectedMappingID: null,
         status: {},
         interval: 0,
-        modalVisible: false,
-        modalConfirmLoading: false,
-        reasoning: true,
-        enableRun: false
+        //      MASTRO STATUS
+        enabledStartMastro: true,
+        loadingMastro: false,
+        intervalMastro: 0,
+        runningMappingIDs: []
     }
 
     componentWillUnmount() {
         this.stopPolling()
+        this.stopPollingMastro()
     }
 
     componentDidMount() {
+        const currMappingID = this.props.mappings[0] !== undefined && this.props.mappings[0].mappingID
         this.setState({
             oldQueryID: this.props.query.queryID,
             newQueryID: this.props.query.queryID,
             new: this.props.new,
-            selectedMappingID: this.props.mappings[0] !== undefined && this.props.mappings[0].mappingID
+            selectedMappingID: currMappingID
         })
+        this.props.mappings.forEach(mapping => {
+            getMastroStatus(this.props.ontology.name, this.props.ontology.version, mapping.mappingID, this.checkMastroStatus.bind(this))
+        });
         this.changeDescription({ target: { value: this.props.query.queryDescription } })
         this.yasqe = YASQE(document.getElementById('sparql_' + this.props.num),
             {
@@ -53,6 +73,50 @@ export default class MastroSPARQLTabPane extends React.Component {
 
     componentDidUpdate() {
         this.yasqe.refresh();
+    }
+
+    startMastro = () => {
+        startMastroAPI(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.startPollingMastro.bind(this))
+        this.setState({ loadingMastro: true })
+
+    }
+
+    stopMastro = () => {
+        this.stopPollingMastro()
+        stopMastroAPI(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, (mapId) => {
+            this.setState({runningMappingIDs: this.state.runningMappingIDs.filter(mid => mapId !== mid)})
+        })
+    }
+
+    pollingMastro() {
+        getMastroStatus(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.checkMastroStatus.bind(this))
+    }
+
+    startPollingMastro() {
+        this.setState({ intervalMastro: setInterval(this.pollingMastro.bind(this), 1000) })
+    }
+
+    stopPollingMastro() {
+        clearInterval(this.state.intervalMastro)
+        this.setState({ loadingMastro: false, intervalMastro: 0 })
+    }
+
+    checkMastroStatus(status, mappingID) {
+        if (status.status === 'ERROR') {
+            this.stopPollingMastro()
+        }
+
+        if (status.status === 'RUNNING') {
+            const newRunningMappingIDs = [...this.state.runningMappingIDs]
+            if (!this.state.runningMappingIDs.includes[mappingID]) {
+                newRunningMappingIDs.push(mappingID)
+            }
+            if (this.state.intervalMastro !== 0) {
+                message.success('MASTRO IS FUCKING RUNNING!')
+            }
+            this.setState({ enabledStartMastro: false, runningMappingIDs: newRunningMappingIDs, enableRun: true })
+            this.stopPollingMastro()
+        }
     }
 
     showModal = () => {
@@ -106,7 +170,6 @@ export default class MastroSPARQLTabPane extends React.Component {
     }
 
     onSelectMapping(value, enableRun) {
-    console.log(value, enableRun) 
         this.setState({ selectedMappingID: value, enableRun: enableRun })
     }
 
@@ -216,10 +279,15 @@ export default class MastroSPARQLTabPane extends React.Component {
         const elements = [
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <MappingSelector
-                    ontology={this.props.ontology}
                     mappings={this.props.mappings}
                     onSelection={this.onSelectMapping.bind(this)}
-                    selected={this.state.selectedMappingID} />
+                    selected={this.state.selectedMappingID}
+                    loadingMastro={this.state.loadingMastro}
+                    runningMappingIDs={this.state.runningMappingIDs}
+                    startMastro={this.startMastro}
+                    stopMastro={this.stopMastro}
+
+                />
             </div>,
             <Progress percent={this.state.status.percentage} />,
             <div id={"sparql_" + this.props.num} />,
@@ -245,12 +313,12 @@ export default class MastroSPARQLTabPane extends React.Component {
                             type="danger"
                             icon="stop"
                             onClick={this.stop.bind(this)}
-                            disabled={this.state.enableRun}
+                            disabled={!this.state.loading}
                         >Stop</Button>
                     </Button.Group>
                     <span style={{ padding: '0px 10px', color: 'rgb(255, 255, 255, 0.75)' }}>Reasoning</span>
                     <Popover content='Toggle Reasoning'>
-                        <Switch checked={this.state.reasoning} onClick={this.toggleReasoning} />
+                        <Switch checked={this.state.reasoning} onClick={this.toggleReasoning} disabled={!this.state.enableRun} />
                     </Popover>
                 </div>
                 <Button

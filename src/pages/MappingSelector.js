@@ -1,31 +1,14 @@
 import React from 'react';
-import { Select, Popover, Button, Icon, message, } from 'antd';
-import { startMastro, stopMastro, getMastroStatus } from '../api/MastroApi';
+import { Select, Popover, Button, Icon, } from 'antd';
+import {  } from '../api/MastroApi';
 
 const Option = Select.Option;
 
 export default class MappingSelector extends React.Component {
-    state = {
-        enabledStart: true,
-        loading: false,
-        interval: 0,
-        runningMappingIDs: []
-    }
-
-    componentWillReceiveProps(props) {
-        props.mappings.forEach(mapping => {
-            getMastroStatus(props.ontology.name, props.ontology.version, mapping.mappingID, this.checkStatus.bind(this))
-        });
-
-    }
-
-    componentWillUnmount() {
-        this.stopPolling()
-    }
 
     getOptions(item) {
 
-        const running = this.state.runningMappingIDs.includes(item.mappingID)
+        const running = this.props.runningMappingIDs.includes(item.mappingID)
 
         const style = running ? { color: '#52c41a' } : {}
 
@@ -37,66 +20,24 @@ export default class MappingSelector extends React.Component {
                 </div>
             } placement='right'>
                 <div className='mapping' style={style}>
-                    {running && <Icon type='thunderbolt' />}
+                    {running && <Icon type='thunderbolt' style={{paddingRight: 4}}/>}
                     {item.mappingID}
                 </div>
             </Popover>
         </Option>
     }
 
-    start() {
-        startMastro(this.props.ontology.name, this.props.ontology.version, this.props.selected, this.startPolling.bind(this))
-        this.setState({ loading: true })
-
-    }
-
-    stop() {
-        this.stopPolling()
-        stopMastro(this.props.ontology.name, this.props.ontology.version, this.props.selected, () => {
-            this.componentWillReceiveProps(this.props)
-        })
-    }
-
-    polling() {
-        getMastroStatus(this.props.ontology.name, this.props.ontology.version, this.props.selected, this.checkStatus.bind(this))
-    }
-
-    startPolling() {
-        this.setState({ interval: setInterval(this.polling.bind(this), 1000) })
-    }
-
-    stopPolling() {
-        clearInterval(this.state.interval)
-        this.setState({ loading: false, interval: 0 })
-    }
-
-    checkStatus(status, mappingID) {
-        if (status.status === 'ERROR') {
-            this.stopPolling()
-        }
-
-        if (status.status === 'RUNNING') {
-            const newRunningMappingIDs = [...this.state.runningMappingIDs]
-            if (!this.state.runningMappingIDs.includes[mappingID]) {
-                newRunningMappingIDs.push(mappingID)
-            }
-            if (this.state.interval !== 0)
-                message.success('MASTRO IS FUCKING RUNNING!')
-            this.setState({ enabledStart: false, runningMappingIDs: newRunningMappingIDs })
-            this.stopPolling()
-        }
-    }
+    
 
     select = (value) => {
-        const enableStart = !this.state.runningMappingIDs.includes(this.props.selected);
+        const enableStart = !this.props.runningMappingIDs.includes(this.props.selected);
         this.props.onSelection(value, enableStart)
     }
 
     render() {
         if (this.props.mappings[0] === undefined) return null
         const mappings = this.props.mappings.map(item => this.getOptions(item));
-        const disableStart = this.state.runningMappingIDs.includes(this.props.selected);
-        // this.props.onSelection(this.props.selected, !disableStart)
+        const disableStart = this.props.runningMappingIDs.includes(this.props.selected);
         return (
             <div>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
@@ -107,15 +48,15 @@ export default class MappingSelector extends React.Component {
                             this.props.mappings[0].mappingID
                         }
                         onChange={this.select}
-                        disabled={this.state.loading}>
+                        disabled={this.props.loadingMastro}>
                         {mappings}
                     </Select>
                     <Button.Group style={{ margin: '0px 10px' }}>
                         <Button
                             type="primary"
                             icon="play-circle"
-                            loading={this.state.loading}
-                            onClick={this.start.bind(this)}
+                            loading={this.props.loadingMastro}
+                            onClick={this.props.startMastro}
                             disabled={disableStart}
                         >
                             Start Mastro
@@ -123,7 +64,7 @@ export default class MappingSelector extends React.Component {
                         <Button
                             type="danger"
                             icon="stop"
-                            onClick={this.stop.bind(this)}
+                            onClick={this.props.stopMastro}
                             disabled={!disableStart}
                         >
                             Stop Mastro

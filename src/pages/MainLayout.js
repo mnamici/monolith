@@ -129,7 +129,7 @@ export default class MainLayout extends React.Component {
               <Breadcrumb.Item>User</Breadcrumb.Item>
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
             </Breadcrumb> */}
-            <div style={{ padding: '0px' }}>
+            {/* <div style={{ padding: '0px' }}> */}
               <Route exact path="/" render={(props) =>
                 <Home {...props} openOntology={this.openCurrent.bind(this)} />} />
 
@@ -146,7 +146,7 @@ export default class MainLayout extends React.Component {
               <Route path="/dataset" component={() => <UnderConstruction />} />
               <Route path="/admin" component={() => <UnderConstruction />} />
               <Route path="/settings" component={() => <Settings />} />
-            </div>
+            {/* </div> */}
           </Content>
           <Footer style={{ padding: '2px', textAlign: 'center' }}>
             <a href="http://www.obdasystems.com" target="_blank" rel="noopener noreferrer">OBDA Systems ©2018</a>

@@ -20,9 +20,9 @@ function manageError(err) {
     console.error(err)
 }
 
-function reportError(msg) {
-    console.error(msg)
-    message.error(msg)
+function reportError(error) {
+    console.error(error)
+    message.error(error.message)
 }
 
 export function login(username, password, mastroUrl, callback) {
@@ -555,7 +555,7 @@ export function stopMastro(name, version, mapping, callback) {
         data: encodedVersion,
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
-        callback()
+        callback(mapping)
         if (response.data === 1)
             throw ErrorEvent()
     }).catch(function (err) {
@@ -577,7 +577,7 @@ export function getMastroStatus(name, version, mapping, callback) {
     }).then(function (response) {
         callback(response.data, mapping)
     }).catch(function (err) {
-        // manageError(err)
+        manageError(err)
     });
 }
 

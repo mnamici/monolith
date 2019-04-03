@@ -99,6 +99,12 @@ h1 {
   margin-bottom: 4px !important
 }
 
+/* BUG FIX ANT ROW MARGIN */
+
+.ant-row {
+  margin: 0 !important
+}
+
 /* WORD WRAP IN TABLE CELLS*/
 
 td {
@@ -175,6 +181,14 @@ td {
 *                          *
 *                          *
 ****************************/
+
+/* BTN DISABLED */
+
+.ant-btn:disabled {
+  background-color: rgb(136, 148, 163);
+  opacity: 0.4;
+  color: #fff;
+}
 
 /* SPARQL TAB COLORS */
 
