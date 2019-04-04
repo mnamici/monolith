@@ -20,8 +20,8 @@ export default class QueryExecutionReport extends React.Component {
         const tabList = [
             { key: "qi", tab: "Query Info" },
             { key: "or", tab: "Ontology Rewritings" },
-            { key: "mr", tab: "Mapping Rewritings" },
-            { key: "vr", tab: "View Rewritings" },
+            { key: "mr", tab: "View Rewritings" },
+            { key: "vr", tab: "SQL Rewritings" },
         ];
 
         const contentList = {
@@ -54,7 +54,9 @@ export default class QueryExecutionReport extends React.Component {
                     activeTabKey={this.state.tabKey}
                     onTabChange={(key) => { this.onTabChange(key, 'tabKey'); }}
                 >
-                    {contentList[this.state.tabKey]}
+                    <div style={{ height: 340, width: '100%', overflow: 'auto' }}>
+                        {contentList[this.state.tabKey]}
+                    </div>
                 </Card>
             </div>
         );

@@ -32,7 +32,7 @@ export default class QueryInfo extends React.Component {
             <div>
                 <ListMapItem data={data} />
                 <div style={{ display: 'flex', paddingTop: 4 }}>
-                    <DownloadFile />
+                    <DownloadFile title='Download Query Report'/>
                 </div>
             </div>
         );

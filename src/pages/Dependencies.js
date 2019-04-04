@@ -37,7 +37,9 @@ export default class Dependencies extends React.Component {
                     activeTabKey={this.state.tabKey}
                     onTabChange={(key) => { this.onTabChange(key, 'tabKey'); }}
                 >
-                    {contentList[this.state.tabKey]}
+                    <div style={{ height: 340, width: '100%', overflow: 'auto' }}>
+                        {contentList[this.state.tabKey]}
+                    </div>
                 </Card>
             </div>
         );

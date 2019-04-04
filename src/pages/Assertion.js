@@ -7,7 +7,10 @@ import ListMapItem from './ListMapItem';
 export default class Assertion extends React.Component {
     render() {
         const head = this.props.assertion.mappingHead.secondArg !== null ?
-            this.props.assertion.mappingHead.firstArg+', '+this.props.assertion.mappingHead.secondArg:
+            <div>
+                <div>Domain: {this.props.assertion.mappingHead.firstArg}</div>
+                <div>Range: {this.props.assertion.mappingHead.secondArg}</div>
+            </div> :
             this.props.assertion.mappingHead.firstArg;
         const data = [
             {

@@ -30,6 +30,7 @@ export default class SearchTree extends React.Component {
       this.props.ontology.version,
       this.props.mappingID,
       this.loaded)
+    document.getElementsByClassName("dropdown-trigger")[0].click()
   }
 
   componentWillReceiveProps(props) {

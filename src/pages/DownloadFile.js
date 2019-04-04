@@ -19,7 +19,7 @@ export default class DownloadFile extends React.Component {
     return (
       <div style={{ margin: 'auto' }}>
         <Button icon='download' onClick={this.download}>
-          Download
+          {this.props.title || 'Download'}
         </Button>
       </div>
 

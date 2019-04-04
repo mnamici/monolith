@@ -49,8 +49,8 @@ export default class MastroSPARQLTabPane extends React.Component {
     componentDidMount() {
         const currMappingID = this.props.mappings[0] !== undefined && this.props.mappings[0].mappingID
         this.setState({
-            oldQueryID: this.props.query.queryID,
-            newQueryID: this.props.query.queryID,
+            tabKey: this.props.tabKey,
+            queryID: this.props.query.queryID,
             new: this.props.new,
             selectedMappingID: currMappingID
         })
@@ -67,7 +67,11 @@ export default class MastroSPARQLTabPane extends React.Component {
                     showQueryButton: false
                 }
             });
-        this.props.query.queryCode !== undefined && this.yasqe.setValue(this.props.query.queryCode)
+        this.yasqe.on('change', () => { 
+            this.props.setDirty(this.state.tabKey)
+            this.setState({new: true})
+        })
+        this.props.query.queryCode !== undefined ? this.yasqe.setValue(this.props.query.queryCode) : this.yasqe.setValue("")
         this.yasqe.refresh();
     }
 
@@ -140,17 +144,16 @@ export default class MastroSPARQLTabPane extends React.Component {
 
     handleOkOverwrite = () => {
         const query = {
-            queryID: this.state.newQueryID,
+            queryID: this.state.queryID,
             queryDescription: this.state.queryDescription || '',
             queryCode: this.yasqe.getValue()
         }
         putInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
-            this.props.renameTab(this.state.oldQueryID, this.state.newQueryID)
+            this.props.renameTab(this.state.tabKey, this.state.queryID)
             this.setState({
                 modalVisible: false,
                 overwirteModalVisible: false,
                 modalConfirmLoading: false,
-                oldQueryID: this.state.newQueryID
             })
         })
     }
@@ -179,12 +182,12 @@ export default class MastroSPARQLTabPane extends React.Component {
                 this.props.ontology.name,
                 this.props.ontology.version,
                 this.state.selectedMappingID,
-                this.state.oldQueryID,
+                this.state.tabKey,
                 this.state.reasoning,
                 this.startPolling.bind(this))
         else {
             const query = {
-                queryID: this.state.oldQueryID,
+                queryID: this.state.tabKey,
                 queryDescription: this.state.queryDescription || '',
                 queryCode: this.yasqe.getValue()
             }
@@ -229,12 +232,12 @@ export default class MastroSPARQLTabPane extends React.Component {
 
     save() {
         const query = {
-            queryID: this.state.newQueryID,
+            queryID: this.state.queryID,
             queryDescription: this.state.queryDescription || '',
             queryCode: this.yasqe.getValue()
         }
 
-        const alreadyInCatalog = this.props.catalog.filter(query => query.queryID === this.state.newQueryID).length === 1
+        const alreadyInCatalog = this.props.catalog.filter(query => query.queryID === this.state.queryID).length === 1
 
         if (alreadyInCatalog) {
             this.showOverwriteModal()
@@ -242,29 +245,29 @@ export default class MastroSPARQLTabPane extends React.Component {
 
         else if (this.props.new) {
             postInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
-                this.props.renameTab(this.state.oldQueryID, this.state.newQueryID, true)
+                this.props.renameTab(this.state.tabKey, this.state.queryID, true)
                 this.setState({
                     modalVisible: false,
                     modalConfirmLoading: false,
-                    oldQueryID: this.state.newQueryID
+                    tabKey: this.state.queryID
                 })
 
             })
         }
         else {
             putInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
-                this.props.renameTab(this.state.oldQueryID, this.state.newQueryID)
+                this.props.renameTab(this.state.tabKey, this.state.queryID)
                 this.setState({
                     modalVisible: false,
                     modalConfirmLoading: false,
-                    oldQueryID: this.state.newQueryID
+                    tabKey: this.state.queryID
                 })
             })
         }
     }
 
     changeQueryID = (e) => {
-        this.setState({ newQueryID: e.target.value })
+        this.setState({ queryID: e.target.value })
     }
 
     changeDescription = (e) => {
@@ -365,7 +368,7 @@ export default class MastroSPARQLTabPane extends React.Component {
                     confirmLoading={this.state.modalConfirmLoading}
                     onCancel={this.handleCancel}
                 >
-                    <Input placeholder='Specify query ID' value={this.state.newQueryID} onChange={this.changeQueryID} />
+                    <Input placeholder='Specify query ID' value={this.state.queryID} onChange={this.changeQueryID} />
                 </Modal>
                 <Modal
                     visible={this.state.overwirteModalVisible}

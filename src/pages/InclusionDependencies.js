@@ -8,6 +8,7 @@ export default class InclusionDependencies extends React.Component {
         return (
             <div>
                 <List
+                    className='bigCards'
                     grid={{ gutter: 4, column: 1 }}
                     dataSource={this.props.ids}
                     renderItem={item => (

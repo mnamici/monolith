@@ -22,7 +22,7 @@ function manageError(err) {
 
 function reportError(error) {
     console.error(error)
-    message.error(error.message)
+    message.error(error.message || error)
 }
 
 export function login(username, password, mastroUrl, callback) {

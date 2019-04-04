@@ -5,7 +5,7 @@ import Entity from './Entity';
 export default class ListItem extends React.Component {
     render() {
         const propsData = this.props.data || []
-
+        
         let dataIndex = 'value'
         var data = []
         if (this.props.entity) {

@@ -256,8 +256,12 @@ a:hover {
 
 /* COMPONENTS BACKGROUND */
 
-.ant-card, .ant-collapse-content, .ant-layout-footer, .ant-drawer-header, .ant-drawer-wrapper-body, .ant-table-placeholder, .ant-modal-content, .ant-modal-header {
+.ant-card, .ant-collapse-content, .ant-drawer-header, .ant-drawer-wrapper-body, .ant-table-placeholder, .ant-modal-content, .ant-modal-header {
   background-color: rgb(87, 102, 121) !important;
+}
+
+.ant-layout-footer {
+  background-color: rgb(52, 61, 73) !important;
 }
 
 .ant-popover-inner-content, .ant-popover-arrow {

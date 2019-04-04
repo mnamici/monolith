@@ -77,7 +77,7 @@ export default class OntologyWiki extends React.Component {
                 </Sider> */}
                 <Layout >
                     <Content >
-                        <div style={{ height: '84vh', overflowY: 'auto', paddingRight: 12 }}>
+                        <div style={{ height: 'calc(100vh - 89px)', overflowY: 'auto', paddingRight: 12 }}>
                             <Route exact path="/open/ontology/wiki/:predicateType?/:entityID?" render={(props) => (
                                 this.state.current !== props.match.params.entityID && this.state.current !== undefined ?
                                     <Redirect push to={"/open/ontology/wiki/" + this.state.predicateType + "/" + this.state.current} />

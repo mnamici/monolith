@@ -49,7 +49,15 @@ export default class DataPropertyPage extends React.Component {
         this.state.data.dataPropertyFunctional && dataPropertyCharacteristics.push("Functional")
 
         const components = [
-
+            <Card className='dataPropertyCard' title="Domain" >
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.dataPropertyDomain} />
+            </Card>,
+            <Card className='dataPropertyCard' title="Range" >
+                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.dataPropertyRange} />
+            </Card>,
+            <Card className='dataPropertyCard' title="Data Property Characteristics" >
+                <ListItem data={dataPropertyCharacteristics} />
+            </Card>,
             <Card className='dataPropertyCard' title="Equivalent Data Properties" >
                 <ListItem entity predicateType={predicateTypes.op} data={this.state.data.equivalentDataProperties} />
             </Card>,
@@ -62,15 +70,6 @@ export default class DataPropertyPage extends React.Component {
             <Card className='dataPropertyCard' title="Disjoint Data Properties" >
                 <ListItem entity predicateType={predicateTypes.op} data={this.state.data.disjointDataProperties} />
             </Card>,
-            <Card className='dataPropertyCard' title="Domain" >
-                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.dataPropertyDomain} />
-            </Card>,
-            <Card className='dataPropertyCard' title="Range" >
-                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.dataPropertyRange} />
-            </Card>,
-            <Card className='dataPropertyCard' title="Data Property Characteristics" >
-                <ListItem data={dataPropertyCharacteristics} />
-            </Card>,
             <Card className='dataPropertyCard' title="Data Property Individuals" >
                 <ListItem entity predicateType={predicateTypes.op} data={this.state.data.dataPropertyIndividuals} />
             </Card>,
@@ -78,8 +77,8 @@ export default class DataPropertyPage extends React.Component {
         return (
             <div>
                 <div style={{ textAlign: 'center' }}>
-                    <h1><img src={svg} alt='' style={{height: 30}}/><span>{renderEntity(this.state.data.currentEntity)}</span></h1>
-                    <Popover content={this.state.data.currentEntity.entityIRI}>
+                    <h1><img src={svg} alt='' style={{ height: 35, paddingBottom: 4 }} /><span>{renderEntity(this.state.data.currentEntity)}</span></h1>
+                    <Popover content={this.state.data.currentEntity.entityIRI} placement='bottom'>
                         <h3>{this.state.data.currentEntity.entityPrefixIRI}</h3>
                     </Popover>
                 </div>
@@ -89,10 +88,10 @@ export default class DataPropertyPage extends React.Component {
                     </Card>
                 </div>
                 <List
-                    grid={{ gutter: 16, column: 4 }}
+                    grid={{ gutter: 16, lg: 4, md: 2, sm: 1, xs: 1 }}
                     dataSource={components}
                     renderItem={item => (
-                        <List.Item style={{paddingBottom: 8}}>
+                        <List.Item style={{ paddingBottom: 8 }}>
                             {item}
                         </List.Item>
                     )}

@@ -54,7 +54,7 @@ export default class SQLViewsPage extends React.Component {
             },
         ]
         const elements = [
-            <Card className='mappingAssertion' title={data.sqlView.sqlViewID} >
+            <Card className='mappingAssertion'>
                 <ListMapItem data={first} />
             </Card>,
             <Divider>{"Ontology Mappings"}</Divider>,
@@ -67,6 +67,9 @@ export default class SQLViewsPage extends React.Component {
 
         return (
             <div style={{ paddingTop: 12 }}>
+                <div style={{ textAlign: 'center', padding: '16px 0px 16px 0px' }}>
+                    <h1>{data.sqlView.sqlViewID}</h1>
+                </div>
                 <List
                     grid={{ gutter: 12, column: 1 }}
                     dataSource={elements}

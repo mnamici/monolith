@@ -11,11 +11,9 @@ export default class MappingInfo extends React.Component {
 
     state = {
         data: {
-            mapping: { mappingDescription: "" },
-            mappingDBConnections: [{}],
-            mappingTemplates: [],
-            showPassword: false
-        }
+            mappingDBConnections: [{}]
+        },
+        showPassword: false
     }
 
     componentDidMount() {
@@ -71,10 +69,11 @@ export default class MappingInfo extends React.Component {
         return (
             <div style={{ paddingRight: '1vw' }}>
                 <div style={{ textAlign: 'center', padding: 16 }}>
-                    <h1 >{data.mapping.mappingID}</h1>
+                    <h1 >{this.props.mappingID}</h1>
                 </div>
                 <Card title="Description" className='description'>
-                    <ListItem data={[data.mapping.mappingDescription]} />
+                    {/* <ListItem data={data.mapping?[data.mapping.mappingDescription]:[]} /> */}
+                    <p style={{ color: 'rgba(255, 255, 255, 0.85)' }}>{data.mapping && data.mapping.mappingDescription}</p>
                 </Card>,
                 <List
                     grid={{ gutter: 12, column: 2 }}

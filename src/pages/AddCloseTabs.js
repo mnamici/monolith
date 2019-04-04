@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Icon } from 'antd';
+import { Tabs, Icon, Modal } from 'antd';
 import MastroSPARQLTabPane from './MastroSPARQLTabPane'
 
 const TabPane = Tabs.TabPane;
@@ -12,6 +12,9 @@ export default class AddCloseTabs extends React.Component {
     this.state = {
       activeKey: null,
       panes: [],
+      dirtyPanes: [],
+      modalVisible: false,
+      toClose: null
     };
   }
 
@@ -23,7 +26,7 @@ export default class AddCloseTabs extends React.Component {
       const activeKey = newQueryID + this.newTabIndex
       const title = newQueryID + this.newTabIndex
       panes.push({
-        title: <span key={title}><Icon type='file' />{title+"*"}</span>,
+        title: <span key={title}><Icon type='file' />{title + "*"}</span>,
         content: <MastroSPARQLTabPane
           ontology={props.ontology}
           mappings={props.mappings}
@@ -32,6 +35,8 @@ export default class AddCloseTabs extends React.Component {
           query={{ queryID: title }}
           new
           renameTab={this.renameTab}
+          setDirty={this.setDirty}
+          tabKey={activeKey}
         />,
         key: activeKey
       });
@@ -52,15 +57,29 @@ export default class AddCloseTabs extends React.Component {
     this[action](targetKey);
   }
 
-  renameTab = (oldTitle, newTitle, ref) => {
+  renameTab = (paneKey, newTitle, ref) => {
     let panes = [...this.state.panes]
     for (let pane of panes) {
-      if (pane.title.key === oldTitle) {
+      if (pane.key === paneKey) {
         pane.title = <span key={newTitle}><Icon type='file' />{newTitle}</span>
       }
     }
-    this.setState({ panes: panes })
-    if(ref) this.props.refreshCatalog()
+
+    this.setState({ panes: panes, dirtyPanes: this.state.dirtyPanes.filter(pane => pane !== paneKey) })
+    if (ref) this.props.refreshCatalog()
+  }
+
+  setDirty = (paneKey) => {
+    if (paneKey === undefined) return
+    let panes = [...this.state.panes]
+    for (let pane of panes) {
+      if (pane.key === paneKey) {
+        pane.title = <span key={pane.title.key}><Icon type='file' />{pane.title.key + '*'}</span>
+      }
+    }
+    let dirtypanes = [...this.state.dirtyPanes]
+    if (!dirtypanes.includes(paneKey)) dirtypanes.push(paneKey)
+    this.setState({ panes: panes, dirtyPanes: dirtypanes })
   }
 
   add = (query) => {
@@ -78,12 +97,14 @@ export default class AddCloseTabs extends React.Component {
           num={activeKey}
           query={query}
           renameTab={this.renameTab}
+          setDirty={this.setDirty}
+          tabKey={activeKey}
         />,
         key: activeKey
       });
     else {
       panes.push({
-        title: <span key={title}><Icon type='file' />{title+"*"}</span>,
+        title: <span key={title}><Icon type='file' />{title + "*"}</span>,
         content: <MastroSPARQLTabPane
           ontology={this.props.ontology}
           mappings={this.props.mappings}
@@ -92,6 +113,8 @@ export default class AddCloseTabs extends React.Component {
           query={{ queryID: title }}
           new
           renameTab={this.renameTab}
+          setDirty={this.setDirty}
+          tabKey={activeKey}
         />,
         key: activeKey
       });
@@ -101,6 +124,14 @@ export default class AddCloseTabs extends React.Component {
   }
 
   remove = (targetKey) => {
+    if (this.state.dirtyPanes.includes(targetKey)) {
+      this.setState({ modalVisible: true, toClose: targetKey })
+    }
+    else
+      this.closeTab(targetKey)
+  }
+
+  closeTab(targetKey) {
     let activeKey = this.state.activeKey;
     let lastIndex;
     this.state.panes.forEach((pane, i) => {
@@ -120,19 +151,28 @@ export default class AddCloseTabs extends React.Component {
       this.newTabIndex = 0
     }
 
-    this.setState({ panes, activeKey });
+    this.setState({ panes, activeKey, modalVisible: false, toClose: null });
   }
 
   render() {
     return (
-      <Tabs
-        onChange={this.onChange}
-        activeKey={this.state.activeKey}
-        type="editable-card"
-        onEdit={this.onEdit}
-      >
-        {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</TabPane>)}
-      </Tabs>
+      <div>
+        <Modal
+          visible={this.state.modalVisible}
+          onOk={() => this.closeTab(this.state.toClose)}
+          onCancel={() => this.setState({modalVisible: false})}
+        >
+          Discard changes?
+        </Modal>
+        <Tabs
+          onChange={this.onChange}
+          activeKey={this.state.activeKey}
+          type="editable-card"
+          onEdit={this.onEdit}
+        >
+          {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</TabPane>)}
+        </Tabs>
+      </div>
     );
   }
 }

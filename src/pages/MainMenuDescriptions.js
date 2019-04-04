@@ -30,7 +30,7 @@ export default class MainMenuDescriptions extends React.Component {
             <div>
                 <Divider>Help</Divider>
                 <List
-                    grid={{ gutter: 16, column: 3 }}
+                    grid={{ gutter: 16, lg: 3, md: 2, sm: 1, xs: 1 }}
                     dataSource={data}
                     renderItem={item => (
                         <List.Item>
