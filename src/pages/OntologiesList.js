@@ -17,12 +17,13 @@ export default class OntologiesList extends React.Component {
             <div>
                 <Divider>Choose or add an ontology</Divider>
                 <List
+                    className='bigCards'
                     rowKey="ontologiesView"
                     grid={{ gutter: 12, lg: 3, md: 2, sm: 1, xs: 1 }}
-                    dataSource={[...this.props.data, '']}
+                    dataSource={['', ...this.props.data]}
                     renderItem={item =>
                         item ? (
-                            <List.Item key={item.ontologyID} style={{paddingBottom: 6}}>
+                            <List.Item key={item.ontologyID} style={{ paddingBottom: 6 }}>
                                 <Card hoverable actions={[
                                     <span onClick={
                                         () => this.delete(item.ontologyID)

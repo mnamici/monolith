@@ -19,7 +19,7 @@ export default class OntologyVersionsList extends React.Component {
         var list = [];
         for (let i = 0; i < this.props.data.length; i++) {
             if (this.props.data[i].ontologyID === this.props.current) {
-                list = [...this.props.data[i].ontologyVersions, ''];
+                list = ['', ...this.props.data[i].ontologyVersions];
                 break;
             }
         }

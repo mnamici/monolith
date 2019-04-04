@@ -48,18 +48,18 @@ export default class Home extends React.Component {
     return (
       <div style={{ height: 'calc(96vh - 21px)', overflowX: 'hidden', overflowY: 'auto' }}>
         <div style={{ display: 'flex', justifyContent: 'center' }}><img src={logo} alt="logo" style={isChrome ? { height: 100 } : { maxHeight: 100 }} /></div>
-        {dataOntologies.length !== 0 && <LastLoadedList
-          ontology title="Last Loaded Ontologies"
+        {<LastLoadedList
+          ontology title="Recent Ontologies"
           data={dataOntologies}
           path="/open/ontology/info"
           open={this.props.openOntology} />}
-        {dataKG.length !== 0 && <LastLoadedList
-          title="Last Loaded Knowledge Graphs"
+        {<LastLoadedList
+          title="Recent Knowledge Graphs"
           data={dataKG}
           path="/kg"
           open={() => null} />}
-        {dataDataset.length !== 0 && <LastLoadedList
-          title="Last Loaded Datasets"
+        {<LastLoadedList
+          title="Recent Datasets"
           data={dataDataset}
           path="/dataset"
           open={() => null} />}

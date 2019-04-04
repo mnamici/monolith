@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Popover, List } from 'antd';
 import { getDataPropertyPage } from '../api/MastroApi';
-
+import svg from '../css/attr.svg'
 import { renderEntity, predicateTypes } from '../utils/utils'
 import ListItem from './ListItem';
 
@@ -78,7 +78,7 @@ export default class DataPropertyPage extends React.Component {
         return (
             <div>
                 <div style={{ textAlign: 'center' }}>
-                    <h1 >{renderEntity(this.state.data.currentEntity)}</h1>
+                    <h1><img src={svg} alt='' style={{height: 30}}/><span>{renderEntity(this.state.data.currentEntity)}</span></h1>
                     <Popover content={this.state.data.currentEntity.entityIRI}>
                         <h3>{this.state.data.currentEntity.entityPrefixIRI}</h3>
                     </Popover>
@@ -92,7 +92,7 @@ export default class DataPropertyPage extends React.Component {
                     grid={{ gutter: 16, column: 4 }}
                     dataSource={components}
                     renderItem={item => (
-                        <List.Item>
+                        <List.Item style={{paddingBottom: 8}}>
                             {item}
                         </List.Item>
                     )}

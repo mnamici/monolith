@@ -16,7 +16,8 @@ function convertData(node, arr, predicateType) {
       label: renderEntity(item.entity),
       entityID: item.entity.entityID,
       predicateType: predicateType,
-      children: children
+      children: children,
+      className: predicateType,
     })
   }
 
@@ -41,6 +42,9 @@ export default class SearchTree extends React.Component {
       this.props.ontology.name,
       this.props.ontology.version,
       this.loaded)
+
+    document.getElementsByClassName("dropdown-trigger")[0].click()
+
   }
 
   componentWillReceiveProps(props) {
@@ -83,14 +87,17 @@ export default class SearchTree extends React.Component {
     const gData = [
       {
         label: "Classes",
+        className: predicateTypes.c,
         children: convertData(mastroData.hierarchyTree.classTree.children, [], predicateTypes.c)
       },
       {
         label: "Object Properties",
+        className: predicateTypes.op,
         children: convertData(mastroData.hierarchyTree.objectPropertyTree.children, [], predicateTypes.op)
       },
       {
         label: "Data Properties",
+        className: predicateTypes.dp,
         children: convertData(mastroData.hierarchyTree.dataPropertyTree.children, [], predicateTypes.dp)
       }
     ]
@@ -98,6 +105,7 @@ export default class SearchTree extends React.Component {
   }
 
   render() {
+
     return <DropdownTreeSelect
       data={this.state.data}
       onChange={this.onChange}

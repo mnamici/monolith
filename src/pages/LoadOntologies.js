@@ -58,6 +58,13 @@ export default class LoadOntologies extends React.Component {
         return (
             <div style={{ height: 'calc(100vh - 25px)', overflow: 'auto' }}>
                 {
+                    this.state.current > 0 && (
+                        <Button icon='step-backward' style={{ marginTop: 8 }} onClick={this.prev}>
+                            Back
+                        </Button>
+                    )
+                }
+                {
                     this.state.current === 0 ?
                         <OntologiesList
                             data={this.state.data}
@@ -74,13 +81,7 @@ export default class LoadOntologies extends React.Component {
                             close={this.props.close}
                         />
                 }
-                {
-                    this.state.current > 0 && (
-                        <Button style={{ marginTop: 8 }} onClick={this.prev}>
-                            Back
-                        </Button>
-                    )
-                }
+
             </div>);
     }
 }

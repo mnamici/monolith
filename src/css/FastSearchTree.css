@@ -64,18 +64,18 @@
 }
 
 .dropdown-content {
-    overflow: scroll;
+    overflow: auto;
     max-height: 80vh;
     max-width: 40vw;
-    background-color: rgb(219,219,219) !important;
+    background-color: rgb(39, 42, 46) !important;
     min-width: 376px;
     min-height: 300px;
+    border-radius: 5px;
 }
 
 .infinite-scroll-component {
     overflow: unset !important;
 }
-
 
 /* comment the following if show search in the sidebar of wiki ontology */
 
@@ -86,4 +86,35 @@
 
 .react-dropdown-tree-select .dropdown .dropdown-content {
     z-index: 100 !important;
-  }
+}
+
+.node {
+    color: rgb(187, 197, 206);
+}
+
+.class .node-label::before {
+    /* content: url("../lib/grapholscape/assets/icons/ic_treeview_concept_18dp_1x.png"); */
+    content: url(class.svg);
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+}
+
+.objectProperty .node-label::before {
+    /* content: url("../lib/grapholscape/assets/icons/ic_treeview_role_18dp_1x.png"); */
+    content: url(role.svg);
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 21px;
+}
+
+.dataProperty .node-label::before {
+    /* content: url("../lib/grapholscape/assets/icons/ic_treeview_attribute_18dp_1x.png"); */
+    content: url(attr.svg);
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+}

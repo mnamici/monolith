@@ -32,7 +32,7 @@ export default class OntologyMenu extends React.Component {
                 <MenuItem key="wiki">
                     <Link to="/open/ontology/wiki" >
                         <Icon type="book" />
-                        <span>Documentation</span>
+                        <span>Navigation</span>
                     </Link>
                 </MenuItem>
                 <MenuItem key="graphol">

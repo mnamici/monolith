@@ -68,9 +68,9 @@ export default class UploadFile extends React.Component {
 
   render() {
     return (
-      <div>
-        <Upload beforeUpload={beforeUpload.bind(this)} fileList={[]}>
-          <Button loading={this.state.loading}>
+      <div style={{height: 247, width: '100%'}}>
+        <Upload className='bigUpload' beforeUpload={beforeUpload.bind(this)} fileList={[]}>
+          <Button style={{height: 247, width: '100%'}} type='primary' loading={this.state.loading}>
             <Icon type={this.state.loading ? "loading" : "plus"} /> {this.state.loading ? "Uploading" : "Upload"}
           </Button>
         </Upload>

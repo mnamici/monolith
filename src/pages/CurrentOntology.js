@@ -13,7 +13,7 @@ import UnderConstruction from './UnderConstruction';
 const { Content, Sider } = Layout;
 export default class CurrentOntology extends React.Component {
     state = {
-        collapsed: true,
+        collapsed: false,
     };
 
     toggle = () => {

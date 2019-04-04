@@ -4,53 +4,54 @@ import Entity from './Entity';
 
 export default class ListItem extends React.Component {
     render() {
-        if (this.props.data === undefined || this.props.data === null) return null
+        const propsData = this.props.data || []
+
         let dataIndex = 'value'
         var data = []
         if (this.props.entity) {
-            for (let i = 0; i < this.props.data.length; i++) {
+            for (let i = 0; i < propsData.length; i++) {
                 data.push({
-                    key: this.props.data[i].entityID,
-                    value: <Entity predicateType={this.props.predicateType} entity={this.props.data[i]} />
+                    key: propsData[i].entityID,
+                    value: <Entity predicateType={this.props.predicateType} entity={propsData[i]} />
                 })
             }
 
         }
         else if (this.props.partecipation) {
-            for (let i = 0; i < this.props.data.length; i++) {
+            for (let i = 0; i < propsData.length; i++) {
                 data.push({
-                    key: this.props.data[i].property.entityID,
-                    value: <Entity predicateType={this.props.predicateType} entity={this.props.data[i].property} />
+                    key: propsData[i].property.entityID,
+                    value: <Entity predicateType={this.props.predicateType} entity={propsData[i].property} />
                 })
             }
         }
         else if (this.props.union) {
-            for (let i = 0; i < this.props.data.length; i++) {
+            for (let i = 0; i < propsData.length; i++) {
                 data.push({
-                    key: this.props.data[i][0].entityID + '_' + this.props.data[i][1].entityID,
+                    key: propsData[i][0].entityID + '_' + propsData[i][1].entityID,
                     value: <div>
-                        <Entity predicateType={this.props.predicateType} entity={this.props.data[i][0]} />
+                        <Entity predicateType={this.props.predicateType} entity={propsData[i][0]} />
                         <br />
-                        <Entity predicateType={this.props.predicateType} entity={this.props.data[i][1]} />
+                        <Entity predicateType={this.props.predicateType} entity={propsData[i][1]} />
                     </div>
                 })
             }
         }
         else if (this.props.label) {
-            for (let i = 0; i < this.props.data.length; i++) {
+            for (let i = 0; i < propsData.length; i++) {
                 data.push({
                     key: i,
-                    value: this.props.data[i].content,
+                    value: propsData[i].content,
                 })
             }
 
         }
         // string
         else {
-            for (let i = 0; i < this.props.data.length; i++) {
+            for (let i = 0; i < propsData.length; i++) {
                 data.push({
                     key: i,
-                    value: this.props.data[i],
+                    value: propsData[i],
                 })
             }
 

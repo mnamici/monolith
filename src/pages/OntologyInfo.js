@@ -70,9 +70,9 @@ export default class OntologyInfo extends React.Component {
             <div style={{ paddingRight: '1vw' }} >
                 <div style={{ textAlign: 'center', padding: 16 }}>
                     <h1 >{this.props.ontology.name}</h1>
-                    <div><h3>{this.state.data.ontologyIRI}</h3></div>
-                    <h3>{this.props.ontology.version}</h3>
                 </div>
+                <h3>{`Ontology IRI: ${this.state.data.ontologyIRI}`}</h3>
+                <h3>{`Ontology Version IRI: ${this.props.ontology.version}`}</h3>
                 <div style={{ paddingBottom: 12 }}>
                     {/* <OntologyMetricsTabs titles={[{ key: "desc", tab: "Descriptions" }]} data={this.state.data.ontologyDescriptions} /> */}
                     <Card title='Description' className='description'>

@@ -44,92 +44,102 @@ export default class MainMenu extends React.Component {
 
         const mastroUrl = localStorage.getItem('mastroUrl')
         const helpUrl = mastroUrl.substring(0, mastroUrl.length - 9) + "HelpPage"
+
+        const h = !this.props.collapsed ? '272px' : '279px'
         return (
-            <Menu defaultOpenKeys={openSubMenus} selectedKeys={selected} theme="dark" mode="inline">
+            <div>
+                <Menu defaultOpenKeys={openSubMenus} selectedKeys={selected} style={{ height: `calc(100vh - ${h})`, overflow: 'auto' }} theme="dark" mode="inline">
 
-                <SubMenu
-                    key="ontology"
-                    title={
+                    <SubMenu
+                        key="ontology"
+                        title={
+                            <NavLink
+                                to="/ontology"
+                                activeStyle={{ fontWeight: "bold", color: "white" }}
+                                style={{ color: 'rgba(255, 255, 255, 0.75)' }}
+                            >
+                                <span><Icon type="block" /><span>Ontology</span></span>
+                            </NavLink>}
+                    >
+                        {ontos}
+                    </SubMenu>
+
+                    <SubMenu
+                        key="kg"
+                        title={
+                            <NavLink
+                                to="/kg"
+                                activeStyle={{ fontWeight: "bold", color: "white" }}
+                                style={{ color: 'rgba(255, 255, 255, 0.75)' }}
+                            >
+                                <span><Icon type="deployment-unit" /><span>Knowledge Graph</span></span>
+                            </NavLink>}
+                    >
+                        {kgs}
+                    </SubMenu>
+                    <SubMenu
+                        key="dataset"
+                        title={
+                            <NavLink
+                                to="/dataset"
+                                activeStyle={{ fontWeight: "bold", color: "white" }}
+                                style={{ color: 'rgba(255, 255, 255, 0.75)' }}
+                            >
+                                <span><Icon type="table" /><span>Dataset</span></span>
+                            </NavLink>}
+                    >
+                        {dss}
+                    </SubMenu>
+
+                </Menu>
+                <Menu theme="dark" mode="inline">
+                    <MenuItem key="admin">
                         <NavLink
-                            to="/ontology"
+                            to="/admin"
                             activeStyle={{ fontWeight: "bold", color: "white" }}
                             style={{ color: 'rgba(255, 255, 255, 0.75)' }}
                         >
-                            <span><Icon type="block" /><span>Ontology</span></span>
-                        </NavLink>}
-                >
-                    {ontos}
-                </SubMenu>
+                            <Icon type="user" />
+                            <span>Administration</span>
+                        </NavLink>
+                    </MenuItem>
 
-                <SubMenu
-                    key="kg"
-                    title={
+                    <MenuItem key="sett">
                         <NavLink
-                            to="/kg"
+                            to="/settings"
                             activeStyle={{ fontWeight: "bold", color: "white" }}
                             style={{ color: 'rgba(255, 255, 255, 0.75)' }}
                         >
-                            <span><Icon type="deployment-unit" /><span>Knowledge Graph</span></span>
-                        </NavLink>}
-                >
-                    {kgs}
-                </SubMenu>
-                <SubMenu
-                    key="dataset"
-                    title={
-                        <NavLink
-                            to="/dataset"
-                            activeStyle={{ fontWeight: "bold", color: "white" }}
+                            <Icon type="setting" />
+                            <span>Settings</span>
+                        </NavLink>
+                    </MenuItem>
+                    <MenuItem key="help">
+                        <a
+                            href={helpUrl} target="_blank" rel="noopener noreferrer"
+                            // to="/help" 
+                            // activeStyle={{ fontWeight: "bold", color: "white" }} 
                             style={{ color: 'rgba(255, 255, 255, 0.75)' }}
                         >
-                            <span><Icon type="table" /><span>Dataset</span></span>
-                        </NavLink>}
-                >
-                    {dss}
-                </SubMenu>
-                {/* <Menu.Divider/> */}
-                <MenuItem key="admin">
-                    <NavLink
-                        to="/admin"
-                        activeStyle={{ fontWeight: "bold", color: "white" }}
-                        style={{ color: 'rgba(255, 255, 255, 0.75)' }}
-                    >
-                        <Icon type="user" />
-                        <span>Administration</span>
-                    </NavLink>
-                </MenuItem>
+                            <Icon type="question-circle" />
+                            <span>Help</span>
+                        </a>
+                    </MenuItem>
+                    <MenuItem key="Logout">
+                        <div
+                            style={{ color: 'rgba(255, 255, 255, 0.75)' }}
+                            onClick={this.props.logout}
+                        >
+                            <Icon type="logout" />
+                            <span>
+                                <span>Logout </span>
+                                <span style={{ fontWeight: 'bold' }}>{localStorage.getItem('username')}</span>
+                            </span>
+                        </div>
+                    </MenuItem>
+                </Menu>
+            </div>
 
-                <MenuItem key="sett">
-                    <NavLink
-                        to="/settings"
-                        activeStyle={{ fontWeight: "bold", color: "white" }}
-                        style={{ color: 'rgba(255, 255, 255, 0.75)' }}
-                    >
-                        <Icon type="setting" />
-                        <span>Settings</span>
-                    </NavLink>
-                </MenuItem>
-                <MenuItem key="help">
-                    <a
-                        href={helpUrl} target="_blank" rel="noopener noreferrer"
-                        // to="/help" 
-                        // activeStyle={{ fontWeight: "bold", color: "white" }} 
-                        style={{ color: 'rgba(255, 255, 255, 0.75)' }}
-                    >
-                        <Icon type="question-circle" />
-                        <span>Help</span>
-                    </a>
-                </MenuItem>
-                <MenuItem key="Logout">
-                    <div
-                        style={{ color: 'rgba(255, 255, 255, 0.75)' }}
-                        onClick={this.props.logout}
-                    >
-                        <Icon type="logout" />
-                        <span>Logout</span>
-                    </div>
-                </MenuItem>
-            </Menu>
         )
     }
 }

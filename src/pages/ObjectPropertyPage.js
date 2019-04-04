@@ -3,6 +3,8 @@ import { Card, Popover, List } from 'antd';
 import { getObjectPropertyPage } from '../api/MastroApi';
 import { renderEntity, predicateTypes } from '../utils/utils'
 import ListItem from './ListItem';
+import svg from '../css/role.svg'
+
 
 export default class ObjectPropertyPage extends React.Component {
     _isMounted = false;
@@ -86,7 +88,7 @@ export default class ObjectPropertyPage extends React.Component {
         return (
             <div>
                 <div style={{ textAlign: 'center' }}>
-                    <h1 >{renderEntity(this.state.data.currentEntity)}</h1>
+                    <h1><img src={svg} alt='' style={{height: 30}}/><span>{renderEntity(this.state.data.currentEntity)}</span></h1>
                     <Popover content={this.state.data.currentEntity.entityIRI}>
                         <h3>{this.state.data.currentEntity.entityPrefixIRI}</h3>
                     </Popover>
@@ -100,7 +102,7 @@ export default class ObjectPropertyPage extends React.Component {
                     grid={{ gutter: 16, column: 4 }}
                     dataSource={components}
                     renderItem={item => (
-                        <List.Item>
+                        <List.Item style={{paddingBottom: 8}}>
                             {item}
                         </List.Item>
                     )}
