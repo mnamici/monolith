@@ -1,11 +1,39 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
-import { List, Card, Divider, Popover } from 'antd';
+import { List, Card, Divider, Popover, Select } from 'antd';
 import UploadFile from './UploadFile';
 import { downloadOntologyFile, deleteOntologyVersion } from '../api/MastroApi';
 import { saveFileInfo } from '../utils/utils';
 
+const Option = Select.Option
 export default class OntologyVersionsList extends React.Component {
+    state = {
+        data: []
+    }
+
+    getData(props) {
+        var list = [];
+        for (let i = 0; i < this.props.data.length; i++) {
+            if (this.props.data[i].ontologyID === this.props.current) {
+                list = [...this.props.data[i].ontologyVersions];
+                break;
+            }
+        }
+        return list;
+    }
+
+    componentDidMount() {
+        this.setState({
+            data: this.getData(this.props.data)
+        })
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({
+            data: this.getData(props.data)
+        })
+    }
+
 
     delete(ontologyID, versionID) {
         deleteOntologyVersion(ontologyID, versionID, this.props.rerender)
@@ -15,21 +43,41 @@ export default class OntologyVersionsList extends React.Component {
         })
     }
 
+    changeSort = (value) => {
+        if (value === 'name')
+            this.setState({
+                data: this.getData(this.props.data).sort(function (a, b) {
+                    var x = a.versionID.toLowerCase();
+                    var y = b.versionID.toLowerCase();
+                    if (x < y) { return -1; }
+                    if (x > y) { return 1; }
+                    return 0;
+                })
+            })
+        else if (value === 'date')
+            this.setState({
+                data: this.getData(this.props.data)
+            })
+    }
+
     render() {
-        var list = [];
-        for (let i = 0; i < this.props.data.length; i++) {
-            if (this.props.data[i].ontologyID === this.props.current) {
-                list = ['', ...this.props.data[i].ontologyVersions];
-                break;
-            }
-        }
+        
         return (
             <div>
-                <Divider>Choose or add a version</Divider>
+                <Divider>choose or add a version</Divider>
+                <Select defaultValue='date' onChange={this.changeSort} style={{ padding: 6}}>
+                    <Option value='date' >
+                        Sort by date
+                    </Option>
+                    <Option value='name' >
+                        Sort by version
+                    </Option>
+                </Select>
                 <List
+                    className='bigCards'
                     rowKey="ontologyVersionsView"
-                    grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
-                    dataSource={list}
+                    grid={{ gutter: 12, lg: 3, md: 2, sm: 1, xs: 1 }}
+                    dataSource={['', ...this.state.data]}
                     renderItem={item =>
                         item ? (
                             <List.Item key={item.versionID}>

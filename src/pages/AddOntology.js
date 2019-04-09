@@ -47,7 +47,7 @@ class DrawerForm extends React.Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <div>
-                <Button type='primary' style={{height: 247, width: '100%'}} onClick={this.showDrawer}>
+                <Button type='primary' style={{height: 249, width: '100%'}} onClick={this.showDrawer}>
                     <Icon type="plus" /> Add Ontology
                 </Button>
                 <Drawer

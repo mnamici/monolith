@@ -22,7 +22,10 @@ function manageError(err) {
 
 function reportError(error) {
     console.error(error)
-    message.error(error.message || error)
+    const trace = error.stackTrace ? 'Exception in ' + error.stackTrace[0].methodName + ' ' + error.stackTrace[0].className : null
+    message.error(error.message ||
+        trace ||
+        error)
 }
 
 export function login(username, password, mastroUrl, callback) {

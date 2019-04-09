@@ -33,7 +33,7 @@ export default class LoadMappings extends React.Component {
     render() {
         return (
             <div style={{ padding: 2 }}>
-                <Divider>Choose or add a mapping</Divider>
+                <Divider>choose or add a mapping</Divider>
                 <List
                     rowKey="mappingsView"
                     grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}

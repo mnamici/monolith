@@ -20,6 +20,15 @@ export default class SPARQLEndpoint extends React.Component {
         this.requestMappings()
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if(nextState !== this.state) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
     requestCatalog() {
         getQueryCatalog(
             this.props.ontology.name,

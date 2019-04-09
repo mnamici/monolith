@@ -46,9 +46,15 @@ export default class MainMenu extends React.Component {
         const helpUrl = mastroUrl.substring(0, mastroUrl.length - 9) + "HelpPage"
 
         const h = !this.props.collapsed ? '272px' : '279px'
+        const w = !this.props.collapsed ? 200 : null
         return (
             <div>
-                <Menu defaultOpenKeys={openSubMenus} selectedKeys={selected} style={{ height: `calc(100vh - ${h})`, overflow: 'auto' }} theme="dark" mode="inline">
+                <Menu
+                    defaultOpenKeys={openSubMenus}
+                    selectedKeys={selected}
+                    style={{ height: `calc(100vh - ${h})`, width: w, overflow: 'auto' }}
+                    theme="dark"
+                    mode="inline">
 
                     <SubMenu
                         key="ontology"

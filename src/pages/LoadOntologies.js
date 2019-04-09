@@ -56,7 +56,7 @@ export default class LoadOntologies extends React.Component {
 
     render() {
         return (
-            <div style={{ height: 'calc(100vh - 25px)', overflow: 'auto' }}>
+            <div style={{ height: 'calc(99vh - 25px)', overflow: 'auto' }}>
                 {
                     this.state.current > 0 && (
                         <Button icon='step-backward' style={{ marginTop: 8 }} onClick={this.prev}>

@@ -2,7 +2,6 @@ import React from 'react'
 import uc from '../underConstruction.gif'
 
 export default class UnderConstruction extends React.Component {
-
     render() {
         return (
             <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>

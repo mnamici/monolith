@@ -1,9 +1,27 @@
 import React from 'react';
-import { List, Card, Divider } from 'antd';
+import { List, Card, Divider, Select } from 'antd';
 import AddOntology from './AddOntology';
 import { deleteOntology } from '../api/MastroApi';
 
+const Option = Select.Option
+
 export default class OntologiesList extends React.Component {
+    state = {
+        data: []
+    }
+
+    componentDidMount() {
+        this.setState({
+            data: this.props.data
+        })
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({
+            data: props.data
+        })
+    }
+
 
     delete(ontologyID) {
         deleteOntology(ontologyID, this.props.rerender)
@@ -12,15 +30,40 @@ export default class OntologiesList extends React.Component {
         })
     }
 
+    changeSort = (value) => {
+        if (value === 'name')
+            this.setState({
+                data: [...this.props.data].sort(function (a, b) {
+                    var x = a.ontologyID.toLowerCase();
+                    var y = b.ontologyID.toLowerCase();
+                    if (x < y) { return -1; }
+                    if (x > y) { return 1; }
+                    return 0;
+                })
+            })
+        else if (value === 'date')
+            this.setState({
+                data: this.props.data
+            })
+    }
+
     render() {
         return (
             <div>
-                <Divider>Choose or add an ontology</Divider>
+                <Divider>choose or add an ontology</Divider>
+                <Select defaultValue='date' onChange={this.changeSort} style={{ padding: 6}}>
+                    <Option value='date' >
+                        Sort by date
+                    </Option>
+                    <Option value='name' >
+                        Sort by name
+                    </Option>
+                </Select>
                 <List
                     className='bigCards'
                     rowKey="ontologiesView"
                     grid={{ gutter: 12, lg: 3, md: 2, sm: 1, xs: 1 }}
-                    dataSource={['', ...this.props.data]}
+                    dataSource={['', ...this.state.data]}
                     renderItem={item =>
                         item ? (
                             <List.Item key={item.ontologyID} style={{ paddingBottom: 6 }}>

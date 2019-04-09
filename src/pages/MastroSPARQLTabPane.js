@@ -88,7 +88,7 @@ export default class MastroSPARQLTabPane extends React.Component {
     stopMastro = () => {
         this.stopPollingMastro()
         stopMastroAPI(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, (mapId) => {
-            this.setState({runningMappingIDs: this.state.runningMappingIDs.filter(mid => mapId !== mid)})
+            this.setState({runningMappingIDs: this.state.runningMappingIDs.filter(mid => mapId !== mid), enableRun: false})
         })
     }
 
@@ -116,7 +116,7 @@ export default class MastroSPARQLTabPane extends React.Component {
                 newRunningMappingIDs.push(mappingID)
             }
             if (this.state.intervalMastro !== 0) {
-                message.success('MASTRO IS FUCKING RUNNING!')
+                message.success('Mastro is running!')
             }
             this.setState({ enabledStartMastro: false, runningMappingIDs: newRunningMappingIDs, enableRun: true })
             this.stopPollingMastro()

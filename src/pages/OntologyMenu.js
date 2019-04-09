@@ -18,7 +18,11 @@ export default class OntologyMenu extends React.Component {
 
     render() {
         return (
-            <Menu selectedKeys={this.state.currMenu} style={{background: 'transparent', paddingTop: 0, minHeight: 'calc(100vh - 47px)' }} theme='dark' mode="vertical">
+            <Menu
+                selectedKeys={this.state.currMenu}
+                style={{ background: 'transparent', paddingTop: 0, minHeight: 'calc(100vh - 47px)', }}
+                theme='dark'
+                mode="vertical">
                 <MenuItem key="info" style={{ marginTop: 0 }}>
                     <Link to="/open/ontology/info" >
                         <Icon type="info" />

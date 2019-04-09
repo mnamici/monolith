@@ -4,6 +4,7 @@ import QueryInfo from './QueryInfo'
 import OntologyRewritings from './OntologyRewritings';
 import MappingRewritings from './MappingRewritings';
 import ViewRewritings from './ViewRewritings';
+import DownloadFile from './DownloadFile';
 
 export default class QueryExecutionReport extends React.Component {
     state = {
@@ -58,6 +59,9 @@ export default class QueryExecutionReport extends React.Component {
                         {contentList[this.state.tabKey]}
                     </div>
                 </Card>
+                <div style={{ display: 'flex', paddingTop: 4 }}>
+                    <DownloadFile title='Download Query Report'/>
+                </div>
             </div>
         );
     }

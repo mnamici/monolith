@@ -6,16 +6,16 @@ const TabPane = Tabs.TabPane;
 
 const newQueryID = 'new_'
 export default class AddCloseTabs extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    activeKey: null,
+    panes: [],
+    dirtyPanes: [],
+    modalVisible: false,
+    toClose: null
+  };
+  
+  componentDidMount() {
     this.newTabIndex = 0;
-    this.state = {
-      activeKey: null,
-      panes: [],
-      dirtyPanes: [],
-      modalVisible: false,
-      toClose: null
-    };
   }
 
   componentWillReceiveProps(props) {
@@ -160,7 +160,7 @@ export default class AddCloseTabs extends React.Component {
         <Modal
           visible={this.state.modalVisible}
           onOk={() => this.closeTab(this.state.toClose)}
-          onCancel={() => this.setState({modalVisible: false})}
+          onCancel={() => this.setState({ modalVisible: false })}
         >
           Discard changes?
         </Modal>

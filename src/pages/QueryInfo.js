@@ -1,6 +1,5 @@
 import React from 'react'
 import ListMapItem from './ListMapItem';
-import DownloadFile from './DownloadFile'
 
 export default class QueryInfo extends React.Component {
     render() {
@@ -31,9 +30,6 @@ export default class QueryInfo extends React.Component {
         return (
             <div>
                 <ListMapItem data={data} />
-                <div style={{ display: 'flex', paddingTop: 4 }}>
-                    <DownloadFile title='Download Query Report'/>
-                </div>
             </div>
         );
     }
