@@ -5,11 +5,16 @@ import { login } from '../api/MastroApi'
 const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
+  state = {
+    loading: false
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values);
+        this.setState({loading: true})
         login(values.userName, values.password, values.mastroUrl, this.props.login);
       }
     });
@@ -51,7 +56,7 @@ class NormalLoginForm extends React.Component {
           <a className="login-form-forgot" href="http://www.obdasystems.com" style={{ color: 'white' }}>Forgot password</a>
         </FormItem>
         <FormItem style={{ textAlign: 'center' }}>
-          <Button type="primary" htmlType="submit" >
+          <Button type="primary" htmlType="submit" loading={this.state.loading}>
             Log in
           </Button>
         </FormItem>

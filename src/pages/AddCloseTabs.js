@@ -16,6 +16,7 @@ export default class AddCloseTabs extends React.Component {
   
   componentDidMount() {
     this.newTabIndex = 0;
+    this.componentWillReceiveProps(this.props)
   }
 
   componentWillReceiveProps(props) {

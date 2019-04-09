@@ -1,42 +1,52 @@
 import React from 'react'
-import { Button } from 'antd'
+import { Button, Spin } from 'antd'
 import OntologiesList from './OntologiesList'
 import OntologyVersionsList from './OntologyVersionsList'
 import { getOntologies } from '../api/MastroApi'
 
 export default class LoadOntologies extends React.Component {
+    _isMounted = false;
+
     constructor(props) {
         super(props);
         this.state = {
             current: 0,
             ontologyID: null,
-            data: []
+            data: [],
+            loading: false
         };
 
         this.prev = this.prev.bind(this)
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.requestOntologies()
     }
 
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
     requestOntologies() {
+        this._isMounted && this.setState({ loading: true })
         getOntologies(this.loaded)
     }
 
     loaded = (data) => {
         if (data === undefined)
             data = []
-        this.setState((state) => ({
+        this._isMounted && this.setState((state) => ({
             current: state.current,
             ontologyID: state.ontologyID,
-            data: data
+            data: data,
+            loading: false
         }));
     }
 
     next(ontologyID) {
         const current = this.state.current + 1;
-        this.setState((state) => ({
+        this._isMounted && this.setState((state) => ({
             current: current,
             ontologyID: ontologyID,
             data: state.data
@@ -46,7 +56,7 @@ export default class LoadOntologies extends React.Component {
 
     prev() {
         const current = this.state.current - 1;
-        this.setState((state) => ({
+        this._isMounted && this.setState((state) => ({
             current: current,
             ontologyID: state.ontologyID,
             data: state.data
@@ -56,32 +66,33 @@ export default class LoadOntologies extends React.Component {
 
     render() {
         return (
-            <div style={{ height: 'calc(99vh - 25px)', overflow: 'auto' }}>
-                {
-                    this.state.current > 0 && (
-                        <Button icon='step-backward' style={{ marginTop: 8 }} onClick={this.prev}>
-                            Back
+            this.state.loading ? <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
+                <div style={{ height: 'calc(99vh - 25px)', overflow: 'auto' }}>
+                    {
+                        this.state.current > 0 && (
+                            <Button icon='step-backward' style={{ marginTop: 8 }} onClick={this.prev}>
+                                Back
                         </Button>
-                    )
-                }
-                {
-                    this.state.current === 0 ?
-                        <OntologiesList
-                            data={this.state.data}
-                            next={this.next.bind(this)}
-                            rerender={this.requestOntologies.bind(this)}
-                            close={this.props.close}
-                        /> :
-                        <OntologyVersionsList
-                            data={this.state.data}
-                            current={this.state.ontologyID}
-                            previous={this.prev.bind(this)}
-                            rerender={this.requestOntologies.bind(this)}
-                            open={this.props.open}
-                            close={this.props.close}
-                        />
-                }
+                        )
+                    }
+                    {
+                        this.state.current === 0 ?
+                            <OntologiesList
+                                data={this.state.data}
+                                next={this.next.bind(this)}
+                                rerender={this.requestOntologies.bind(this)}
+                                close={this.props.close}
+                            /> :
+                            <OntologyVersionsList
+                                data={this.state.data}
+                                current={this.state.ontologyID}
+                                previous={this.prev.bind(this)}
+                                rerender={this.requestOntologies.bind(this)}
+                                open={this.props.open}
+                                close={this.props.close}
+                            />
+                    }
 
-            </div>);
+                </div>);
     }
 }

@@ -16,10 +16,16 @@ export function renderEntity(entity) {
     //if labels
     if (rendering instanceof Array) {
         for (let label of rendering)
-            if (label.lang === lang)
-                return label.content
-        // default rendering when label not found
-        return entity[renders[3]]
+            if (label.lang === lang) {
+                rendering = label.content
+                break;
+            }
+        
+    }
+
+    // default rendering when not found
+    if (rendering instanceof Array || rendering === null || rendering === undefined) {
+        rendering = entity[renders[0]]
     }
 
     return rendering;
@@ -44,11 +50,11 @@ export function saveFileInfo(body) {
 export function getBase64(file, callback) {
     const reader = new FileReader();
     reader.addEventListener('load', () => {
-      let index = reader.result.indexOf('base64,')
-      let base64 = reader.result.substr(index + 'base64,'.length)
-      callback(base64)
+        let index = reader.result.indexOf('base64,')
+        let base64 = reader.result.substr(index + 'base64,'.length)
+        callback(base64)
     });
     reader.readAsDataURL(file);
-  }
+}
 
 export const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);

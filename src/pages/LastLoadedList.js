@@ -8,6 +8,7 @@ export default class LastLoadedList extends React.Component {
             <div>
                 <Divider>{this.props.title}</Divider>
                 <List
+                    className='bigCards'
                     grid={{ gutter: 16, lg: 4, md: 2, sm: 1, xs: 1 }}
                     dataSource={this.props.data}
                     renderItem={item => (

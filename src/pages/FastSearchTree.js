@@ -35,9 +35,12 @@ const onAction = ({ action, node }) => {
 }
 
 export default class SearchTree extends React.Component {
-  state = { data: [] }
+  _isMounted = false;
+  state = { data: [], loading: false }
 
   componentDidMount() {
+    this._isMounted = true;
+    this.setState({ loading: true })
     getOntologyVersionHierarchy(
       this.props.ontology.name,
       this.props.ontology.version,
@@ -49,10 +52,15 @@ export default class SearchTree extends React.Component {
 
   componentWillReceiveProps(props) {
     // console.log(this.props)
+    this.setState({ loading: true })
     getOntologyVersionHierarchy(
       props.ontology.name,
       props.ontology.version,
       this.loaded)
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
   }
 
   onChange = (currentNode, selectedNodes) => {
@@ -101,13 +109,16 @@ export default class SearchTree extends React.Component {
         children: convertData(mastroData.hierarchyTree.dataPropertyTree.children, [], predicateTypes.dp)
       }
     ]
-    this.setState({ data: gData })
+    this._isMounted && this.setState({ data: gData, loading: false })
   }
 
   render() {
+    const data = this.state.loading ?
+      [{ label: 'Loading...' }] :
+      this.state.data
 
     return <DropdownTreeSelect
-      data={this.state.data}
+      data={data}
       onChange={this.onChange}
       onAction={onAction}
       // onNodeToggle={onNodeToggle}

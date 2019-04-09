@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Card, Icon } from 'antd';
+import { List, Card, Icon, Spin } from 'antd';
 
 import DownloadFile from './DownloadFile'
 import { getMappingInfo } from '../api/MastroApi';
@@ -8,19 +8,26 @@ import ListItem from './ListItem';
 
 
 export default class MappingInfo extends React.Component {
-
+    _isMounted = false;
     state = {
         data: {
             mappingDBConnections: [{}]
         },
-        showPassword: false
+        showPassword: false,
+        loading: false
+
     }
 
     componentDidMount() {
-        this.requestMappings()
+        this.requestMappingInfo()
     }
 
-    requestMappings() {
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
+    requestMappingInfo() {
+        this.setState({ loading: true })
         getMappingInfo(
             this.props.ontology.name,
             this.props.ontology.version,
@@ -31,12 +38,15 @@ export default class MappingInfo extends React.Component {
     loaded = (data) => {
         if (data === undefined)
             data = []
-        this.setState((state) => ({
-            data: data
-        }));
+        this._isMounted && this.setState({
+            data: data,
+            loading: false
+        });
     }
 
     render() {
+        if (this.state.loading) return <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div>
+
         const data = this.state.data
         const db = [
             {

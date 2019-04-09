@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, List, Divider } from 'antd'
+import { Card, List, Divider, Spin } from 'antd'
 import AssertionsList from './AssertionsList';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
@@ -12,10 +12,12 @@ import ListMapItem from './ListMapItem'
 export default class SQLViewsPage extends React.Component {
 
     state = {
-        data: null
+        data: null,
+        loading: false
     }
 
     componentDidMount() {
+        this.setState({ loading: true })
         getMappingView(
             this.props.ontology.name,
             this.props.ontology.version,
@@ -25,6 +27,7 @@ export default class SQLViewsPage extends React.Component {
     }
 
     componentWillReceiveProps(props) {
+        this.setState({ loading: true })
         getMappingView(
             props.ontology.name,
             props.ontology.version,
@@ -34,12 +37,12 @@ export default class SQLViewsPage extends React.Component {
     }
 
     loaded = (data) => {
-        this.setState({ data: data })
+        this.setState({ data: data, loading: false })
     }
 
     render() {
         const data = this.state.data
-        if (data === null) return null
+        if (this.state.data === null || this.state.loading) return <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div>
 
         const first = [
             {
