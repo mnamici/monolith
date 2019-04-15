@@ -61,11 +61,11 @@ export default class OntologyVersionsList extends React.Component {
     }
 
     render() {
-        
+
         return (
             <div>
                 <Divider>choose or add a version</Divider>
-                <Select defaultValue='date' onChange={this.changeSort} style={{ padding: 6}}>
+                <Select defaultValue='date' onChange={this.changeSort} style={{ padding: 6 }}>
                     <Option value='date' >
                         Sort by date
                     </Option>
@@ -109,7 +109,14 @@ export default class OntologyVersionsList extends React.Component {
                                         <Card.Meta key={item.versionID}
                                             avatar={<img alt="" src={item.avatar} />}
                                             title={
-                                                item.ontologyID + "-" + item.versionID
+                                                <div>
+                                                    <div style={{overflow: 'hidden', textOverflow: 'ellipsis'}}>
+                                                        {item.ontologyID}
+                                                    </div>
+                                                    <div style={{overflow: 'hidden', textOverflow: 'ellipsis', direction: 'rtl', textAlign: 'left'}}>
+                                                        {item.versionID}
+                                                    </div>
+                                                </div>
                                             }
                                             description={item.versionDescription[0] !== undefined ? item.versionDescription[0].content : ""}
                                         /></NavLink>

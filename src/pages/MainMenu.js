@@ -14,7 +14,7 @@ export default class MainMenu extends React.Component {
             <MenuItem key={item.name + "-" + item.version}>
                 {/* <Popover content={<small>{item.version}</small>} placement='right'> */}
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <div style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                    <div style={{overflow: 'hidden', textOverflow: 'ellipsis', direction: 'rtl', textAlign: 'left'}}>
                         <NavLink
                             to={path}
                             onClick={() => this.props.setcurrent(item)}
@@ -43,7 +43,7 @@ export default class MainMenu extends React.Component {
         const selected = this.props.current === undefined ? [] : [this.props.current.name + "-" + this.props.current.version]
 
         const mastroUrl = localStorage.getItem('mastroUrl')
-        const helpUrl = mastroUrl.substring(0, mastroUrl.length - 9) + "HelpPage"
+        const helpUrl = mastroUrl ? mastroUrl.substring(0, mastroUrl.length - 9) + "HelpPage" : '/'
 
         const h = !this.props.collapsed ? '272px' : '279px'
         const w = !this.props.collapsed ? 200 : null
@@ -54,7 +54,7 @@ export default class MainMenu extends React.Component {
                     selectedKeys={selected}
                     style={{ height: `calc(100vh - ${h})`, width: w, overflow: 'auto' }}
                     theme="dark"
-                    mode="inline">
+                    mode="vertical">
 
                     <SubMenu
                         key="ontology"

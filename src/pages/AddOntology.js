@@ -21,38 +21,35 @@ class DrawerForm extends React.Component {
         this.props.rerender()
     };
 
-    validate(name) {
-        if (name === '')
-            return false;
-
-        return true;
-    }
-
     submit = () => {
-        if (!this.validate(this.props.form.getFieldValue('name'))) return;
-
-        const ontology = {
-            ontologyID: this.props.form.getFieldValue('name'),
-            ontologyDescription: this.props.form.getFieldValue('description'),
-            ontologyVersions: [],
-            ontologyOwner: {
-                name: localStorage.getItem('username'),
-                roles: null
+        this.props.form.validateFieldsAndScroll((err, values) => {
+            if (!err) {
+                const ontology = {
+                    ontologyID: values.name,
+                    ontologyDescription: values.description,
+                    ontologyVersions: [],
+                    ontologyOwner: {
+                        name: localStorage.getItem('username'),
+                        roles: null
+                    }
+                }
+                putOntology(ontology, this.onClose)
             }
-        }
-        putOntology(ontology, this.onClose)
+        });
+
+
     }
 
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
             <div>
-                <Button type='primary' style={{height: 249, width: '100%'}} onClick={this.showDrawer}>
+                <Button type='primary' style={{ height: 249, width: '100%' }} onClick={this.showDrawer}>
                     <Icon type="plus" /> Add Ontology
                 </Button>
                 <Drawer
                     title="Create a new ontology"
-                    width={720}
+                    width='40vw'
                     onClose={this.onClose}
                     visible={this.state.visible}
                     style={{
@@ -66,7 +63,9 @@ class DrawerForm extends React.Component {
                             <Col span={12}>
                                 <Form.Item label="Ontology">
                                     {getFieldDecorator('name', {
-                                        rules: [{ required: true, message: 'Please enter ontology name' }],
+                                        rules: [
+                                            { required: true, message: 'Please enter ontology name' },
+                                            { pattern: /^[aA-zZ]+(_[0-9][aA-zZ])*$/, message: 'You can use only letters numbers and underscore.' }],
                                     })(<Input placeholder="Please enter ontology name" />)}
                                 </Form.Item>
                             </Col>

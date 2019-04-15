@@ -178,6 +178,10 @@ td {
   width: 100%
 }
 
+.ant-list-empty-text {
+  padding: 0
+}
+
 /***************************
 *                          *
 *                          *

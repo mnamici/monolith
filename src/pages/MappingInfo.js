@@ -19,6 +19,7 @@ export default class MappingInfo extends React.Component {
     }
 
     componentDidMount() {
+        this._isMounted = true
         this.requestMappingInfo()
     }
 

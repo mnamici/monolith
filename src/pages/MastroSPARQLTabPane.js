@@ -16,7 +16,8 @@ import {
     getQueryStatus,
     startNewQuery,
     postInQueryCatalog,
-    putInQueryCatalog
+    putInQueryCatalog,
+    getPrefixes
 } from '../api/MastroApi';
 
 const { TextArea } = Input;
@@ -28,7 +29,6 @@ export default class MastroSPARQLTabPane extends React.Component {
         modalVisible: false,
         modalConfirmLoading: false,
         reasoning: true,
-        enableRun: false,
         // QUERY STATUS
         loading: false,
         selectedMappingID: null,
@@ -57,6 +57,8 @@ export default class MastroSPARQLTabPane extends React.Component {
         this.props.mappings.forEach(mapping => {
             getMastroStatus(this.props.ontology.name, this.props.ontology.version, mapping.mappingID, this.checkMastroStatus.bind(this))
         });
+        /** INITIALIZE YASQE */
+        getPrefixes(this.props.ontology.name, this.props.ontology.version, currMappingID, this.loadedPrefixes)
         this.changeDescription({ target: { value: this.props.query.queryDescription } })
         this.yasqe = YASQE(document.getElementById('sparql_' + this.props.num),
             {
@@ -67,9 +69,9 @@ export default class MastroSPARQLTabPane extends React.Component {
                     showQueryButton: false
                 }
             });
-        this.yasqe.on('change', () => { 
+        this.yasqe.on('change', () => {
             this.props.setDirty(this.state.tabKey)
-            this.setState({new: true})
+            this.setState({ new: true })
         })
         this.props.query.queryCode !== undefined ? this.yasqe.setValue(this.props.query.queryCode) : this.yasqe.setValue("")
         this.yasqe.refresh();
@@ -77,6 +79,15 @@ export default class MastroSPARQLTabPane extends React.Component {
 
     componentDidUpdate() {
         this.yasqe.refresh();
+    }
+
+    loadedPrefixes = (prefixes) => {
+        let yPrefixes = {}
+        for (let prefix of prefixes) {
+            let p = prefix.name
+            yPrefixes[p.substring(0, p.length - 1)] = prefix.namespace
+        }
+        this.yasqe.addPrefixes(yPrefixes)
     }
 
     startMastro = () => {
@@ -88,7 +99,7 @@ export default class MastroSPARQLTabPane extends React.Component {
     stopMastro = () => {
         this.stopPollingMastro()
         stopMastroAPI(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, (mapId) => {
-            this.setState({runningMappingIDs: this.state.runningMappingIDs.filter(mid => mapId !== mid), enableRun: false})
+            this.setState({ runningMappingIDs: this.state.runningMappingIDs.filter(mid => mapId !== mid) })
         })
     }
 
@@ -107,18 +118,19 @@ export default class MastroSPARQLTabPane extends React.Component {
 
     checkMastroStatus(status, mappingID) {
         if (status.status === 'ERROR') {
+            message.error(status.lastError)
             this.stopPollingMastro()
         }
 
         if (status.status === 'RUNNING') {
             const newRunningMappingIDs = [...this.state.runningMappingIDs]
-            if (!this.state.runningMappingIDs.includes[mappingID]) {
+            if (!this.state.runningMappingIDs.includes(mappingID)) {
                 newRunningMappingIDs.push(mappingID)
             }
             if (this.state.intervalMastro !== 0) {
                 message.success('Mastro is running!')
             }
-            this.setState({ enabledStartMastro: false, runningMappingIDs: newRunningMappingIDs, enableRun: true })
+            this.setState({ enabledStartMastro: false, runningMappingIDs: newRunningMappingIDs })
             this.stopPollingMastro()
         }
     }
@@ -172,8 +184,8 @@ export default class MastroSPARQLTabPane extends React.Component {
         });
     }
 
-    onSelectMapping(value, enableRun) {
-        this.setState({ selectedMappingID: value, enableRun: enableRun })
+    onSelectMapping(value) {
+        this.setState({ selectedMappingID: value })
     }
 
     start() {
@@ -279,6 +291,7 @@ export default class MastroSPARQLTabPane extends React.Component {
     }
 
     render() {
+        const enableRun = this.state.runningMappingIDs.includes(this.state.selectedMappingID)
         const elements = [
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <MappingSelector
@@ -309,7 +322,7 @@ export default class MastroSPARQLTabPane extends React.Component {
                             icon="play-circle"
                             loading={this.state.loading}
                             onClick={this.start.bind(this)}
-                            disabled={!this.state.enableRun}
+                            disabled={!enableRun}
                         >
                             Run</Button>
                         <Button
@@ -321,7 +334,7 @@ export default class MastroSPARQLTabPane extends React.Component {
                     </Button.Group>
                     <span style={{ padding: '0px 10px', color: 'rgb(255, 255, 255, 0.75)' }}>Reasoning</span>
                     <Popover content='Toggle Reasoning'>
-                        <Switch checked={this.state.reasoning} onClick={this.toggleReasoning} disabled={!this.state.enableRun} />
+                        <Switch checked={this.state.reasoning} onClick={this.toggleReasoning} disabled={!enableRun} />
                     </Popover>
                 </div>
                 <Button

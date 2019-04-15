@@ -723,3 +723,20 @@ export function downloadQueryResults(name, version, mapping, executionID, callba
         manageError(err)
     });
 }
+
+export function getPrefixes(name, version, mapping, callback) {
+    if (fakeCalls) { return callback(fakeData.status(), mapping) }
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/prefixes'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data, mapping)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}

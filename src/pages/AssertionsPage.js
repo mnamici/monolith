@@ -50,8 +50,9 @@ export default class AssertionsPage extends React.Component {
 
     render() {
         // console.log(this.state.data)
-        if(this.state.data === null || this.state.loading) return <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div>
-        
+        if (this.state.data === null || this.state.loading) return <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div>
+        if (this.state.data.length === 0) return <h1 style={{ textAlign: 'center', padding: '16px 0px 16px 0px' }}>No mapping found for the selected entity</h1>
+
         return (
             <div>
                 <div style={{ textAlign: 'center', padding: '16px 0px 16px 0px' }}>
