@@ -130,10 +130,11 @@ export function deleteOntologyVersion(ontologyID, version, callback) {
     if (fakeCalls) return callback();
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + ontologyID + '/version'
     const method = 'DELETE'
+    const encodedVersion = version//encodeURIComponent(version)
     axios({
         url: url,
         method: method,
-        data: version,
+        params: { version: encodedVersion },
         headers: JSON.parse(localStorage.getItem('headers'))
     }).then(function (response) {
         callback()
@@ -170,7 +171,7 @@ export function downloadOntologyFile(name, version, callback) {
         params: { version: encodedVersion },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
-        callback(response.data)
+        callback(response.data, name+'.owl')
     }).catch(function (err) {
         callback(false)
         manageError(err)
@@ -517,7 +518,7 @@ export function deleteFromQueryCatalog(name, version, queryID, callback) {
     axios({
         url: url,
         method: method,
-        data: encodedVersion,
+        params: { version: encodedVersion },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback()
@@ -536,7 +537,7 @@ export function startMastro(name, version, mapping, callback) {
     axios({
         url: url,
         method: method,
-        data: encodedVersion,
+        params: { version: encodedVersion },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback()
@@ -555,7 +556,7 @@ export function stopMastro(name, version, mapping, callback) {
     axios({
         url: url,
         method: method,
-        data: encodedVersion,
+        params: { version: encodedVersion },        
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(mapping)
@@ -610,8 +611,7 @@ export function startQuery(name, version, mapping, queryID, reasoning, callback)
     axios({
         url: url,
         method: method,
-        params: { reasoning: reasoning },
-        data: encodedVersion,
+        params: { version: encodedVersion, reasoning: reasoning },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data.executionId)
@@ -725,7 +725,7 @@ export function downloadQueryResults(name, version, mapping, executionID, callba
 }
 
 export function getPrefixes(name, version, mapping, callback) {
-    if (fakeCalls) { return callback(fakeData.status(), mapping) }
+    if (fakeCalls) { return callback([]) }
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/prefixes'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)

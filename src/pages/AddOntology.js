@@ -58,14 +58,14 @@ class DrawerForm extends React.Component {
                         paddingBottom: '108px',
                     }}
                 >
-                    <Form layout="vertical" hideRequiredMark>
+                    <Form layout="vertical">
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item label="Ontology">
                                     {getFieldDecorator('name', {
                                         rules: [
                                             { required: true, message: 'Please enter ontology name' },
-                                            { pattern: /^[aA-zZ]+(_[0-9][aA-zZ])*$/, message: 'You can use only letters numbers and underscore.' }],
+                                            { pattern: /^[A-Za-z][A-Za-z0-9_]*$/, message: 'You can use only letters numbers and underscore.' }],
                                     })(<Input placeholder="Please enter ontology name" />)}
                                 </Form.Item>
                             </Col>

@@ -54,28 +54,57 @@ export default class ClassPage extends React.Component {
 
         const components = [
             <Card className='classCard' title="Equivalent Classes">
-                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.equivalentClasses} />
+                <ListItem
+                    entity
+                    axiom={{ owl: 'EquivalentClasses', first: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.c}
+                    data={this.state.data.equivalentClasses} />
             </Card>,
             <Card className='classCard' title="Sub Classes">
-                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.subClasses} />
+                <ListItem
+                    entity
+                    axiom={{ owl: 'SubClassOf', first: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.c}
+                    data={this.state.data.subClasses} />
             </Card>,
             <Card className='classCard' title="Super Classes">
-                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.superClasses} />
+                <ListItem
+                    entity
+                    axiom={{ owl: 'SubClassOf', second: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.c}
+                    data={this.state.data.superClasses} />
             </Card>,
             <Card className='classCard' title="Disjoint Classes">
-                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.disjointClasses} />
+                <ListItem
+                    entity
+                    axiom={{ owl: 'DisjoinClasses', first: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.c}
+                    data={this.state.data.disjointClasses} />
             </Card>,
             <Card className='classCard' title="Object Properties">
-                <ListItem partecipation predicateType={predicateTypes.op} data={this.state.data.objectPropertiesParticipations} />
+                <ListItem
+                    partecipation
+                    axiom={{ owl: 'SubClassOf', first: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.op}
+                    data={this.state.data.objectPropertiesParticipations} />
             </Card>,
             <Card className='classCard' title="Data Properties">
-                <ListItem partecipation predicateType={predicateTypes.dp} data={this.state.data.dataPropertiesParticipations} />
+                <ListItem
+                    partecipation
+                    axiom={{ owl: 'SubClassOf', first: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.dp}
+                    data={this.state.data.dataPropertiesParticipations} />
             </Card>,
             <Card className='classCard' title="Disjoint Unions">
-                <ListItem union predicateType={predicateTypes.c} data={this.state.data.disjointUnions} />
+                <ListItem
+                    union
+                    predicateType={predicateTypes.c}
+                    data={this.state.data.disjointUnions} />
             </Card>,
             <Card className='classCard' title="Individuals">
-                <ListItem entity predicateType={predicateTypes.i} data={this.state.data.classIndividuals} />
+                <ListItem
+                    entity
+                    predicateType={predicateTypes.i} data={this.state.data.classIndividuals} />
             </Card>,
         ]
         return (

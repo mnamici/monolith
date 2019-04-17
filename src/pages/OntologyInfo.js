@@ -57,12 +57,16 @@ export default class OntologyInfo extends React.Component {
             }
         }
 
+        let prefixes = []
+        this.state.data.prefixes && this.state.data.prefixes.forEach(element => {
+            prefixes.push({mapKey: element.name, mapValue: element.namespace})
+        });
 
         const elements = [
             <OntologyMetricsTabs titles={[
                 { key: "pm", tab: "Prefixes" }, { key: "imports", tab: "Imports" },
             ]}
-                data={{ imports: this.state.data.ontologyImports, pm: this.state.data.ontologyPrefixManager }} />,
+                data={{ imports: this.state.data.ontologyImports, pm: prefixes}} />,
             <OntologyMetricsTabs titles={[
                 { key: "metrics", tab: "Metrics" },
                 { key: "axioms", tab: "Axioms" },

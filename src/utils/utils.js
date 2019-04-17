@@ -31,12 +31,11 @@ export function renderEntity(entity) {
     return rendering;
 }
 
-export function saveFileInfo(body) {
-    console.log(body)
+export function saveFileInfo(body, fileName) {
     const text = atob(body.content)
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    element.setAttribute('download', body.fileName);
+    element.setAttribute('download', fileName || body.fileName);
 
     element.style.display = 'none';
     document.body.appendChild(element);

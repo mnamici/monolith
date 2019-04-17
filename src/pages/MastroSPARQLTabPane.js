@@ -29,6 +29,9 @@ export default class MastroSPARQLTabPane extends React.Component {
         modalVisible: false,
         modalConfirmLoading: false,
         reasoning: true,
+        new: true,
+        dirty: true,
+        validID: true,
         // QUERY STATUS
         loading: false,
         selectedMappingID: null,
@@ -58,7 +61,6 @@ export default class MastroSPARQLTabPane extends React.Component {
             getMastroStatus(this.props.ontology.name, this.props.ontology.version, mapping.mappingID, this.checkMastroStatus.bind(this))
         });
         /** INITIALIZE YASQE */
-        getPrefixes(this.props.ontology.name, this.props.ontology.version, currMappingID, this.loadedPrefixes)
         this.changeDescription({ target: { value: this.props.query.queryDescription } })
         this.yasqe = YASQE(document.getElementById('sparql_' + this.props.num),
             {
@@ -69,9 +71,11 @@ export default class MastroSPARQLTabPane extends React.Component {
                     showQueryButton: false
                 }
             });
+        if (currMappingID)
+            getPrefixes(this.props.ontology.name, this.props.ontology.version, currMappingID, this.loadedPrefixes)
         this.yasqe.on('change', () => {
             this.props.setDirty(this.state.tabKey)
-            this.setState({ new: true })
+            this.setState({ dirty: true })
         })
         this.props.query.queryCode !== undefined ? this.yasqe.setValue(this.props.query.queryCode) : this.yasqe.setValue("")
         this.yasqe.refresh();
@@ -166,6 +170,8 @@ export default class MastroSPARQLTabPane extends React.Component {
                 modalVisible: false,
                 overwirteModalVisible: false,
                 modalConfirmLoading: false,
+                new: false,
+                dirty: false
             })
         })
     }
@@ -189,7 +195,7 @@ export default class MastroSPARQLTabPane extends React.Component {
     }
 
     start() {
-        if (!this.state.new)
+        if (!this.state.new && !this.state.dirty)
             startQuery(
                 this.props.ontology.name,
                 this.props.ontology.version,
@@ -250,18 +256,19 @@ export default class MastroSPARQLTabPane extends React.Component {
         }
 
         const alreadyInCatalog = this.props.catalog.filter(query => query.queryID === this.state.queryID).length === 1
-
         if (alreadyInCatalog) {
             this.showOverwriteModal()
         }
 
-        else if (this.props.new) {
+        else if (this.state.new) {
             postInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
-                this.props.renameTab(this.state.tabKey, this.state.queryID, true)
+                this.props.renameTab(this.state.tabKey, this.state.queryID)
                 this.setState({
                     modalVisible: false,
                     modalConfirmLoading: false,
-                    tabKey: this.state.queryID
+                    tabKey: this.state.queryID,
+                    new: false,
+                    dirty: false
                 })
 
             })
@@ -279,7 +286,14 @@ export default class MastroSPARQLTabPane extends React.Component {
     }
 
     changeQueryID = (e) => {
-        this.setState({ queryID: e.target.value })
+        const v = e.target.value
+        const re = /^[A-Za-z][A-Za-z0-9_]*$/
+        if (re.test(v)) {
+            this.setState({ queryID: v, validID: true })
+        }
+        else {
+            this.setState({ queryID: v, validID: false })
+        }
     }
 
     changeDescription = (e) => {
@@ -376,12 +390,15 @@ export default class MastroSPARQLTabPane extends React.Component {
                     )}
                 />
                 <Modal title="Insert query ID"
+                    className={!this.state.validID && 'has-error'}
                     visible={this.state.modalVisible}
                     onOk={this.handleOk}
                     confirmLoading={this.state.modalConfirmLoading}
                     onCancel={this.handleCancel}
+                    okButtonProps={{ disabled: !this.state.validID }}
                 >
                     <Input placeholder='Specify query ID' value={this.state.queryID} onChange={this.changeQueryID} />
+                    {!this.state.validID && <div className='ant-form-explain'>Not valid id: use letters numbers and underscores.</div>}
                 </Modal>
                 <Modal
                     visible={this.state.overwirteModalVisible}

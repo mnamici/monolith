@@ -13,7 +13,7 @@ export default class AddCloseTabs extends React.Component {
     modalVisible: false,
     toClose: null
   };
-  
+
   componentDidMount() {
     this.newTabIndex = 0;
     this.componentWillReceiveProps(this.props)
@@ -58,7 +58,7 @@ export default class AddCloseTabs extends React.Component {
     this[action](targetKey);
   }
 
-  renameTab = (paneKey, newTitle, ref) => {
+  renameTab = (paneKey, newTitle) => {
     let panes = [...this.state.panes]
     for (let pane of panes) {
       if (pane.key === paneKey) {
@@ -67,7 +67,7 @@ export default class AddCloseTabs extends React.Component {
     }
 
     this.setState({ panes: panes, dirtyPanes: this.state.dirtyPanes.filter(pane => pane !== paneKey) })
-    if (ref) this.props.refreshCatalog()
+    this.props.refreshCatalog()
   }
 
   setDirty = (paneKey) => {

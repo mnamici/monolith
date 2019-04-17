@@ -152,8 +152,14 @@ td {
 
 /* FIX HEIGHT OF CARDS IN WIKI ETC */
 
-.classCard .ant-card-body, .objectPropertyCard .ant-card-body, .dataPropertyCard .ant-card-body, .mappingCard .ant-card-body {
+.classCard .ant-card-body, .objectPropertyCard .ant-card-body, .dataPropertyCard .ant-card-body {
   height: 150px;
+  overflow: auto;
+  padding: 4px;
+}
+
+.mappingCard .ant-card-body {
+  height: 40vh;
   overflow: auto;
   padding: 4px;
 }
@@ -426,4 +432,12 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-w
   border-bottom-width: 2px;
   border-bottom-style: dotted;
   border-bottom-color: #aa2d2f !important;
+}
+
+.has-error .ant-form-explain {
+  color: #aa2d2f
+}
+
+.has-error .ant-input {
+  border-color: #aa2d2f
 }

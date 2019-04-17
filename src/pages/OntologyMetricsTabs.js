@@ -32,7 +32,7 @@ export default class OntologyMetricsTabs extends React.Component {
                     activeTabKey={this.state.tabKey}
                     onTabChange={(key) => { this.onTabChange(key, 'tabKey'); }}
                 >
-                    <div style={{ width: '100%', height: 150, overflow: 'auto' }}>
+                    <div style={{ width: '100%', height: '40vh', overflow: 'auto' }}>
                         {contentList[this.state.tabKey]}
                     </div>
                 </Card>

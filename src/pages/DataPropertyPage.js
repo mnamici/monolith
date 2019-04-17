@@ -42,7 +42,7 @@ export default class DataPropertyPage extends React.Component {
     }
 
     loaded = (data) => {
-        this._isMounted && this.setState({ data: data })
+        this._isMounted && this.setState({ data: data, loading: false })
     }
 
     render() {
@@ -57,28 +57,57 @@ export default class DataPropertyPage extends React.Component {
 
         const components = [
             <Card className='dataPropertyCard' title="Domain" >
-                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.dataPropertyDomain} />
+                <ListItem
+                    entity
+                    axiom={{ owl: 'DataPropertyDomain', first: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.c}
+                    data={this.state.data.dataPropertyDomain} />
             </Card>,
             <Card className='dataPropertyCard' title="Range" >
-                <ListItem entity predicateType={predicateTypes.c} data={this.state.data.dataPropertyRange} />
+                <ListItem
+                    entity
+                    axiom={{ owl: 'DataPropertyRange', first: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.c}
+                    data={this.state.data.dataPropertyRange} />
             </Card>,
             <Card className='dataPropertyCard' title="Data Property Characteristics" >
-                <ListItem data={dataPropertyCharacteristics} />
+                <ListItem
+                    axiom={{ type: 'DataProperty', entity: this.state.data.currentEntity }}
+                    data={dataPropertyCharacteristics} />
             </Card>,
             <Card className='dataPropertyCard' title="Equivalent Data Properties" >
-                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.equivalentDataProperties} />
+                <ListItem
+                    entity
+                    axiom={{ owl: 'EquivalentDataProperties', first: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.op}
+                    data={this.state.data.equivalentDataProperties} />
             </Card>,
             <Card className='dataPropertyCard' title="Sub Data Properties" >
-                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.subDataProperties} />
+                <ListItem
+                    entity
+                    axiom={{ owl: 'SubDataPropertyOf', first: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.op}
+                    data={this.state.data.subDataProperties} />
             </Card>,
             <Card className='dataPropertyCard' title="Super Data Properties" >
-                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.superDataProperties} />
+                <ListItem
+                    entity
+                    axiom={{ owl: 'SubDataPropertyOf', second: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.op}
+                    data={this.state.data.superDataProperties} />
             </Card>,
             <Card className='dataPropertyCard' title="Disjoint Data Properties" >
-                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.disjointDataProperties} />
+                <ListItem
+                    entity
+                    axiom={{ owl: 'DisjointDataProperties', second: this.state.data.currentEntity }}
+                    predicateType={predicateTypes.op}
+                    data={this.state.data.disjointDataProperties} />
             </Card>,
             <Card className='dataPropertyCard' title="Data Property Individuals" >
-                <ListItem entity predicateType={predicateTypes.op} data={this.state.data.dataPropertyIndividuals} />
+                <ListItem
+                    entity
+                    predicateType={predicateTypes.op}
+                    data={this.state.data.dataPropertyIndividuals} />
             </Card>,
         ]
         return (
