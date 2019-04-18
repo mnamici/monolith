@@ -51,6 +51,10 @@ export default class MappingInfo extends React.Component {
         const data = this.state.data
         const db = [
             {
+                mapKey: "name",
+                mapValue: data.mappingDBConnections[0].name
+            },
+            {
                 mapKey: "URL",
                 mapValue: data.mappingDBConnections[0].jdbcURL
             },

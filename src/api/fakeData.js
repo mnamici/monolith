@@ -805,3 +805,33 @@ export const viewRews = [
         time: 55555
     }
 ]
+
+export const datasources = [
+    {
+        "id": "S1",
+        "description": "test data source",
+        "dataSourceUsername": "utente-mastro",
+        "jdbcUrl": "jdbc:mysql://localhost/books",
+        "jdbcDriver": "com.mysql.jdbc.Driver",
+        "jdbcUsername": "root",
+        "jdbcPassword": "the-password"
+    },
+    {
+        "id": "S2",
+        "description": "test data source",
+        "dataSourceUsername": "utente-mastro",
+        "jdbcUrl": "jdbc:mysql://localhost/books",
+        "jdbcDriver": "com.mysql.jdbc.Driver",
+        "jdbcUsername": "root",
+        "jdbcPassword": "the-password"
+    },
+    {
+        "id": "S3",
+        "description": "test data source",
+        "dataSourceUsername": "utente-mastro",
+        "jdbcUrl": "jdbc:mysql://localhost/books",
+        "jdbcDriver": "com.mysql.jdbc.Driver",
+        "jdbcUsername": "root",
+        "jdbcPassword": "the-password"
+    }
+]

@@ -1,17 +1,18 @@
 import React from 'react'
 import {
-    Form, Button, Col, Row, Input, Select,
+    Form, Button, Col, Row, Input, Select, message,
 } from 'antd';
+import { postDatasources, getDatasourceDrivers, putDatasources } from '../api/MastroApi';
 
-const drivers = [
-    "com.mysql.jdbc.Driver",
-    "oracle",
-    "postgres"
-]
 
 class DrawerForm extends React.Component {
 
+    state = {
+        drivers: []
+    }
+
     componentDidMount() {
+        getDatasourceDrivers(this.loaded)
         if (this.props.dataSource) {
             const ds = this.props.dataSource
             this.props.form.setFieldsValue({
@@ -22,8 +23,11 @@ class DrawerForm extends React.Component {
                 jdbcUsername: ds.jdbcUsername,
                 jdbcPassword: ds.jdbcPassword
             })
-            this.setState({ visible: true })
         }
+    }
+
+    loaded = (drivers) => {
+        this.setState({ drivers })
     }
 
     submit = () => {
@@ -32,12 +36,21 @@ class DrawerForm extends React.Component {
                 const datasource = {
                     id: values.name,
                     description: values.description,
+                    dataSourceUsername: localStorage.getItem('username'),
                     jdbcDriver: values.jdbcDriver,
                     jdbcUrl: values.jdbcUrl,
                     jdbcUsername: values.jdbcUsername,
                     jdbcPassword: values.jdbcPassword
                 }
-                console.log(datasource)
+                if (this.props.dataSource)
+                    putDatasources(datasource, () => {
+                        message.success("Done.")
+                    })
+                else
+                    postDatasources(datasource, () => {
+                        message.success("Done.")
+                    })
+                this.props.rerender()
             }
         });
 
@@ -85,7 +98,7 @@ class DrawerForm extends React.Component {
                                         },
                                     ],
                                 })(<Select placeholder='Please select jdbc driver'>
-                                    {drivers.map(i => <Select.Option key={i} value={i}>{i}</Select.Option>)}
+                                    {this.state.drivers.map(i => <Select.Option key={i} value={i}>{i}</Select.Option>)}
                                 </Select>)}
                             </Form.Item>
                         </Col>

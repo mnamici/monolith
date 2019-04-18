@@ -11,7 +11,7 @@ export default class DatasourceCard extends React.Component {
         return (
             <Card hoverable actions={[
                 <span onClick={() => this.props.open(this.props.datasource.id)}>edit</span>,
-                <span onClick={() => this.delete(this.props.datasource.id)}>delete</span>,
+                <span onClick={() => this.props.delete(this.props.datasource.id)}>delete</span>,
             ]}>
                 <Card.Meta key={this.props.datasource.id}
                     title={this.props.datasource.id}

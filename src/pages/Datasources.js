@@ -2,74 +2,45 @@ import React from 'react';
 import { List, Divider, Select, Button, Icon, Drawer } from 'antd';
 import DatasourceCard from './DatasourceCard';
 import DatasourceForm from './DatasourceForm';
+import { getDatasources, deleteDatasources } from '../api/MastroApi';
 
 const Option = Select.Option
 
 export default class Datasources extends React.Component {
     state = {
-        data: [
-            {
-                "id": "S1",
-                "description": "test data source",
-                "dataSourceUsername": "utente-mastro",
-                "jdbcUrl": "jdbc:mysql://localhost/books",
-                "jdbcDriver": "com.mysql.jdbc.Driver",
-                "jdbcUsername": "root",
-                "jdbcPassword": "the-password"
-            },
-            {
-                "id": "S2",
-                "description": "test data source",
-                "dataSourceUsername": "utente-mastro",
-                "jdbcUrl": "jdbc:mysql://localhost/books",
-                "jdbcDriver": "com.mysql.jdbc.Driver",
-                "jdbcUsername": "root",
-                "jdbcPassword": "the-password"
-            },
-            {
-                "id": "S3",
-                "description": "test data source",
-                "dataSourceUsername": "utente-mastro",
-                "jdbcUrl": "jdbc:mysql://localhost/books",
-                "jdbcDriver": "com.mysql.jdbc.Driver",
-                "jdbcUsername": "root",
-                "jdbcPassword": "the-password"
-            }
-        ],
+        data: [],
         visible: false,
         drawer: null
     }
 
     componentDidMount() {
-
+        this.load()
     }
 
-    delete(datasourceID) {
+    load = () => {
+        getDatasources(this.loaded)
+    }
 
+    loaded = (data) => {
+        this.setState({ data, visible: false })
+    }
+
+    delete = (datasourceID) => {
+        deleteDatasources(datasourceID, this.load)
     }
 
     showDrawer = () => {
         this.setState({
-            drawer: <DatasourceForm />,
+            drawer: <DatasourceForm rerender={this.load} />,
             visible: true
         })
     }
 
     changeSort = (value) => {
-        if (value === 'name')
-            this.setState({
-                data: [...this.props.data].sort(function (a, b) {
-                    var x = a.id.toLowerCase();
-                    var y = b.id.toLowerCase();
-                    if (x < y) { return -1; }
-                    if (x > y) { return 1; }
-                    return 0;
-                })
-            })
-        else if (value === 'date')
-            this.setState({
-                data: this.props.data
-            })
+        // if (value === 'name')
+
+        // else if (value === 'date')
+
     }
 
     open = (open) => {
@@ -99,7 +70,7 @@ export default class Datasources extends React.Component {
                     renderItem={item =>
                         item ? (
                             <List.Item key={item.id} style={{ paddingBottom: 6 }} >
-                                <DatasourceCard datasource={item} open={this.open} />
+                                <DatasourceCard datasource={item} open={this.open} delete={this.delete} />
                             </List.Item>
                         ) : (
                                 <List.Item>

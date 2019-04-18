@@ -171,7 +171,7 @@ export function downloadOntologyFile(name, version, callback) {
         params: { version: encodedVersion },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
-        callback(response.data, name+'.owl')
+        callback(response.data, name + '.owl')
     }).catch(function (err) {
         callback(false)
         manageError(err)
@@ -556,7 +556,7 @@ export function stopMastro(name, version, mapping, callback) {
     axios({
         url: url,
         method: method,
-        params: { version: encodedVersion },        
+        params: { version: encodedVersion },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(mapping)
@@ -736,6 +736,82 @@ export function getPrefixes(name, version, mapping, callback) {
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data, mapping)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function getDatasources(callback) {
+    if (fakeCalls) { return callback([]) }
+    const url = localStorage.getItem('mastroUrl') + '/datasource'
+    const method = 'GET'
+    axios({
+        url: url,
+        method: method,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function postDatasources(datasource, callback) {
+    if (fakeCalls) { return callback([]) }
+    const url = localStorage.getItem('mastroUrl') + '/datasource'
+    const method = 'POST'
+    axios({
+        url: url,
+        method: method,
+        data: datasource,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function putDatasources(datasourceID, callback) {
+    if (fakeCalls) { return callback([]) }
+    const url = localStorage.getItem('mastroUrl') + '/datasource/' + datasourceID
+    const method = 'PUT'
+    axios({
+        url: url,
+        method: method,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function deleteDatasources(datasourceID, callback) {
+    if (fakeCalls) { return callback([]) }
+    const url = localStorage.getItem('mastroUrl') + '/datasource/' + datasourceID
+    const method = 'DELETE'
+    axios({
+        url: url,
+        method: method,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function getDatasourceDrivers(callback) {
+    if (fakeCalls) { return callback([]) }
+    const url = localStorage.getItem('mastroUrl') + '/datasource/drivers'
+    const method = 'GET'
+    axios({
+        url: url,
+        method: method,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
     }).catch(function (err) {
         manageError(err)
     });

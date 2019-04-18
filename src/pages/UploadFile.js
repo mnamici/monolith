@@ -5,11 +5,10 @@ import { getBase64 } from '../utils/utils'
 
 function beforeUpload(file) {
   this.setState({ loading: true });
-  console.log(file)
   if (this.props.type === 'owl') {
     const validFormat = file.name.endsWith('.owl') || file.name.endsWith('.graphol')
     if (!validFormat) {
-      message.error('You can only upload OWL or GRAPHOL file! Found '+file.type);
+      message.error('You can only upload OWL or GRAPHOL file! Found ' + file.type);
       this.setState({ loading: false });
     }
 
@@ -26,7 +25,7 @@ function beforeUpload(file) {
             message.success('upload successfully.');
             this.props.rerender()
           }
-          this.setState({ loading: false });
+          else this.setState({ loading: false });
         })
       })
     }
@@ -52,7 +51,7 @@ function beforeUpload(file) {
             message.success('upload successfully.');
             this.props.rerender()
           }
-          this.setState({ loading: false });
+          else this.setState({ loading: false });
         })
       })
     }
@@ -68,9 +67,9 @@ export default class UploadFile extends React.Component {
 
   render() {
     return (
-      <div style={{height: 247, width: '100%'}}>
+      <div style={{ height: 247, width: '100%' }}>
         <Upload className='bigUpload' beforeUpload={beforeUpload.bind(this)} fileList={[]}>
-          <Button style={{height: 247, width: '100%'}} type='primary' loading={this.state.loading}>
+          <Button style={{ height: 247, width: '100%' }} type='primary' loading={this.state.loading}>
             <Icon type={this.state.loading ? "loading" : "plus"} /> {this.state.loading ? "Uploading" : "Upload"}
           </Button>
         </Upload>
