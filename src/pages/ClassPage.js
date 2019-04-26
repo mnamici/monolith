@@ -124,7 +124,7 @@ export default class ClassPage extends React.Component {
                             </Card>
                         </div>
                         <List
-                            grid={{ gutter: 12, lg: 4, md: 2, sm: 1, xs: 1 }}
+                            grid={{ gutter: 12, lg: 3, md: 2, sm: 1, xs: 1 }}
                             dataSource={components}
                             renderItem={item => (
                                 <List.Item style={{ paddingBottom: 8 }}>

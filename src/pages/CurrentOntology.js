@@ -32,9 +32,9 @@ export default class CurrentOntology extends React.Component {
                     <OntologyMenu select={this.props.match.params.menu} />
                     <div>
                         <Icon
+                            className="ontologyTrigger"
                             style={{ display: "inherit", cursor: "pointer", color: 'white', padding: 4 }}
-                            theme="filled"
-                            type={this.state.collapsed ? 'caret-right' : 'caret-left'}
+                            type={this.state.collapsed ? 'right' : 'left'}
                             onClick={this.toggle}
                         />
                     </div>

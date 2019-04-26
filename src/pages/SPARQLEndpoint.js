@@ -84,7 +84,7 @@ export default class SPARQLEndpoint extends React.Component {
 
                 <Layout style={{ minHeight: 'calc(100vh - 25px)', marginLeft: '-1vw' }}>
                     <Sider
-                        style={{ background: '#000c17' }}
+                        className='queryCatalog'
                     >
                         <QueryCatalog
                             ontology={this.props.ontology}

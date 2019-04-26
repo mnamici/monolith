@@ -1,7 +1,6 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout, Drawer, Button } from 'antd';
 import SearchTree from './FastSearchTree';
-import SearchIndividuals from './SearchIndividuals';
 import ClassPage from './ClassPage';
 import ObjectPropertyPage from './ObjectPropertyPage';
 import DataPropertyPage from './DataPropertyPage';
@@ -10,11 +9,12 @@ import { Route, Redirect } from 'react-router'
 
 import { predicateTypes } from '../utils/utils'
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 export default class OntologyWiki extends React.Component {
     state = {
-        collapsed: false,
+        // collapsed: false,
+        visible: false
     };
 
     componentDidMount() {
@@ -22,6 +22,7 @@ export default class OntologyWiki extends React.Component {
         this.setState({
             current: this.props.match.params.entityID,
             predicateType: this.props.match.params.predicateType,
+            visible: !this.props.match.params.entityID
         })
     }
 
@@ -30,12 +31,20 @@ export default class OntologyWiki extends React.Component {
         this.setState({
             current: props.match.params.entityID,
             predicateType: props.match.params.predicateType,
+            visible: !props.match.params.entityID
+
         })
     }
 
+    // toggle = () => {
+    //     this.setState({
+    //         collapsed: !this.state.collapsed,
+    //     });
+    // }
+
     toggle = () => {
         this.setState({
-            collapsed: !this.state.collapsed,
+            visible: !this.state.visible,
         });
     }
 
@@ -43,22 +52,25 @@ export default class OntologyWiki extends React.Component {
         this.setState({
             current: entityID,
             predicateType: predicateType,
+            visible: false
         })
-
-
     }
+
     render() {
         // console.log("RENDER: ",this.state)
         return (
             <Layout>
-                <Header style={{ backgroundColor: 'transparent', display: 'flex', justifyContent: 'center', lineHeight: 1.5, paddingTop:16 }}>
+                <Drawer title='Ontology Entities' visible={this.state.visible} onClose={this.toggle} width={'50vw'}>
+                    <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
+                </Drawer>
+                {/* <Header style={{ backgroundColor: 'transparent', display: 'flex', justifyContent: 'center', lineHeight: 1.5, paddingTop:16 }}>
                     <div style={{ display: 'inline-flex' }}>
                         <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
                         <SearchIndividuals style={{ display: 'inherit' }} />
 
                     </div>
 
-                </Header>
+                </Header> */}
                 {/* <Sider
                     width={400}
                     style={{ background: '#fff' }}
@@ -77,7 +89,8 @@ export default class OntologyWiki extends React.Component {
                 </Sider> */}
                 <Layout >
                     <Content >
-                        <div style={{ height: 'calc(100vh - 89px)', overflowY: 'auto', paddingRight: 12 }}>
+                        <div style={{ height: 'calc(98vh - 25px)', overflowY: 'auto', paddingRight: 12 }}>
+                            <Button type='primary' style={{ float: 'right', margin: 8 }} icon='menu-fold' onClick={this.toggle} />
                             <Route exact path="/open/ontology/wiki/:predicateType?/:entityID?" render={(props) => (
                                 this.state.current !== props.match.params.entityID && this.state.current !== undefined ?
                                     <Redirect push to={"/open/ontology/wiki/" + this.state.predicateType + "/" + this.state.current} />

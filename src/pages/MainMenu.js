@@ -14,7 +14,7 @@ export default class MainMenu extends React.Component {
             <MenuItem key={item.name + "-" + item.version}>
                 {/* <Popover content={<small>{item.version}</small>} placement='right'> */}
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <div style={{overflow: 'hidden', textOverflow: 'ellipsis', direction: 'rtl', textAlign: 'left'}}>
+                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', direction: 'rtl', textAlign: 'left' }}>
                         <NavLink
                             to={path}
                             onClick={() => this.props.setcurrent(item)}
@@ -54,6 +54,7 @@ export default class MainMenu extends React.Component {
                     selectedKeys={selected}
                     style={{ height: `calc(100vh - ${h})`, width: w, overflow: 'auto' }}
                     theme="dark"
+                    className='mainMenu'
                     mode="vertical">
 
                     <SubMenu
@@ -98,7 +99,10 @@ export default class MainMenu extends React.Component {
                     </SubMenu>
 
                 </Menu>
-                <Menu theme="dark" mode="inline">
+                <Menu
+                    className='mainMenu'
+                    theme="dark"
+                    mode="inline">
                     <MenuItem key="admin">
                         <NavLink
                             to="/admin"

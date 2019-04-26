@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
-import { List, Card, Divider, Popover, Select } from 'antd';
+import { List, Card, Popover, Select, Button } from 'antd';
 import UploadFile from './UploadFile';
 import { downloadOntologyFile, deleteOntologyVersion } from '../api/MastroApi';
 import { saveFileInfo } from '../utils/utils';
@@ -64,15 +64,20 @@ export default class OntologyVersionsList extends React.Component {
 
         return (
             <div>
-                <Divider>choose or add a version</Divider>
-                <Select defaultValue='date' onChange={this.changeSort} style={{ padding: 6 }}>
-                    <Option value='date' >
-                        Sort by date
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 6 }}>
+                    <Button type='primary' icon='step-backward' onClick={this.props.prev}>
+                        Back
+                    </Button>
+                    <h1>Ontology Versions</h1>
+                    <Select defaultValue='date' onChange={this.changeSort}>
+                        <Option value='date' >
+                            Sort by date
                     </Option>
-                    <Option value='name' >
-                        Sort by version
+                        <Option value='name' >
+                            Sort by version
                     </Option>
-                </Select>
+                    </Select>
+                </div>
                 <List
                     className='bigCards'
                     rowKey="ontologyVersionsView"
@@ -110,10 +115,10 @@ export default class OntologyVersionsList extends React.Component {
                                             avatar={<img alt="" src={item.avatar} />}
                                             title={
                                                 <div>
-                                                    <div style={{overflow: 'hidden', textOverflow: 'ellipsis'}}>
+                                                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                                         {item.ontologyID}
                                                     </div>
-                                                    <div style={{overflow: 'hidden', textOverflow: 'ellipsis', direction: 'rtl', textAlign: 'left'}}>
+                                                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', direction: 'rtl', textAlign: 'left' }}>
                                                         {item.versionID}
                                                     </div>
                                                 </div>

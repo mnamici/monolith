@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Card, Divider, Select } from 'antd';
+import { List, Card, Select, Button } from 'antd';
 import AddOntology from './AddOntology';
 import { deleteOntology } from '../api/MastroApi';
 
@@ -50,15 +50,20 @@ export default class OntologiesList extends React.Component {
     render() {
         return (
             <div>
-                <Divider>choose or add an ontology</Divider>
-                <Select defaultValue='date' onChange={this.changeSort} style={{ padding: 6}}>
-                    <Option value='date' >
-                        Sort by date
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 6 }}>
+                    <Button style={{visibility: 'hidden'}} type='primary' icon='step-backward'>
+                        Back
+                    </Button>
+                    <h1>Ontologies</h1>
+                    <Select defaultValue='date' onChange={this.changeSort} >
+                        <Option value='date' >
+                            Sort by date
                     </Option>
-                    <Option value='name' >
-                        Sort by name
+                        <Option value='name' >
+                            Sort by name
                     </Option>
-                </Select>
+                    </Select>
+                </div>
                 <List
                     className='bigCards'
                     rowKey="ontologiesView"

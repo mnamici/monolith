@@ -102,7 +102,7 @@ export default class MainLayout extends React.Component {
           collapsible
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
-
+          className='mainMenu'
         >
           <div style={{ position: 'fixed' }}>
             <div style={{ padding: 16 }} >

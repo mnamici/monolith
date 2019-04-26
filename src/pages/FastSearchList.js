@@ -33,7 +33,7 @@ export default class SearchTree extends React.Component {
       this.props.ontology.version,
       this.props.mappingID,
       this.loaded)
-    document.getElementsByClassName("dropdown-trigger")[0].click()
+    // document.getElementsByClassName("dropdown-trigger")[0].click()
   }
 
   componentWillReceiveProps(props) {
@@ -54,9 +54,9 @@ export default class SearchTree extends React.Component {
     // console.log('onChange::', currentNode)
     this.props.onHandle(currentNode.label)
     //click away to close tree
-    var click = document.createEvent("MouseEvent")
-    click.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    document.getElementById("root").dispatchEvent(click)
+    // var click = document.createEvent("MouseEvent")
+    // click.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    // document.getElementById("root").dispatchEvent(click)
 
 
   }
@@ -76,6 +76,7 @@ export default class SearchTree extends React.Component {
       // onNodeToggle={onNodeToggle}
       className="ant-input"
       placeholderText="Choose or select SQL view"
+      showDropdown      
     />
   }
 }

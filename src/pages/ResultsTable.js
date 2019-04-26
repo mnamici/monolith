@@ -36,15 +36,6 @@ export default class Results extends React.Component {
         this.stopPolling()
     }
 
-    showTotal(total) {
-        return <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignContent: 'center' }}>
-            <Button icon='download' onClick={this.downloadResults}>
-                Download Results
-            </Button>
-            <p style={{ margin: '0px 8px' }} className='results'>{total} results</p>
-        </div>
-    }
-
     downloadResults = () => {
         downloadQueryResults(
             this.props.ontology.name,
@@ -107,42 +98,12 @@ export default class Results extends React.Component {
         else {
             this.stopPolling()
         }
-        // https.get(fakeDataUrl + '?page=' + page, (resp) => {
-        //     let data = '';
-
-        //     // A chunk of data has been recieved.
-        //     resp.on('data', (chunk) => {
-        //         data += chunk;
-        //     });
-
-        //     // The whole response has been received. Print out the result.
-        //     resp.on('end', () => {
-        //         const res = JSON.parse(data);
-        //         const pagination = { ...this.state.pagination };
-        //         pagination.total = res.count;
-        //         this.setState({
-        //             loading: false,
-        //             data: res.results,
-        //             pagination: pagination
-        //         });
-        //     });
-
-        // }).on("error", (err) => {
-        //     console.log("Error: " + err.message);
-        // });
-
     }
 
     render() {
         const columns = this.state.headTerms.map(item => ({ title: item, dataIndex: item }));
         return (
             <div>
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 8}}>
-                    <Button ghost icon='download' shape="circle" onClick={this.downloadResults}>
-                        {/* Download Results */}
-                    </Button>
-                    <span style={{paddingLeft: 8}} className='results'>{this.props.numberOfResults} results</span>
-                </div>
                 <Table
                     style={{ minHeight: 200 }}
                     columns={columns}
@@ -152,6 +113,11 @@ export default class Results extends React.Component {
                     loading={this.state.loading}
                     onChange={this.handleTableChange}
                 />
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 8, marginTop: -48 }}>
+                    <Button ghost icon='download' shape="circle" onClick={this.downloadResults}>
+                    </Button>
+                    <span style={{ paddingLeft: 8 }} className='results'>{this.props.numberOfResults} results</span>
+                </div>
             </div>
         );
     }

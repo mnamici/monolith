@@ -133,6 +133,7 @@ td {
 
 .ant-card-head {
   min-height: unset;
+  border-bottom-color: transparent
 }
 
 /* KEEP CARDS AND TABBED CARDS LOOK THE SAME */
@@ -196,6 +197,39 @@ td {
 *                          *
 ****************************/
 
+/* BACKGORUND COLORS  */
+
+:root {
+  --highlight: #2196f3;
+  --light: #365474;
+  --medium: #2C445E;
+  --medium-dark: #182634;
+  --dark: #121C27;
+}
+
+.mainMenu, .ant-layout-sider-trigger {
+  background-color: var(--light)
+}
+
+.ant-layout, .SPARQLTab, .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab-active {
+  background-color: var(--dark) !important;
+  border-radius: 0px;
+}
+
+.ant-tabs-nav-scroll {
+  background-color: var(--medium);
+  min-height: 40px;
+}
+
+.ontologyMenu {
+  background-color: var(--medium);
+  color: white
+}
+
+.queryCatalog {
+  background-color: var(--medium-dark)
+}
+
 /* BTN DISABLED */
 
 .ant-btn:disabled {
@@ -215,14 +249,26 @@ td {
   background-color: #6194c3;
 }
 
-.ant-btn-primary {
-  border-color: #fff;
+.ant-btn-primary, .ant-btn {
+  border-color: transparent;
+  color: white;
+}
+
+.ant-btn:hover, .ant-btn:focus {
+  background-color: var(--medium)
+}
+
+.ant-modal-footer {
+  border-top: solid 1px var(--dark)
+}
+
+.ant-input {
+  border-color: transparent
 }
 
 .ant-btn-primary:hover, .ant-btn-primary:focus {
   color: #fff;
-  background-color: #6194c3;
-  border-color: #6194c3;
+  background-color: var(--highlight);
 }
 
 .ant-btn-danger {
@@ -244,8 +290,8 @@ pre {
 
 /* LINK COLOR */
 
-a {
-  color: rgb(201, 208, 219);
+a, .ant-card-head-title, .ant-tabs-tab {
+  color: white !important
 }
 
 a:hover {
@@ -255,23 +301,17 @@ a:hover {
 /* MENU SELECTION */
 
 .ant-menu-dark .ant-menu-item-selected {
-  background: rgb(97, 148, 195) !important;
-}
-
-/* MAIN BACKGROUND */
-
-.ant-layout {
-  background-color: rgb(10, 27, 45);
+  background: var(--highlight) !important;
 }
 
 /* COMPONENTS BACKGROUND */
 
 .ant-card, .ant-collapse-content, .ant-drawer-header, .ant-drawer-wrapper-body, .ant-table-placeholder, .ant-modal-content, .ant-modal-header {
-  background-color: rgb(87, 102, 121) !important;
+  background-color: var(--light) !important;
 }
 
 .ant-layout-footer {
-  background-color: rgb(52, 61, 73) !important;
+  background-color: var(--light) !important
 }
 
 .ant-popover-inner-content, .ant-popover-arrow {
@@ -283,18 +323,13 @@ a:hover {
 /* TITLES AND BUTTONS BACKGROUND */
 
 .ant-card-actions, .ant-btn, .ant-input, .search, .ant-table-thead>tr>th, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-item, .ant-select-selection, .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab, .ant-card-head, .ant-collapse-header, .ant-checkbox-inner {
-  background-color: rgb(136, 148, 163)
-}
-
-.ant-tabs-nav-scroll {
-  background-color: rgb(136, 148, 163);
-  min-height: 40px;
+  background-color: var(--medium)
 }
 
 /* NEW TAB IN SPARQL ENDPOINT */
 
 .ant-tabs-extra-content {
-  background-color: #7a818b;
+  background-color: var(--light);
   padding-right: 10px;
   padding-top: 6px;
   padding-left: 10px;
@@ -303,7 +338,13 @@ a:hover {
 }
 
 .ant-tabs-extra-content .ant-tabs-new-tab {
-  border: unset
+  border-color: transparent;
+  color: white
+}
+
+.ant-tabs-extra-content .ant-tabs-new-tab:hover, .ant-layout-sider-trigger:hover, .ontologyTrigger:hover {
+  border-color: transparent;
+  color: var(--highlight) !important
 }
 
 .ant-btn-loading {
@@ -312,7 +353,7 @@ a:hover {
 
 /* TABLE ROWS */
 
-.ant-table-tbody>tr:hover:not(.ant-table-expanded-row)>td, .ant-select-dropdown-menu-item {
+.ant-table-tbody>tr:hover:not(.ant-table-expanded-row)>td {
   background-color: #7a818b;
 }
 
@@ -324,10 +365,30 @@ a:hover {
   border-color: transparent
 }
 
+.ant-select-dropdown-menu-item {
+  background-color: var(--light);
+}
+
+.ant-select-dropdown-menu-item:hover {
+  background-color: var(--highlight);
+}
+
+.ant-select-selection {
+  border-color: transparent
+}
+
+.ant-card-actions>li:not(:last-child) {
+  border-right: 1px solid var(--dark);
+}
+
+.ant-card-actions {
+  border-top: 1px solid var(--dark);
+}
+
 /* TEXT COLOR */
 
-h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-tabs-nav .ant-tabs-tab-active, .ant-pagination-item-ellipsis, .ant-progress-text, .ant-empty-description {
-  color: rgba(255, 255, 255, 0.75) !important;
+h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-pagination-item-ellipsis, .ant-progress-text, .ant-empty-description, .ant-select-selection, .ant-select-arrow, .ant-select-dropdown-menu-item, .ant-card-actions>li, .ant-drawer-title, .ant-form-item-label>label, .ant-table-thead>tr>th, .ant-modal-body, .ant-modal-close {
+  color: white !important;
 }
 
 /* ROW COLOR */
@@ -341,14 +402,7 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-w
 }
 
 .ant-tabs-ink-bar {
-  background-color: rgba(255, 255, 255, 0.85);
-}
-
-.ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab-active, .SPARQLTab, .ontologyMenu {
-  /* background-color: rgb(10, 27, 45); */
-  background-color: rgb(14, 31, 48);
-  border-radius: 0px;
-  color: white
+  background-color: var(--highlight)
 }
 
 .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab .ant-tabs-close-x {
@@ -360,11 +414,11 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-w
 }
 
 .ant-card-bordered {
-  border: 1px solid transparent
+  border-color: transparent
 }
 
 .ant-card-bordered:hover {
-  border: 1px solid white
+  border: 1px solid var(--highlight)
 }
 
 /**************************
@@ -440,4 +494,23 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-w
 
 .has-error .ant-input {
   border-color: #aa2d2f
+}
+
+.ant-pagination-item, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link {
+  border: 1px solid transparent;
+}
+
+/***************************
+*                          *
+*        SCROLLBARS        *
+*                          *
+****************************/
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
 }

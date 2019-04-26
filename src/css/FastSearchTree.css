@@ -12,10 +12,12 @@
 
 .toggle.collapsed::after {
     content: "\E5CF";
+    color: white;
 }
 
 .toggle.expanded::after {
     content: "\E5CE";
+    color: white;
 }
 
 .tag {
@@ -65,12 +67,19 @@
 
 .dropdown-content {
     overflow: auto;
-    max-height: 80vh;
+    /* max-height: 80vh;
     max-width: 40vw;
-    background-color: rgb(39, 42, 46) !important;
     min-width: 376px;
-    min-height: 300px;
-    border-radius: 5px;
+    min-height: 300px; */
+    /* border-radius: 5px; */
+
+}
+
+.react-dropdown-tree-select .dropdown .dropdown-content {
+    background-color: transparent;
+    /* background-color: rgb(39, 42, 46) !important; */
+    border: unset;
+    box-shadow: unset;
 }
 
 .infinite-scroll-component {
@@ -89,7 +98,8 @@
 }
 
 .node {
-    color: rgb(187, 197, 206);
+    /* color: rgb(187, 197, 206); */
+    color:white
 }
 
 .class .node-label::before {

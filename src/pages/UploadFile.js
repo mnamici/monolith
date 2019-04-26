@@ -66,11 +66,12 @@ export default class UploadFile extends React.Component {
   };
 
   render() {
+    const title = this.props.type === 'mapping' ? 'Add Mapping' : 'Add Ontology Version'
     return (
-      <div style={{ height: 247, width: '100%' }}>
+      <div style={{ height: 249, width: '100%' }}>
         <Upload className='bigUpload' beforeUpload={beforeUpload.bind(this)} fileList={[]}>
-          <Button style={{ height: 247, width: '100%' }} type='primary' loading={this.state.loading}>
-            <Icon type={this.state.loading ? "loading" : "plus"} /> {this.state.loading ? "Uploading" : "Upload"}
+          <Button style={{ height: 249, width: '100%' }} type='primary' loading={this.state.loading}>
+            <Icon type={this.state.loading ? "loading" : "plus"} /> {this.state.loading ? "Uploading" : title}
           </Button>
         </Upload>
       </div>

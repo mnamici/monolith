@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Spin } from 'antd'
+import { Spin } from 'antd'
 import OntologiesList from './OntologiesList'
 import OntologyVersionsList from './OntologyVersionsList'
 import { getOntologies } from '../api/MastroApi'
@@ -69,13 +69,6 @@ export default class LoadOntologies extends React.Component {
             this.state.loading ? <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
                 <div style={{ height: 'calc(99vh - 25px)', overflow: 'auto' }}>
                     {
-                        this.state.current > 0 && (
-                            <Button icon='step-backward' style={{ marginTop: 8 }} onClick={this.prev}>
-                                Back
-                        </Button>
-                        )
-                    }
-                    {
                         this.state.current === 0 ?
                             <OntologiesList
                                 data={this.state.data}
@@ -86,7 +79,7 @@ export default class LoadOntologies extends React.Component {
                             <OntologyVersionsList
                                 data={this.state.data}
                                 current={this.state.ontologyID}
-                                previous={this.prev.bind(this)}
+                                prev={this.prev.bind(this)}
                                 rerender={this.requestOntologies.bind(this)}
                                 open={this.props.open}
                                 close={this.props.close}

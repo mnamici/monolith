@@ -46,7 +46,7 @@ export default class SearchTree extends React.Component {
       this.props.ontology.version,
       this.loaded)
 
-    document.getElementsByClassName("dropdown-trigger")[0].click()
+    // document.getElementsByClassName("dropdown-trigger")[0].click()
 
   }
 
@@ -67,10 +67,10 @@ export default class SearchTree extends React.Component {
     if (currentNode._depth !== 0) {
       // console.log('onChange::', currentNode)
       this.props.onHandle(currentNode.entityID, currentNode.predicateType)
-      //click away to close tree
-      var click = document.createEvent("MouseEvent")
-      click.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-      document.getElementById("root").dispatchEvent(click)
+      //simulate click away to close tree
+      // var click = document.createEvent("MouseEvent")
+      // click.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      // document.getElementById("root").dispatchEvent(click)
 
     }
     // toggle expand and collapse clicking on Classes Object Properties adn Data Properties labels
@@ -96,16 +96,19 @@ export default class SearchTree extends React.Component {
       {
         label: "Classes",
         className: predicateTypes.c,
+        expanded: true,
         children: convertData(mastroData.hierarchyTree.classTree.children, [], predicateTypes.c)
       },
       {
         label: "Object Properties",
         className: predicateTypes.op,
+        expanded: true,
         children: convertData(mastroData.hierarchyTree.objectPropertyTree.children, [], predicateTypes.op)
       },
       {
         label: "Data Properties",
         className: predicateTypes.dp,
+        expanded: true,
         children: convertData(mastroData.hierarchyTree.dataPropertyTree.children, [], predicateTypes.dp)
       }
     ]
@@ -124,6 +127,7 @@ export default class SearchTree extends React.Component {
       // onNodeToggle={onNodeToggle}
       className="ant-input"
       placeholderText="Search or select from entity tree"
+      showDropdown
     />
   }
 }

@@ -51,7 +51,6 @@ export default class SearchTree extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log(this.props)
     getOntologyVersionHierarchy(
       props.ontology.name,
       props.ontology.version,
