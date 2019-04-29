@@ -51,17 +51,17 @@ export default class OntologiesList extends React.Component {
         return (
             <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 6 }}>
-                    <Button style={{visibility: 'hidden'}} type='primary' icon='step-backward'>
+                    <Button style={{ visibility: 'hidden', width: 140 }} type='primary' icon='step-backward'>
                         Back
                     </Button>
                     <h1>Ontologies</h1>
-                    <Select defaultValue='date' onChange={this.changeSort} >
+                    <Select style={{ width: 140 }} defaultValue='date' onChange={this.changeSort} >
                         <Option value='date' >
                             Sort by date
-                    </Option>
+                        </Option>
                         <Option value='name' >
                             Sort by name
-                    </Option>
+                        </Option>
                     </Select>
                 </div>
                 <List

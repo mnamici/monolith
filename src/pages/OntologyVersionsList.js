@@ -65,11 +65,11 @@ export default class OntologyVersionsList extends React.Component {
         return (
             <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 6 }}>
-                    <Button type='primary' icon='step-backward' onClick={this.props.prev}>
+                    <Button style={{ width: 140 }} type='primary' icon='step-backward' onClick={this.props.prev}>
                         Back
                     </Button>
                     <h1>Ontology Versions</h1>
-                    <Select defaultValue='date' onChange={this.changeSort}>
+                    <Select style={{ width: 140 }} defaultValue='date' onChange={this.changeSort}>
                         <Option value='date' >
                             Sort by date
                     </Option>

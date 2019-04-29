@@ -49,16 +49,16 @@ export default class QueryCatalog extends React.Component {
         return (
             <MenuItem className='catalogQuery' key={item}>
                 {/* <Link to={'/open/ontology/endpoint/' + item}> */}
-                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <div style={{ textOverflow: 'ellipsis', overflow: 'hidden' }} onClick={() => this.props.open(item)}>{item}</div>
-                    <span style={{ float: "right" }} onClick={() => deleteFromQueryCatalog(
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', width: '100%' }} onClick={() => this.props.open(item)}>{item}</div>
+                    {!this.props.collapsed && <span style={{ float: "right" }} onClick={() => deleteFromQueryCatalog(
                         this.props.ontology.name,
                         this.props.ontology.version,
                         item,
                         this.props.refreshCatalog
                     )}>
                         <Icon type="minus-circle" />
-                    </span>
+                    </span>}
                 </div>
                 {/* </Link> */}
             </MenuItem>
@@ -66,9 +66,10 @@ export default class QueryCatalog extends React.Component {
     }
 
     render() {
+        const h = !this.props.collapsed ? 87 : 47
         return (
             <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: 8, }}>
+                {!this.props.collapsed && <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: 8, }}>
                     <h3 style={{ marginBottom: 0 }}>Query Catalog</h3>
                     <div>
                         <Button style={{ margin: '0px 4px' }} ghost size='small' shape='circle' icon='download' onClick={this.downloadCatalog} />
@@ -76,8 +77,8 @@ export default class QueryCatalog extends React.Component {
                             <Button ghost size='small' shape='circle' icon='upload' />
                         </Upload>
                     </div>
-                </div>
-                <Menu style={{ backgroundColor: 'transparent', minHeight: 'calc(100vh - 97px)' }} theme='dark' mode="inline">
+                </div>}
+                <Menu style={{ backgroundColor: 'transparent', minHeight: `calc(100vh - ${h}px)` }} theme='dark' mode="inline">
                     {this.props.catalog && this.props.catalog.map(item => this.getClosableMenuItem(item.queryID))}
                 </Menu>
 

@@ -114,7 +114,8 @@ export default class Results extends React.Component {
                     onChange={this.handleTableChange}
                 />
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 8, marginTop: -48 }}>
-                    <Button ghost icon='download' shape="circle" onClick={this.downloadResults}>
+                    <Button type='primary' icon='download' onClick={this.downloadResults}>
+                        Download Query Results
                     </Button>
                     <span style={{ paddingLeft: 8 }} className='results'>{this.props.numberOfResults} results</span>
                 </div>

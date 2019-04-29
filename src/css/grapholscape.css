@@ -1,0 +1,8 @@
+.module, #search, .bottom_window {
+    background-color: var(--light);
+    color: white
+}
+
+#search::placeholder {
+    color: rgba(255, 255, 255, 0.623)
+}

@@ -50,6 +50,21 @@ export default class AddCloseTabs extends React.Component {
       }
   }
 
+  componentDidUpdate(oldProps) {
+    //CHECK FOR DELETION AND SET DIRTY TABS
+    for (let oq of oldProps.catalog) {
+      let found = false;
+      for (let q of this.props.catalog) {
+        if (oq.queryID === q.queryID) {
+          found = true
+        }
+      }
+      if (!found) {
+        this.state.panes.forEach(p => p.title.key === oq.queryID && this.setDirty(p.key))
+      }
+    }
+  }
+
   onChange = (activeKey) => {
     this.setState({ activeKey });
   }
@@ -128,8 +143,10 @@ export default class AddCloseTabs extends React.Component {
     if (this.state.dirtyPanes.includes(targetKey)) {
       this.setState({ modalVisible: true, toClose: targetKey })
     }
-    else
+    else {
       this.closeTab(targetKey)
+    }
+
   }
 
   closeTab(targetKey) {

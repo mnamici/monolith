@@ -78,7 +78,7 @@ export default class OntologyInfo extends React.Component {
         return (
             this.state.loading ? <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
 
-                <div style={{ paddingRight: '1vw' }} >
+                <div style={{ paddingRight: '1vw', paddingBottom: '1vh' }} >
                     <div style={{ textAlign: 'center', padding: 16 }}>
                         <h1 >{this.props.ontology.name}</h1>
                     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Spin } from 'antd';
+import { Layout, Spin, Icon } from 'antd';
 import AddCloseTabs from './AddCloseTabs';
 import QueryCatalog from './QueryCatalog';
 import { getQueryCatalog, getMappings } from '../api/MastroApi'
@@ -77,6 +77,12 @@ export default class SPARQLEndpoint extends React.Component {
         });
     }
 
+    toggle = () => {
+        this.setState({
+            collapsed: !this.state.collapsed,
+        });
+    }
+
     render() {
         return (
             this.state.loadingCatalog || this.state.loadedMappings ?
@@ -85,6 +91,7 @@ export default class SPARQLEndpoint extends React.Component {
                 <Layout style={{ minHeight: 'calc(100vh - 25px)', marginLeft: '-1vw' }}>
                     <Sider
                         className='queryCatalog'
+                        collapsed={this.state.collapsed}
                     >
                         <QueryCatalog
                             ontology={this.props.ontology}
@@ -92,7 +99,16 @@ export default class SPARQLEndpoint extends React.Component {
                             catalog={this.state.catalog}
                             open={this.open}
                             refreshCatalog={this.requestCatalog.bind(this)}
+                            collapsed={this.state.collapsed}
                         />
+                        <div>
+                            <Icon
+                                className="ontologyTrigger"
+                                style={{ display: "inherit", cursor: "pointer", color: 'white', padding: 4 }}
+                                type={this.state.collapsed ? 'right' : 'left'}
+                                onClick={this.toggle}
+                            />
+                        </div>
                         {/* <MappingSelector ontology={this.props.ontology} mappings={this.state.mappings}/> */}
                     </Sider>
                     <Layout>

@@ -1,4 +1,18 @@
 @import '~antd/dist/antd.css';
+/* BACKGORUND COLORS  */
+
+:root {
+  --highlight-gray: #7a818b;
+  --highlight: #f8a915;
+  --light: #365474;
+  --medium: #2C445E;
+  --medium-dark: #182634;
+  --dark: #121C27;
+  --red: #aa2d2f;
+  --white: #ffffffd5;
+  --disabled: #8894a3;
+}
+
 /***************************
 *                          *
 *                          *
@@ -63,6 +77,7 @@
 
 h1 {
   font-size: 2em;
+  margin-bottom: 0px;
 }
 
 /* EXPAND MAIN MENU BUTTON */
@@ -197,14 +212,8 @@ td {
 *                          *
 ****************************/
 
-/* BACKGORUND COLORS  */
-
-:root {
-  --highlight: #2196f3;
-  --light: #365474;
-  --medium: #2C445E;
-  --medium-dark: #182634;
-  --dark: #121C27;
+.ant-table-thead>tr>th {
+  border: unset
 }
 
 .mainMenu, .ant-layout-sider-trigger {
@@ -217,41 +226,41 @@ td {
 }
 
 .ant-tabs-nav-scroll {
-  background-color: var(--medium);
+  background-color: var(--medium-dark);
   min-height: 40px;
 }
 
 .ontologyMenu {
   background-color: var(--medium);
-  color: white
+  color: var(--white)
 }
 
-.queryCatalog {
+.queryCatalog, .ant-card-head, .ant-card, .ant-table-placeholder {
   background-color: var(--medium-dark)
 }
 
 /* BTN DISABLED */
 
 .ant-btn:disabled {
-  background-color: rgb(136, 148, 163);
+  background-color: var(--disabled);
   opacity: 0.4;
-  color: #fff;
+  color: var(--white);
 }
 
 /* SPARQL TAB COLORS */
 
 .ant-menu-dark .ant-menu-item-selected.catalogQuery {
   background-color: transparent !important;
-  color: unset
+  color: var(--white)
 }
 
 .ant-switch-checked, .ant-progress-success-bg, .ant-progress-bg {
-  background-color: #6194c3;
+  background-color: var(--highlight);
 }
 
 .ant-btn-primary, .ant-btn {
   border-color: transparent;
-  color: white;
+  color: var(--white);
 }
 
 .ant-btn:hover, .ant-btn:focus {
@@ -266,19 +275,47 @@ td {
   border-color: transparent
 }
 
+.ant-input:hover, .ant-input:focus {
+  border-color: var(--highlight)
+}
+
 .ant-btn-primary:hover, .ant-btn-primary:focus {
-  color: #fff;
-  background-color: var(--highlight);
+  color: var(--white);
+  background-color: var(--highlight-gray);
+  border-color: var(--highlight)
+}
+
+.ant-btn-group .ant-btn-primary:first-child:not(:last-child) {
+  border-right-color: var(--highlight)
+}
+
+.ant-btn-group .ant-btn-primary + .ant-btn:not(.ant-btn-primary):not([disabled]){
+  border-left-color: var(--highlight)
+}
+
+.ant-card-actions>li>span:hover {
+  color: var(--highlight);
+  transition: .4s ease-in-out
+}
+
+.ant-select-selection:hover {
+  border-color: var(--highlight);
+  border-right-width: 1px !important;
+}
+
+.ant-btn:hover {
+  color: var(--highlight);
+  border-color: var(--highlight)
 }
 
 .ant-btn-danger {
-  color: #aa2d2f;
+  color: var(--red)
 }
 
 .ant-btn-danger:hover, .ant-btn-danger:focus {
-  color: #fff;
-  background-color: #aa2d2f;
-  border-color: #aa2d2f;
+  color: var(--white);
+  background-color: var(--red);
+  border-color: var(--red);
 }
 
 /* pre COLOR */
@@ -291,7 +328,7 @@ pre {
 /* LINK COLOR */
 
 a, .ant-card-head-title, .ant-tabs-tab {
-  color: white !important
+  color: var(--white) !important
 }
 
 a:hover {
@@ -300,13 +337,25 @@ a:hover {
 
 /* MENU SELECTION */
 
-.ant-menu-dark .ant-menu-item-selected {
-  background: var(--highlight) !important;
+.ant-menu-inline, .ant-menu-vertical {
+  border: unset;
+}
+
+.ant-menu .ant-menu-item-selected {
+  background: var(--highlight-gray) !important;
+}
+
+.ant-menu .ant-menu-item-selected a {
+  color: var(--dark) !important;
+}
+
+.ant-menu .ant-menu-item-selected::after {
+  border-color: var(--highlight)
 }
 
 /* COMPONENTS BACKGROUND */
 
-.ant-card, .ant-collapse-content, .ant-drawer-header, .ant-drawer-wrapper-body, .ant-table-placeholder, .ant-modal-content, .ant-modal-header {
+.ant-collapse-content, .ant-drawer-header, .ant-drawer-wrapper-body, .ant-modal-content, .ant-modal-header {
   background-color: var(--light) !important;
 }
 
@@ -317,12 +366,12 @@ a:hover {
 .ant-popover-inner-content, .ant-popover-arrow {
   border-color: rgb(43, 43, 43) !important;
   background-color: rgb(43, 43, 43);
-  color: white
+  color: var(--white)
 }
 
 /* TITLES AND BUTTONS BACKGROUND */
 
-.ant-card-actions, .ant-btn, .ant-input, .search, .ant-table-thead>tr>th, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-item, .ant-select-selection, .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab, .ant-card-head, .ant-collapse-header, .ant-checkbox-inner {
+.ant-card-actions, .ant-btn, .ant-input, .search, .ant-table-thead>tr>th, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-item, .ant-select-selection, .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab, .ant-collapse-header, .ant-checkbox-inner {
   background-color: var(--medium)
 }
 
@@ -339,12 +388,26 @@ a:hover {
 
 .ant-tabs-extra-content .ant-tabs-new-tab {
   border-color: transparent;
-  color: white
+  color: var(--white)
 }
 
-.ant-tabs-extra-content .ant-tabs-new-tab:hover, .ant-layout-sider-trigger:hover, .ontologyTrigger:hover {
+.ant-menu-dark .ant-menu-item {
+  color: var(--white);
+}
+
+.catalogQuery>div>span>i:hover {
+  color: var(--red);
+  transition: .4s ease-in-out
+}
+
+.ant-menu-item div a {
+  text-decoration: none !important
+}
+
+.ant-tabs-extra-content .ant-tabs-new-tab:hover, .ant-layout-sider-trigger:hover, .ontologyTrigger:hover, .mainMenuArrow:hover {
   border-color: transparent;
-  color: var(--highlight) !important
+  color: var(--highlight) !important;
+  transition: .4s ease-in-out
 }
 
 .ant-btn-loading {
@@ -354,7 +417,7 @@ a:hover {
 /* TABLE ROWS */
 
 .ant-table-tbody>tr:hover:not(.ant-table-expanded-row)>td {
-  background-color: #7a818b;
+  background-color: var(--highlight-gray)
 }
 
 .ant-tabs.ant-tabs-card>.ant-tabs-bar {
@@ -387,8 +450,8 @@ a:hover {
 
 /* TEXT COLOR */
 
-h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-pagination-item-ellipsis, .ant-progress-text, .ant-empty-description, .ant-select-selection, .ant-select-arrow, .ant-select-dropdown-menu-item, .ant-card-actions>li, .ant-drawer-title, .ant-form-item-label>label, .ant-table-thead>tr>th, .ant-modal-body, .ant-modal-close {
-  color: white !important;
+h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-pagination-item-ellipsis, .ant-progress-text, .ant-empty-description, .ant-select-selection, .ant-select-arrow, .ant-select-dropdown-menu-item, .ant-card-actions>li, .ant-drawer-title, .ant-form-item-label>label, .ant-table-thead>tr>th, .ant-modal-body, .ant-modal-close, .ant-input {
+  color: var(--white) !important;
 }
 
 /* ROW COLOR */
@@ -397,20 +460,12 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-w
   border-color: rgba(28, 48, 66, 0.80);
 }
 
-.ant-tabs-nav .ant-tabs-tab:hover {
-  color: rgba(255, 255, 255, 0.55);
-}
-
-.ant-tabs-ink-bar {
-  background-color: var(--highlight)
-}
-
 .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab .ant-tabs-close-x {
   color: rgba(255, 255, 255, 0.5)
 }
 
 .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab .ant-tabs-close-x:hover {
-  color: white
+  color: var(--white)
 }
 
 .ant-card-bordered {
@@ -474,26 +529,26 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-w
 /* ERRORS */
 
 .parseErrorIcon>svg>g {
-  fill: #aa2d2f;
+  fill: var(--red);
 }
 
 .yasqe .cm-invalidchar, .yasqe .cm-s-default .cm-error {
-  color: #aa2d2f !important;
+  color: var(--red) !important;
 }
 
 .yasqe span.cm-error {
-  border-bottom: 2px dotted #aa2d2f !important;
+  border-bottom: 2px dotted var(--red) !important;
   border-bottom-width: 2px;
   border-bottom-style: dotted;
-  border-bottom-color: #aa2d2f !important;
+  border-bottom-color: var(--red) !important;
 }
 
 .has-error .ant-form-explain {
-  color: #aa2d2f
+  color: var(--red)
 }
 
 .has-error .ant-input {
-  border-color: #aa2d2f
+  border-color: var(--red)
 }
 
 .ant-pagination-item, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link {

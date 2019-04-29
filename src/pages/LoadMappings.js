@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { List, Card, Divider, Popover, Spin } from 'antd';
+import { List, Card, Divider as h1, Popover, Spin } from 'antd';
 import UploadFile from './UploadFile';
 import { getMappings, downloadMappingFile, deleteMappingFile } from '../api/MastroApi';
 import { saveFileInfo } from '../utils/utils';
@@ -43,7 +43,9 @@ export default class LoadMappings extends React.Component {
             this.state.loading ? <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
 
                 <div style={{ padding: 2 }}>
-                    <Divider>choose or add a mapping</Divider>
+                    <div style={{ textAlign: 'center', padding: 16 }}>
+                        <h1>Mappings</h1>
+                    </div>
                     <List
                         rowKey="mappingsView"
                         grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}

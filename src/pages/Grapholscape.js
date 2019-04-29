@@ -3,6 +3,7 @@ import GrapholScape from '../lib/grapholscape/dist/grapholscape.js'
 import { toggle, search } from '../lib/grapholscape/dist/grapholscape.js'
 import '../lib/grapholscape/style/style.css'
 import '../lib/material-icons/MaterialIcons.css'
+import '../css/grapholscape.css'
 import { getGraphol } from '../api/MastroApi.js';
 
 export default class Graphol extends React.Component {
@@ -31,8 +32,8 @@ export default class Graphol extends React.Component {
 
     render() {
         return (
-            <div style={{ borderRadius: 10, border: 'solid white 10px', background: 'white', marginTop: 16 }}>
-                <div id="grapholscape-container" style={{ position: "relative", height: "90vh" }} />
+            <div style={{ borderRadius: 10, border: 'solid white 10px', background: 'white', margin: '1vh 1vw 1vh 0px' }}>
+                <div id="grapholscape-container" style={{ position: "relative", height: "calc(98vh - 47px)" }} />
             </div>
         )
     }
