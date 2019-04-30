@@ -21,6 +21,7 @@ export default class AddCloseTabs extends React.Component {
 
   componentWillReceiveProps(props) {
     if (props.mappings === undefined || props.catalog === undefined) return
+    const qc = JSON.parse(localStorage.getItem('queryCatalog'))
     if (this.state.panes.length === 0) {
       const panes = []
       this.newTabIndex++;
@@ -43,26 +44,38 @@ export default class AddCloseTabs extends React.Component {
       });
       this.setState({ panes, activeKey });
     }
-    for (let i = 0; i < props.catalog.length; i++)
+
+    if(qc) {
+      this.openLastTabs(qc, props)
+    }
+    // OPEN SELECTED TAB
+    for (let i = 0; i < props.catalog.length; i++) {
       if (props.catalog[i].queryID === props.open) {
         this.add(props.catalog[i])
         break
       }
+    }
+
   }
 
   componentDidUpdate(oldProps) {
     //CHECK FOR DELETION AND SET DIRTY TABS
-    for (let oq of oldProps.catalog) {
-      let found = false;
-      for (let q of this.props.catalog) {
-        if (oq.queryID === q.queryID) {
-          found = true
+    if (oldProps.catalog)
+      for (let oq of oldProps.catalog) {
+        let found = false;
+        for (let q of this.props.catalog) {
+          if (oq.queryID === q.queryID) {
+            found = true
+          }
+        }
+        if (!found) {
+          this.state.panes.forEach(p => p.title.key === oq.queryID && this.setDirty(p.key))
         }
       }
-      if (!found) {
-        this.state.panes.forEach(p => p.title.key === oq.queryID && this.setDirty(p.key))
-      }
-    }
+  }
+
+  componentWillUnmount() {
+    localStorage.setItem('queryCatalog', JSON.stringify(this.state.panes.map(p => p.title.key)))
   }
 
   onChange = (activeKey) => {
@@ -97,6 +110,36 @@ export default class AddCloseTabs extends React.Component {
     if (!dirtypanes.includes(paneKey)) dirtypanes.push(paneKey)
     this.setState({ panes: panes, dirtyPanes: dirtypanes })
   }
+
+  openLastTabs(qc, props) {
+    const panes = this.state.panes;
+    let activeKey = newQueryID + this.newTabIndex
+    for (let q of qc) {
+      const query = props.catalog.filter(query => query.queryID === q)[0]
+      if (query) {
+        this.newTabIndex++
+        activeKey = newQueryID + this.newTabIndex
+        const title = query.queryID
+        panes.push({
+          title: <span key={title}><Icon type='file' />{title}</span>,
+          content: <MastroSPARQLTabPane
+            ontology={props.ontology}
+            mappings={props.mappings}
+            catalog={props.catalog}
+            num={activeKey}
+            query={query}
+            renameTab={this.renameTab}
+            setDirty={this.setDirty}
+            tabKey={activeKey}
+          />,
+          key: activeKey
+        });
+      }
+    }
+    this.setState({ panes, activeKey });
+    localStorage.removeItem('queryCatalog')
+  }
+
 
   add = (query) => {
     const panes = this.state.panes;

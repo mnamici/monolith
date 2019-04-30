@@ -8,7 +8,7 @@ import { graphol } from './ACIOpenData'
 // var mastroUrl = 'http://' + ips[0] + ':8080/mws/rest/mwsx'
 // mastroUrl = '/mws/rest/mwsx'
 
-const fakeCalls = false
+const fakeCalls = true
 
 function manageError(err) {
     if (err.response === undefined)
@@ -490,7 +490,7 @@ export function postInQueryCatalog(name, version, query, callback) {
     });
 }
 
-export function putInQueryCatalog(name, version, query, callback) {
+export function putInQueryCatalog(name, version, query, callback, callbackError) {
     if (fakeCalls) return callback(fakeData.queryCatalog)
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/query/' + query.queryID
     const method = 'PUT'
@@ -506,7 +506,8 @@ export function putInQueryCatalog(name, version, query, callback) {
         if (response.data === 1)
             throw ErrorEvent()
     }).catch(function (err) {
-        manageError(err)
+        callbackError()
+        // manageError(err)
     });
 }
 

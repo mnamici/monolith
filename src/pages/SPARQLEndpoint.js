@@ -49,6 +49,7 @@ export default class SPARQLEndpoint extends React.Component {
     loadedCatalog = (data) => {
         if (data === undefined)
             data = []
+
         this._isMounted && this.setState({
             catalog: data,
             loadingCatalog: false
@@ -84,10 +85,12 @@ export default class SPARQLEndpoint extends React.Component {
     }
 
     render() {
-        return (
-            this.state.loadingCatalog || this.state.loadedMappings ?
-                <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
-
+        if (this.state.loadingCatalog || this.state.loadedMappings) {
+            // console.log("LOADING")
+            return <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div>
+        }
+        else
+            return (
                 <Layout style={{ minHeight: 'calc(100vh - 25px)', marginLeft: '-1vw' }}>
                     <Sider
                         className='queryCatalog'
@@ -126,7 +129,7 @@ export default class SPARQLEndpoint extends React.Component {
                         </Content>
                     </Layout>
                 </Layout>
-        );
+            );
     }
 }
 

@@ -281,9 +281,22 @@ export default class MastroSPARQLTabPane extends React.Component {
                     modalConfirmLoading: false,
                     tabKey: this.state.queryID
                 })
-            })
+            },
+            //FIXME IF CANNOT PUT TRY TO CREATE NEW QUERY 
+                () => postInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
+                    this.props.renameTab(this.state.tabKey, this.state.queryID)
+                    this.setState({
+                        modalVisible: false,
+                        modalConfirmLoading: false,
+                        tabKey: this.state.queryID,
+                        new: false,
+                        dirty: false
+                    })
+
+                }))
         }
     }
+
 
     changeQueryID = (e) => {
         const v = e.target.value
