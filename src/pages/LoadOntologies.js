@@ -67,7 +67,7 @@ export default class LoadOntologies extends React.Component {
     render() {
         return (
             this.state.loading ? <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
-                <div style={{ height: 'calc(99vh - 25px)', overflow: 'auto' }}>
+                <div>
                     {
                         this.state.current === 0 ?
                             <OntologiesList

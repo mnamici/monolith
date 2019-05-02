@@ -8,8 +8,9 @@ export default class AssertionsList extends React.Component {
         return (
             <div>
                 <List
+                style={{padding: '0px 8px'}}
                     rowKey="ontologiesView"
-                    grid={{ gutter: 24, column: 1 }}
+                    grid={{ column: 1 }}
                     dataSource={this.props.list}
                     renderItem={(item, index) =>
                         <List.Item key={index}>

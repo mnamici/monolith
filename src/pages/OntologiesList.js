@@ -65,6 +65,7 @@ export default class OntologiesList extends React.Component {
                     </Select>
                 </div>
                 <List
+                    style={{ height: 'calc(100vh - 79px)', overflow: 'auto' }}
                     className='bigCards'
                     rowKey="ontologiesView"
                     grid={{ gutter: 12, lg: 3, md: 2, sm: 1, xs: 1 }}

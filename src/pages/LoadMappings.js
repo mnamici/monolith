@@ -42,11 +42,13 @@ export default class LoadMappings extends React.Component {
         return (
             this.state.loading ? <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
 
-                <div style={{ padding: 2 }}>
+                <div>
                     <div style={{ textAlign: 'center', padding: 16 }}>
                         <h1>Mappings</h1>
                     </div>
                     <List
+                        style={{ height: 'calc(100vh - 99px)', overflow: 'auto' }}
+                        className='bigCards'
                         rowKey="mappingsView"
                         grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
                         dataSource={['', ...this.state.data]}

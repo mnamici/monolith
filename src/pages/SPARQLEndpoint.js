@@ -91,7 +91,7 @@ export default class SPARQLEndpoint extends React.Component {
         }
         else
             return (
-                <Layout style={{ minHeight: 'calc(100vh - 25px)', marginLeft: '-1vw' }}>
+                <Layout style={{ minHeight: 'calc(100vh - 25px)'}}>
                     <Sider
                         className='queryCatalog'
                         collapsed={this.state.collapsed}

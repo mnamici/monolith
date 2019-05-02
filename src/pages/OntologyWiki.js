@@ -89,7 +89,7 @@ export default class OntologyWiki extends React.Component {
                 </Sider> */}
                 <Layout >
                     <Content >
-                        <div style={{ height: 'calc(98vh - 25px)', overflowY: 'auto', paddingRight: 12 }}>
+                        <div style={{ height: 'calc(100vh - 25px)', overflowY: 'auto', padding: 8 }}>
                             <Button type='primary' style={{ float: 'right', margin: 8 }} icon='menu-fold' onClick={this.toggle} />
                             <Route exact path="/open/ontology/wiki/:predicateType?/:entityID?" render={(props) => (
                                 this.state.current !== props.match.params.entityID && this.state.current !== undefined ?

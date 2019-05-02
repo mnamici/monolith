@@ -46,7 +46,7 @@ export default class Home extends React.Component {
   render() {
 
     return (
-      <div style={{ height: 'calc(99vh - 25px)', overflow: 'auto', marginRight: '-1vw' }}>
+      <div style={{ height: 'calc(100vh - 25px)', overflow: 'auto', padding: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'center' }}><img src={logo} alt="logo" style={isChrome ? { height: 100 } : { maxHeight: 100 }} /></div>
         {<LastLoadedList
           ontology title="Recent Ontologies"

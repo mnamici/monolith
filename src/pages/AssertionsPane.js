@@ -47,7 +47,7 @@ export default class AssertionsPane extends React.Component {
                 </Sider> */}
                 <Layout>
                     <Content >
-                        <div style={{ height: 'calc(94vh - 72px)', overflowY: 'auto', paddingRight: 12 }}>
+                        <div>
                             <Button type='primary' style={{ float: 'right', margin: 8 }} icon='menu-fold' onClick={this.toggle} />
                             {this.state.current !== null &&
                                 <AssertionsPage

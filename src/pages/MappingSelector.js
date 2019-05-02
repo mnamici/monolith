@@ -1,6 +1,5 @@
 import React from 'react';
 import { Select, Popover, Button, Icon, } from 'antd';
-import {  } from '../api/MastroApi';
 
 const Option = Select.Option;
 
@@ -20,14 +19,14 @@ export default class MappingSelector extends React.Component {
                 </div>
             } placement='right'>
                 <div className='mapping' style={style}>
-                    {running && <Icon type='thunderbolt' style={{paddingRight: 4}}/>}
+                    {running && <Icon type='thunderbolt' style={{ paddingRight: 4 }} />}
                     {item.mappingID}
                 </div>
             </Popover>
         </Option>
     }
 
-    
+
 
     select = (value) => {
         const enableStart = !this.props.runningMappingIDs.includes(this.props.selected);
@@ -40,7 +39,8 @@ export default class MappingSelector extends React.Component {
         const disableStart = this.props.runningMappingIDs.includes(this.props.selected);
         return (
             <div>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignContent: 'center' }}>
+
                     <h3>Choose mapping:</h3>
                     <Select
                         style={{ paddingLeft: 8 }}
@@ -51,6 +51,7 @@ export default class MappingSelector extends React.Component {
                         disabled={this.props.loadingMastro}>
                         {mappings}
                     </Select>
+
                     <Button.Group style={{ margin: '0px 10px' }}>
                         <Button
                             type="primary"

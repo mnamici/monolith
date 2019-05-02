@@ -23,7 +23,7 @@ export default class CurrentOntology extends React.Component {
     }
     render() {
         return (
-            <Layout style={{ margin: '-1vh -1vw', height: 'calc(100vh - 25px)' }}>
+            <Layout style={{ height: 'calc(100vh - 25px)' }}>
                 <Sider
                     // width={200} 
                     className='ontologyMenu'
@@ -40,7 +40,7 @@ export default class CurrentOntology extends React.Component {
                     </div>
 
                 </Sider>
-                <Layout style={{ paddingLeft: '1vw', }}>
+                <Layout>
                     <Content >
                         <div>
                             <Route path="/open/ontology/info" render={(props) =>

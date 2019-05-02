@@ -269,6 +269,17 @@ export const classData = {
                     content: 'livesIna'
                 }],
                 entityType: 'livesIn',
+            },
+            filler: {
+                entityIRI: 'http://www.example.com/livesIn',
+                entityID: 'livesIn',
+                entityPrefixIRI: ':livesIn',
+                entityRemainder: 'livesIn',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'livesIna'
+                }],
+                entityType: 'livesIn',
             }
         },
         {
@@ -282,6 +293,17 @@ export const classData = {
                     content: 'wasBornIna'
                 }],
                 entityType: 'wasBornIn',
+            },
+            filler: {
+                entityIRI: 'http://www.example.com/livesIn',
+                entityID: 'livesIn',
+                entityPrefixIRI: ':livesIn',
+                entityRemainder: 'livesIn',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'livesIna'
+                }],
+                entityType: 'livesIn',
             }
         }
     ],
@@ -298,6 +320,17 @@ export const classData = {
                     content: 'yearOfBirtha'
                 }],
                 entityType: 'yearOfBirth',
+            },
+            filler: {
+                entityIRI: 'http://www.example.com/livesIn',
+                entityID: 'livesIn',
+                entityPrefixIRI: ':livesIn',
+                entityRemainder: 'livesIn',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'livesIna'
+                }],
+                entityType: 'livesIn',
             }
         },
         {
@@ -311,6 +344,17 @@ export const classData = {
                     content: 'FemaleNamea'
                 }],
                 entityType: 'FemaleName',
+            },
+            filler: {
+                entityIRI: 'http://www.example.com/livesIn',
+                entityID: 'livesIn',
+                entityPrefixIRI: ':livesIn',
+                entityRemainder: 'livesIn',
+                entityLabels: [{
+                    lang: 'it',
+                    content: 'livesIna'
+                }],
+                entityType: 'livesIn',
             }
         }
     ],
@@ -413,6 +457,17 @@ export const mappings = {
             "numInclusionDependencies": 3212124,
             "numDenials": 312124,
         },
+        {
+            "mappingID": "MAPPING_20000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "mappingDescription": "Added some dependencies",
+            "mappingDate": "25/12/0122",
+            "numAssertions": 20,
+            "numViews": 23,
+            "numKeyDependencies": 12122134,
+            "numInclusionDependencies": 3212124,
+            "numDenials": 312124,
+        },
+
 
     ]
 }

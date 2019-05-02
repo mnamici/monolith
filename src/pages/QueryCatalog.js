@@ -70,7 +70,7 @@ export default class QueryCatalog extends React.Component {
         return (
             <div>
                 {!this.props.collapsed && <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: 8, }}>
-                    <h3 style={{ marginBottom: 0 }}>Query Catalog</h3>
+                    <h3 style={{ margin: '0px 0px 0px 16px' }}>Query Catalog</h3>
                     <div>
                         <Button style={{ margin: '0px 4px' }} ghost size='small' shape='circle' icon='download' onClick={this.downloadCatalog} />
                         <Upload beforeUpload={this.beforeUpload.bind(this)} fileList={[]}>

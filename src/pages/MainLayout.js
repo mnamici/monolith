@@ -124,7 +124,7 @@ export default class MainLayout extends React.Component {
         </Sider>
         <Layout>
           {/* <Header style={{ background: '#fff', padding: 0 }} /> */}
-          <Content style={{ margin: '1vh 1vw 1vh 1vw' }}>
+          <Content>
             {/* <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>User</Breadcrumb.Item>
               <Breadcrumb.Item>Bill</Breadcrumb.Item>

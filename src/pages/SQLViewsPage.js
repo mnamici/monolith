@@ -70,18 +70,20 @@ export default class SQLViewsPage extends React.Component {
 
         return (
             <div style={{ paddingTop: 12 }}>
-                <div style={{ textAlign: 'center', padding: '16px 0px 16px 0px' }}>
+                <div style={{ textAlign: 'center' }}>
                     <h1>{data.sqlView.sqlViewID}</h1>
                 </div>
-                <List
-                    grid={{ gutter: 12, column: 1 }}
-                    dataSource={elements}
-                    renderItem={item => (
-                        <List.Item>
-                            {item}
-                        </List.Item>
-                    )}
-                />
+                <div style={{ height: 'calc(100vh - 143px)', overflowY: 'auto', padding: '0px 8px'}}>
+                    <List
+                        grid={{ column: 1 }}
+                        dataSource={elements}
+                        renderItem={item => (
+                            <List.Item>
+                                {item}
+                            </List.Item>
+                        )}
+                    />
+                </div>
             </div>
         );
     }

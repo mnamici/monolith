@@ -82,27 +82,29 @@ export default class MappingInfo extends React.Component {
             </Card>,
         ]
         return (
-            <div style={{ paddingRight: '1vw' }}>
+            <div>
                 <div style={{ textAlign: 'center', padding: 16 }}>
                     <h1 >{this.props.mappingID}</h1>
                 </div>
-                <Card title="Description" className='description'>
-                    {/* <ListItem data={data.mapping?[data.mapping.mappingDescription]:[]} /> */}
-                    <p style={{ color: 'rgba(255, 255, 255, 0.85)' }}>{data.mapping && data.mapping.mappingDescription}</p>
-                </Card>,
-                <List
-                    grid={{ gutter: 12, column: 2 }}
-                    dataSource={elements}
-                    renderItem={item => (
-                        <List.Item>
-                            {item}
-                        </List.Item>
-                    )}
-                />
-                <div style={{ display: 'flex', paddingTop: 12 }}>
-                    <DownloadFile ontology={this.props.ontology} mapping={this.props.mappingID} />
+                <div style={{ height: 'calc(100vh - 163px)', overflow: 'auto' }}>
+                    <Card title="Description" className='description' style={{ margin: '0px 6px 12px 6px' }}>
+                        {/* <ListItem data={data.mapping?[data.mapping.mappingDescription]:[]} /> */}
+                        <p style={{ color: 'rgba(255, 255, 255, 0.85)' }}>{data.mapping && data.mapping.mappingDescription}</p>
+                    </Card>
+                    <List
+                        className='bigCards'
+                        grid={{ gutter: 12, column: 2 }}
+                        dataSource={elements}
+                        renderItem={item => (
+                            <List.Item>
+                                {item}
+                            </List.Item>
+                        )}
+                    />
+                    <div style={{ display: 'flex', padding: '12px 0px' }}>
+                        <DownloadFile ontology={this.props.ontology} mapping={this.props.mappingID} />
+                    </div>
                 </div>
-
             </div>
         );
     }

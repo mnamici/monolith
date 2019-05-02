@@ -341,7 +341,7 @@ export default class MastroSPARQLTabPane extends React.Component {
                 value={this.state.queryDescription}
                 onChange={this.changeDescription}
             />,
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                 <div>
                     <Button.Group>
                         <Button
@@ -392,7 +392,7 @@ export default class MastroSPARQLTabPane extends React.Component {
         }
 
         return (
-            <div style={{ padding: '0px 12px 8px 8px', height: 'calc(100vh - 81px)', overflow: 'auto' }}>
+            <div style={{ padding: '0px 8px 8px 8px', height: 'calc(100vh - 81px)', overflow: 'auto' }}>
                 <List
                     grid={{ gutter: 8, column: 1 }}
                     dataSource={elements}
