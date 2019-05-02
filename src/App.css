@@ -235,7 +235,7 @@ td {
   color: var(--white)
 }
 
-.queryCatalog, .ant-card-head, .ant-card, .ant-table-placeholder {
+.queryCatalog, .ant-card-head, .ant-card, .ant-table-placeholder, .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab {
   background-color: var(--medium-dark)
 }
 
@@ -289,7 +289,7 @@ td {
   border-right-color: var(--highlight)
 }
 
-.ant-btn-group .ant-btn-primary + .ant-btn:not(.ant-btn-primary):not([disabled]){
+.ant-btn-group .ant-btn-primary+.ant-btn:not(.ant-btn-primary):not([disabled]) {
   border-left-color: var(--highlight)
 }
 
@@ -375,7 +375,7 @@ a:hover {
 
 /* TITLES AND BUTTONS BACKGROUND */
 
-.ant-card-actions, .ant-btn, .ant-input, .search, .ant-table-thead>tr>th, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-item, .ant-select-selection, .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab, .ant-collapse-header, .ant-checkbox-inner {
+.ant-card-actions, .ant-btn, .ant-input, .search, .ant-table-thead>tr>th, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-item, .ant-select-selection, .ant-collapse-header, .ant-checkbox-inner {
   background-color: var(--medium)
 }
 

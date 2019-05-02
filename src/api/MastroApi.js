@@ -8,7 +8,7 @@ import { graphol } from './ACIOpenData'
 // var mastroUrl = 'http://' + ips[0] + ':8080/mws/rest/mwsx'
 // mastroUrl = '/mws/rest/mwsx'
 
-const fakeCalls = true
+const fakeCalls = false
 
 function manageError(err) {
     if (err.response === undefined)

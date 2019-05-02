@@ -14,8 +14,8 @@ export default class SPARQLEndpoint extends React.Component {
         catalog: undefined,
         mappings: undefined,
         open: null,
-        loadingCatalog: false,
-        loadingMappings: false
+        loadingCatalog: true,
+        loadingMappings: true
 
     }
 

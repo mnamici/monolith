@@ -113,7 +113,7 @@ export default class Results extends React.Component {
                     loading={this.state.loading}
                     onChange={this.handleTableChange}
                 />
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 8, marginTop: -71 }}>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 8, marginTop: -48 }}>
                     <Button type='primary' icon='download' onClick={this.downloadResults}>
                         Download Query Results
                     </Button>

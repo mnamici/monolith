@@ -75,6 +75,7 @@ export default class AddCloseTabs extends React.Component {
   }
 
   componentWillUnmount() {
+    console.log('UNMOUNT')
     localStorage.setItem('queryCatalog', JSON.stringify(this.state.panes.map(p => p.title.key)))
   }
 
