@@ -13,7 +13,7 @@ export default class LoadOntologies extends React.Component {
             current: 0,
             ontologyID: null,
             data: [],
-            loading: false
+            loading: true
         };
 
         this.prev = this.prev.bind(this)

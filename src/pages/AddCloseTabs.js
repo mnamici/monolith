@@ -75,7 +75,6 @@ export default class AddCloseTabs extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('UNMOUNT')
     localStorage.setItem('queryCatalog', JSON.stringify(this.state.panes.map(p => p.title.key)))
   }
 
@@ -136,6 +135,25 @@ export default class AddCloseTabs extends React.Component {
           key: activeKey
         });
       }
+    }
+    if (panes.length === 0) {
+      activeKey = newQueryID + this.newTabIndex
+      const title = newQueryID + this.newTabIndex
+      panes.push({
+        title: <span key={title}><Icon type='file' />{title + "*"}</span>,
+        content: <MastroSPARQLTabPane
+          ontology={props.ontology}
+          mappings={props.mappings}
+          catalog={props.catalog}
+          num={activeKey}
+          query={{ queryID: title }}
+          new
+          renameTab={this.renameTab}
+          setDirty={this.setDirty}
+          tabKey={activeKey}
+        />,
+        key: activeKey
+      });
     }
     this.setState({ panes, activeKey });
     localStorage.removeItem('queryCatalog')

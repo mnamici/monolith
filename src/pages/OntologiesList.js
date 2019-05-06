@@ -2,6 +2,8 @@ import React from 'react';
 import { List, Card, Select, Button } from 'antd';
 import AddOntology from './AddOntology';
 import { deleteOntology } from '../api/MastroApi';
+import moment from 'moment'
+import { dateFormat } from '../utils/utils';
 
 const Option = Select.Option
 
@@ -12,13 +14,25 @@ export default class OntologiesList extends React.Component {
 
     componentDidMount() {
         this.setState({
-            data: this.props.data
+            data: this.props.data.sort(function (a, b) {
+                var x = a.ontologyDate;
+                var y = b.ontologyDate;
+                if (x < y) { return -1; }
+                if (x > y) { return 1; }
+                return 0;
+            })
         })
     }
 
     componentWillReceiveProps(props) {
         this.setState({
-            data: props.data
+            data: props.data.sort(function (a, b) {
+                var x = a.ontologyDate;
+                var y = b.ontologyDate;
+                if (x < y) { return -1; }
+                if (x > y) { return 1; }
+                return 0;
+            })
         })
     }
 
@@ -33,7 +47,7 @@ export default class OntologiesList extends React.Component {
     changeSort = (value) => {
         if (value === 'name')
             this.setState({
-                data: [...this.props.data].sort(function (a, b) {
+                data: this.props.data.sort(function (a, b) {
                     var x = a.ontologyID.toLowerCase();
                     var y = b.ontologyID.toLowerCase();
                     if (x < y) { return -1; }
@@ -43,7 +57,13 @@ export default class OntologiesList extends React.Component {
             })
         else if (value === 'date')
             this.setState({
-                data: this.props.data
+                data: this.props.data.sort(function (a, b) {
+                    var x = a.ontologyDate;
+                    var y = b.ontologyDate;
+                    if (x < y) { return -1; }
+                    if (x > y) { return 1; }
+                    return 0;
+                })
             })
     }
 
@@ -90,6 +110,7 @@ export default class OntologiesList extends React.Component {
                                             }
                                         }
                                     />
+                                    <div className='ant-card-meta-description'>{moment(item.ontologyDate).format(dateFormat)}</div>
                                 </Card>
                             </List.Item>
                         ) : (

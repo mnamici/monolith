@@ -13,7 +13,7 @@ export default class SQLViewsPage extends React.Component {
 
     state = {
         data: null,
-        loading: false
+        loading: true
     }
 
     componentDidMount() {

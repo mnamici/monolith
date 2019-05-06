@@ -817,3 +817,22 @@ export function getDatasourceDrivers(callback) {
         manageError(err)
     });
 }
+
+export function getKnowledgeGraphs(callback) {
+    return callback(fakeData.kgs)
+}
+
+export function uploadKnowledgeGraph(name, version, file, callback) {
+    return callback(true);
+}
+
+export function downloadKnowledgeGraph(name, version, mapping, callback) {
+    console.log(name, version, mapping, callback); return
+}
+
+export function deleteKnowledgeGraph(name, version, mapping, callback) {
+}
+
+export function getKnowledgeGraphInfo(kgIri, callback) {
+    return callback(fakeData.kgs[0])
+}

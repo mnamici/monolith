@@ -9,6 +9,8 @@ import LoadOntologies from './LoadOntologies'
 import CurrentOntology from './CurrentOntology';
 import Settings from './Settings';
 import UnderConstruction from './UnderConstruction';
+import LoadKnowledgeGraphs from './LoadKnowledgeGraphs';
+import CurrentKnowledgeGraph from './CurrentKnowledgeGraph';
 const { Content, Footer, Sider } = Layout;
 
 export default class MainLayout extends React.Component {
@@ -36,7 +38,7 @@ export default class MainLayout extends React.Component {
     }));
   }
 
-  openCurrent(ontologyID, versionID) {
+  openCurrentOntology(ontologyID, versionID) {
     const current = {
       name: ontologyID,
       version: versionID
@@ -62,7 +64,32 @@ export default class MainLayout extends React.Component {
     }))
   }
 
-  close(toClose) {
+  openCurrentKg(kgIri) {
+    const current = {
+      kgIri
+    }
+    const openKgs = Array.from(this.state.open.ontologies)
+    let found = false
+    for (let item of openKgs)
+      if (item.kgIri === current.kgIri) {
+        found = true;
+        break;
+      }
+
+    !found && openKgs.push(current)
+
+    this.setState((state) => ({
+      collapsed: state.collapsed,
+      current: current,
+      open: {
+        ontologies: state.open.ontologies,
+        kgs: openKgs,
+        dss: state.open.dss
+      }
+    }))
+  }
+
+  closeOntology(toClose) {
     let current = this.state.current
     const openOntologies = Array.from(this.state.open.ontologies)
     let filtered
@@ -82,8 +109,24 @@ export default class MainLayout extends React.Component {
         dss: state.open.dss
       }
     }))
+  }
 
-
+  closeKnowledgeGraph(toClose) {
+    let current = this.state.current
+    const openKgs = Array.from(this.state.open.kgs)
+    let filtered = openKgs.filter(item => (item.kgIri !== toClose.kgIri))
+    if (this.state.current !== undefined && toClose.kgIri === this.state.current.kgIri) {
+      current = filtered[0]
+    }
+    this.setState((state) => ({
+      collapsed: state.collapsed,
+      current: current,
+      open: {
+        ontologies: state.open.ontologies,
+        kgs: filtered,
+        dss: state.open.dss
+      }
+    }))
   }
 
   setCurrent(current) {
@@ -116,8 +159,9 @@ export default class MainLayout extends React.Component {
               open={this.state.open}
               current={this.state.current}
               setcurrent={this.setCurrent.bind(this)}
-              close={this.close.bind(this)}
-              logout={this.props.logout}
+              closeOntology={this.closeOntology.bind(this)}
+              closeKnowledgeGraph={this.closeKnowledgeGraph.bind(this)}
+            logout={this.props.logout}
             />
 
           </div>
@@ -130,22 +174,29 @@ export default class MainLayout extends React.Component {
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
             </Breadcrumb> */}
             {/* <div style={{ padding: '0px' }}> */}
-              <Route exact path="/" render={(props) =>
-                <Home {...props} openOntology={this.openCurrent.bind(this)} />} />
+            <Route exact path="/" render={(props) =>
+              <Home {...props} openOntology={this.openCurrentOntology.bind(this)} />} />
 
-              <Route path="/ontology" render={(props) =>
-                <LoadOntologies {...props} open={this.openCurrent.bind(this)} close={this.close.bind(this)} />} />
-              <Route path="/open/ontology/:menu" render={(props) => (
-                this.state.current === undefined ?
-                  <Redirect to="/" /> :
-                  <CurrentOntology {...props} ontology={this.state.current} />
-              )
-              } />
+            <Route path="/ontology" render={(props) =>
+              <LoadOntologies {...props} open={this.openCurrentOntology.bind(this)} close={this.closeOntology.bind(this)} />} />
+            <Route path="/open/ontology/:menu" render={(props) => (
+              this.state.current === undefined ?
+                <Redirect to="/" /> :
+                <CurrentOntology {...props} ontology={this.state.current} />
+            )
+            } />
 
-              <Route path="/kg" component={() => <UnderConstruction />} />
-              <Route path="/dataset" component={() => <UnderConstruction />} />
-              <Route path="/admin" component={() => <UnderConstruction />} />
-              <Route path="/settings" component={() => <Settings />} />
+            <Route path="/kg" render={(props) =>
+              <LoadKnowledgeGraphs {...props} open={this.openCurrentKg.bind(this)} close={this.closeOntology.bind(this)} />} />
+            <Route path="/open/kg/:menu" render={(props) => (
+              this.state.current === undefined ?
+                <Redirect to="/" /> :
+                <CurrentKnowledgeGraph {...props} kg={this.state.current} />
+            )
+            } />
+            <Route path="/dataset" component={() => <UnderConstruction />} />
+            <Route path="/admin" component={() => <UnderConstruction />} />
+            <Route path="/settings" component={() => <Settings />} />
             {/* </div> */}
           </Content>
           <Footer style={{ padding: '2px', textAlign: 'center' }}>

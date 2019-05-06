@@ -21,7 +21,6 @@ export default class CurrentMapping extends React.Component {
                         style={{ background: 'transparent', borderBottom: 'solid 1px white' }}
                         defaultSelectedKeys={currTab}
                         mode="horizontal"
-                        theme='dark'
                     >
                         <Menu.Item key="info">
                             <NavLink to={"/open/ontology/mapping/info/"+this.props.match.params.mappingID} >

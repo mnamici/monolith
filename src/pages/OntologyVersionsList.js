@@ -3,7 +3,9 @@ import { NavLink } from 'react-router-dom'
 import { List, Card, Popover, Select, Button } from 'antd';
 import UploadFile from './UploadFile';
 import { downloadOntologyFile, deleteOntologyVersion } from '../api/MastroApi';
-import { saveFileInfo } from '../utils/utils';
+import { saveFileInfo, dateFormat } from '../utils/utils';
+import moment from 'moment'
+
 
 const Option = Select.Option
 export default class OntologyVersionsList extends React.Component {
@@ -24,13 +26,25 @@ export default class OntologyVersionsList extends React.Component {
 
     componentDidMount() {
         this.setState({
-            data: this.getData(this.props.data)
+            data: this.getData(this.props.data).sort(function (a, b) {
+                var x = a.versionDate;
+                var y = b.versionDate;
+                if (x < y) { return -1; }
+                if (x > y) { return 1; }
+                return 0;
+            })
         })
     }
 
     componentWillReceiveProps(props) {
         this.setState({
-            data: this.getData(props.data)
+            data: this.getData(props.data).sort(function (a, b) {
+                var x = a.versionDate;
+                var y = b.versionDate;
+                if (x < y) { return -1; }
+                if (x > y) { return 1; }
+                return 0;
+            })
         })
     }
 
@@ -56,7 +70,13 @@ export default class OntologyVersionsList extends React.Component {
             })
         else if (value === 'date')
             this.setState({
-                data: this.getData(this.props.data)
+                data: this.getData(this.props.data).sort(function (a, b) {
+                    var x = a.versionDate;
+                    var y = b.versionDate;
+                    if (x < y) { return -1; }
+                    if (x > y) { return 1; }
+                    return 0;
+                })
             })
     }
 
@@ -125,7 +145,9 @@ export default class OntologyVersionsList extends React.Component {
                                                 </div>
                                             }
                                             description={item.versionDescription[0] !== undefined ? item.versionDescription[0].content : ""}
-                                        /></NavLink>
+                                        />
+                                    </NavLink>
+                                    <div className='ant-card-meta-description'>{moment(item.versionDate).format(dateFormat)}</div>
                                 </Card>
                             </List.Item>
                         ) : (

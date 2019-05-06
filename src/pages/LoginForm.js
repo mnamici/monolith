@@ -53,7 +53,7 @@ class NormalLoginForm extends React.Component {
           })(
             <Checkbox>Remember me</Checkbox>
           )} */}
-          <a className="login-form-forgot" href="mailto:santarelli@diag.uniroma1.it?subject=Forgot%20Password%20Monolith" style={{ color: 'white' }}>Forgot password</a>
+          {/* <a className="login-form-forgot" href="mailto:santarelli@diag.uniroma1.it?subject=Forgot%20Password%20Monolith" style={{ color: 'white' }}>Forgot password</a> */}
         </FormItem>
         <FormItem style={{ textAlign: 'center' }}>
           <Button type="primary" htmlType="submit" loading={this.state.loading}>

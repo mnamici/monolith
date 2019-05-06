@@ -10,7 +10,7 @@ export default class ObjectPropertyPage extends React.Component {
     _isMounted = false;
     state = {
         data: {},
-        loading: false
+        loading: true
     }
 
     componentDidMount() {

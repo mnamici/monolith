@@ -890,3 +890,39 @@ export const datasources = [
         "jdbcPassword": "the-password"
     }
 ]
+
+export const kgs = [
+    {
+        kgIri: 'http://mykg.com',
+        kgTitle: [
+            { lang: '', content: 'My First Knowledge Graph' }
+        ],
+        kgCreator: { username: 'santaroni' },
+        kgPublisher: {
+            agentIri: 'http://aci.com',
+            agentLabels: [
+                { lang: '', content: 'AUTOMOBIL CLUB ITALIA' }
+            ],
+            agentWebsite: 'lod.aci.it',
+            agentEmail: 'd.caltabiano@aci.it',
+            agentAddress: 'Vicino casa di Valerio'
+        },
+        kgContributors: [{ username: 'mastro' }],
+        kgRightsHolder: {
+            agentIri: 'http://aci.com',
+            agentLabels: [
+                { lang: '', content: 'AUTOMOBIL CLUB ITALIA' }
+            ],
+            agentWebsite: 'lod.aci.it',
+            agentEmail: 'd.caltabiano@aci.it',
+            agentAddress: 'Vicino casa di Valerio'
+        },
+        kgCreationTs: 0,
+        kgLastModifiedTs: 1556872819361,
+        kgDescriptions: [
+            { lang: '', content: 'Automobili che non possiedo' }
+        ],
+        kgTriples: 50000000000
+    }
+]
+

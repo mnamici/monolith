@@ -14,7 +14,7 @@ export default class MappingSelector extends React.Component {
         return <Option value={item.mappingID} key={item.mappingID}>
             <Popover content={
                 <div>
-                    <p>{item.mappingID}</p>
+                    <p>{item.mappingID + ' ' + item.mappingVersion}</p>
                     <small>{item.mappingDescription}</small>
                 </div>
             } placement='right'>

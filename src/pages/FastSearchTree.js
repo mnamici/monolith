@@ -36,7 +36,7 @@ const onAction = ({ action, node }) => {
 
 export default class SearchTree extends React.Component {
   _isMounted = false;
-  state = { data: [], loading: false }
+  state = { data: [], loading: true }
 
   componentDidMount() {
     this._isMounted = true;

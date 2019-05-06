@@ -235,6 +235,11 @@ td {
   color: var(--white)
 }
 
+.drawerMenu {
+  background-color: var(--light);
+  color: var(--white)
+}
+
 .queryCatalog, .ant-card-head, .ant-card, .ant-table-placeholder, .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab {
   background-color: var(--medium-dark)
 }
@@ -357,10 +362,18 @@ a:hover {
   background-color: var(--highlight)
 }
 
+.ant-menu-horizontal>.ant-menu-item:hover, .ant-menu-horizontal>.ant-menu-submenu:hover, .ant-menu-horizontal>.ant-menu-item-active, .ant-menu-horizontal>.ant-menu-submenu-active, .ant-menu-horizontal>.ant-menu-item-open, .ant-menu-horizontal>.ant-menu-submenu-open, .ant-menu-horizontal>.ant-menu-item-selected, .ant-menu-horizontal>.ant-menu-submenu-selected {
+  border-bottom: 2px solid var(--highlight)
+}
+
 /* COMPONENTS BACKGROUND */
 
 .ant-collapse-content, .ant-drawer-header, .ant-drawer-wrapper-body, .ant-modal-content, .ant-modal-header {
   background-color: var(--light) !important;
+}
+
+.ant-drawer-header {
+  border-color: var(--highlight)
 }
 
 .ant-layout-footer {
@@ -452,9 +465,18 @@ a:hover {
   border-top: 1px solid var(--dark);
 }
 
+.results {
+  border: solid 1px transparent;
+  border-radius: 3px
+}
+
+.results:hover {
+  border: solid 1px var(--highlight)
+}
+
 /* TEXT COLOR */
 
-h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-pagination-item-ellipsis, .ant-progress-text, .ant-empty-description, .ant-select-selection, .ant-select-arrow, .ant-select-dropdown-menu-item, .ant-card-actions>li, .ant-drawer-title, .ant-form-item-label>label, .ant-table-thead>tr>th, .ant-modal-body, .ant-modal-close, .ant-input, .ant-tabs-tab-prev-icon, .ant-tabs-tab-next-icon {
+h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-pagination-item-ellipsis, .ant-progress-text, .ant-empty-description, .ant-select-selection, .ant-select-arrow, .ant-select-dropdown-menu-item, .ant-card-actions>li, .ant-drawer-title, .ant-form-item-label>label, .ant-table-thead>tr>th, .ant-modal-body, .ant-modal-close, .ant-input, .ant-tabs-tab-prev-icon, .ant-tabs-tab-next-icon, .ant-drawer-close {
   color: var(--white) !important;
 }
 
@@ -557,6 +579,15 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-w
 
 .ant-pagination-item, .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link {
   border: 1px solid transparent;
+}
+
+.ant-pagination-item-active, .ant-pagination-item-active:focus, .ant-pagination-item:hover, .ant-pagination-prev .ant-pagination-item-link:hover, .ant-pagination-next .ant-pagination-item-link:hover {
+  border-color: var(--highlight)
+}
+
+.ant-pagination-disabled .ant-pagination-item-link{
+  background-color: var(--disabled) !important;
+  border-color: transparent !important
 }
 
 /***************************

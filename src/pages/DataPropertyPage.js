@@ -9,7 +9,7 @@ export default class DataPropertyPage extends React.Component {
     _isMounted = false;
     state = {
         data: {},
-        loading: false
+        loading: true
     }
 
     componentDidMount() {

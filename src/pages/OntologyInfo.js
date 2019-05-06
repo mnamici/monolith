@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, Card, Spin } from 'antd';
-import OntologyMetricsTabs from './OntologyMetricsTabs'
+import MetricsTabs from './MetricsTabs'
 import DownloadFile from './DownloadFile'
 import { getOntologyVersionInfo } from '../api/MastroApi';
 import ListItem from './ListItem';
@@ -9,7 +9,7 @@ export default class OntologyInfo extends React.Component {
     _isMounted = false;
     constructor(props) {
         super(props)
-        this.state = { data: {}, loading: false }
+        this.state = { data: {}, loading: true }
     }
 
     componentDidMount() {
@@ -41,7 +41,7 @@ export default class OntologyInfo extends React.Component {
     }
 
     render() {
-        let metriscAxioms = {}
+        let metricsAxioms = {}
 
         if (this.state.data.ontologyMetrics !== undefined) {
             let axioms = []
@@ -51,7 +51,7 @@ export default class OntologyInfo extends React.Component {
             axioms.push(...this.state.data.ontologyMetrics.individualAxioms)
             axioms.push(...this.state.data.ontologyMetrics.annotationAxioms)
 
-            metriscAxioms = {
+            metricsAxioms = {
                 metrics: this.state.data.ontologyMetrics.metrics,
                 axioms: axioms
             }
@@ -63,15 +63,15 @@ export default class OntologyInfo extends React.Component {
         });
 
         const elements = [
-            <OntologyMetricsTabs titles={[
+            <MetricsTabs titles={[
                 { key: "pm", tab: "Prefixes" }, { key: "imports", tab: "Imports" },
             ]}
                 data={{ imports: this.state.data.ontologyImports, pm: prefixes}} />,
-            <OntologyMetricsTabs titles={[
+            <MetricsTabs titles={[
                 { key: "metrics", tab: "Metrics" },
                 { key: "axioms", tab: "Axioms" },
             ]}
-                data={metriscAxioms} />,
+                data={metricsAxioms} />,
 
         ]
 
@@ -85,7 +85,6 @@ export default class OntologyInfo extends React.Component {
                     <h3>{`Ontology IRI: ${this.state.data.ontologyIRI}`}</h3>
                     <h3>{`Ontology Version IRI: ${this.props.ontology.version}`}</h3>
                     <div style={{ paddingBottom: 12 }}>
-                        {/* <OntologyMetricsTabs titles={[{ key: "desc", tab: "Descriptions" }]} data={this.state.data.ontologyDescriptions} /> */}
                         <Card title='Description' className='description'>
                             <ListItem label data={this.state.data.ontologyDescriptions} />
                         </Card>

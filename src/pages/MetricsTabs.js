@@ -3,7 +3,7 @@ import { Card } from 'antd';
 import ListMapItem from './ListMapItem';
 import ListItem from './ListItem';
 
-export default class OntologyMetricsTabs extends React.Component {
+export default class MetricsTabs extends React.Component {
     state = {
         tabKey: this.props.titles[0].key,
     }

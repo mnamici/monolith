@@ -2,11 +2,11 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { List, Card, Divider as h1, Popover, Spin } from 'antd';
 import UploadFile from './UploadFile';
-import { getMappings, downloadMappingFile, deleteMappingFile } from '../api/MastroApi';
+import { getKnowledgeGraphs, downloadKnowledgeGraph, deleteKnowledgeGraph } from '../api/MastroApi';
 import { saveFileInfo, dateFormat } from '../utils/utils';
 import moment from 'moment'
 
-export default class LoadMappings extends React.Component {
+export default class LoadKnowledgeGraphs extends React.Component {
     _isMounted = false;
     state = {
         data: [],
@@ -15,18 +15,16 @@ export default class LoadMappings extends React.Component {
 
     componentDidMount() {
         this._isMounted = true;
-        this.requestMappings()
+        this.requestKnowledgeGraphs()
     }
 
     componentWillUnmount() {
         this._isMounted = false
     }
 
-    requestMappings() {
+    requestKnowledgeGraphs() {
         this._isMounted && this.setState({ loading: true })
-        getMappings(
-            this.props.ontology.name,
-            this.props.ontology.version,
+        getKnowledgeGraphs(
             this.loaded)
     }
 
@@ -34,7 +32,7 @@ export default class LoadMappings extends React.Component {
         if (data === undefined)
             data = []
         this._isMounted && this.setState({
-            data: data.mappingList,
+            data: data,
             loading: false
         });
     }
@@ -44,8 +42,8 @@ export default class LoadMappings extends React.Component {
             this.state.loading ? <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
 
                 <div>
-                    <div style={{ textAlign: 'center', padding: 16 }}>
-                        <h1>Mappings</h1>
+                    <div style={{ textAlign: 'center', padding: 6 }}>
+                        <h1>Knowledge Graphs</h1>
                     </div>
                     <List
                         style={{ height: 'calc(100vh - 99px)', overflow: 'auto' }}
@@ -57,12 +55,10 @@ export default class LoadMappings extends React.Component {
                             item ? (
                                 <List.Item key={item.mappingID}>
                                     <Card hoverable actions={[
-                                        <NavLink to={"/open/ontology/mapping/info/" + item.mappingID}>
+                                        <NavLink to={"/open/kg/info/" + item.mappingID}>
                                             <Popover content={
                                                 <div>
-                                                    <p>{item.numAssertions + " assertions"}</p>
-                                                    <p>{item.numViews + " views"}</p>
-                                                    <p>{item.numKeyDependencies + item.numInclusionDependencies + item.numDenials + " dependencies"}</p>
+                                                    <p>{item.kgTriples + " triples"}</p>
                                                 </div>
                                             } placement="bottom">
                                                 <span>
@@ -71,7 +67,7 @@ export default class LoadMappings extends React.Component {
                                             </Popover>
                                         </NavLink>,
                                         <span onClick={
-                                            () => downloadMappingFile(
+                                            () => downloadKnowledgeGraph(
                                                 this.props.ontology.name,
                                                 this.props.ontology.version,
                                                 item.mappingID,
@@ -80,28 +76,27 @@ export default class LoadMappings extends React.Component {
                                             download
                                     </span>,
                                         <span onClick={
-                                            () => deleteMappingFile(
+                                            () => deleteKnowledgeGraph(
                                                 this.props.ontology.name,
                                                 this.props.ontology.version,
                                                 item.mappingID,
-                                                this.requestMappings.bind(this))
+                                                this.requestKnowledgeGraphs.bind(this))
                                         }>
                                             delete
                                     </span>
                                     ]}>
-                                        <NavLink to={"/open/ontology/mapping/info/" + item.mappingID}>
-                                            <Card.Meta key={item.mappingID}
-                                                avatar={<img alt="" src={item.avatar} />}
-                                                title={item.mappingID + ' ' + item.mappingVersion}
+                                        <NavLink to={"/open/kg/info"} onClick={() => this.props.open(item.kgIri)}>
+                                            <Card.Meta key={item.kgIri}
+                                                title={item.kgTitle[0].content + ' ' + item.kgIri}
                                                 description={item.mappingDescription}
                                             />
-                                            <div className='ant-card-meta-description'>{moment(item.mappingDate).format(dateFormat)}</div>
+                                            <div className='ant-card-meta-description'>{moment(item.kgLastModifiedTs).format(dateFormat)}</div>
                                         </NavLink>
                                     </Card>
                                 </List.Item>
                             ) : (
                                     <List.Item>
-                                        <UploadFile type='mapping' current={this.props.ontology} rerender={this.requestMappings.bind(this)} />
+                                        <UploadFile type='mapping' current={this.props.ontology} rerender={this.requestKnowledgeGraphs.bind(this)} />
                                         {/* <Button type="dashed" onClick={() => console.log("Add version of ontology")}>
                                         <Icon type="plus" />
                                         Add Ontology Version

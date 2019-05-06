@@ -9,7 +9,7 @@ export default class AssertionsPage extends React.Component {
     _isMounted = false;
     state = {
         data: null,
-        loading: false
+        loading: true
     }
 
     componentDidMount() {

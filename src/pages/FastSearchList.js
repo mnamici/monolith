@@ -23,11 +23,11 @@ const onAction = ({ action, node }) => {
 
 export default class SearchTree extends React.Component {
   _isMounted = false;
-  state = { data: [], loading: false }
+  state = { data: [], loading: true }
 
   componentDidMount() {
     this._isMounted = true;
-    this.setState({loading: true})
+    this.setState({ loading: true })
     getMappingViews(
       this.props.ontology.name,
       this.props.ontology.version,
@@ -38,7 +38,7 @@ export default class SearchTree extends React.Component {
 
   componentWillReceiveProps(props) {
     // console.log(this.props)
-    this.setState({loading: true})
+    this.setState({ loading: true })
     getMappingViews(
       props.ontology.name,
       props.ontology.version,
@@ -67,7 +67,7 @@ export default class SearchTree extends React.Component {
 
   render() {
     const data = this.state.loading ?
-      [{ label: 'Loading...'}] :
+      [{ label: 'Loading...' }] :
       this.state.data
     return <DropdownTreeSelect
       data={data}
@@ -76,7 +76,7 @@ export default class SearchTree extends React.Component {
       // onNodeToggle={onNodeToggle}
       className="ant-input"
       placeholderText="Choose or select SQL view"
-      showDropdown      
+      showDropdown
     />
   }
 }

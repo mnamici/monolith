@@ -5,28 +5,54 @@ import { Menu, Icon, Drawer } from 'antd';
 
 const MenuItem = Menu.Item;
 
+const types = ['ontologies', 'kg', 'dataset']
 
 export default class MainMenu extends React.Component {
+    type = ['Ontologies', 'Knowledge Graphs', 'Datasets']
+
     state = {
-        visible: false
+        visible: false,
+        type: 0
     }
 
-    getClosableMenuItem(item, path) {
+    getClosableMenuItem(item, t) {
+        const type = types[t]
+        const path = `/open/${type}/info`
+        let key = null
+        let title = null
+        let close = null
+        let isCurrent = null
+
+        if (t === 0){
+            key = item.name + "-" + item.version
+            title = item.name + " " + item.version.split("/").pop()
+            close = this.props.closeOntology
+            isCurrent = this.props.current.name === item.name && this.props.current.version === item.version 
+        }
+        else if (t === 1){
+            key = item.kgIri
+            title = item.kgIri
+            close = this.props.closeKnowledgeGraph
+            isCurrent = this.props.current.kgIri === item.kgIri
+        }
+          
         return (
-            <MenuItem key={item.name + "-" + item.version}>
+            <MenuItem key={key} className={isCurrent ? 'ant-menu-item-selected' : ''}>
                 {/* <Popover content={<small>{item.version}</small>} placement='right'> */}
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', direction: 'rtl', textAlign: 'left' }}>
+                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', direction: 'rtl', textAlign: 'left', width: '100%' }}>
                         <NavLink
                             to={path}
-                            onClick={() => this.props.setcurrent(item)}
-                            activeStyle={{ fontWeight: "bold", color: "white" }}
-                            style={{ color: 'rgba(255, 255, 255, 0.75)' }}
+                            onClick={() => {
+                                this.props.setcurrent(item)
+                                this.setState({ visible: false })
+                            }}
+                            style={{ color: 'rgba(255, 255, 255, 0.75)', display: 'block', width: '100%' }}
                         >
-                            {item.name + " " + item.version.split("/").pop()}
+                            {title}
                         </NavLink>
                     </div>
-                    <span style={{ float: "right" }} onClick={() => this.props.close(item)}>
+                    <span style={{ float: "right" }} onClick={() => close(item)}>
                         <Icon type="close" style={{ color: 'rgba(255, 255, 255, 0.75)' }} />
                     </span>
                 </div>
@@ -35,15 +61,28 @@ export default class MainMenu extends React.Component {
         );
     }
 
-    toggleDrawer = () => {
-        this.setState({ visible: !this.state.visible })
+    toggleDrawer = (type) => {
+        this.setState({ visible: !this.state.visible, type })
+    }
+
+    openDrawerOntologies = () => {
+        this.toggleDrawer(0)
+    }
+
+    openDrawerKgs = () => {
+        this.toggleDrawer(1)
+    }
+
+    openDrawerDss = () => {
+        this.toggleDrawer(2)
     }
 
     render() {
 
-        const ontos = this.props.open.ontologies.map(item => this.getClosableMenuItem(item, "/open/ontology/info"));
-        const kgs = this.props.open.kgs.map(item => this.getClosableMenuItem(item, "/kg"));
-        const dss = this.props.open.dss.map(item => this.getClosableMenuItem(item, "/dataset"));
+        const ontos = this.props.open.ontologies.map(item => this.getClosableMenuItem(item, 0))
+        const kgs = this.props.open.kgs.map(item => this.getClosableMenuItem(item, 1))
+        const dss = this.props.open.dss.map(item => this.getClosableMenuItem(item, 2))
+        const openProjects = [ontos, kgs, dss]
 
         const openSubMenus = !this.props.collapsed ? ["ontology", ",kg", "dataset"] : []
         const selected = this.props.current === undefined ? [] : [this.props.current.name + "-" + this.props.current.version]
@@ -61,19 +100,16 @@ export default class MainMenu extends React.Component {
         return (
             <div>
                 <Drawer
-                    title='Open Projects'
+                    title={'Open ' + this.type[this.state.type]}
                     visible={this.state.visible}
                     onClose={this.toggleDrawer}
                     width='50vw'
                 >
                     <Menu
-                        theme="dark"
-                        className='mainMenu'
+                        className='drawerMenu'
                         mode="inline"
                     >
-                        {ontos}
-                        {kgs}
-                        {dss}
+                        {openProjects[this.state.type]}
                     </Menu>
                 </Drawer>
                 <Menu
@@ -96,7 +132,7 @@ export default class MainMenu extends React.Component {
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                             <NavLink
                                 to="/ontology"
-                                activeStyle={{ fontWeight: "bold"}}
+                                activeStyle={{ fontWeight: "bold" }}
                                 style={{ color: 'rgba(255, 255, 255, 0.75)' }}
                             >
                                 <span>
@@ -105,7 +141,7 @@ export default class MainMenu extends React.Component {
                                 </span>
                             </NavLink>
 
-                            {!this.props.collapsed && <span style={styleSpan} className='mainMenuArrow' onClick={this.toggleDrawer}>
+                            {!this.props.collapsed && <span style={styleSpan} className='mainMenuArrow' onClick={this.openDrawerOntologies}>
                                 <Icon style={styleIcon} type='right' />
                             </span>}
                         </div>
@@ -118,12 +154,12 @@ export default class MainMenu extends React.Component {
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                             <NavLink
                                 to="/kg"
-                                activeStyle={{ fontWeight: "bold"}}
+                                activeStyle={{ fontWeight: "bold" }}
                                 style={{ color: 'rgba(255, 255, 255, 0.75)' }}
                             >
                                 <span><Icon type="deployment-unit" /><span>Knowledge Graph</span></span>
                             </NavLink>
-                            {!this.props.collapsed && <span style={styleSpan} className='mainMenuArrow' onClick={this.toggleDrawer} >
+                            {!this.props.collapsed && <span style={styleSpan} className='mainMenuArrow' onClick={this.openDrawerKgs}>
                                 <Icon style={styleIcon} type='right' />
                             </span>}
                         </div>
@@ -135,12 +171,12 @@ export default class MainMenu extends React.Component {
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                             <NavLink
                                 to="/dataset"
-                                activeStyle={{ fontWeight: "bold"}}
+                                activeStyle={{ fontWeight: "bold" }}
                                 style={{ color: 'rgba(255, 255, 255, 0.75)' }}
                             >
                                 <span><Icon type="table" /><span>Dataset</span></span>
                             </NavLink>
-                            {!this.props.collapsed && <span style={{ borderLeft: 'solid 1px white' }} className='mainMenuArrow' onClick={this.toggleDrawer} >
+                            {!this.props.collapsed && <span style={{ borderLeft: 'solid 1px white' }} className='mainMenuArrow' onClick={this.openDrawerDss}>
                                 <Icon style={styleIcon} type='right' />
                             </span>}
                         </div>

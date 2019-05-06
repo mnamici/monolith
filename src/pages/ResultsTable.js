@@ -105,6 +105,7 @@ export default class Results extends React.Component {
         return (
             <div>
                 <Table
+                    className='results'
                     style={{ minHeight: 200 }}
                     columns={columns}
                     rowKey={record => record.url}

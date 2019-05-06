@@ -15,12 +15,7 @@ export function renderEntity(entity) {
     var rendering = entity[render]
     //if labels
     if (rendering instanceof Array) {
-        for (let label of rendering)
-            if (label.lang === lang) {
-                rendering = label.content
-                break;
-            }
-        
+        rendering = renderLabel(rendering)
     }
 
     // default rendering when not found
@@ -29,6 +24,13 @@ export function renderEntity(entity) {
     }
 
     return rendering;
+}
+
+export function renderLabel(rendering) {
+    for (let label of rendering)
+            if (label.lang === lang) {
+                return label.content
+            }
 }
 
 export function saveFileInfo(body, fileName) {
@@ -57,3 +59,5 @@ export function getBase64(file, callback) {
 }
 
 export const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+
+export const dateFormat = 'LLL'

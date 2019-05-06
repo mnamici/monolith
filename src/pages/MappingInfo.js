@@ -14,7 +14,7 @@ export default class MappingInfo extends React.Component {
             mappingDBConnections: [{}]
         },
         showPassword: false,
-        loading: false
+        loading: true
 
     }
 

@@ -341,7 +341,7 @@ export default class MastroSPARQLTabPane extends React.Component {
                 value={this.state.queryDescription}
                 onChange={this.changeDescription}
             />,
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: 16 }}>
                 <div>
                     <Button.Group>
                         <Button
