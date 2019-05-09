@@ -9,7 +9,7 @@ import { saveFileInfo } from '../utils/utils'
 
 const POLLING_TIME = 1000;
 
-export default class Results extends React.Component {
+export default class MastroResultsTable extends React.Component {
     state = {
         headTerms: [],
         data: [],

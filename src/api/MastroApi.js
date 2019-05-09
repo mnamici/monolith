@@ -8,7 +8,7 @@ import { graphol } from './ACIOpenData'
 // var mastroUrl = 'http://' + ips[0] + ':8080/mws/rest/mwsx'
 // mastroUrl = '/mws/rest/mwsx'
 
-const fakeCalls = false
+const fakeCalls = true
 
 function manageError(err) {
     if (err.response === undefined)
@@ -95,7 +95,7 @@ export function getOntologies(callback) {
     });
 }
 
-export function putOntology(ontology, callback) {
+export function postOntology(ontology, callback) {
     if (fakeCalls) return callback();
     const url = localStorage.getItem('mastroUrl') + '/owlOntology'
     const method = 'POST'
@@ -819,7 +819,18 @@ export function getDatasourceDrivers(callback) {
 }
 
 export function getKnowledgeGraphs(callback) {
-    return callback(fakeData.kgs)
+    if (fakeCalls) return callback(fakeData.kgs)
+    const url = localStorage.getItem('mastroUrl') + '/knowledgeGraphs'
+    const method = 'GET'
+    axios({
+        url: url,
+        method: method,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
 }
 
 export function uploadKnowledgeGraph(name, version, file, callback) {
@@ -835,4 +846,148 @@ export function deleteKnowledgeGraph(name, version, mapping, callback) {
 
 export function getKnowledgeGraphInfo(kgIri, callback) {
     return callback(fakeData.kgs[0])
+}
+
+export function getQueryCatalogKg(name, version, callback) {
+    if (fakeCalls) return callback(fakeData.queryCatalog)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/querycatalog'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data.queryCatalog || [])
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function downloadQueryCatalogKg(name, version, callback) {
+    if (fakeCalls) return callback(fakeData.queryCatalog)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/querycatalog/export'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function uploadQueryCatalogKg(name, version, file, callback) {
+    if (fakeCalls) return callback(fakeData.queryCatalog)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/querycatalog/import'
+    const method = 'POST'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion, additive: true },
+        data: file,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function postInQueryCatalogKg(name, version, query, callback) {
+    if (fakeCalls) return callback(fakeData.queryCatalog)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/query'
+    const method = 'POST'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        data: query,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback()
+        if (response.data === 1)
+            throw ErrorEvent()
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function putInQueryCatalogKg(name, version, query, callback, callbackError) {
+    if (fakeCalls) return callback(fakeData.queryCatalog)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/query/' + query.queryID
+    const method = 'PUT'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        data: query,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback()
+        if (response.data === 1)
+            throw ErrorEvent()
+    }).catch(function (err) {
+        callbackError()
+        // manageError(err)
+    });
+}
+
+export function deleteFromQueryCatalogKg(name, version, queryID, callback) {
+    if (fakeCalls) return callback(fakeData.queryCatalog)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/query/' + queryID
+    const method = 'DELETE'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback()
+        if (response.data === 1)
+            throw ErrorEvent()
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function postKnowledgeGraph(kg, callback) {
+    if (fakeCalls) return callback();
+    const url = localStorage.getItem('mastroUrl') + '/knowledgeGraphs'
+    const method = 'POST'
+    axios({
+        url: url,
+        method: method,
+        data: kg,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function getInstancePage(callback) {
+    return callback({
+        title: fakeData.getInstanceLabelType,
+        subjects: fakeData.getInstanceSubjectTripsGroup,
+        objects: fakeData.getInstanceObjectTripsGroup,
+    })
+}
+
+export function getSubjectType(callback) {
+    return callback(fakeData.getSubjectPredicatePageType)
+}
+
+export function getObjectType(callback) {
+    return callback(fakeData.getObjectPredicatePageTypeVariato)
 }

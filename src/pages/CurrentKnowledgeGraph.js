@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom'
 import { Layout, Icon } from 'antd';
-import UnderConstruction from './UnderConstruction';
 import KnowledgeGraphMenu from './KnowledgeGraphMenu';
 import KnowledgeGraphInfo from './KnowledgeGraphInfo';
+import KnowledgeGraphSPARQLEndpoint from './KnowledgeGraphSPARQLEndpoint';
+import InstanceNavigation from './InstanceNavigationGroup';
 
 const { Content, Sider } = Layout;
 export default class CurrentKnowledgeGraph extends React.Component {
@@ -39,11 +40,11 @@ export default class CurrentKnowledgeGraph extends React.Component {
                     <Content >
                         <div>
                             <Route path="/open/kg/info" render={(props) =>
-                                <KnowledgeGraphInfo {...props} kg={this.props.kg}/>} />
+                                <KnowledgeGraphInfo {...props} kg={this.props.kg} />} />
                             <Route path="/open/kg/explore" render={(props) =>
-                                <UnderConstruction />} />
+                                <InstanceNavigation />} />
                             <Route path="/open/kg/endpoint" render={(props) =>
-                                <UnderConstruction />} />
+                                <KnowledgeGraphSPARQLEndpoint {...props} kg={this.props.kg} />} />
                         </div>
                     </Content>
                 </Layout>

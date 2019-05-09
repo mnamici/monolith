@@ -5,7 +5,7 @@ import { saveFileInfo, getBase64 } from '../utils/utils';
 
 const MenuItem = Menu.Item;
 
-export default class QueryCatalog extends React.Component {
+export default class MastroQueryCatalog extends React.Component {
 
     downloadCatalog = () => {
         downloadQueryCatalog(

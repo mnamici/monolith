@@ -6,7 +6,7 @@ import MappingRewritings from './MappingRewritings';
 import ViewRewritings from './ViewRewritings';
 import DownloadFile from './DownloadFile';
 
-export default class QueryExecutionReport extends React.Component {
+export default class MastroQueryExecutionReport extends React.Component {
     state = {
         tabKey: 'qi',
     }

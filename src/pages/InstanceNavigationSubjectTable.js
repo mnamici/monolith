@@ -1,0 +1,149 @@
+import React from 'react'
+import { Link } from 'react-router-dom'
+import InstanceNavigationSubjectType from './InstanceNavigationSubjectType';
+// const arrow = '<br><font color="black">&#8618; </font>';
+
+function renderDataValue(data) {
+    if (data.indexOf("^^") >= 0) {
+        var ar = data.split("^^");
+        return '' +
+            ar[0] +
+            '<sup>' +
+            '<a href="' + ar[1] + '">' +
+            ar[1].replace("http://www.w3.org/2001/XMLSchema#", "<small>xsd:</small>") +
+            '</a>' +
+            '</sup>';
+    }
+    else
+        return data;
+}
+
+export default class InstanceNavigationSubjectTable extends React.Component {
+    state = {
+        expanded: {
+
+        }
+    }
+
+    componentDidMount() {
+        const obj = this.props.subjects
+        let expanded = {}
+        for (let i = 0; i < obj.subject_object_properties.length; i++) {
+            let predicateLink = obj.subject_object_properties[i].predicate;   
+            expanded[predicateLink] = new Set()
+        }
+
+        this.setState({ expanded })
+    }
+
+    expandTypeSubject(predicate, type) {
+        let expanded = { ...this.state.expanded }
+        if(expanded[predicate].has(type)){
+            expanded[predicate].delete(type)
+        }
+        else
+            expanded[predicate].add(type)
+
+        this.setState({ expanded })
+    }
+
+    render() {
+        const obj = this.props.subjects
+
+        let tableInnerD = []
+        for (let i = 0; i < obj.subject_data_properties.length; i++) {
+            let values = []
+            let predicate = obj.subject_data_properties[i].predicate_short;
+            let predicateLink = obj.subject_data_properties[i].predicate;
+
+            for (let j = 0; j < obj.subject_data_properties[i].objects.length; j++) {
+                values.push(
+                    <li key={j}>
+                        {renderDataValue(obj.subject_data_properties[i].objects[j].object_literal)}
+                    </li>
+                )
+            }
+
+            tableInnerD.push(
+                <tr key={i}>
+                    <td>
+                        <Link to={'?iri=' + encodeURIComponent(predicateLink)}>
+                            {this.props.renderShortIRI(predicate)}
+                        </Link>
+                    </td>
+                    <td>
+                        <ul>
+                            {values}
+                        </ul>
+                    </td>
+                </tr>
+            )
+        }
+
+        let tableInnerS = []
+
+        for (let i = 0; i < obj.subject_object_properties.length; i++) {
+            let values = []
+            let predicate = obj.subject_object_properties[i].predicate_short;
+            let predicateLink = obj.subject_object_properties[i].predicate;
+            for (let j = 0; j < obj.subject_object_properties[i].objects_types.length; j++) {
+                let type = obj.subject_object_properties[i].objects_types[j].object_type;
+                let nRes = obj.subject_object_properties[i].objects_types[j].instance_count;
+                let pages = obj.subject_object_properties[i].objects_types[j].page_count;
+                let suff = nRes === 1 ? '' : 's';
+                values.push(
+                    <li key={j}>
+                        <button
+                            className='link'
+                            onClick={() => this.expandTypeSubject(predicateLink, type, pages)}
+                        >
+                            {this.props.renderShortIRI(obj.subject_object_properties[i].objects_types[j].object_type_short)}
+                        </button>
+                        {'(' + nRes + ' resource' + suff + ')'}
+                        {this.state.expanded[predicateLink] && this.state.expanded[predicateLink].has(type) &&
+                            <InstanceNavigationSubjectType
+                                predicate={predicateLink}
+                                type={type}
+                                pages={pages}
+                                renderShortIRI={this.props.renderShortIRI} />}
+                    </li>
+                )
+            }
+
+            tableInnerS.push(
+                <tr key={i}>
+                    <td>
+                        <Link to={'?iri=' + encodeURIComponent(predicateLink)}>
+                            {this.props.renderShortIRI(predicate)}
+                        </Link>
+                    </td>
+                    <td>
+                        <ul>
+                            {values}
+                        </ul>
+                    </td>
+                </tr>
+            )
+
+        }
+
+        return (
+            <div>
+                <div style={{ overflow: 'auto' }}>
+                    <table style={{ width: '100%', tableLayout: 'fixed1' }}>
+                        <thead className='ant-table-thead'>
+                            <tr>
+                                <th>Direct Relations</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody className='ant-table-tbody'>
+                            {tableInnerD}
+                            {tableInnerS}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        )
+    }
+}

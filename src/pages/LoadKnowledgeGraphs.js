@@ -1,10 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { List, Card, Divider as h1, Popover, Spin } from 'antd';
-import UploadFile from './UploadFile';
 import { getKnowledgeGraphs, downloadKnowledgeGraph, deleteKnowledgeGraph } from '../api/MastroApi';
 import { saveFileInfo, dateFormat } from '../utils/utils';
 import moment from 'moment'
+import AddKnowledgeGraph from './AddKnowledgeGraph';
 
 export default class LoadKnowledgeGraphs extends React.Component {
     _isMounted = false;
@@ -96,11 +96,7 @@ export default class LoadKnowledgeGraphs extends React.Component {
                                 </List.Item>
                             ) : (
                                     <List.Item>
-                                        <UploadFile type='mapping' current={this.props.ontology} rerender={this.requestKnowledgeGraphs.bind(this)} />
-                                        {/* <Button type="dashed" onClick={() => console.log("Add version of ontology")}>
-                                        <Icon type="plus" />
-                                        Add Ontology Version
-                                    </Button> */}
+                                        <AddKnowledgeGraph rerender={this.requestKnowledgeGraphs.bind(this)} />
                                     </List.Item>
                                 )
                         }

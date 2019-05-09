@@ -907,7 +907,7 @@ export const kgs = [
             agentEmail: 'd.caltabiano@aci.it',
             agentAddress: 'Vicino casa di Valerio'
         },
-        kgContributors: [{ username: 'mastro' }],
+        kgContributors: [{ username: 'mastro' }, { username: 'deRuzzacomo' }],
         kgRightsHolder: {
             agentIri: 'http://aci.com',
             agentLabels: [
@@ -926,3 +926,309 @@ export const kgs = [
     }
 ]
 
+export const getInstanceLabelType = {
+    "iri_short": "aod:DataSet_statistico/2018DS2",
+    "label": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro",
+    "type": "http://lod.aci.it/opendataontology/DataSet_statistico",
+    "type_short": "aod:DataSet_statistico"
+}
+
+export const getInstanceSubjectTripsGroup = {
+    "subject_data_properties": [
+        {
+            "predicate": "http://lod.aci.it/opendataontology/anno_statistica",
+            "objects": [
+                {
+                    "object_literal": "2018"
+                }
+            ],
+            "predicate_short": "aod:anno_statistica",
+            "instance_count": 1,
+            "page_count": 1
+        },
+        {
+            "predicate": "http://dublincore.org/2012/06/14/dcterms#available",
+            "objects": [
+                {
+                    "object_literal": "2019-04-01"
+                }
+            ],
+            "predicate_short": "http://dublincore.org/2012/06/14/dcterms#available",
+            "instance_count": 1,
+            "page_count": 1
+        },
+        {
+            "predicate": "http://dublincore.org/2012/06/14/dcterms#description",
+            "objects": [
+                {
+                    "object_literal": "Radiazioni di autovetture per demolizione aggregate per ente territoriale di residenza dell'utilizzatore e per Euro nel 2018"
+                }
+            ],
+            "predicate_short": "http://dublincore.org/2012/06/14/dcterms#description",
+            "instance_count": 1,
+            "page_count": 1
+        },
+        {
+            "predicate": "http://dublincore.org/2012/06/14/dcterms#title",
+            "objects": [
+                {
+                    "object_literal": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro"
+                }
+            ],
+            "predicate_short": "http://dublincore.org/2012/06/14/dcterms#title",
+            "instance_count": 1,
+            "page_count": 1
+        },
+        {
+            "predicate": "http://dublincore.org/2012/06/14/dcterms#identifier",
+            "objects": [
+                {
+                    "object_literal": "http://lod.aci.it/opendataontology/DataSet_statistico/2018DS2"
+                }
+            ],
+            "predicate_short": "http://dublincore.org/2012/06/14/dcterms#identifier",
+            "instance_count": 1,
+            "page_count": 1
+        }
+    ],
+    "subject_object_properties": [
+        {
+            "predicate": "http://lod.aci.it/opendataontology/contiene_osservazione",
+            "predicate_short": "aod:contiene_osservazione",
+            "objects_types": [
+                {
+                    "object_type": "http://lod.aci.it/opendataontology/Demolizioni_annuali_di_autovetture_per_ente_territoriale_per_euro",
+                    "object_type_short": "aod:Demolizioni_annuali_di_autovetture_per_ente_territoriale_per_euro",
+                    "instance_count": 45770,
+                    "page_count": 4577
+                }
+            ],
+            "instance_count": 45770,
+            "page_count": 4577
+        },
+        {
+            "predicate": "http://dublincore.org/2012/06/14/dcterms#rightsHolder",
+            "predicate_short": "http://dublincore.org/2012/06/14/dcterms#rightsHolder",
+            "objects_types": [
+                {
+                    "object_type": "http://lod.aci.it/ontology/Persona_giuridica",
+                    "object_type_short": "aci:Persona_giuridica",
+                    "instance_count": 1,
+                    "page_count": 1
+                }
+            ],
+            "instance_count": 1
+        },
+        {
+            "predicate": "http://dublincore.org/2012/06/14/dcterms#creator",
+            "predicate_short": "http://dublincore.org/2012/06/14/dcterms#creator",
+            "objects_types": [
+                {
+                    "object_type": "http://lod.aci.it/ontology/Persona_giuridica",
+                    "object_type_short": "aci:Persona_giuridica",
+                    "instance_count": 1,
+                    "page_count": 1
+                }
+            ],
+            "instance_count": 1
+        },
+        {
+            "predicate": "http://dublincore.org/2012/06/14/dcterms#contributor",
+            "predicate_short": "http://dublincore.org/2012/06/14/dcterms#contributor",
+            "objects_types": [
+                {
+                    "object_type": "http://lod.aci.it/ontology/Persona_giuridica",
+                    "object_type_short": "aci:Persona_giuridica",
+                    "instance_count": 1,
+                    "page_count": 1
+                }
+            ],
+            "instance_count": 1
+        },
+        {
+            "predicate": "http://dublincore.org/2012/06/14/dcterms#publisher",
+            "predicate_short": "http://dublincore.org/2012/06/14/dcterms#publisher",
+            "objects_types": [
+                {
+                    "object_type": "http://lod.aci.it/ontology/Persona_giuridica",
+                    "object_type_short": "aci:Persona_giuridica",
+                    "instance_count": 1,
+                    "page_count": 1
+                }
+            ],
+            "instance_count": 1
+        }
+    ]
+}
+
+export const getInstanceObjectTripsGroup = {
+    "object_triples": [
+        {
+            "predicate": "http://lod.aci.it/opendataontology/compare_in_dataset",
+            "subjects_types": [
+                {
+                    "subject_type": "http://lod.aci.it/ontology/Comune",
+                    "subject_type_short": "aci:Comune",
+                    "instance_count": 7928,
+                    "page_count": 793
+                },
+                {
+                    "subject_type": "http://lod.aci.it/ontology/Provincia",
+                    "subject_type_short": "aci:Provincia",
+                    "instance_count": 94,
+                    "page_count": 10
+                },
+                {
+                    "subject_type": "http://lod.aci.it/ontology/Regione",
+                    "subject_type_short": "aci:Regione",
+                    "instance_count": 21,
+                    "page_count": 3
+                },
+                {
+                    "subject_type": "http://lod.aci.it/ontology/Classe_Euro",
+                    "subject_type_short": "aci:Classe_Euro",
+                    "instance_count": 8,
+                    "page_count": 1
+                },
+                {
+                    "subject_type": "http://lod.aci.it/ontology/Nazione",
+                    "subject_type_short": "aci:Nazione",
+                    "instance_count": 1,
+                    "page_count": 1
+                },
+                {
+                    "subject_type": "http://lod.aci.it/ontology/CittaMetropolitana",
+                    "subject_type_short": "aci:CittaMetropolitana",
+                    "instance_count": 14,
+                    "page_count": 2
+                }
+            ],
+            "predicate_short": "aod:compare_in_dataset",
+            "instance_count": 8066,
+            "page_count": 807
+        }
+    ]
+}
+
+export const getObjectPredicatePageTypeVariato = {
+    "object_triples": [
+        {
+            "predicate": "http://lod.aci.it/opendataontology/compare_in_dataset",
+            "subjects": [
+                {
+                    "subject_resource": "http://lod.aci.it/ontology/Comune/023007",
+                    "subject_label": "Belfiore",
+                    "subject_resource_short": "aci:Comune/023007"
+                },
+                {
+                    "subject_resource": "http://lod.aci.it/ontology/Comune/061010",
+                    "subject_label": "Calvi Risorta",
+                    "subject_resource_short": "aci:Comune/061010"
+                },
+                {
+                    "subject_resource": "http://lod.aci.it/ontology/Comune/070068",
+                    "subject_label": "San Giuliano di Puglia",
+                    "subject_resource_short": "aci:Comune/070068"
+                },
+                {
+                    "subject_resource": "http://lod.aci.it/ontology/Comune/004144",
+                    "subject_label": "Morozzo",
+                    "subject_resource_short": "aci:Comune/004144"
+                },
+                {
+                    "subject_resource": "http://lod.aci.it/ontology/Comune/098010",
+                    "subject_label": "Casalpusterlengo",
+                    "subject_resource_short": "aci:Comune/098010"
+                },
+                {
+                    "subject_resource": "http://lod.aci.it/ontology/Comune/004187",
+                    "subject_label": "Roccabruna",
+                    "subject_resource_short": "aci:Comune/004187"
+                },
+                {
+                    "subject_resource": "http://lod.aci.it/ontology/Comune/096073",
+                    "subject_label": "Valle Mosso",
+                    "subject_resource_short": "aci:Comune/096073"
+                },
+                {
+                    "subject_resource": "http://lod.aci.it/ontology/Comune/078009",
+                    "subject_label": "Altomonte",
+                    "subject_resource_short": "aci:Comune/078009"
+                },
+                {
+                    "subject_resource": "http://lod.aci.it/ontology/Comune/083079",
+                    "subject_label": "San Marco d'Alunzio",
+                    "subject_resource_short": "aci:Comune/083079"
+                },
+                {
+                    "subject_resource": "http://lod.aci.it/ontology/Comune/063037",
+                    "subject_label": "Ischia",
+                    "subject_resource_short": "aci:Comune/063037"
+                }
+            ],
+            "predicate_short": "aod:compare_in_dataset"
+        }
+    ]
+}
+
+export const getSubjectPredicatePageType = {
+    "subject_data_properties": [],
+    "subject_object_properties": [
+        {
+            "predicate": "http://lod.aci.it/opendataontology/contiene_osservazione",
+            "objects": [
+                {
+                    "object_resource_short": "aod:Osservazione_statistica/2018DS2OS44163",
+                    "object_resource": "http://lod.aci.it/opendataontology/Osservazione_statistica/2018DS2OS44163",
+                    "object_label": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro: Canino, Euro 1"
+                },
+                {
+                    "object_resource_short": "aod:Osservazione_statistica/2018DS2OS24064",
+                    "object_resource": "http://lod.aci.it/opendataontology/Osservazione_statistica/2018DS2OS24064",
+                    "object_label": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro: Sorrento, Euro 6"
+                },
+                {
+                    "object_resource_short": "aod:Osservazione_statistica/2018DS2OS28475",
+                    "object_resource": "http://lod.aci.it/opendataontology/Osservazione_statistica/2018DS2OS28475",
+                    "object_label": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro: Montecatini-Terme, Euro 3"
+                },
+                {
+                    "object_resource_short": "aod:Osservazione_statistica/2018DS2OS38240",
+                    "object_resource": "http://lod.aci.it/opendataontology/Osservazione_statistica/2018DS2OS38240",
+                    "object_label": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro: Lusiglie', Euro 3"
+                },
+                {
+                    "object_resource_short": "aod:Osservazione_statistica/2018DS2OS5641",
+                    "object_resource": "http://lod.aci.it/opendataontology/Osservazione_statistica/2018DS2OS5641",
+                    "object_label": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro: Pralungo, Euro non disponibile"
+                },
+                {
+                    "object_resource_short": "aod:Osservazione_statistica/2018DS2OS40840",
+                    "object_resource": "http://lod.aci.it/opendataontology/Osservazione_statistica/2018DS2OS40840",
+                    "object_label": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro: Talmassons, Euro 2"
+                },
+                {
+                    "object_resource_short": "aod:Osservazione_statistica/2018DS2OS14103",
+                    "object_resource": "http://lod.aci.it/opendataontology/Osservazione_statistica/2018DS2OS14103",
+                    "object_label": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro: Verbicaro, Euro non disponibile"
+                },
+                {
+                    "object_resource_short": "aod:Osservazione_statistica/2018DS2OS9246",
+                    "object_resource": "http://lod.aci.it/opendataontology/Osservazione_statistica/2018DS2OS9246",
+                    "object_label": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro: Cercepiccola, Euro 3"
+                },
+                {
+                    "object_resource_short": "aod:Osservazione_statistica/2018DS2OS11827",
+                    "object_resource": "http://lod.aci.it/opendataontology/Osservazione_statistica/2018DS2OS11827",
+                    "object_label": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro: Santo Stefano Roero, Euro non disponibile"
+                },
+                {
+                    "object_resource_short": "aod:Osservazione_statistica/2018DS2OS15",
+                    "object_resource": "http://lod.aci.it/opendataontology/Osservazione_statistica/2018DS2OS15",
+                    "object_label": "Radiazioni per demolizione nel 2018 - autovetture per ente territoriale e classe euro: Aragona, Euro 0"
+                }
+            ],
+            "predicate_short": "aod:contiene_osservazione"
+        }
+    ]
+}

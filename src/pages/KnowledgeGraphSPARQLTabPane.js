@@ -1,65 +1,46 @@
 import React from 'react';
-import { Switch, Button, Progress, List, Popover, Modal, message } from 'antd';
+import { Button, Progress, List, Modal } from 'antd';
 import YASQE from 'yasgui-yasqe'
 import '../css/yasqe.min.css'
 import { Input } from 'antd';
 // import Results from './ResultsInfiniteList';
 // import Results from './ResultsGriddle';
-import Results from './MastroResultsTable'
-import QueryExecutionReport from './MastroQueryExecutionReport';
-import MappingSelector from './MappingSelector'
+import Results from './KnowledgeGraphResultsTable'
 import {
-    startMastro as startMastroAPI,
-    stopMastro as stopMastroAPI,
-    getMastroStatus,
     startQuery,
     getQueryStatus,
     startNewQuery,
     postInQueryCatalog,
     putInQueryCatalog,
-    getPrefixes
 } from '../api/MastroApi';
 
 const { TextArea } = Input;
 
 const POLLING_TIME = 1000
 
-export default class MastroSPARQLTabPane extends React.Component {
+export default class KnowledgeGraphSPARQLTabPane extends React.Component {
     state = {
         modalVisible: false,
         modalConfirmLoading: false,
-        reasoning: true,
         new: true,
         dirty: true,
         validID: true,
         // QUERY STATUS
         loading: false,
-        selectedMappingID: null,
         status: {},
         interval: 0,
-        //      MASTRO STATUS
-        enabledStartMastro: true,
-        loadingMastro: false,
-        intervalMastro: 0,
-        runningMappingIDs: []
     }
 
     componentWillUnmount() {
         this.stopPolling()
-        this.stopPollingMastro()
     }
 
     componentDidMount() {
-        const currMappingID = this.props.mappings[0] !== undefined && this.props.mappings[0].mappingID
         this.setState({
             tabKey: this.props.tabKey,
             queryID: this.props.query.queryID,
             new: this.props.new,
-            selectedMappingID: currMappingID
         })
-        this.props.mappings.forEach(mapping => {
-            getMastroStatus(this.props.ontology.name, this.props.ontology.version, mapping.mappingID, this.checkMastroStatus.bind(this))
-        });
         /** INITIALIZE YASQE */
         this.changeDescription({ target: { value: this.props.query.queryDescription } })
         this.yasqe = YASQE(document.getElementById('sparql_' + this.props.num),
@@ -71,11 +52,10 @@ export default class MastroSPARQLTabPane extends React.Component {
                     showQueryButton: false
                 }
             });
-        if (currMappingID)
-            getPrefixes(this.props.ontology.name, this.props.ontology.version, currMappingID, this.loadedPrefixes)
         this.yasqe.on('change', () => {
             this.props.setDirty(this.state.tabKey)
             this.setState({ dirty: true })
+            // console.debug(this.yasqe.getQueryType())
         })
         this.props.query.queryCode !== undefined ? this.yasqe.setValue(this.props.query.queryCode) : this.yasqe.setValue("")
         this.yasqe.refresh();
@@ -92,51 +72,6 @@ export default class MastroSPARQLTabPane extends React.Component {
             yPrefixes[p.substring(0, p.length - 1)] = prefix.namespace
         }
         this.yasqe.addPrefixes(yPrefixes)
-    }
-
-    startMastro = () => {
-        startMastroAPI(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.startPollingMastro.bind(this))
-        this.setState({ loadingMastro: true })
-
-    }
-
-    stopMastro = () => {
-        this.stopPollingMastro()
-        stopMastroAPI(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, (mapId) => {
-            this.setState({ runningMappingIDs: this.state.runningMappingIDs.filter(mid => mapId !== mid) })
-        })
-    }
-
-    pollingMastro() {
-        getMastroStatus(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.checkMastroStatus.bind(this))
-    }
-
-    startPollingMastro() {
-        this.setState({ intervalMastro: setInterval(this.pollingMastro.bind(this), 1000) })
-    }
-
-    stopPollingMastro() {
-        clearInterval(this.state.intervalMastro)
-        this.setState({ loadingMastro: false, intervalMastro: 0 })
-    }
-
-    checkMastroStatus(status, mappingID) {
-        if (status.status === 'ERROR') {
-            message.error(status.lastError)
-            this.stopPollingMastro()
-        }
-
-        if (status.status === 'RUNNING') {
-            const newRunningMappingIDs = [...this.state.runningMappingIDs]
-            if (!this.state.runningMappingIDs.includes(mappingID)) {
-                newRunningMappingIDs.push(mappingID)
-            }
-            if (this.state.intervalMastro !== 0) {
-                message.success('Mastro is running!')
-            }
-            this.setState({ enabledStartMastro: false, runningMappingIDs: newRunningMappingIDs })
-            this.stopPollingMastro()
-        }
     }
 
     showModal = () => {
@@ -190,18 +125,14 @@ export default class MastroSPARQLTabPane extends React.Component {
         });
     }
 
-    onSelectMapping(value) {
-        this.setState({ selectedMappingID: value })
-    }
-
     start() {
         if (!this.state.new && !this.state.dirty)
             startQuery(
                 this.props.ontology.name,
                 this.props.ontology.version,
-                this.state.selectedMappingID,
+                null,
                 this.state.tabKey,
-                this.state.reasoning,
+                null,
                 this.startPolling.bind(this))
         else {
             const query = {
@@ -212,9 +143,9 @@ export default class MastroSPARQLTabPane extends React.Component {
             startNewQuery(
                 this.props.ontology.name,
                 this.props.ontology.version,
-                this.state.selectedMappingID,
+                null,
                 query,
-                this.state.reasoning,
+                null,
                 this.startPolling.bind(this))
         }
 
@@ -225,7 +156,7 @@ export default class MastroSPARQLTabPane extends React.Component {
     }
 
     polling() {
-        getQueryStatus(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.state.executionID, this.checkStatus.bind(this))
+        getQueryStatus(this.props.ontology.name, this.props.ontology.version, null, this.state.executionID, this.checkStatus.bind(this))
     }
 
     startPolling(executionID) {
@@ -313,25 +244,9 @@ export default class MastroSPARQLTabPane extends React.Component {
         this.setState({ queryDescription: e.target.value })
     }
 
-    toggleReasoning = () => {
-        this.setState({ reasoning: !this.state.reasoning })
-    }
-
     render() {
-        const enableRun = this.state.runningMappingIDs.includes(this.state.selectedMappingID)
+        const enableRun = true
         const elements = [
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <MappingSelector
-                    mappings={this.props.mappings}
-                    onSelection={this.onSelectMapping.bind(this)}
-                    selected={this.state.selectedMappingID}
-                    loadingMastro={this.state.loadingMastro}
-                    runningMappingIDs={this.state.runningMappingIDs}
-                    startMastro={this.startMastro}
-                    stopMastro={this.stopMastro}
-
-                />
-            </div>,
             <Progress percent={this.state.status.percentage} />,
             <div id={"sparql_" + this.props.num} />,
             <TextArea
@@ -359,10 +274,6 @@ export default class MastroSPARQLTabPane extends React.Component {
                             disabled={!this.state.loading}
                         >Stop</Button>
                     </Button.Group>
-                    <span style={{ padding: '0px 10px', color: 'rgb(255, 255, 255, 0.75)' }}>Reasoning</span>
-                    <Popover content='Toggle Reasoning'>
-                        <Switch checked={this.state.reasoning} onClick={this.toggleReasoning} disabled={!enableRun} />
-                    </Popover>
                 </div>
                 <Button
                     type='primary'
@@ -378,17 +289,10 @@ export default class MastroSPARQLTabPane extends React.Component {
             elements.push(
                 <Results
                     ontology={this.props.ontology}
-                    mappingID={this.state.selectedMappingID}
                     executionID={this.state.executionID}
                     numberOfResults={this.state.status.numResults}
                     running={this.state.loading}
-                />,
-                <QueryExecutionReport
-                    ontology={this.props.ontology}
-                    mappingID={this.state.selectedMappingID}
-                    executionID={this.state.executionID}
-                    running={this.state.loading}
-                    status={this.state.status} />)
+                />)
         }
 
         return (

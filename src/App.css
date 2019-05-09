@@ -332,12 +332,18 @@ pre {
 
 /* LINK COLOR */
 
-a, .ant-card-head-title, .ant-tabs-tab {
+a, .ant-card-head-title, .ant-tabs-tab, .link {
   color: var(--white) !important
 }
 
-a:hover {
-  color: rgb(244, 248, 255);
+a:hover, .link:hover {
+  color: var(--highlight) !important;
+}
+
+.link {
+  background-color: transparent;
+  cursor: pointer;
+  border: none
 }
 
 /* MENU SELECTION */
@@ -588,6 +594,10 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-w
 .ant-pagination-disabled .ant-pagination-item-link{
   background-color: var(--disabled) !important;
   border-color: transparent !important
+}
+
+.ant-table-tbody>tr>td {
+  color: var(--white)
 }
 
 /***************************

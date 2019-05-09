@@ -3,7 +3,7 @@ import {
     Drawer, Form, Button, Col, Row, Input, Icon,
 } from 'antd';
 
-import { putOntology } from '../api/MastroApi'
+import { postOntology } from '../api/MastroApi'
 
 class DrawerForm extends React.Component {
     state = { visible: false };
@@ -33,7 +33,7 @@ class DrawerForm extends React.Component {
                         roles: null
                     }
                 }
-                putOntology(ontology, this.onClose)
+                postOntology(ontology, this.onClose)
             }
         });
 

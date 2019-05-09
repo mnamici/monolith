@@ -1,29 +1,25 @@
 import React from 'react';
 import { Layout, Spin, Icon } from 'antd';
-import AddCloseTabs from './AddCloseTabs';
-import QueryCatalog from './QueryCatalog';
-import { getQueryCatalog, getMappings } from '../api/MastroApi'
+import { getQueryCatalogKg } from '../api/MastroApi'
+import KnowledgeGraphQueryCatalog from './KnowledgeGraphQueryCatalog';
+import KnowledgeGraphAddCloseTabs from './KnowledgeGraphAddCloseTabs';
 
 const {
     Sider, Content,
 } = Layout;
 
-export default class SPARQLEndpoint extends React.Component {
+export default class KnowledgeGraphSPARQLEndpoint extends React.Component {
     _isMounted = false;
     state = {
         catalog: undefined,
-        mappings: undefined,
         open: null,
         loadingCatalog: true,
-        loadingMappings: true
-
     }
 
     componentDidMount() {
         this._isMounted = true;
-        this.setState({ loadingCatalog: true, loadingMappings: true })
+        this.setState({ loadingCatalog: true })
         this.requestCatalog()
-        this.requestMappings()
     }
 
     componentWillUnmount() {
@@ -40,9 +36,9 @@ export default class SPARQLEndpoint extends React.Component {
     }
 
     requestCatalog() {
-        getQueryCatalog(
-            this.props.ontology.name,
-            this.props.ontology.version,
+        getQueryCatalogKg(
+            this.props.kg,
+            null,
             this.loadedCatalog)
     }
 
@@ -53,22 +49,6 @@ export default class SPARQLEndpoint extends React.Component {
         this._isMounted && this.setState({
             catalog: data,
             loadingCatalog: false
-        });
-    }
-
-    requestMappings() {
-        getMappings(
-            this.props.ontology.name,
-            this.props.ontology.version,
-            this.loadedMappings)
-    }
-
-    loadedMappings = (data) => {
-        if (data === undefined)
-            data = []
-        this._isMounted && this.setState({
-            mappings: data.mappingList,
-            loadedMappings: false
         });
     }
 
@@ -86,19 +66,17 @@ export default class SPARQLEndpoint extends React.Component {
 
     render() {
         if (this.state.loadingCatalog || this.state.loadedMappings) {
-            // console.log("LOADING")
             return <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div>
         }
         else
             return (
-                <Layout style={{ minHeight: 'calc(100vh - 25px)'}}>
+                <Layout style={{ minHeight: 'calc(100vh - 25px)' }}>
                     <Sider
                         className='queryCatalog'
                         collapsed={this.state.collapsed}
                     >
-                        <QueryCatalog
+                        <KnowledgeGraphQueryCatalog
                             ontology={this.props.ontology}
-                            mappings={this.state.mappings}
                             catalog={this.state.catalog}
                             open={this.open}
                             refreshCatalog={this.requestCatalog.bind(this)}
@@ -117,9 +95,8 @@ export default class SPARQLEndpoint extends React.Component {
                     <Layout>
                         <Content >
                             <div className='SPARQLTab' style={{ minHeight: '100%' }}>
-                                <AddCloseTabs
+                                <KnowledgeGraphAddCloseTabs
                                     ontology={this.props.ontology}
-                                    mappings={this.state.mappings}
                                     catalog={this.state.catalog}
                                     open={this.state.open}
                                     openF={this.open}

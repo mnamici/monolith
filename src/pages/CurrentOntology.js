@@ -5,7 +5,7 @@ import OntologyMenu from './OntologyMenu'
 import OntologyInfo from './OntologyInfo';
 import OntologyWiki from './OntologyWiki';
 import LoadMappings from './LoadMappings';
-import SPARQLEndpoint from './SPARQLEndpoint';
+import MastroSPARQLEndpoint from './MastroSPARQLEndpoint';
 import CurrentMapping from './CurrentMapping';
 import Graphol from './Grapholscape';
 import UnderConstruction from './UnderConstruction';
@@ -54,7 +54,7 @@ export default class CurrentOntology extends React.Component {
                             <Route path="/open/ontology/mapping/:tab/:mappingID" render={(props) =>
                                 <CurrentMapping {...props} ontology={this.props.ontology} />} />
                             <Route exact path="/open/ontology/endpoint" render={(props) =>
-                                <SPARQLEndpoint {...props} ontology={this.props.ontology} />} />
+                                <MastroSPARQLEndpoint {...props} ontology={this.props.ontology} />} />
                             <Route path="/open/ontology/dataQuality" render={(props) =>
                                 <UnderConstruction {...props} ontology={this.props.ontology} />} />
                         </div>

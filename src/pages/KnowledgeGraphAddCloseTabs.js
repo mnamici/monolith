@@ -1,11 +1,11 @@
 import React from 'react';
 import { Tabs, Icon, Modal } from 'antd';
-import MastroSPARQLTabPane from './MastroSPARQLTabPane'
+import KnowledgeGraphSPARQLTabPane from './KnowledgeGraphSPARQLTabPane'
 
 const TabPane = Tabs.TabPane;
 
 const newQueryID = 'new_'
-export default class AddCloseTabs extends React.Component {
+export default class KnowledgeGraphAddCloseTabs extends React.Component {
   state = {
     activeKey: null,
     panes: [],
@@ -20,8 +20,8 @@ export default class AddCloseTabs extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.mappings === undefined || props.catalog === undefined) return
-    const qc = JSON.parse(localStorage.getItem('queryCatalog'))
+    if (props.catalog === undefined) return
+    const qc = JSON.parse(localStorage.getItem('kgQueryCatalog'))
     if (this.state.panes.length === 0) {
       const panes = []
       this.newTabIndex++;
@@ -29,9 +29,8 @@ export default class AddCloseTabs extends React.Component {
       const title = newQueryID + this.newTabIndex
       panes.push({
         title: <span key={title}><Icon type='file' />{title + "*"}</span>,
-        content: <MastroSPARQLTabPane
+        content: <KnowledgeGraphSPARQLTabPane
           ontology={props.ontology}
-          mappings={props.mappings}
           catalog={props.catalog}
           num={activeKey}
           query={{ queryID: title }}
@@ -75,7 +74,7 @@ export default class AddCloseTabs extends React.Component {
   }
 
   componentWillUnmount() {
-    localStorage.setItem('queryCatalog', JSON.stringify(this.state.panes.map(p => p.title.key)))
+    localStorage.setItem('kgQueryCatalog', JSON.stringify(this.state.panes.map(p => p.title.key)))
   }
 
   onChange = (activeKey) => {
@@ -122,9 +121,8 @@ export default class AddCloseTabs extends React.Component {
         const title = query.queryID
         panes.push({
           title: <span key={title}><Icon type='file' />{title}</span>,
-          content: <MastroSPARQLTabPane
+          content: <KnowledgeGraphSPARQLTabPane
             ontology={props.ontology}
-            mappings={props.mappings}
             catalog={props.catalog}
             num={activeKey}
             query={query}
@@ -141,9 +139,8 @@ export default class AddCloseTabs extends React.Component {
       const title = newQueryID + this.newTabIndex
       panes.push({
         title: <span key={title}><Icon type='file' />{title + "*"}</span>,
-        content: <MastroSPARQLTabPane
+        content: <KnowledgeGraphSPARQLTabPane
           ontology={props.ontology}
-          mappings={props.mappings}
           catalog={props.catalog}
           num={activeKey}
           query={{ queryID: title }}
@@ -156,7 +153,7 @@ export default class AddCloseTabs extends React.Component {
       });
     }
     this.setState({ panes, activeKey });
-    localStorage.removeItem('queryCatalog')
+    localStorage.removeItem('kgQueryCatalog')
   }
 
 
@@ -168,9 +165,8 @@ export default class AddCloseTabs extends React.Component {
     if (query.queryID !== undefined)
       panes.push({
         title: <span key={title}><Icon type='file' />{title}</span>,
-        content: <MastroSPARQLTabPane
+        content: <KnowledgeGraphSPARQLTabPane
           ontology={this.props.ontology}
-          mappings={this.props.mappings}
           catalog={this.props.catalog}
           num={activeKey}
           query={query}
@@ -183,9 +179,8 @@ export default class AddCloseTabs extends React.Component {
     else {
       panes.push({
         title: <span key={title}><Icon type='file' />{title + "*"}</span>,
-        content: <MastroSPARQLTabPane
+        content: <KnowledgeGraphSPARQLTabPane
           ontology={this.props.ontology}
-          mappings={this.props.mappings}
           catalog={this.props.catalog}
           num={activeKey}
           query={{ queryID: title }}
