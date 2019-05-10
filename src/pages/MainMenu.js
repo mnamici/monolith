@@ -5,7 +5,7 @@ import { Menu, Icon, Drawer } from 'antd';
 
 const MenuItem = Menu.Item;
 
-const types = ['ontologies', 'kg', 'dataset']
+const types = ['ontology', 'kg', 'dataset']
 
 export default class MainMenu extends React.Component {
     type = ['Ontologies', 'Knowledge Graphs', 'Datasets']

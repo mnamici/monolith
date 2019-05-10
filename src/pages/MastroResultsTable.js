@@ -1,7 +1,8 @@
 import React from 'react'
-import { Table, Button } from 'antd';
+import { Table, Button, Drawer } from 'antd';
 import { getQueryResults, downloadQueryResults } from '../api/MastroApi';
 import { saveFileInfo } from '../utils/utils'
+import LoadKnowledgeGraphs from './LoadKnowledgeGraphs';
 
 // const https = require('https');
 
@@ -19,6 +20,8 @@ export default class MastroResultsTable extends React.Component {
         },
         loading: false,
         interval: 0,
+        visible: false,
+        drawer: null
     };
 
     componentDidMount() {
@@ -100,13 +103,39 @@ export default class MastroResultsTable extends React.Component {
         }
     }
 
+    addToKnowledgeGraph = () => {
+        this.setState({
+            visible: true,
+            drawer: <LoadKnowledgeGraphs open={this.exportOBDAResultsToKg} oneColumn/>
+        })
+    }
+
+    onClose = () => {
+        this.setState({
+            visible: false,
+            drawer: null
+        });
+    }
+
+    exportOBDAResultsToKg = (kgIri) => {
+        console.debug('CALL API FOR EXPORTING KG')
+    }
+
     render() {
         const columns = this.state.headTerms.map(item => ({ title: item, dataIndex: item }));
         return (
             <div>
+                <Drawer
+                    visible={this.state.visible}
+                    closable={false}
+                    onClose={this.onClose}
+                    width='35vw'
+                >
+                    {this.state.drawer}
+                </Drawer>
                 <Table
                     className='results'
-                    style={{ minHeight: 200 }}
+                    style={{ minHeight: 200, marginBottom: 8 }}
                     columns={columns}
                     rowKey={record => record.url}
                     dataSource={this.state.data}
@@ -114,7 +143,16 @@ export default class MastroResultsTable extends React.Component {
                     loading={this.state.loading}
                     onChange={this.handleTableChange}
                 />
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 8, marginTop: -48 }}>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: '-78px 0px 50px 1px' }}>
+                    {this.props.queryType === 'CONSTRUCT' &&
+                        <Button
+                            style={{ marginRight: 8 }}
+                            type='primary' icon='upload'
+                            onClick={this.addToKnowledgeGraph}
+                        >
+                            Export to Knowledge Graph
+                        </Button>
+                    }
                     <Button type='primary' icon='download' onClick={this.downloadResults}>
                         Download Query Results
                     </Button>

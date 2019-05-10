@@ -50,7 +50,8 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
                 sparql: {
                     // Disable query execution button
                     showQueryButton: false
-                }
+                },
+                persistent: null
             });
         this.yasqe.on('change', () => {
             this.props.setDirty(this.state.tabKey)
@@ -213,7 +214,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
                     tabKey: this.state.queryID
                 })
             },
-            //FIXME IF CANNOT PUT TRY TO CREATE NEW QUERY 
+                //FIXME IF CANNOT PUT TRY TO CREATE NEW QUERY 
                 () => postInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
                     this.props.renameTab(this.state.tabKey, this.state.queryID)
                     this.setState({
@@ -292,6 +293,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
                     executionID={this.state.executionID}
                     numberOfResults={this.state.status.numResults}
                     running={this.state.loading}
+                    queryType={this.yasqe.getQueryType()}
                 />)
         }
 

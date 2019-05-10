@@ -49,7 +49,7 @@ export default class LoadKnowledgeGraphs extends React.Component {
                         style={{ height: 'calc(100vh - 99px)', overflow: 'auto' }}
                         className='bigCards'
                         rowKey="mappingsView"
-                        grid={{ gutter: 12, lg: 3, md: 2, sm: 1, xs: 1 }}
+                        grid={this.props.oneColumn ? { column: 1 } : { gutter: 12, lg: 3, md: 2, sm: 1, xs: 1 }}
                         dataSource={['', ...this.state.data]}
                         renderItem={item =>
                             item ? (

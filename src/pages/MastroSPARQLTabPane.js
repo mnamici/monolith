@@ -69,7 +69,8 @@ export default class MastroSPARQLTabPane extends React.Component {
                 sparql: {
                     // Disable query execution button
                     showQueryButton: false
-                }
+                },
+                persistent: null
             });
         if (currMappingID)
             getPrefixes(this.props.ontology.name, this.props.ontology.version, currMappingID, this.loadedPrefixes)
@@ -382,6 +383,7 @@ export default class MastroSPARQLTabPane extends React.Component {
                     executionID={this.state.executionID}
                     numberOfResults={this.state.status.numResults}
                     running={this.state.loading}
+                    queryType={this.yasqe.getQueryType()}
                 />,
                 <QueryExecutionReport
                     ontology={this.props.ontology}
