@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Button, Drawer } from 'antd';
-import { getQueryResults, downloadQueryResults } from '../api/MastroApi';
+import { getQueryResults, downloadQueryResults } from '../api/KgApi';
 import { saveFileInfo } from '../utils/utils'
 import LoadKnowledgeGraphs from './LoadKnowledgeGraphs';
 
@@ -41,9 +41,7 @@ export default class MastroResultsTable extends React.Component {
 
     downloadResults = () => {
         downloadQueryResults(
-            this.props.ontology.name,
-            this.props.ontology.version,
-            this.props.mappingID,
+            this.props.kg,
             this.props.executionID,
             saveFileInfo)
     }
@@ -77,9 +75,7 @@ export default class MastroResultsTable extends React.Component {
             pagination: pager,
         });
         getQueryResults(
-            this.props.ontology.name,
-            this.props.ontology.version,
-            this.props.mappingID,
+            this.props.kg,
             this.props.executionID,
             pager.current,
             this.state.pagination.defaultPageSize,
@@ -90,9 +86,7 @@ export default class MastroResultsTable extends React.Component {
     polling = () => {
         if (this.props.running)
             getQueryResults(
-                this.props.ontology.name,
-                this.props.ontology.version,
-                this.props.mappingID,
+                this.props.kg,
                 this.props.executionID,
                 this.state.pagination.current,
                 this.state.pagination.defaultPageSize,

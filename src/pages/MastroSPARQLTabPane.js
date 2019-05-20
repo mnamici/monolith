@@ -72,7 +72,7 @@ export default class MastroSPARQLTabPane extends React.Component {
                 },
                 persistent: null
             });
-        if (currMappingID)
+        if (currMappingID && this.props.new)
             getPrefixes(this.props.ontology.name, this.props.ontology.version, currMappingID, this.loadedPrefixes)
         this.yasqe.on('change', () => {
             this.props.setDirty(this.state.tabKey)
@@ -283,7 +283,7 @@ export default class MastroSPARQLTabPane extends React.Component {
                     tabKey: this.state.queryID
                 })
             },
-            //FIXME IF CANNOT PUT TRY TO CREATE NEW QUERY 
+                //FIXME IF CANNOT PUT TRY TO CREATE NEW QUERY 
                 () => postInQueryCatalog(this.props.ontology.name, this.props.ontology.version, query, () => {
                     this.props.renameTab(this.state.tabKey, this.state.queryID)
                     this.setState({

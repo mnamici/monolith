@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Spin, Icon } from 'antd';
-import { getQueryCatalogKg } from '../api/MastroApi'
+import { getQueryCatalogKg } from '../api/KgApi'
 import KnowledgeGraphQueryCatalog from './KnowledgeGraphQueryCatalog';
 import KnowledgeGraphAddCloseTabs from './KnowledgeGraphAddCloseTabs';
 
@@ -38,7 +38,6 @@ export default class KnowledgeGraphSPARQLEndpoint extends React.Component {
     requestCatalog() {
         getQueryCatalogKg(
             this.props.kg,
-            null,
             this.loadedCatalog)
     }
 
@@ -76,7 +75,7 @@ export default class KnowledgeGraphSPARQLEndpoint extends React.Component {
                         collapsed={this.state.collapsed}
                     >
                         <KnowledgeGraphQueryCatalog
-                            ontology={this.props.ontology}
+                            kg={this.props.kg}
                             catalog={this.state.catalog}
                             open={this.open}
                             refreshCatalog={this.requestCatalog.bind(this)}
@@ -96,7 +95,7 @@ export default class KnowledgeGraphSPARQLEndpoint extends React.Component {
                         <Content >
                             <div className='SPARQLTab' style={{ minHeight: '100%' }}>
                                 <KnowledgeGraphAddCloseTabs
-                                    ontology={this.props.ontology}
+                                    kg={this.props.kg}
                                     catalog={this.state.catalog}
                                     open={this.state.open}
                                     openF={this.open}

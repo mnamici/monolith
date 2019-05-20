@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, Icon, Button, Upload, message } from 'antd';
-import { deleteFromQueryCatalogKg, downloadQueryCatalogKg, uploadQueryCatalogKg } from '../api/MastroApi';
+import { deleteFromQueryCatalogKg, downloadQueryCatalogKg, uploadQueryCatalogKg } from '../api/KgApi';
 import { saveFileInfo, getBase64 } from '../utils/utils';
 
 const MenuItem = Menu.Item;
@@ -9,8 +9,7 @@ export default class KnowledgeGraphQueryCatalog extends React.Component {
 
     downloadCatalog = () => {
         downloadQueryCatalogKg(
-            this.props.ontology.name,
-            this.props.ontology.version,
+            this.props.kg,
             saveFileInfo
         )
     }
@@ -30,8 +29,7 @@ export default class KnowledgeGraphQueryCatalog extends React.Component {
                 }
 
                 uploadQueryCatalogKg(
-                    this.props.ontology.name,
-                    this.props.ontology.version,
+                    this.props.kg,
                     json,
                     (success) => {
                         if (success) {
@@ -52,8 +50,7 @@ export default class KnowledgeGraphQueryCatalog extends React.Component {
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', width: '100%' }} onClick={() => this.props.open(item)}>{item}</div>
                     {!this.props.collapsed && <span style={{ float: "right" }} onClick={() => deleteFromQueryCatalogKg(
-                        this.props.ontology.name,
-                        this.props.ontology.version,
+                        this.props.kg.kgIri,
                         item,
                         this.props.refreshCatalog
                     )}>

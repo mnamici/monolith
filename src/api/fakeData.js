@@ -1110,7 +1110,7 @@ export const getInstanceObjectTripsGroup = {
     ]
 }
 
-export const getObjectPredicatePageTypeVariato = {
+export const getObjectPredicatePageType = {
     "object_triples": [
         {
             "predicate": "http://lod.aci.it/opendataontology/compare_in_dataset",
@@ -1231,4 +1231,10 @@ export const getSubjectPredicatePageType = {
             "predicate_short": "aod:contiene_osservazione"
         }
     ]
+}
+
+export const instancePage = {
+    title: getInstanceLabelType,
+    subjects: getInstanceSubjectTripsGroup,
+    objects: getInstanceObjectTripsGroup,
 }

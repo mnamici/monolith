@@ -3,6 +3,7 @@ import { Table, Button, Drawer } from 'antd';
 import { getQueryResults, downloadQueryResults } from '../api/MastroApi';
 import { saveFileInfo } from '../utils/utils'
 import LoadKnowledgeGraphs from './LoadKnowledgeGraphs';
+import { patchKnowledgeGraphUnionQueryOBDA } from '../api/KgApi';
 
 // const https = require('https');
 
@@ -106,7 +107,7 @@ export default class MastroResultsTable extends React.Component {
     addToKnowledgeGraph = () => {
         this.setState({
             visible: true,
-            drawer: <LoadKnowledgeGraphs open={this.exportOBDAResultsToKg} oneColumn/>
+            drawer: <LoadKnowledgeGraphs open={this.exportOBDAResultsToKg} drawer />
         })
     }
 
@@ -118,7 +119,23 @@ export default class MastroResultsTable extends React.Component {
     }
 
     exportOBDAResultsToKg = (kgIri) => {
-        console.debug('CALL API FOR EXPORTING KG')
+        const knowledgeGraphDestinationQueryOBDA = {
+            source: {
+                execution: {
+                    executionID: this.props.executionID
+                },
+                source: {
+                    ontologyID: this.props.ontology.name,
+                    ontologyVersion: this.props.ontology.version,
+                    mapping: this.props.mappingID,
+                }
+            },
+            target: {
+                destination: kgIri,
+                namedGraph: kgIri,
+            }
+        }
+        patchKnowledgeGraphUnionQueryOBDA(knowledgeGraphDestinationQueryOBDA, this.onClose)
     }
 
     render() {

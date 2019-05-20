@@ -30,7 +30,7 @@ export default class KnowledgeGraphAddCloseTabs extends React.Component {
       panes.push({
         title: <span key={title}><Icon type='file' />{title + "*"}</span>,
         content: <KnowledgeGraphSPARQLTabPane
-          ontology={props.ontology}
+          kg={props.kg}
           catalog={props.catalog}
           num={activeKey}
           query={{ queryID: title }}
@@ -122,7 +122,7 @@ export default class KnowledgeGraphAddCloseTabs extends React.Component {
         panes.push({
           title: <span key={title}><Icon type='file' />{title}</span>,
           content: <KnowledgeGraphSPARQLTabPane
-            ontology={props.ontology}
+            kg={props.kg}
             catalog={props.catalog}
             num={activeKey}
             query={query}
@@ -140,7 +140,7 @@ export default class KnowledgeGraphAddCloseTabs extends React.Component {
       panes.push({
         title: <span key={title}><Icon type='file' />{title + "*"}</span>,
         content: <KnowledgeGraphSPARQLTabPane
-          ontology={props.ontology}
+          kg={props.kg}
           catalog={props.catalog}
           num={activeKey}
           query={{ queryID: title }}
@@ -166,7 +166,7 @@ export default class KnowledgeGraphAddCloseTabs extends React.Component {
       panes.push({
         title: <span key={title}><Icon type='file' />{title}</span>,
         content: <KnowledgeGraphSPARQLTabPane
-          ontology={this.props.ontology}
+          kg={this.props.kg}
           catalog={this.props.catalog}
           num={activeKey}
           query={query}
@@ -180,7 +180,7 @@ export default class KnowledgeGraphAddCloseTabs extends React.Component {
       panes.push({
         title: <span key={title}><Icon type='file' />{title + "*"}</span>,
         content: <KnowledgeGraphSPARQLTabPane
-          ontology={this.props.ontology}
+          kg={this.props.kg}
           catalog={this.props.catalog}
           num={activeKey}
           query={{ queryID: title }}

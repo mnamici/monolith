@@ -1,5 +1,5 @@
 import React from 'react'
-import { getInstancePage } from '../api/MastroApi';
+import { getInstancePage } from '../api/KgApi';
 import { Spin } from 'antd';
 import InstanceNavigationSubjectTable from './InstanceNavigationSubjectTable';
 import InstanceNavigationObjectTable from './InstanceNavigationObjectTable';
@@ -77,12 +77,12 @@ export default class InstanceNavigation extends React.Component {
 
     componentDidMount() {
         resource = getUrlVars()["iri"];
-        getInstancePage(this.loaded)
+        getInstancePage(this.props.kg, resource, this.loaded)
     }
 
     componentWillReceiveProps() {
         resource = getUrlVars()["iri"];
-        getInstancePage(this.loaded)
+        getInstancePage(this.props.kg, resource, this.loaded)
     }
 
     loaded = (data) => {
@@ -106,9 +106,11 @@ export default class InstanceNavigation extends React.Component {
                 <h2 id="type">{renderType(ob)}</h2>
 
                 <InstanceNavigationSubjectTable
+                    resource={resource}
                     subjects={this.state.data.subjects}
                     renderShortIRI={renderShortIRI} />
                 <InstanceNavigationObjectTable
+                    resource={resource}
                     objects={this.state.data.objects}
                     renderShortIRI={renderShortIRI} />
             </div>

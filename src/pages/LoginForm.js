@@ -14,10 +14,19 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values);
-        this.setState({loading: true})
-        login(values.userName, values.password, values.mastroUrl, this.props.login);
+        this.setState({ loading: true })
+        login(values.userName, values.password, values.mastroUrl, this.callback);
       }
     });
+  }
+
+  callback = (success) => {
+    if (success) {
+      this.props.login(success)
+    }
+    else {
+      this.setState({ loading: false })
+    }
   }
 
   render() {

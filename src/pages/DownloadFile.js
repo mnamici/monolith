@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import { downloadOntologyFile, downloadMappingFile } from '../api/MastroApi';
 import { saveFileInfo } from '../utils/utils'
+import { downloadKnowledgeGraph } from '../api/KgApi';
 
 export default class DownloadFile extends React.Component {
 
@@ -10,6 +11,8 @@ export default class DownloadFile extends React.Component {
       downloadMappingFile(this.props.ontology.name, this.props.ontology.version, this.props.mapping, saveFileInfo)
     else if (this.props.ontology)
       downloadOntologyFile(this.props.ontology.name, this.props.ontology.version, saveFileInfo)
+    else if (this.props.kg)
+      downloadKnowledgeGraph(this.props.kg.kgIri, "RDF", saveFileInfo)
   }
 
   render() {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { getObjectType } from '../api/MastroApi';
+import { getObjectType } from '../api/KgApi';
 import { Spin } from 'antd';
 
 
@@ -14,7 +14,7 @@ export default class InstanceNavigationObjectType extends React.Component {
     componentDidMount() {
         // this.props.predicate
         // this.props.type
-        getObjectType(this.loaded)
+        getObjectType(this.props.kg, this.props.resource, this.props.type, this.state.page, this.loaded)
     }
 
     loaded = (data) => {

@@ -3,7 +3,7 @@ import {
     Drawer, Form, Button, Col, Row, Input, Icon, Divider,
 } from 'antd';
 
-import { postKnowledgeGraph } from '../api/MastroApi'
+import { postKnowledgeGraph } from '../api/KgApi'
 import { regexIri } from '../utils/utils';
 
 class DrawerForm extends React.Component {
@@ -25,16 +25,30 @@ class DrawerForm extends React.Component {
     submit = () => {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                const ontology = {
-                    ontologyID: values.name,
-                    ontologyDescription: values.description,
-                    ontologyVersions: [],
-                    ontologyOwner: {
-                        name: localStorage.getItem('username'),
-                        roles: null
-                    }
+                const kg = {
+                    kgIri: values.iri,
+                    kgTitle: values.title,
+                    kgCreator: { username: localStorage.getItem('username') },
+                    kgPublisher: {
+                        agentIri: values.publisherAgentIri,
+                        agentLabels: [{ lang: '', content: values.publisherAgentLabel }],
+                        agentWebsite: values.publisherAgentWebsite,
+                        agentEmail: values.publisherAgentEmail,
+                        agentAddress: values.publisherAgentAddress,
+                    },
+                    kgContributors: [{ username: localStorage.getItem('username') }],
+                    kgRightsHolder: {
+                        agentIri: values.rightsHolderAgentIri,
+                        agentLabels: [{ lang: '', content: values.rightsHolderAgentLabel }],
+                        agentWebsite: values.rightsHolderAgentWebsite,
+                        agentEmail: values.rightsHolderAgentEmail,
+                        agentAddress: values.rightsHolderAgentAddress,
+                    },
+                    kgCreationTs: Date.now(),
+                    kgLastModifiedTs: Date.now(),
+                    kgDescriptions: { lang: '', content: values.description },
                 }
-                postKnowledgeGraph(ontology, this.onClose)
+                postKnowledgeGraph(kg, this.onClose)
             }
         });
 
@@ -160,7 +174,7 @@ class DrawerForm extends React.Component {
                                                 message: 'Please enter knowledge graph description',
                                             },
                                         ],
-                                    })(<Input.TextArea rows={4} placeholder="Please enter ontology description" />)}
+                                    })(<Input.TextArea rows={4} placeholder="Please enter knowledge graph description" />)}
                                 </Form.Item>
                             </Col>
                         </Row>

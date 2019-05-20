@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, Card, Spin } from 'antd';
 import DownloadFile from './DownloadFile'
-import { getKnowledgeGraphInfo } from '../api/MastroApi';
+import { getKnowledgeGraphInfo } from '../api/KgApi';
 import ListItem from './ListItem';
 import { renderLabel, dateFormat } from '../utils/utils';
 import moment from 'moment';
@@ -18,14 +18,14 @@ export default class KnowledgeGraphInfo extends React.Component {
         this._isMounted = true;
         this.setState({ loading: true })
         getKnowledgeGraphInfo(
-            this.props.kg,
+            this.props.kg.kgIri,
             this.loaded)
     }
 
     componentWillReceiveProps(props) {
         this.setState({ loading: true })
         getKnowledgeGraphInfo(
-            props.kg,
+            props.kg.kgIri,
             this.loaded)
     }
 
@@ -117,10 +117,10 @@ export default class KnowledgeGraphInfo extends React.Component {
                 />
 
                 <div style={{ display: 'flex', paddingTop: 12 }}>
-                    <DownloadFile ontology={this.props.ontology}
+                    <DownloadFile kg={this.props.kg}
                     />
                 </div>
-            </div >
+            </div>
         );
     }
 }
