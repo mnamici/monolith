@@ -17,7 +17,10 @@ import {
     startNewQuery,
     postInQueryCatalog,
     putInQueryCatalog,
-    getPrefixes
+    getPrefixes,
+    startNewConstructQuery,
+    getConstructQueryStatus,
+    startConstructQuery
 } from '../api/MastroApi';
 
 const { TextArea } = Input;
@@ -196,27 +199,49 @@ export default class MastroSPARQLTabPane extends React.Component {
     }
 
     start() {
-        if (!this.state.new && !this.state.dirty)
-            startQuery(
-                this.props.ontology.name,
-                this.props.ontology.version,
-                this.state.selectedMappingID,
-                this.state.tabKey,
-                this.state.reasoning,
-                this.startPolling.bind(this))
+        if (!this.state.new && !this.state.dirty) {
+            if (this.yasqe.getQueryType() === 'CONSTRUCT') {
+                startConstructQuery(
+                    this.props.ontology.name,
+                    this.props.ontology.version,
+                    this.state.selectedMappingID,
+                    this.state.tabKey,
+                    this.state.reasoning,
+                    this.startPolling.bind(this))
+            }
+            else
+                startQuery(
+                    this.props.ontology.name,
+                    this.props.ontology.version,
+                    this.state.selectedMappingID,
+                    this.state.tabKey,
+                    this.state.reasoning,
+                    this.startPolling.bind(this))
+        }
         else {
             const query = {
                 queryID: this.state.tabKey,
                 queryDescription: this.state.queryDescription || '',
                 queryCode: this.yasqe.getValue()
             }
-            startNewQuery(
-                this.props.ontology.name,
-                this.props.ontology.version,
-                this.state.selectedMappingID,
-                query,
-                this.state.reasoning,
-                this.startPolling.bind(this))
+            if (this.yasqe.getQueryType() === 'CONSTRUCT') {
+                query.construct = true
+                startNewConstructQuery(
+                    this.props.ontology.name,
+                    this.props.ontology.version,
+                    this.state.selectedMappingID,
+                    query,
+                    this.state.reasoning,
+                    this.startPolling.bind(this))
+            }
+            else
+                startNewQuery(
+                    this.props.ontology.name,
+                    this.props.ontology.version,
+                    this.state.selectedMappingID,
+                    query,
+                    this.state.reasoning,
+                    this.startPolling.bind(this))
         }
 
     }
@@ -226,7 +251,12 @@ export default class MastroSPARQLTabPane extends React.Component {
     }
 
     polling() {
-        getQueryStatus(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.state.executionID, this.checkStatus.bind(this))
+        if (this.yasqe.getQueryType() === 'CONSTRUCT') {
+            getConstructQueryStatus(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.state.executionID, this.checkStatus.bind(this))
+        }
+        else
+            getQueryStatus(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.state.executionID, this.checkStatus.bind(this))
+
     }
 
     startPolling(executionID) {

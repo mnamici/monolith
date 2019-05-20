@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Button, Drawer } from 'antd';
-import { getQueryResults, downloadQueryResults } from '../api/MastroApi';
+import { getQueryResults, downloadQueryResults, getConstructQueryResults } from '../api/MastroApi';
 import { saveFileInfo } from '../utils/utils'
 import LoadKnowledgeGraphs from './LoadKnowledgeGraphs';
 import { patchKnowledgeGraphUnionQueryOBDA } from '../api/KgApi';
@@ -60,14 +60,25 @@ export default class MastroResultsTable extends React.Component {
 
     convertData(results) {
         var data = [];
-        for (let i = 0; i < results.results.length; i++) {
-            var object = {};
-            for (let j = 0; j < results.results[i].length; j++) {
-                object[results.headTerms[j]] = results.results[i][j].value
+        if (this.props.queryType === 'CONSTRUCT') {
+            for (let i = 0; i < results.results.length; i++) {
+                let object = {};
+                for (let j = 0; j < results.results[i].length; j++) {
+                    object[results.headTerms[j]] = results.results[i][j].shortIRI
+                }
+                object['url'] = i;
+                data.push(object);
             }
-            object['url'] = i;
-            data.push(object);
         }
+        else
+            for (let i = 0; i < results.results.length; i++) {
+                let object = {};
+                for (let j = 0; j < results.results[i].length; j++) {
+                    object[results.headTerms[j]] = results.results[i][j].value
+                }
+                object['url'] = i;
+                data.push(object);
+            }
         this.setState({ headTerms: results.headTerms, data: data, loading: this.state.loading && results.results.length < this.state.pagination.defaultPageSize });
     }
 
@@ -77,28 +88,53 @@ export default class MastroResultsTable extends React.Component {
         this.setState({
             pagination: pager,
         });
-        getQueryResults(
-            this.props.ontology.name,
-            this.props.ontology.version,
-            this.props.mappingID,
-            this.props.executionID,
-            pager.current,
-            this.state.pagination.defaultPageSize,
-            this.convertData.bind(this),
-            this.stopPolling.bind(this))
-    }
-
-    polling = () => {
-        if (this.props.running)
+        if (this.props.queryType === 'CONSTRUCT') {
+            // getConstructQueryResults(
+            //     this.props.ontology.name,
+            //     this.props.ontology.version,
+            //     this.props.mappingID,
+            //     this.props.executionID,
+            //     pager.current,
+            //     this.state.pagination.defaultPageSize,
+            //     this.convertData.bind(this),
+            //     this.stopPolling.bind(this))
+        }
+        else
             getQueryResults(
                 this.props.ontology.name,
                 this.props.ontology.version,
                 this.props.mappingID,
                 this.props.executionID,
-                this.state.pagination.current,
+                pager.current,
                 this.state.pagination.defaultPageSize,
                 this.convertData.bind(this),
                 this.stopPolling.bind(this))
+    }
+
+    polling = () => {
+        if (this.props.running) {
+            if (this.props.queryType === 'CONSTRUCT') {
+                getConstructQueryResults(
+                    this.props.ontology.name,
+                    this.props.ontology.version,
+                    this.props.mappingID,
+                    this.props.executionID,
+                    this.state.pagination.current,
+                    this.state.pagination.defaultPageSize,
+                    this.convertData.bind(this),
+                    this.stopPolling.bind(this))
+            }
+            else
+                getQueryResults(
+                    this.props.ontology.name,
+                    this.props.ontology.version,
+                    this.props.mappingID,
+                    this.props.executionID,
+                    this.state.pagination.current,
+                    this.state.pagination.defaultPageSize,
+                    this.convertData.bind(this),
+                    this.stopPolling.bind(this))
+        }
         else {
             this.stopPolling()
         }
@@ -160,7 +196,7 @@ export default class MastroResultsTable extends React.Component {
                     loading={this.state.loading}
                     onChange={this.handleTableChange}
                 />
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: '-78px 0px 50px 1px' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: '-57px 0px 30px 1px' }}>
                     {this.props.queryType === 'CONSTRUCT' &&
                         <Button
                             style={{ marginRight: 8 }}

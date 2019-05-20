@@ -77,6 +77,7 @@ export function login(username, password, mastroUrl, callback) {
                 break;
             default:
                 manageError(err)
+                callback(false)
         }
 
     });
@@ -606,9 +607,44 @@ export function startNewQuery(name, version, mapping, query, reasoning, callback
     });
 }
 
+export function startNewConstructQuery(name, version, mapping, query, reasoning, callback) {
+    if (fakeCalls) return callback('pippoQuery')
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/cquery/start'
+    const method = 'POST'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion, reasoning: reasoning },
+        data: query,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data.executionId)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
 export function startQuery(name, version, mapping, queryID, reasoning, callback) {
     if (fakeCalls) return callback('pippoQuery')
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + queryID + '/start'
+    const method = 'POST'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion, reasoning: reasoning },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data.executionId)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function startConstructQuery(name, version, mapping, queryID, reasoning, callback) {
+    if (fakeCalls) return callback('pippoQuery')
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/cquery/' + queryID + '/start'
     const method = 'POST'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
@@ -641,9 +677,45 @@ export function getQueryStatus(name, version, mapping, queryID, callback, errorC
     });
 }
 
+export function getConstructQueryStatus(name, version, mapping, queryID, callback, errorCall) {
+    if (fakeCalls) { return callback(fakeData.queryStatus()) }
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/cquery/' + queryID + '/status'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+        errorCall()
+    });
+}
+
 export function getQueryResults(name, version, mapping, executionID, page, pageSize, callback, errorCall) {
     if (fakeCalls) { return fakeData.queryResults(callback) }
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/query/' + executionID + '/results'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion, pagesize: pageSize, pagenumber: page },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+        errorCall()
+    });
+}
+
+export function getConstructQueryResults(name, version, mapping, executionID, page, pageSize, callback, errorCall) {
+    if (fakeCalls) { return fakeData.queryResults(callback) }
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/cquery/' + executionID + '/results'
     const method = 'GET'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
