@@ -4,6 +4,7 @@ import { getObjectPropertyPage } from '../api/MastroApi';
 import { renderEntity, predicateTypes } from '../utils/utils'
 import ListItem from './ListItem';
 import svg from '../css/role.svg'
+import OntologyTabs from './OntologyTabs';
 
 
 export default class ObjectPropertyPage extends React.Component {
@@ -62,67 +63,142 @@ export default class ObjectPropertyPage extends React.Component {
         this.state.data.objectPropertyTransitive && objectPropertyCharacteristics.push("Transitive")
         this.state.data.objectPropertyAsymmetric && objectPropertyCharacteristics.push("Asymmetric")
 
-        const components = [
-            <Card className='objectPropertyCard' title="Domain" >
-                <ListItem
-                    entity
-                    axiom={{ owl: 'ObjectPropertyDomain', first: this.state.data.currentEntity }}
-                    predicateType={predicateTypes.c}
-                    data={this.state.data.objectPropertyDomain} />
-            </Card>,
-            <Card className='objectPropertyCard' title="Range" >
-                <ListItem
-                    entity
-                    axiom={{ owl: 'ObjectPropertyRange', first: this.state.data.currentEntity }}
-                    predicateType={predicateTypes.c}
-                    data={this.state.data.objectPropertyRange} />
-            </Card>,
-            <Card className='objectPropertyCard' title="Object Property Characteristics" >
-                <ListItem
-                    axiom={{ type: 'ObjectProperty', entity: this.state.data.currentEntity }}
-                    data={objectPropertyCharacteristics} />
-            </Card>,
-            <Card className='objectPropertyCard' title="Equivalent Object Properties" >
-                <ListItem
-                    entity
-                    axiom={{ owl: 'EquivalentObjectProperties', first: this.state.data.currentEntity }}                    
-                    predicateType={predicateTypes.op}
-                    data={this.state.data.equivalentObjectProperties} />
-            </Card>,
-            <Card className='objectPropertyCard' title="Sub Object Properties" >
-                <ListItem
-                    entity
-                    axiom={{ owl: 'SubObjectPropertyOf', first: this.state.data.currentEntity }}
-                    predicateType={predicateTypes.op}
-                    data={this.state.data.subObjectProperties} />
-            </Card>,
-            <Card className='objectPropertyCard' title="Super Object Properties" >
-                <ListItem
-                    entity
-                    axiom={{ owl: 'SubObjectPropertyOf', second: this.state.data.currentEntity }}
-                    predicateType={predicateTypes.op}
-                    data={this.state.data.superObjectProperties} />
-            </Card>,
-            <Card className='objectPropertyCard' title="Disjoint Object Properties" >
-                <ListItem
-                    entity
-                    axiom={{ owl: 'DisjointObjectProperties', second: this.state.data.currentEntity }}
-                    predicateType={predicateTypes.op}
-                    data={this.state.data.disjointObjectProperties} />
-            </Card>,
-            <Card className='objectPropertyCard' title="Inverse Object Properties" >
-                <ListItem
-                    entity
-                    axiom={{ owl: 'InverseObjectProperties', second: this.state.data.currentEntity }}
-                    predicateType={predicateTypes.op}
-                    data={this.state.data.inverseObjectProperties} />
-            </Card>,
-            <Card className='objectPropertyCard' title="Object Property Individuals" >
-                <ListItem
-                    entity
-                    predicateType={predicateTypes.op}
-                    data={this.state.data.objectPropertyIndividuals} />
-            </Card>,
+        // const components = [
+        //     <Card className='objectPropertyCard' title="Domain" >
+        //         <ListItem
+        //             entity
+        //             axiom={{ owl: 'ObjectPropertyDomain', first: this.state.data.currentEntity }}
+        //             predicateType={predicateTypes.c}
+        //             data={this.state.data.objectPropertyDomain} />
+        //     </Card>,
+        //     <Card className='objectPropertyCard' title="Range" >
+        //         <ListItem
+        //             entity
+        //             axiom={{ owl: 'ObjectPropertyRange', first: this.state.data.currentEntity }}
+        //             predicateType={predicateTypes.c}
+        //             data={this.state.data.objectPropertyRange} />
+        //     </Card>,
+        //     <Card className='objectPropertyCard' title="Object Property Characteristics" >
+        //         <ListItem
+        //             axiom={{ type: 'ObjectProperty', entity: this.state.data.currentEntity }}
+        //             data={objectPropertyCharacteristics} />
+        //     </Card>,
+        //     <Card className='objectPropertyCard' title="Equivalent Object Properties" >
+        //         <ListItem
+        //             entity
+        //             axiom={{ owl: 'EquivalentObjectProperties', first: this.state.data.currentEntity }}
+        //             predicateType={predicateTypes.op}
+        //             data={this.state.data.equivalentObjectProperties} />
+        //     </Card>,
+        //     <Card className='objectPropertyCard' title="Sub Object Properties" >
+        //         <ListItem
+        //             entity
+        //             axiom={{ owl: 'SubObjectPropertyOf', first: this.state.data.currentEntity }}
+        //             predicateType={predicateTypes.op}
+        //             data={this.state.data.subObjectProperties} />
+        //     </Card>,
+        //     <Card className='objectPropertyCard' title="Super Object Properties" >
+        //         <ListItem
+        //             entity
+        //             axiom={{ owl: 'SubObjectPropertyOf', second: this.state.data.currentEntity }}
+        //             predicateType={predicateTypes.op}
+        //             data={this.state.data.superObjectProperties} />
+        //     </Card>,
+        //     <Card className='objectPropertyCard' title="Disjoint Object Properties" >
+        //         <ListItem
+        //             entity
+        //             axiom={{ owl: 'DisjointObjectProperties', second: this.state.data.currentEntity }}
+        //             predicateType={predicateTypes.op}
+        //             data={this.state.data.disjointObjectProperties} />
+        //     </Card>,
+        //     <Card className='objectPropertyCard' title="Inverse Object Properties" >
+        //         <ListItem
+        //             entity
+        //             axiom={{ owl: 'InverseObjectProperties', second: this.state.data.currentEntity }}
+        //             predicateType={predicateTypes.op}
+        //             data={this.state.data.inverseObjectProperties} />
+        //     </Card>,
+        //     <Card className='objectPropertyCard' title="Object Property Individuals" >
+        //         <ListItem
+        //             entity
+        //             predicateType={predicateTypes.op}
+        //             data={this.state.data.objectPropertyIndividuals} />
+        //     </Card>,
+        // ]
+
+        const tabs = [
+            <OntologyTabs
+                titles={[{ key: 'domain', tab: 'Domain' }, { key: 'range', tab: 'Range' }]}
+                data={
+                    {
+                        domain: <ListItem
+                            entity
+                            axiom={{ owl: 'ObjectPropertyDomain', first: this.state.data.currentEntity }}
+                            predicateType={predicateTypes.c}
+                            data={this.state.data.objectPropertyDomain} />,
+                        range: <ListItem
+                            entity
+                            axiom={{ owl: 'ObjectPropertyRange', first: this.state.data.currentEntity }}
+                            predicateType={predicateTypes.c}
+                            data={this.state.data.objectPropertyRange} />
+                    }
+                }
+            />,
+            <OntologyTabs
+                titles={
+                    [
+                        { key: 'equivalentObjectProperties', tab: 'Equivalent Object Properties' },
+                        { key: 'subObjectProperties', tab: 'Sub Object Properties' },
+                        { key: 'superObjectProperties', tab: 'Super Object Properties' },
+                        { key: 'disjointObjectProperties', tab: 'Disjoint Object Properties' },
+                        { key: 'inverseObjectProperties', tab: 'Inverse Object Properties' },
+                    ]
+                }
+                data={{
+                    equivalentObjectProperties: <ListItem
+                        entity
+                        axiom={{ owl: 'EquivalentObjectProperties', first: this.state.data.currentEntity }}
+                        predicateType={predicateTypes.op}
+                        data={this.state.data.equivalentObjectProperties} />,
+                    subObjectProperties: <ListItem
+                        entity
+                        axiom={{ owl: 'SubObjectPropertyOf', first: this.state.data.currentEntity }}
+                        predicateType={predicateTypes.op}
+                        data={this.state.data.subObjectProperties} />,
+                    superObjectProperties: <ListItem
+                        entity
+                        axiom={{ owl: 'SubObjectPropertyOf', second: this.state.data.currentEntity }}
+                        predicateType={predicateTypes.op}
+                        data={this.state.data.superObjectProperties} />,
+                    disjointObjectProperties: <ListItem
+                        entity
+                        axiom={{ owl: 'DisjointObjectProperties', second: this.state.data.currentEntity }}
+                        predicateType={predicateTypes.op}
+                        data={this.state.data.disjointObjectProperties} />,
+                    inverseObjectProperties: <ListItem
+                        entity
+                        axiom={{ owl: 'InverseObjectProperties', second: this.state.data.currentEntity }}
+                        predicateType={predicateTypes.op}
+                        data={this.state.data.inverseObjectProperties} />
+                }}
+            />,
+            <OntologyTabs
+                titles={[
+                    { key: 'objectPropertyCharacteristics', tab: 'Object Property Characteristics' },
+                    { key: 'objectPropertyIndividuals', tab: 'Object Property Individuals' },
+                ]}
+                data={
+                    {
+                        objectPropertyCharacteristics: <ListItem
+                            axiom={{ type: 'ObjectProperty', entity: this.state.data.currentEntity }}
+                            data={objectPropertyCharacteristics} />,
+                        objectPropertyIndividuals: <ListItem
+                            entity
+                            predicateType={predicateTypes.op}
+                            data={this.state.data.objectPropertyIndividuals} />
+                    }
+                }
+            />
         ]
 
         return (
@@ -142,7 +218,7 @@ export default class ObjectPropertyPage extends React.Component {
                     </div>
                     <List
                         grid={{ gutter: 16, lg: 3, md: 2, sm: 1, xs: 1 }}
-                        dataSource={components}
+                        dataSource={tabs}
                         renderItem={item => (
                             <List.Item style={{ paddingBottom: 8 }}>
                                 {item}

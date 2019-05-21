@@ -24,27 +24,39 @@ export default class OntologyVersionsList extends React.Component {
         return list;
     }
 
+    sortByDate(a, b) {
+        var x = a.versionDate;
+        var y = b.versionDate;
+        if (x < y) { return -1; }
+        if (x > y) { return 1; }
+        return 0;
+    }
+
+    sortByDateD(a, b) {
+        var x = a.versionDate;
+        var y = b.versionDate;
+        if (x > y) { return -1; }
+        if (x < y) { return 1; }
+        return 0;
+    }
+
+    sortByName(a, b) {
+        var x = a.versionID.toLowerCase();
+        var y = b.versionID.toLowerCase();
+        if (x < y) { return -1; }
+        if (x > y) { return 1; }
+        return 0;
+    }
+
     componentDidMount() {
         this.setState({
-            data: this.getData(this.props.data).sort(function (a, b) {
-                var x = a.versionDate;
-                var y = b.versionDate;
-                if (x < y) { return -1; }
-                if (x > y) { return 1; }
-                return 0;
-            })
+            data: this.getData(this.props.data).sort(this.sortByDate)
         })
     }
 
     componentWillReceiveProps(props) {
         this.setState({
-            data: this.getData(props.data).sort(function (a, b) {
-                var x = a.versionDate;
-                var y = b.versionDate;
-                if (x < y) { return -1; }
-                if (x > y) { return 1; }
-                return 0;
-            })
+            data: this.getData(props.data).sort(this.sortByDate)
         })
     }
 
@@ -60,23 +72,15 @@ export default class OntologyVersionsList extends React.Component {
     changeSort = (value) => {
         if (value === 'name')
             this.setState({
-                data: this.getData(this.props.data).sort(function (a, b) {
-                    var x = a.versionID.toLowerCase();
-                    var y = b.versionID.toLowerCase();
-                    if (x < y) { return -1; }
-                    if (x > y) { return 1; }
-                    return 0;
-                })
+                data: this.getData(this.props.data).sort(this.sortByName)
             })
         else if (value === 'date')
             this.setState({
-                data: this.getData(this.props.data).sort(function (a, b) {
-                    var x = a.versionDate;
-                    var y = b.versionDate;
-                    if (x < y) { return -1; }
-                    if (x > y) { return 1; }
-                    return 0;
-                })
+                data: this.getData(this.props.data).sort(this.sortByDate)
+            })
+        else if (value === 'dateD')
+            this.setState({
+                data: this.getData(this.props.data).sort(this.sortByDateD)
             })
     }
 
@@ -89,10 +93,13 @@ export default class OntologyVersionsList extends React.Component {
                         Back
                     </Button>
                     <h1>Ontology Versions</h1>
-                    <Select style={{ width: 140 }} defaultValue='date' onChange={this.changeSort}>
+                    <Select defaultValue='date' onChange={this.changeSort}>
                         <Option value='date' >
-                            Sort by date
-                    </Option>
+                            Sort by date (ascending)
+                        </Option>
+                        <Option value='dateD' >
+                            Sort by date (descending)
+                        </Option>
                         <Option value='name' >
                             Sort by version
                     </Option>
@@ -140,7 +147,7 @@ export default class OntologyVersionsList extends React.Component {
                                                         {item.ontologyID}
                                                     </div>
                                                     <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', direction: 'rtl', textAlign: 'left' }}>
-                                                        {item.versionID}
+                                                        {'Version: ' + item.versionID}
                                                     </div>
                                                 </div>
                                             }

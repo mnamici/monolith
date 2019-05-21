@@ -12,27 +12,39 @@ export default class OntologiesList extends React.Component {
         data: []
     }
 
+    sortByDate(a, b) {
+        var x = a.ontologyDate;
+        var y = b.ontologyDate;
+        if (x < y) { return -1; }
+        if (x > y) { return 1; }
+        return 0;
+    }
+
+    sortByDateD(a, b) {
+        var x = a.ontologyDate;
+        var y = b.ontologyDate;
+        if (x > y) { return -1; }
+        if (x < y) { return 1; }
+        return 0;
+    }
+
+    sortByName(a, b) {
+        var x = a.ontologyID.toLowerCase();
+        var y = b.ontologyID.toLowerCase();
+        if (x < y) { return -1; }
+        if (x > y) { return 1; }
+        return 0;
+    }
+
     componentDidMount() {
         this.setState({
-            data: this.props.data.sort(function (a, b) {
-                var x = a.ontologyDate;
-                var y = b.ontologyDate;
-                if (x < y) { return -1; }
-                if (x > y) { return 1; }
-                return 0;
-            })
+            data: this.props.data.sort(this.sortByDate)
         })
     }
 
     componentWillReceiveProps(props) {
         this.setState({
-            data: props.data.sort(function (a, b) {
-                var x = a.ontologyDate;
-                var y = b.ontologyDate;
-                if (x < y) { return -1; }
-                if (x > y) { return 1; }
-                return 0;
-            })
+            data: props.data.sort(this.sortByDate)
         })
     }
 
@@ -47,23 +59,15 @@ export default class OntologiesList extends React.Component {
     changeSort = (value) => {
         if (value === 'name')
             this.setState({
-                data: this.props.data.sort(function (a, b) {
-                    var x = a.ontologyID.toLowerCase();
-                    var y = b.ontologyID.toLowerCase();
-                    if (x < y) { return -1; }
-                    if (x > y) { return 1; }
-                    return 0;
-                })
+                data: this.props.data.sort(this.sortByName)
             })
         else if (value === 'date')
             this.setState({
-                data: this.props.data.sort(function (a, b) {
-                    var x = a.ontologyDate;
-                    var y = b.ontologyDate;
-                    if (x < y) { return -1; }
-                    if (x > y) { return 1; }
-                    return 0;
-                })
+                data: this.props.data.sort(this.sortByDate)
+            })
+        else if (value === 'dateD')
+            this.setState({
+                data: this.props.data.sort(this.sortByDateD)
             })
     }
 
@@ -75,9 +79,12 @@ export default class OntologiesList extends React.Component {
                         Back
                     </Button>
                     <h1>Ontologies</h1>
-                    <Select style={{ width: 140 }} defaultValue='date' onChange={this.changeSort} >
+                    <Select defaultValue='date' onChange={this.changeSort} >
                         <Option value='date' >
-                            Sort by date
+                            Sort by date (ascending)
+                        </Option>
+                        <Option value='dateD' >
+                            Sort by date (descending)
                         </Option>
                         <Option value='name' >
                             Sort by name

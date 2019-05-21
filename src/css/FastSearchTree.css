@@ -73,7 +73,6 @@
     min-width: 376px;
     min-height: 300px; */
     /* border-radius: 5px; */
-
 }
 
 .react-dropdown-tree-select .dropdown .dropdown-content {
@@ -100,7 +99,7 @@
 
 .node {
     /* color: rgb(187, 197, 206); */
-    color:white
+    color: white
 }
 
 .class .node-label::before {
@@ -128,4 +127,8 @@
     vertical-align: middle;
     width: 20px;
     height: 20px;
+}
+
+.treeRoots {
+    font-weight: bold
 }

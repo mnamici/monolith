@@ -95,19 +95,19 @@ export default class SearchTree extends React.Component {
     const gData = [
       {
         label: "Classes",
-        className: predicateTypes.c,
+        className: 'treeRoots',
         expanded: true,
         children: convertData(mastroData.hierarchyTree.classTree.children, [], predicateTypes.c)
       },
       {
         label: "Object Properties",
-        className: predicateTypes.op,
+        className: 'treeRoots',
         expanded: true,
         children: convertData(mastroData.hierarchyTree.objectPropertyTree.children, [], predicateTypes.op)
       },
       {
         label: "Data Properties",
-        className: predicateTypes.dp,
+        className: 'treeRoots',
         expanded: true,
         children: convertData(mastroData.hierarchyTree.dataPropertyTree.children, [], predicateTypes.dp)
       }
