@@ -283,7 +283,8 @@ export default class MastroSPARQLTabPane extends React.Component {
         const query = {
             queryID: this.state.queryID,
             queryDescription: this.state.queryDescription || '',
-            queryCode: this.yasqe.getValue()
+            queryCode: this.yasqe.getValue(),
+            construct: this.yasqe.getQueryType() === 'CONSTRUCT'
         }
 
         const alreadyInCatalog = this.props.catalog.filter(query => query.queryID === this.state.queryID).length === 1

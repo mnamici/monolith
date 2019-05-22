@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Card, Select, Button } from 'antd';
+import { List, Card, Select, Button, Modal } from 'antd';
 import AddOntology from './AddOntology';
 import { deleteOntology } from '../api/MastroApi';
 import moment from 'moment'
@@ -9,7 +9,9 @@ const Option = Select.Option
 
 export default class OntologiesList extends React.Component {
     state = {
-        data: []
+        data: [],
+        modalVisible: false,
+        toDelete: null
     }
 
     sortByDate(a, b) {
@@ -74,12 +76,19 @@ export default class OntologiesList extends React.Component {
     render() {
         return (
             <div>
+                <Modal
+                    visible={this.state.modalVisible}
+                    onOk={() => this.delete(this.state.toDelete)}
+                    onCancel={() => this.setState({ modalVisible: false, toDelete: null })}
+                >
+                    Delete all ontology versions?
+                </Modal>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 6 }}>
                     <Button style={{ visibility: 'hidden', width: 140 }} type='primary' icon='step-backward'>
                         Back
                     </Button>
                     <h1>Ontologies</h1>
-                    <Select defaultValue='date' onChange={this.changeSort} >
+                    <Select style={{ width: 205 }} defaultValue='date' onChange={this.changeSort} >
                         <Option value='date' >
                             Sort by date (ascending)
                         </Option>
@@ -102,7 +111,7 @@ export default class OntologiesList extends React.Component {
                             <List.Item key={item.ontologyID} style={{ paddingBottom: 6 }}>
                                 <Card hoverable actions={[
                                     <span onClick={
-                                        () => this.delete(item.ontologyID)
+                                        () => this.setState({ modalVisible: true, toDelete: item.ontologyID })
                                     }>
                                         delete
                                     </span>
@@ -127,7 +136,7 @@ export default class OntologiesList extends React.Component {
                             )
                     }
                 />
-            </div>
+            </div >
         );
     }
 }

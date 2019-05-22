@@ -226,7 +226,7 @@ export function getGraphol(name, version, callback) {
         params: { version: encodedVersion },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
-        callback(atob(response.data.content))
+        callback(response.data, name + '.graphol')
     }).catch(function (err) {
         manageError(err)
     });

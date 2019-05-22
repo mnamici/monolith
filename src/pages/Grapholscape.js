@@ -11,8 +11,8 @@ export default class Graphol extends React.Component {
         getGraphol(this.props.ontology.name, this.props.ontology.version, this.loaded)
     }
 
-    loaded = (body) => {
-        var graph = new GrapholScape(null, document.getElementById('grapholscape-container'), body);
+    loaded = (grapholFileInfo) => {
+        var graph = new GrapholScape(null, document.getElementById('grapholscape-container'), atob(grapholFileInfo.content));
         var selectedDiagram = graph.getDiagramName(0);
         graph.drawDiagram(selectedDiagram);
         let btns = document.getElementsByClassName('module_button')

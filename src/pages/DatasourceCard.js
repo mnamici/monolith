@@ -15,7 +15,10 @@ export default class DatasourceCard extends React.Component {
             ]}>
                 <Card.Meta key={this.props.datasource.id}
                     title={this.props.datasource.id}
-                    description={this.props.datasource.description ? this.props.datasource.description : 'No description'}
+                    description={this.props.datasource.description ?
+                        this.props.datasource.description :
+                        <div className='disabled'>No description</div>
+                    }
                     style={{ height: 'unset', paddingBottom: 12 }}
                 />
                 <ListMapItem data={

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
-import { List, Card, Popover, Select, Button } from 'antd';
+import { List, Card, Popover, Select, Button, Modal } from 'antd';
 import UploadFile from './UploadFile';
 import { downloadOntologyFile, deleteOntologyVersion } from '../api/MastroApi';
 import { saveFileInfo, dateFormat } from '../utils/utils';
@@ -88,12 +88,19 @@ export default class OntologyVersionsList extends React.Component {
 
         return (
             <div>
+                <Modal
+                    visible={this.state.modalVisible}
+                    onOk={() => this.delete(this.state.toDelete.name, this.state.toDelete.version)}
+                    onCancel={() => this.setState({ modalVisible: false, toDelete: null })}
+                >
+                    Delete ontology version?
+                </Modal>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 6 }}>
                     <Button style={{ width: 140 }} type='primary' icon='step-backward' onClick={this.props.prev}>
                         Back
                     </Button>
                     <h1>Ontology Versions</h1>
-                    <Select defaultValue='date' onChange={this.changeSort}>
+                    <Select style={{ width: 205 }} defaultValue='date' onChange={this.changeSort}>
                         <Option value='date' >
                             Sort by date (ascending)
                         </Option>
@@ -133,7 +140,7 @@ export default class OntologyVersionsList extends React.Component {
                                         download
                                     </span>,
                                     <span onClick={
-                                        () => this.delete(item.ontologyID, item.versionID)
+                                        () => this.setState({ modalVisible: true, toDelete: { name: item.ontologyID, version: item.versionID } })
                                     }>
                                         delete
                                     </span>

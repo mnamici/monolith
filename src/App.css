@@ -482,8 +482,16 @@ a:hover, .link:hover {
 
 /* TEXT COLOR */
 
-h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-pagination-item-ellipsis, .ant-progress-text, .ant-empty-description, .ant-select-selection, .ant-select-arrow, .ant-select-dropdown-menu-item, .ant-card-actions>li, .ant-drawer-title, .ant-form-item-label>label, .ant-table-thead>tr>th, .ant-modal-body, .ant-modal-close, .ant-input, .ant-tabs-tab-prev-icon, .ant-tabs-tab-next-icon, .ant-drawer-close, .search {
+h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-pagination-item-ellipsis, .ant-progress-text, .ant-select-selection, .ant-select-arrow, .ant-select-dropdown-menu-item, .ant-card-actions>li, .ant-drawer-title, .ant-form-item-label>label, .ant-table-thead>tr>th, .ant-modal-body, .ant-modal-close, .ant-input, .ant-tabs-tab-prev-icon, .ant-tabs-tab-next-icon, .ant-drawer-close, .search {
   color: var(--white) !important;
+}
+
+.ant-empty-image {
+  filter: invert(.5)
+}
+
+.disabled, .ant-empty-description {
+  color: var(--disabled)
 }
 
 /* ROW COLOR */
@@ -591,7 +599,7 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-w
   border-color: var(--highlight)
 }
 
-.ant-pagination-disabled .ant-pagination-item-link{
+.ant-pagination-disabled .ant-pagination-item-link {
   background-color: var(--disabled) !important;
   border-color: transparent !important
 }

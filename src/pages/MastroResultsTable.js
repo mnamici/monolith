@@ -196,7 +196,7 @@ export default class MastroResultsTable extends React.Component {
                     loading={this.state.loading}
                     onChange={this.handleTableChange}
                 />
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: '-57px 0px 30px 1px' }}>
+                {(this.props.queryType === 'CONSTRUCT' || this.props.numberOfResults > 0) && <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: '-57px 0px 30px 1px' }}>
                     {this.props.queryType === 'CONSTRUCT' &&
                         <Button
                             style={{ marginRight: 8 }}
@@ -210,7 +210,7 @@ export default class MastroResultsTable extends React.Component {
                         Download Query Results
                     </Button>
                     <span style={{ paddingLeft: 8 }} className='results'>{this.props.numberOfResults} results</span>
-                </div>
+                </div>}
             </div>
         );
     }
