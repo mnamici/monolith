@@ -78,7 +78,7 @@ export default class MastroQueryCatalog extends React.Component {
                         </Upload>
                     </div>
                 </div>}
-                <Menu style={{ backgroundColor: 'transparent', minHeight: `calc(100vh - ${h}px)` }} theme='dark' mode="inline">
+                <Menu style={{ backgroundColor: 'transparent', height: `calc(100vh - ${h}px)`, overflow: 'auto' }} theme='dark' mode="inline">
                     {this.props.catalog && this.props.catalog.map(item => this.getClosableMenuItem(item.queryID))}
                 </Menu>
 

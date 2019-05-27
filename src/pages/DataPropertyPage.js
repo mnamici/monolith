@@ -56,62 +56,6 @@ export default class DataPropertyPage extends React.Component {
 
         this.state.data.dataPropertyFunctional && dataPropertyCharacteristics.push("Functional")
 
-        // const components = [
-        //     <Card className='dataPropertyCard' title="Domain" >
-        //         <ListItem
-        //             entity
-        //             axiom={{ owl: 'DataPropertyDomain', first: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.c}
-        //             data={this.state.data.dataPropertyDomain} />
-        //     </Card>,
-        //     <Card className='dataPropertyCard' title="Range" >
-        //         <ListItem
-        //             entity
-        //             axiom={{ owl: 'DataPropertyRange', first: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.c}
-        //             data={this.state.data.dataPropertyRange} />
-        //     </Card>,
-        //     <Card className='dataPropertyCard' title="Data Property Characteristics" >
-        //         <ListItem
-        //             axiom={{ type: 'DataProperty', entity: this.state.data.currentEntity }}
-        //             data={dataPropertyCharacteristics} />
-        //     </Card>,
-        //     <Card className='dataPropertyCard' title="Equivalent Data Properties" >
-        //         <ListItem
-        //             entity
-        //             axiom={{ owl: 'EquivalentDataProperties', first: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.op}
-        //             data={this.state.data.equivalentDataProperties} />
-        //     </Card>,
-        //     <Card className='dataPropertyCard' title="Sub Data Properties" >
-        //         <ListItem
-        //             entity
-        //             axiom={{ owl: 'SubDataPropertyOf', first: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.op}
-        //             data={this.state.data.subDataProperties} />
-        //     </Card>,
-        //     <Card className='dataPropertyCard' title="Super Data Properties" >
-        //         <ListItem
-        //             entity
-        //             axiom={{ owl: 'SubDataPropertyOf', second: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.op}
-        //             data={this.state.data.superDataProperties} />
-        //     </Card>,
-        //     <Card className='dataPropertyCard' title="Disjoint Data Properties" >
-        //         <ListItem
-        //             entity
-        //             axiom={{ owl: 'DisjointDataProperties', second: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.op}
-        //             data={this.state.data.disjointDataProperties} />
-        //     </Card>,
-        //     <Card className='dataPropertyCard' title="Data Property Individuals" >
-        //         <ListItem
-        //             entity
-        //             predicateType={predicateTypes.op}
-        //             data={this.state.data.dataPropertyIndividuals} />
-        //     </Card>,
-        // ]
-
         const tabs = [
             <OntologyTabs
                 titles={[{ key: 'domain', tab: 'Domain' }, { key: 'range', tab: 'Range' }]}
@@ -130,44 +74,7 @@ export default class DataPropertyPage extends React.Component {
                     }
                 }
             />,
-            <OntologyTabs
-                titles={
-                    [
-                        { key: 'equivalentDataProperties', tab: 'Equivalent Data Properties' },
-                        { key: 'subDataProperties', tab: 'Sub Data Properties' },
-                        { key: 'superDataProperties', tab: 'Super Data Properties' },
-                        { key: 'disjointDataProperties', tab: 'Disjoint Data Properties' },
-                        { key: 'inverseDataProperties', tab: 'Inverse Data Properties' },
-                    ]
-                }
-                data={{
-                    equivalentDataProperties: <ListItem
-                        entity
-                        axiom={{ owl: 'EquivalentDataProperties', first: this.state.data.currentEntity }}
-                        predicateType={predicateTypes.op}
-                        data={this.state.data.equivalentDataProperties} />,
-                    subDataProperties: <ListItem
-                        entity
-                        axiom={{ owl: 'SubDataPropertyOf', first: this.state.data.currentEntity }}
-                        predicateType={predicateTypes.op}
-                        data={this.state.data.subDataProperties} />,
-                    superDataProperties: <ListItem
-                        entity
-                        axiom={{ owl: 'SubDataPropertyOf', second: this.state.data.currentEntity }}
-                        predicateType={predicateTypes.op}
-                        data={this.state.data.superDataProperties} />,
-                    disjointDataProperties: <ListItem
-                        entity
-                        axiom={{ owl: 'DisjointDataProperties', second: this.state.data.currentEntity }}
-                        predicateType={predicateTypes.op}
-                        data={this.state.data.disjointDataProperties} />,
-                    inverseDataProperties: <ListItem
-                        entity
-                        axiom={{ owl: 'InverseDataProperties', second: this.state.data.currentEntity }}
-                        predicateType={predicateTypes.op}
-                        data={this.state.data.inverseDataProperties} />
-                }}
-            />,
+
             <OntologyTabs
                 titles={[
                     { key: 'dataPropertyCharacteristics', tab: 'Data Property Characteristics' },
@@ -211,6 +118,46 @@ export default class DataPropertyPage extends React.Component {
                             </List.Item>
                         )}
                     />
+                    <div style={{ paddingBottom: '16px' }}>
+                        <OntologyTabs
+                            titles={
+                                [
+                                    { key: 'equivalentDataProperties', tab: 'Equivalent Data Properties' },
+                                    { key: 'subDataProperties', tab: 'Sub Data Properties' },
+                                    { key: 'superDataProperties', tab: 'Super Data Properties' },
+                                    { key: 'disjointDataProperties', tab: 'Disjoint Data Properties' },
+                                    { key: 'inverseDataProperties', tab: 'Inverse Data Properties' },
+                                ]
+                            }
+                            data={{
+                                equivalentDataProperties: <ListItem
+                                    entity
+                                    axiom={{ owl: 'EquivalentDataProperties', first: this.state.data.currentEntity }}
+                                    predicateType={predicateTypes.op}
+                                    data={this.state.data.equivalentDataProperties} />,
+                                subDataProperties: <ListItem
+                                    entity
+                                    axiom={{ owl: 'SubDataPropertyOf', first: this.state.data.currentEntity }}
+                                    predicateType={predicateTypes.op}
+                                    data={this.state.data.subDataProperties} />,
+                                superDataProperties: <ListItem
+                                    entity
+                                    axiom={{ owl: 'SubDataPropertyOf', second: this.state.data.currentEntity }}
+                                    predicateType={predicateTypes.op}
+                                    data={this.state.data.superDataProperties} />,
+                                disjointDataProperties: <ListItem
+                                    entity
+                                    axiom={{ owl: 'DisjointDataProperties', second: this.state.data.currentEntity }}
+                                    predicateType={predicateTypes.op}
+                                    data={this.state.data.disjointDataProperties} />,
+                                inverseDataProperties: <ListItem
+                                    entity
+                                    axiom={{ owl: 'InverseDataProperties', second: this.state.data.currentEntity }}
+                                    predicateType={predicateTypes.op}
+                                    data={this.state.data.inverseDataProperties} />
+                            }}
+                        />
+                    </div>
                 </div>
 
         );

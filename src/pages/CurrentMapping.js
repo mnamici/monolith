@@ -18,7 +18,7 @@ export default class CurrentMapping extends React.Component {
             <Layout>
                 <Header style={{ background: 'transparent' }}>
                     <Menu
-                        style={{ background: 'transparent', borderBottom: 'solid 1px white' }}
+                        style={{ background: 'transparent', borderBottom: 'solid 1px var(--highlight-gray)' }}
                         defaultSelectedKeys={currTab}
                         mode="horizontal"
                     >

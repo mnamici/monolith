@@ -99,7 +99,7 @@ export default class OntologyVersionsList extends React.Component {
                     <Button style={{ width: 140 }} type='primary' icon='step-backward' onClick={this.props.prev}>
                         Back
                     </Button>
-                    <h1>Ontology Versions</h1>
+                    <h1 style={{maxWidth: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{`Ontology Versions for ${this.props.current}`}</h1>
                     <Select style={{ width: 205 }} defaultValue='date' onChange={this.changeSort}>
                         <Option value='date' >
                             Sort by date (ascending)
@@ -150,18 +150,22 @@ export default class OntologyVersionsList extends React.Component {
                                             avatar={<img alt="" src={item.avatar} />}
                                             title={
                                                 <div>
-                                                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                        {item.ontologyID}
-                                                    </div>
                                                     <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', direction: 'rtl', textAlign: 'left' }}>
-                                                        {'Version: ' + item.versionID}
+                                                        {<span>
+                                                            {/* <span>Version: </span> */}
+                                                            {
+                                                                item.versionID === 'NO_VERSION_PROVIDED' ?
+                                                                    <span className='disabled'>No version defined</span> :
+                                                                    <span>{item.versionID}</span>
+                                                            }
+                                                        </span>}
                                                     </div>
                                                 </div>
                                             }
                                             description={item.versionDescription[0] !== undefined ? item.versionDescription[0].content : ""}
                                         />
                                     </NavLink>
-                                    <div className='ant-card-meta-description'>{moment(item.versionDate).format(dateFormat)}</div>
+                                    <div className='ant-card-meta-description' style={{float: 'right'}}>{moment(item.versionDate).format(dateFormat)}</div>
                                 </Card>
                             </List.Item>
                         ) : (

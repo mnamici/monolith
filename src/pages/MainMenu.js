@@ -25,15 +25,15 @@ export default class MainMenu extends React.Component {
 
         if (t === 0){
             key = item.name + "-" + item.version
-            title = item.name + " " + item.version.split("/").pop()
+            title = item.name + " " + (item.version === 'NO_VERSION_PROVIDED' ? '' : item.version.split("/").pop())
             close = this.props.closeOntology
-            isCurrent = this.props.current.name === item.name && this.props.current.version === item.version 
+            isCurrent = this.props.current && this.props.current.name === item.name && this.props.current.version === item.version 
         }
         else if (t === 1){
             key = item.kgIri
             title = item.kgIri
             close = this.props.closeKnowledgeGraph
-            isCurrent = this.props.current.kgIri === item.kgIri
+            isCurrent = this.props.current && this.props.current.kgIri === item.kgIri
         }
           
         return (

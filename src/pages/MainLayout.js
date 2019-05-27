@@ -68,7 +68,7 @@ export default class MainLayout extends React.Component {
     const current = {
       kgIri
     }
-    const openKgs = Array.from(this.state.open.ontologies)
+    const openKgs = Array.from(this.state.open.kgs)
     let found = false
     for (let item of openKgs)
       if (item.kgIri === current.kgIri) {

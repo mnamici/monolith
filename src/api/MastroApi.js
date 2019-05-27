@@ -68,8 +68,10 @@ export function login(username, password, mastroUrl, callback) {
 
 
     }).catch(function (err) {
-        if (err.response === undefined)
+        if (err.response === undefined) {
             reportError(err.response === undefined ? 'No message provided' : err.response.data);
+            callback(false)
+        }
         else switch (err.response.status) {
             case 401:
                 reportError('Wrong username or password')
@@ -308,11 +310,17 @@ export function uploadMappingFile(name, version, file, callback) {
     axios({
         url: url,
         method: method,
-        params: { version: encodedVersion },
+        params: { version: encodedVersion, check: false },
         data: file,
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
-        callback(true)
+        if (response.data.success)
+            callback(true)
+        else {
+            callback(false)
+            message.error('Invalid mapping file: it may be malformed or not compliant with the ontology.')
+            console.error(response.data)
+        }
     }).catch(function (err) {
         callback(false)
         manageError(err)

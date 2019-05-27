@@ -1,9 +1,8 @@
 import React from 'react';
-import { List, Card, Icon, Spin } from 'antd';
-
+import { List, Card, Spin } from 'antd';
+import { Link } from 'react-router-dom'
 import DownloadFile from './DownloadFile'
 import { getMappingInfo } from '../api/MastroApi';
-import ListMapItem from './ListMapItem';
 import ListItem from './ListItem';
 
 
@@ -49,34 +48,8 @@ export default class MappingInfo extends React.Component {
         if (this.state.loading) return <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div>
 
         const data = this.state.data
-        const db = [
-            {
-                mapKey: "name",
-                mapValue: data.mappingDBConnections[0].name
-            },
-            {
-                mapKey: "URL",
-                mapValue: data.mappingDBConnections[0].jdbcURL
-            },
-            {
-                mapKey: "User",
-                mapValue: data.mappingDBConnections[0].dbUser
-            },
-            {
-                mapKey: "Password",
-                mapValue: <div>
-                    <span>{this.state.showPassword ? data.mappingDBConnections[0].dbPassword : '......'}</span>
-                    <Icon
-                        type={this.state.showPassword ? 'eye-invisible' : 'eye'}
-                        style={{ float: 'right' }}
-                        onClick={() => this.setState((state) => state.showPassword = !state.showPassword)} />
-                </div>
-            },
-        ]
+
         const elements = [
-            <Card className='mappingCard' title="Database">
-                <ListMapItem data={db} />
-            </Card>,
             <Card className='mappingCard' title="Templates">
                 <ListItem data={data.mappingTemplates} />
             </Card>,
@@ -84,7 +57,8 @@ export default class MappingInfo extends React.Component {
         return (
             <div>
                 <div style={{ textAlign: 'center', padding: 16 }}>
-                    <h1 >{this.props.mappingID}</h1>
+                    <h1>{this.props.mappingID}</h1>
+                    <h3><span>Datasource: </span><Link to='/settings'>{data.mappingDBConnections[0].name}</Link></h3>
                 </div>
                 <div style={{ height: 'calc(100vh - 163px)', overflow: 'auto' }}>
                     <Card title="Description" className='description' style={{ margin: '0px 6px 12px 6px' }}>
@@ -93,7 +67,7 @@ export default class MappingInfo extends React.Component {
                     </Card>
                     <List
                         className='bigCards'
-                        grid={{ gutter: 12, column: 2 }}
+                        grid={{ gutter: 12, column: 1 }}
                         dataSource={elements}
                         renderItem={item => (
                             <List.Item>

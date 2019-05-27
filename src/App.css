@@ -427,7 +427,7 @@ a:hover, .link:hover {
   text-decoration: none !important
 }
 
-.ant-tabs-extra-content .ant-tabs-new-tab:hover, .ant-layout-sider-trigger:hover, .ontologyTrigger:hover, .mainMenuArrow:hover {
+.ant-tabs-extra-content .ant-tabs-new-tab:hover, .ant-layout-sider-trigger:hover, .ontologyTrigger:hover, .mainMenuArrow:hover, .ant-dropdown-menu-item-active {
   border-color: transparent;
   color: var(--highlight) !important;
   transition: .4s ease-in-out

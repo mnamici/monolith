@@ -95,7 +95,7 @@ export default class LoadMappings extends React.Component {
                                                 title={item.mappingID + ' ' + item.mappingVersion}
                                                 description={item.mappingDescription}
                                             />
-                                            <div className='ant-card-meta-description'>{moment(item.mappingDate).format(dateFormat)}</div>
+                                            <div className='ant-card-meta-description' style={{float: 'right'}}>{moment(item.mappingDate).format(dateFormat)}</div>
                                         </NavLink>
                                     </Card>
                                 </List.Item>

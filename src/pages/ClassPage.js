@@ -53,62 +53,6 @@ export default class ClassPage extends React.Component {
 
         if (this.state.data.currentEntity === undefined) return spin
 
-        // const components = [
-        //     <Card className='classCard' title="Equivalent Classes">
-        //         <ListItem
-        //             entity
-        //             axiom={{ owl: 'EquivalentClasses', first: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.c}
-        //             data={this.state.data.equivalentClasses} />
-        //     </Card>,
-        //     <Card className='classCard' title="Sub Classes">
-        //         <ListItem
-        //             entity
-        //             axiom={{ owl: 'SubClassOf', first: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.c}
-        //             data={this.state.data.subClasses} />
-        //     </Card>,
-        //     <Card className='classCard' title="Super Classes">
-        //         <ListItem
-        //             entity
-        //             axiom={{ owl: 'SubClassOf', second: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.c}
-        //             data={this.state.data.superClasses} />
-        //     </Card>,
-        //     <Card className='classCard' title="Disjoint Classes">
-        //         <ListItem
-        //             entity
-        //             axiom={{ owl: 'DisjoinClasses', first: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.c}
-        //             data={this.state.data.disjointClasses} />
-        //     </Card>,
-        //     <Card className='classCard' title="Object Properties">
-        //         <ListItem
-        //             partecipation
-        //             axiom={{ owl: 'SubClassOf', first: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.op}
-        //             data={this.state.data.objectPropertiesParticipations} />
-        //     </Card>,
-        //     <Card className='classCard' title="Data Properties">
-        //         <ListItem
-        //             partecipation
-        //             axiom={{ owl: 'SubClassOf', first: this.state.data.currentEntity }}
-        //             predicateType={predicateTypes.dp}
-        //             data={this.state.data.dataPropertiesParticipations} />
-        //     </Card>,
-        //     <Card className='classCard' title="Disjoint Unions">
-        //         <ListItem
-        //             union
-        //             predicateType={predicateTypes.c}
-        //             data={this.state.data.disjointUnions} />
-        //     </Card>,
-        //     <Card className='classCard' title="Individuals">
-        //         <ListItem
-        //             entity
-        //             predicateType={predicateTypes.i} data={this.state.data.classIndividuals} />
-        //     </Card>,
-        // ]
-
         const tabs = [
             <OntologyTabs
                 titles={
@@ -214,8 +158,11 @@ export default class ClassPage extends React.Component {
                                 <ListItem label data={this.state.data.classDescriptions} />
                             </Card>
                         </div>
+                        <div style={{ paddingBottom: '16px' }}>
+                            {tabs.shift()}
+                        </div>
                         <List
-                            grid={{ gutter: 12, lg: 3, md: 2, sm: 1, xs: 1 }}
+                            grid={{ gutter: 12, lg: 2, md: 2, sm: 1, xs: 1 }}
                             dataSource={tabs}
                             renderItem={item => (
                                 <List.Item style={{ paddingBottom: 8 }}>

@@ -81,7 +81,14 @@ export default class OntologiesList extends React.Component {
                     onOk={() => this.delete(this.state.toDelete)}
                     onCancel={() => this.setState({ modalVisible: false, toDelete: null })}
                 >
-                    Delete all ontology versions?
+                    <div>
+                        <div>
+                            Delete ontology?
+                    </div>
+                        <div>
+                            Warning: this operation is irreversibile and will cause all versions of the ontology to be deleted!
+                        </div>
+                    </div>
                 </Modal>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 6 }}>
                     <Button style={{ visibility: 'hidden', width: 140 }} type='primary' icon='step-backward'>
@@ -126,7 +133,7 @@ export default class OntologiesList extends React.Component {
                                             }
                                         }
                                     />
-                                    <div className='ant-card-meta-description'>{moment(item.ontologyDate).format(dateFormat)}</div>
+                                    <div className='ant-card-meta-description' style={{float: 'right'}}>{moment(item.ontologyDate).format(dateFormat)}</div>
                                 </Card>
                             </List.Item>
                         ) : (

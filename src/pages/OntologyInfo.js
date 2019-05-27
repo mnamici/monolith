@@ -59,14 +59,14 @@ export default class OntologyInfo extends React.Component {
 
         let prefixes = []
         this.state.data.prefixes && this.state.data.prefixes.forEach(element => {
-            prefixes.push({mapKey: element.name, mapValue: element.namespace})
+            prefixes.push({ mapKey: element.name, mapValue: element.namespace })
         });
 
         const elements = [
             <MetricsTabs titles={[
                 { key: "pm", tab: "Prefixes" }, { key: "imports", tab: "Imports" },
             ]}
-                data={{ imports: this.state.data.ontologyImports, pm: prefixes}} />,
+                data={{ imports: this.state.data.ontologyImports, pm: prefixes }} />,
             <MetricsTabs titles={[
                 { key: "metrics", tab: "Metrics" },
                 { key: "axioms", tab: "Axioms" },
@@ -83,7 +83,14 @@ export default class OntologyInfo extends React.Component {
                         <h1 >{this.props.ontology.name}</h1>
                     </div>
                     <h3>{`Ontology IRI: ${this.state.data.ontologyIRI}`}</h3>
-                    <h3>{`Ontology Version IRI: ${this.props.ontology.version}`}</h3>
+                    <h3><span>
+                        <span>Ontology Version IRI: </span>
+                        {
+                            this.props.ontology.version === 'NO_VERSION_PROVIDED' ?
+                                <span className='disabled'>no version defined</span> :
+                                <span>{this.props.ontology.version}</span>
+                        }
+                    </span></h3>
                     <div style={{ paddingBottom: 12 }}>
                         <Card title='Description' className='description'>
                             <ListItem label data={this.state.data.ontologyDescriptions} />
