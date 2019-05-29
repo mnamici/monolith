@@ -23,7 +23,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
         modalVisible: false,
         modalConfirmLoading: false,
         new: true,
-        dirty: true,
+        dirty: false,
         validID: true,
         // QUERY STATUS
         loading: false,
@@ -54,11 +54,18 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
                 persistent: null
             });
         this.yasqe.on('change', () => {
-            this.props.setDirty(this.state.tabKey)
-            this.setState({ dirty: true })
+            if (!this.state.dirty) {
+                this.props.setDirty(this.state.tabKey)
+                this.setState({ dirty: true })
+            }
             // console.debug(this.yasqe.getQueryType())
         })
-        this.props.query.queryCode !== undefined ? this.yasqe.setValue(this.props.query.queryCode) : this.yasqe.setValue("")
+        if (this.props.query.queryCode !== undefined) {
+            this.yasqe.setValue(this.props.query.queryCode)
+            this.yasqe.collapsePrefixes(true)
+        }
+        else
+            this.yasqe.setValue("")
         this.yasqe.refresh();
     }
 
@@ -73,6 +80,8 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
             yPrefixes[p.substring(0, p.length - 1)] = prefix.namespace
         }
         this.yasqe.addPrefixes(yPrefixes)
+        this.yasqe.collapsePrefixes(true)
+
     }
 
     showModal = () => {

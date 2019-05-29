@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import * as fakeData from './fakeData'
 import { graphol } from './ACIOpenData'
+import { mp as MastroProperties } from './MastroProperties';
 
 // const ips = ['192.168.0.59', '192.168.0.15']
 // var mastroUrl = 'http://' + ips[0] + ':8080/mws/rest/mwsx'
@@ -11,8 +12,12 @@ import { graphol } from './ACIOpenData'
 const fakeCalls = false
 
 function manageError(err) {
-    if (err.response === undefined)
+    if (err.response === undefined) {
         reportError('No message provided');
+        if (err.message === 'Network Error') {
+            localStorage.removeItem('headers'); window.location.reload()
+        }
+    }
     else {
         reportError(err.response.data);
         if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
@@ -36,6 +41,7 @@ export function login(username, password, mastroUrl, callback) {
         }
         return
     }
+    if (mastroUrl === 'localhost') mastroUrl = 'http://localhost:8080/mws/rest/mwsx'
     const url = mastroUrl + '/login'
     const method = 'GET'
     const h = {
@@ -310,7 +316,7 @@ export function uploadMappingFile(name, version, file, callback) {
     axios({
         url: url,
         method: method,
-        params: { version: encodedVersion, check: false },
+        params: { version: encodedVersion, check: true },
         data: file,
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
@@ -550,6 +556,7 @@ export function startMastro(name, version, mapping, callback) {
         url: url,
         method: method,
         params: { version: encodedVersion },
+        data: MastroProperties,
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback()

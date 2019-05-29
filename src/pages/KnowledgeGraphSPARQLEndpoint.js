@@ -60,6 +60,7 @@ export default class KnowledgeGraphSPARQLEndpoint extends React.Component {
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
+            open: null
         });
     }
 

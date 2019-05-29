@@ -33,7 +33,7 @@ export default class MastroSPARQLTabPane extends React.Component {
         modalConfirmLoading: false,
         reasoning: true,
         new: true,
-        dirty: true,
+        dirty: false,
         validID: true,
         // QUERY STATUS
         loading: false,
@@ -75,13 +75,23 @@ export default class MastroSPARQLTabPane extends React.Component {
                 },
                 persistent: null
             });
-        if (currMappingID && this.props.new)
+        if (currMappingID && this.props.new) {
             getPrefixes(this.props.ontology.name, this.props.ontology.version, currMappingID, this.loadedPrefixes)
+        }
+        if (this.props.query.queryCode !== undefined) {
+            this.yasqe.setValue(this.props.query.queryCode)
+            this.yasqe.collapsePrefixes(true)
+        }
+        else
+            this.yasqe.setValue("")
         this.yasqe.on('change', () => {
-            this.props.setDirty(this.state.tabKey)
-            this.setState({ dirty: true })
+            if (!this.state.dirty) {
+                this.props.setDirty(this.state.tabKey)
+                this.setState({ dirty: true })
+            }
+
         })
-        this.props.query.queryCode !== undefined ? this.yasqe.setValue(this.props.query.queryCode) : this.yasqe.setValue("")
+
         this.yasqe.refresh();
     }
 
@@ -96,6 +106,7 @@ export default class MastroSPARQLTabPane extends React.Component {
             yPrefixes[p.substring(0, p.length - 1)] = prefix.namespace
         }
         this.yasqe.addPrefixes(yPrefixes)
+        this.yasqe.collapsePrefixes(true)
     }
 
     startMastro = () => {
@@ -205,7 +216,7 @@ export default class MastroSPARQLTabPane extends React.Component {
                     this.props.ontology.name,
                     this.props.ontology.version,
                     this.state.selectedMappingID,
-                    this.state.tabKey,
+                    this.state.queryID,
                     this.state.reasoning,
                     this.startPolling.bind(this))
             }
@@ -214,7 +225,7 @@ export default class MastroSPARQLTabPane extends React.Component {
                     this.props.ontology.name,
                     this.props.ontology.version,
                     this.state.selectedMappingID,
-                    this.state.tabKey,
+                    this.state.queryID,
                     this.state.reasoning,
                     this.startPolling.bind(this))
         }

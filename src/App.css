@@ -235,8 +235,8 @@ td {
   color: var(--white)
 }
 
-.drawerMenu {
-  background-color: var(--light);
+.drawerMenu, .ant-drawer-header, .ant-drawer-wrapper-body {
+  background-color: var(--medium-dark);
   color: var(--white)
 }
 
@@ -374,7 +374,7 @@ a:hover, .link:hover {
 
 /* COMPONENTS BACKGROUND */
 
-.ant-collapse-content, .ant-drawer-header, .ant-drawer-wrapper-body, .ant-modal-content, .ant-modal-header {
+.ant-collapse-content, .ant-modal-content, .ant-modal-header {
   background-color: var(--light) !important;
 }
 
@@ -595,7 +595,7 @@ h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-w
   border: 1px solid transparent;
 }
 
-.ant-pagination-item-active, .ant-pagination-item-active:focus, .ant-pagination-item:hover, .ant-pagination-prev .ant-pagination-item-link:hover, .ant-pagination-next .ant-pagination-item-link:hover {
+.ant-pagination-item-active, .ant-pagination-item-active:focus, .ant-pagination-item:hover, .ant-pagination-item:focus, .ant-pagination-prev .ant-pagination-item-link:hover, .ant-pagination-next .ant-pagination-item-link:hover {
   border-color: var(--highlight)
 }
 

@@ -8,6 +8,7 @@ import DataPropertyPage from './DataPropertyPage';
 import { Route, Redirect } from 'react-router'
 
 import { predicateTypes } from '../utils/utils'
+import IndividualPage from './IndividualPage';
 
 const { Content } = Layout;
 
@@ -105,6 +106,9 @@ export default class OntologyWiki extends React.Component {
                             )} />
                             <Route exact path={"/open/ontology/wiki/" + predicateTypes.dp + "/:entityID"} render={(props) => (
                                 <DataPropertyPage {...props} ontology={this.props.ontology} />
+                            )} />
+                            <Route exact path={"/open/ontology/wiki/" + predicateTypes.i + "/:entityID"} render={(props) => (
+                                <IndividualPage {...props} ontology={this.props.ontology} />
                             )} />
                         </div>
                     </Content>

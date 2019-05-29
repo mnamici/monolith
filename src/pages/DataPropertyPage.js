@@ -110,7 +110,7 @@ export default class DataPropertyPage extends React.Component {
                         </Card>
                     </div>
                     <List
-                        grid={{ gutter: 16, lg: 3, md: 2, sm: 1, xs: 1 }}
+                        grid={{ gutter: 16, lg: 2, md: 2, sm: 1, xs: 1 }}
                         dataSource={tabs}
                         renderItem={item => (
                             <List.Item style={{ paddingBottom: 8 }}>
