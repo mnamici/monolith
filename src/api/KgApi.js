@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import * as fakeData from './fakeData'
 
-const fakeCalls = true
+const fakeCalls = false
 
 function manageError(err) {
     if (err.response === undefined)
@@ -86,10 +86,10 @@ export function getKnowledgeGraphInfo(kgIri, callback) {
     });
 }
 
-export function patchKnowledgeGraphFile(kgFile, callback) {
+export function putKnowledgeGraphFile(kgFile, callback) {
     if (fakeCalls) return callback(fakeData.kgs[0])
     const url = localStorage.getItem('mastroUrl') + '/knowledgeGraph/file'
-    const method = 'PATCH'
+    const method = 'PUT'
     axios({
         url: url,
         method: method,
@@ -192,7 +192,7 @@ export function getQueryCatalogKg(kgIri, callback) {
         params: { iri: kgIri },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
-        callback(response.data)
+        callback(response.data.queryCatalog)
     }).catch(function (err) {
         manageError(err)
     });
@@ -299,7 +299,7 @@ export function startNewQuery(kgIri, query, callback) {
         data: query,
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
-        callback(response.data.executionId)
+        callback(query.queryID)
     }).catch(function (err) {
         manageError(err)
     });
@@ -315,7 +315,7 @@ export function startQuery(kgIri, queryID, callback) {
         params: { iri: kgIri },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
-        callback(response.data.executionId)
+        callback(queryID)
     }).catch(function (err) {
         manageError(err)
     });

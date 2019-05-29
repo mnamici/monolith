@@ -5,6 +5,7 @@ import KnowledgeGraphMenu from './KnowledgeGraphMenu';
 import KnowledgeGraphInfo from './KnowledgeGraphInfo';
 import KnowledgeGraphSPARQLEndpoint from './KnowledgeGraphSPARQLEndpoint';
 import InstanceNavigation from './InstanceNavigationGroup';
+import ImportKnowledgeGraph from './ImportKnowledgeGraph';
 
 const { Content, Sider } = Layout;
 export default class CurrentKnowledgeGraph extends React.Component {
@@ -41,8 +42,10 @@ export default class CurrentKnowledgeGraph extends React.Component {
                         <div>
                             <Route path="/open/kg/info" render={(props) =>
                                 <KnowledgeGraphInfo {...props} kg={this.props.kg} />} />
+                            <Route path="/open/kg/import" render={(props) =>
+                                <ImportKnowledgeGraph kg={this.props.kg} />} />
                             <Route path="/open/kg/explore" render={(props) =>
-                                <InstanceNavigation />} />
+                                <InstanceNavigation />} kg={this.props.kg} />
                             <Route path="/open/kg/endpoint" render={(props) =>
                                 <KnowledgeGraphSPARQLEndpoint {...props} kg={this.props.kg} />} />
                         </div>

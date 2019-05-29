@@ -52,7 +52,8 @@ export default class MastroSPARQLEndpoint extends React.Component {
 
         this._isMounted && this.setState({
             catalog: data,
-            loadingCatalog: false
+            loadingCatalog: false,
+            open: null
         });
     }
 

@@ -37,7 +37,7 @@ export default class KnowledgeGraphSPARQLEndpoint extends React.Component {
 
     requestCatalog() {
         getQueryCatalogKg(
-            this.props.kg,
+            this.props.kg.kgIri,
             this.loadedCatalog)
     }
 

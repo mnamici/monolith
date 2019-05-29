@@ -26,6 +26,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
         dirty: false,
         validID: true,
         // QUERY STATUS
+        queryID: null,
         loading: false,
         status: {},
         interval: 0,
@@ -53,6 +54,14 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
                 },
                 persistent: null
             });
+
+        if (this.props.query.queryCode !== undefined) {
+            this.yasqe.setValue(this.props.query.queryCode)
+            this.yasqe.collapsePrefixes(true)
+        }
+        else
+            this.yasqe.setValue("")
+
         this.yasqe.on('change', () => {
             if (!this.state.dirty) {
                 this.props.setDirty(this.state.tabKey)
@@ -60,12 +69,6 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
             }
             // console.debug(this.yasqe.getQueryType())
         })
-        if (this.props.query.queryCode !== undefined) {
-            this.yasqe.setValue(this.props.query.queryCode)
-            this.yasqe.collapsePrefixes(true)
-        }
-        else
-            this.yasqe.setValue("")
         this.yasqe.refresh();
     }
 
@@ -110,7 +113,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
             queryCode: this.yasqe.getValue()
         }
         putInQueryCatalog(
-            this.props.kg,
+            this.props.kg.kgIri,
             query,
             () => {
                 this.props.renameTab(this.state.tabKey, this.state.queryID)
@@ -119,7 +122,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
                     overwirteModalVisible: false,
                     modalConfirmLoading: false,
                     new: false,
-                    dirty: false
+                    dirty: false,
                 })
             })
     }
@@ -141,8 +144,8 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
     start() {
         if (!this.state.new && !this.state.dirty)
             startQuery(
-                this.props.kg,
-                this.state.tabKey,
+                this.props.kg.kgIri,
+                this.state.queryID,
                 this.startPolling.bind(this))
         else {
             const query = {
@@ -151,7 +154,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
                 queryCode: this.yasqe.getValue()
             }
             startNewQuery(
-                this.props.kg,
+                this.props.kg.kgIri,
                 query,
                 this.startPolling.bind(this))
         }
@@ -164,9 +167,10 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
 
     polling() {
         getQueryStatus(
-            this.props.kg,
+            this.props.kg.kgIri,
             this.state.executionID,
-            this.checkStatus.bind(this)
+            this.checkStatus.bind(this),
+            this.stopPolling.bind(this)
         )
     }
 
@@ -204,7 +208,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
 
         else if (this.state.new) {
             postInQueryCatalog(
-                this.props.kg,
+                this.props.kg.kgIri,
                 query,
                 () => {
                     this.props.renameTab(this.state.tabKey, this.state.queryID)
@@ -213,14 +217,16 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
                         modalConfirmLoading: false,
                         tabKey: this.state.queryID,
                         new: false,
-                        dirty: false
+                        dirty: false,
+                        queryID: query.queryID,
+
                     })
 
                 })
         }
         else {
             putInQueryCatalog(
-                this.props.kg,
+                this.props.kg.kgIri,
                 query,
                 () => {
                     this.props.renameTab(this.state.tabKey, this.state.queryID)
@@ -232,7 +238,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
                 },
                 //FIXME IF CANNOT PUT TRY TO CREATE NEW QUERY 
                 () => postInQueryCatalog(
-                    this.props.kg,
+                    this.props.kg.kgIri,
                     query, () => {
                         this.props.renameTab(this.state.tabKey, this.state.queryID)
                         this.setState({
@@ -307,7 +313,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
         if (this.state.showResults) {
             elements.push(
                 <Results
-                    kg={this.props.kg}
+                    kg={this.props.kg.kgIri}
                     executionID={this.state.executionID}
                     numberOfResults={this.state.status.numResults}
                     running={this.state.loading}

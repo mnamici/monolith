@@ -27,8 +27,8 @@ class DrawerForm extends React.Component {
             if (!err) {
                 const kg = {
                     kgIri: values.iri,
-                    kgTitle: values.title,
-                    kgCreator: { username: localStorage.getItem('username') },
+                    kgTitle: [{ lang: '', content: values.title }],
+                    kgCreator: { name: localStorage.getItem('username') },
                     kgPublisher: {
                         agentIri: values.publisherAgentIri,
                         agentLabels: [{ lang: '', content: values.publisherAgentLabel }],
@@ -36,7 +36,7 @@ class DrawerForm extends React.Component {
                         agentEmail: values.publisherAgentEmail,
                         agentAddress: values.publisherAgentAddress,
                     },
-                    kgContributors: [{ username: localStorage.getItem('username') }],
+                    kgContributors: [{ name: localStorage.getItem('username') }],
                     kgRightsHolder: {
                         agentIri: values.rightsHolderAgentIri,
                         agentLabels: [{ lang: '', content: values.rightsHolderAgentLabel }],
@@ -46,7 +46,7 @@ class DrawerForm extends React.Component {
                     },
                     kgCreationTs: Date.now(),
                     kgLastModifiedTs: Date.now(),
-                    kgDescriptions: { lang: '', content: values.description },
+                    kgDescriptions: [{ lang: '', content: values.description }],
                 }
                 postKnowledgeGraph(kg, this.onClose)
             }
@@ -110,7 +110,7 @@ class DrawerForm extends React.Component {
                         <Form.Item label="Address">
                             {getFieldDecorator(`${id}AgentAddress`, {
                                 rules: [
-                                    { type: 'email', required: false, message: 'Please enter agent address', },
+                                    { required: false, message: 'Please enter agent address', },
                                 ],
                             })(<Input placeholder='Please enter agent address' />)}
                         </Form.Item>
