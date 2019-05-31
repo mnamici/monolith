@@ -57,7 +57,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
 
         if (this.props.query.queryCode !== undefined) {
             this.yasqe.setValue(this.props.query.queryCode)
-            this.yasqe.collapsePrefixes(true)
+            // this.yasqe.collapsePrefixes(true)
         }
         else
             this.yasqe.setValue("")
@@ -77,6 +77,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
     }
 
     loadedPrefixes = (prefixes) => {
+        if (true) return
         let yPrefixes = {}
         for (let prefix of prefixes) {
             let p = prefix.name

@@ -6,8 +6,12 @@ import * as fakeData from './fakeData'
 const fakeCalls = false
 
 function manageError(err) {
-    if (err.response === undefined)
-        reportError('No message provided');
+    if (err.response === undefined) {
+        reportError(err.message);
+        if (err.message === 'Network Error') {
+            localStorage.removeItem('headers'); window.location.reload()
+        }
+    }
     else {
         reportError(err.response.data);
         if (err.response.status === 401) { localStorage.removeItem('headers'); window.location.reload() }
@@ -312,7 +316,7 @@ export function startQuery(kgIri, queryID, callback) {
     axios({
         url: url,
         method: method,
-        params: { iri: kgIri },
+        params: { iri: kgIri, namedGraph: "http://named.com" },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(queryID)
@@ -345,7 +349,7 @@ export function getQueryResults(kgIri, executionID, page, pageSize, callback, er
     axios({
         url: url,
         method: method,
-        params: { iri: kgIri, pagesize: pageSize, pagenumber: page },
+        params: { iri: kgIri, offset: page * pageSize, pagesize: pageSize },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
@@ -387,17 +391,82 @@ export function getPrefixes(kgIri, callback) {
     });
 }
 
+export function getClasses(kgIri, callback) {
+    if (fakeCalls) { return callback([]) }
+    const url = localStorage.getItem('mastroUrl') + '/knowledgeGraph/classes'
+    const method = 'GET'
+    axios({
+        url: url,
+        params: { iri: kgIri, namedGraph: "http://named.com" },
+        method: method,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
 
-
+export function getInstances(kgIri, classIri, callback) {
+    if (fakeCalls) { return callback([]) }
+    const url = localStorage.getItem('mastroUrl') + '/knowledgeGraph/class/instances'
+    const method = 'GET'
+    axios({
+        url: url,
+        params: { kgIri: kgIri, classIri: classIri, namedGraph: "http://named.com" },
+        method: method,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
 
 export function getInstancePage(kgIri, iri, callback) {
-    return callback(fakeData.instancePage)
+    if (fakeCalls) return callback(fakeData.instancePage)
+    const url = localStorage.getItem('mastroUrl') + '/knowledgeGraph/instance/page'
+    const method = 'GET'
+    axios({
+        url: url,
+        params: { instanceIri: iri, kgIri: kgIri, namedGraph: "http://named.com" },
+        method: method,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
 }
 
-export function getSubjectType(kgIri, iri, predicate, page, callback) {
-    return callback(fakeData.getSubjectPredicatePageType)
+export function getSubjectType(kgIri, subject, predicate, type, page, callback) {
+    if (fakeCalls) return callback(fakeData.getSubjectPredicatePageType)
+    const url = localStorage.getItem('mastroUrl') + '/knowledgeGraph/instance/subjectType'
+    const method = 'GET'
+    axios({
+        url: url,
+        method: method,
+        params: { kgIri, subject, predicate, type, page, namedGraph: "http://named.com" },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
 }
 
-export function getObjectType(kgIri, iri, predicate, page, callback) {
-    return callback(fakeData.getObjectPredicatePageType)
+export function getObjectType(kgIri, object, predicate, type, page, callback) {
+    if (fakeCalls) return callback(fakeData.getObjectPredicatePageType)
+    const url = localStorage.getItem('mastroUrl') + '/knowledgeGraph/instance/objectType'
+    const method = 'GET'
+    axios({
+        url: url,
+        params: { kgIri, object, predicate, type, page, namedGraph: "http://named.com" },
+        method: method,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
 }

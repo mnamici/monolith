@@ -9,8 +9,8 @@ export default class InstanceNavigationObjectTable extends React.Component {
         }
     }
 
-    componentDidMount() {
-        const obj = this.props.objects
+    componentWillReceiveProps(props) {
+        const obj = props.objects
         let expanded = {}
         for (let i = 0; i < obj.object_triples.length; i++) {
             let predicateLink = obj.object_triples[i].predicate;
@@ -22,7 +22,7 @@ export default class InstanceNavigationObjectTable extends React.Component {
 
     expandTypeSubject(predicate, type) {
         let expanded = { ...this.state.expanded }
-        if(expanded[predicate].has(type)){
+        if (expanded[predicate].has(type)) {
             expanded[predicate].delete(type)
         }
         else
@@ -33,6 +33,7 @@ export default class InstanceNavigationObjectTable extends React.Component {
 
     render() {
         const obj = this.props.objects
+        if (obj.object_triples.length === 0) return null
         let tableInner = []
 
         for (let i = 0; i < obj.object_triples.length; i++) {
@@ -55,6 +56,8 @@ export default class InstanceNavigationObjectTable extends React.Component {
                         {'(' + nRes + ' resource' + suff + ')'}
                         {this.state.expanded[predicateLink] && this.state.expanded[predicateLink].has(type) &&
                             <InstanceNavigationObjectType
+                                kg={this.props.kg}
+                                resource={this.props.resource}
                                 predicate={predicateLink}
                                 type={type}
                                 pages={pages}

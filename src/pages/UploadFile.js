@@ -69,14 +69,15 @@ function beforeUpload(file) {
       getBase64(file, (file64) => {
         const fileInfo = {
           content: file64,
-          fileType: ".rdf",
+          fileType: "N3",
           fileName: file.name
         }
 
         const kgFile = {
           file: fileInfo,
           destination: {
-            destination: this.props.current.kgIri
+            destination: this.props.current.kgIri,
+            namedGraph: 'http://named.com'
           }
         }
 

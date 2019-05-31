@@ -6,13 +6,14 @@ import InstanceNavigationSubjectType from './InstanceNavigationSubjectType';
 function renderDataValue(data) {
     if (data.indexOf("^^") >= 0) {
         var ar = data.split("^^");
-        return '' +
-            ar[0] +
-            '<sup>' +
-            '<a href="' + ar[1] + '">' +
-            ar[1].replace("http://www.w3.org/2001/XMLSchema#", "<small>xsd:</small>") +
-            '</a>' +
-            '</sup>';
+        return <div>
+            {ar[0]}
+            <sup>
+                <a href={ar[1]}>
+                    {ar[1].replace("http://www.w3.org/2001/XMLSchema#", "xsd:")}
+                </a>
+            </sup>
+        </div>;
     }
     else
         return data;
@@ -25,11 +26,11 @@ export default class InstanceNavigationSubjectTable extends React.Component {
         }
     }
 
-    componentDidMount() {
-        const obj = this.props.subjects
+    componentWillReceiveProps(props) {
+        const obj = props.subjects
         let expanded = {}
         for (let i = 0; i < obj.subject_object_properties.length; i++) {
-            let predicateLink = obj.subject_object_properties[i].predicate;   
+            let predicateLink = obj.subject_object_properties[i].predicate;
             expanded[predicateLink] = new Set()
         }
 
@@ -38,7 +39,7 @@ export default class InstanceNavigationSubjectTable extends React.Component {
 
     expandTypeSubject(predicate, type) {
         let expanded = { ...this.state.expanded }
-        if(expanded[predicate].has(type)){
+        if (expanded[predicate].has(type)) {
             expanded[predicate].delete(type)
         }
         else
@@ -49,6 +50,7 @@ export default class InstanceNavigationSubjectTable extends React.Component {
 
     render() {
         const obj = this.props.subjects
+        if (obj.subject_data_properties.length === 0 && obj.subject_object_properties.length === 0) return null
 
         let tableInnerD = []
         for (let i = 0; i < obj.subject_data_properties.length; i++) {
@@ -102,6 +104,8 @@ export default class InstanceNavigationSubjectTable extends React.Component {
                         {'(' + nRes + ' resource' + suff + ')'}
                         {this.state.expanded[predicateLink] && this.state.expanded[predicateLink].has(type) &&
                             <InstanceNavigationSubjectType
+                                kg={this.props.kg}
+                                resource={this.props.resource}
                                 predicate={predicateLink}
                                 type={type}
                                 pages={pages}

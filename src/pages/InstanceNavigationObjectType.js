@@ -12,9 +12,7 @@ export default class InstanceNavigationObjectType extends React.Component {
     }
 
     componentDidMount() {
-        // this.props.predicate
-        // this.props.type
-        getObjectType(this.props.kg, this.props.resource, this.props.type, this.state.page, this.loaded)
+        getObjectType(this.props.kg.kgIri, this.props.resource, this.props.predicate, this.props.type, this.state.page, this.loaded)
     }
 
     loaded = (data) => {
@@ -22,11 +20,27 @@ export default class InstanceNavigationObjectType extends React.Component {
     }
 
     nextPage = () => {
-        this.setState({ page: this.state.page + 1 })
+        const nextPageNumber = this.state.page + 1
+        getObjectType(
+            this.props.kg.kgIri,
+            this.props.resource,
+            this.props.predicate,
+            this.props.type,
+            nextPageNumber,
+            this.loaded)
+        this.setState({ page: nextPageNumber })
     }
 
     previousPage = () => {
-        this.setState({ page: this.state.page - 1 })
+        const prevPageNumber = this.state.page - 1
+        getObjectType(
+            this.props.kg.kgIri,
+            this.props.resource,
+            this.props.predicate,
+            this.props.type,
+            prevPageNumber,
+            this.loaded)
+        this.setState({ page: prevPageNumber })
     }
 
     render() {
@@ -43,7 +57,7 @@ export default class InstanceNavigationObjectType extends React.Component {
                     <Link to={'?iri=' + encodeURIComponent(iri)}>
                         {this.props.renderShortIRI(obj.object_triples[0].subjects[j].subject_resource_short)}
                     </Link>
-                    {label !== undefined && <div>
+                    {label && <div>
                         <font>&#8618; </font>
                         <small>{label}</small>
                     </div>}
@@ -56,7 +70,7 @@ export default class InstanceNavigationObjectType extends React.Component {
                 {pages > 1 && <div style={{ float: 'right' }}>
                     {this.state.page !== 0 && <button className="ant-btn" onClick={this.previousPage}>&lt;</button>}
                     {<button className="ant-btn" style={pages > this.state.page + 1 ? {} : { visibility: 'hidden' }} onClick={this.nextPage}>&gt;</button>}
-                    <br /><small style={{float: 'right'}}>{this.state.page + 1} of {pages}</small>
+                    <br /><small style={{ float: 'right' }}>{this.state.page + 1} of {pages}</small>
                 </div>}
                 <ul>
                     {values}

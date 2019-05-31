@@ -10,7 +10,7 @@ import LoadKnowledgeGraphs from './LoadKnowledgeGraphs';
 
 const POLLING_TIME = 1000;
 
-export default class MastroResultsTable extends React.Component {
+export default class KnowledgeGraphResultsTable extends React.Component {
     state = {
         headTerms: [],
         data: [],
@@ -56,16 +56,18 @@ export default class MastroResultsTable extends React.Component {
     }
 
     convertData(results) {
+
         var data = [];
-        for (let i = 0; i < results.results.length; i++) {
-            var object = {};
-            for (let j = 0; j < results.results[i].length; j++) {
-                object[results.headTerms[j]] = results.results[i][j].value
+        if (results.results)
+            for (let i = 0; i < results.results.length; i++) {
+                var object = {};
+                for (let j = 0; j < results.results[i].length; j++) {
+                    object[results.headTerms[j]] = results.results[i][j].shortIRI
+                }
+                object['url'] = i;
+                data.push(object);
             }
-            object['url'] = i;
-            data.push(object);
-        }
-        this.setState({ headTerms: results.headTerms, data: data, loading: this.state.loading && results.results.length < this.state.pagination.defaultPageSize });
+        this.setState({ headTerms: results.headTerms || [], data: data, loading: this.state.loading && data.length < this.state.pagination.defaultPageSize });
     }
 
     handleTableChange = (pagination, filters, sorter) => {

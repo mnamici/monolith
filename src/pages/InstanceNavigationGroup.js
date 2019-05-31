@@ -4,6 +4,7 @@ import { Spin } from 'antd';
 import InstanceNavigationSubjectTable from './InstanceNavigationSubjectTable';
 import InstanceNavigationObjectTable from './InstanceNavigationObjectTable';
 import { Link } from 'react-router-dom'
+import { getUrlVars } from '../utils/utils';
 
 var resource;
 
@@ -12,18 +13,6 @@ var resource;
 //     return html.replace(/<a/g, '<aa').replace(/<\/a/g, '</aa')
 //         .replace(/text-decoration: underline; color:#0000ff;/g, "color:#000000;");
 // }
-
-function getUrlVars() {
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for (var i = 0; i < hashes.length; i++) {
-        hash = hashes[i].split('=');
-        vars.push(hash[0]);
-        vars[hash[0]] = decodeURIComponent(hash[1]);
-    }
-    return vars;
-}
-
 
 function renderFormats() {
     const ar = { 'RDF/XML': '.rdf', 'N-TRIPLES': '.ntriples', 'N3/Turtle': '.n3' };//, 'TTL':'.ttl'};
@@ -51,7 +40,7 @@ function renderShortIRI(iri) {
     if (iri === 'other_types')
         return 'Other...';
 
-    if (iri === undefined)
+    if (!iri)
         return '';
     else if (iri.indexOf("http:") >= 0)
         return iri;
@@ -77,12 +66,12 @@ export default class InstanceNavigation extends React.Component {
 
     componentDidMount() {
         resource = getUrlVars()["iri"];
-        getInstancePage(this.props.kg, resource, this.loaded)
+        getInstancePage(this.props.kg.kgIri, resource, this.loaded)
     }
 
     componentWillReceiveProps() {
         resource = getUrlVars()["iri"];
-        getInstancePage(this.props.kg, resource, this.loaded)
+        getInstancePage(this.props.kg.kgIri, resource, this.loaded)
     }
 
     loaded = (data) => {
@@ -106,10 +95,12 @@ export default class InstanceNavigation extends React.Component {
                 <h2 id="type">{renderType(ob)}</h2>
 
                 <InstanceNavigationSubjectTable
+                    kg={this.props.kg}
                     resource={resource}
                     subjects={this.state.data.subjects}
                     renderShortIRI={renderShortIRI} />
                 <InstanceNavigationObjectTable
+                    kg={this.props.kg}
                     resource={resource}
                     objects={this.state.data.objects}
                     renderShortIRI={renderShortIRI} />

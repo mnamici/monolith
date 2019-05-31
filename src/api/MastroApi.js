@@ -13,7 +13,7 @@ const fakeCalls = false
 
 function manageError(err) {
     if (err.response === undefined) {
-        reportError('No message provided');
+        reportError(err.message);
         if (err.message === 'Network Error') {
             localStorage.removeItem('headers'); window.location.reload()
         }
@@ -75,7 +75,7 @@ export function login(username, password, mastroUrl, callback) {
 
     }).catch(function (err) {
         if (err.response === undefined) {
-            reportError(err.response === undefined ? 'No message provided' : err.response.data);
+            reportError(err.response === undefined ? err.message : err.response.data);
             callback(false)
         }
         else switch (err.response.status) {
