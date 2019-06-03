@@ -131,7 +131,7 @@ export default class KnowledgeGraphResultsTable extends React.Component {
                 </Drawer>
                 <Table
                     className='results'
-                    style={{ minHeight: 200 }}
+                    style={{ minHeight: 200, overflow: 'auto' }}
                     columns={columns}
                     rowKey={record => record.url}
                     dataSource={this.state.data}

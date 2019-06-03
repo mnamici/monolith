@@ -9,6 +9,10 @@ export default class InstanceNavigationObjectTable extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.componentWillReceiveProps(this.props)
+    }
+
     componentWillReceiveProps(props) {
         const obj = props.objects
         let expanded = {}
