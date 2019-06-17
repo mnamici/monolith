@@ -143,7 +143,7 @@ export default class OntologiesList extends React.Component {
                             )
                     }
                 />
-            </div >
+            </div>
         );
     }
 }

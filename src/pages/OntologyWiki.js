@@ -1,6 +1,5 @@
 import React from 'react';
-import { Layout, Drawer, Button } from 'antd';
-import SearchTree from './FastSearchTree';
+import { Layout, Button} from 'antd';
 import ClassPage from './ClassPage';
 import ObjectPropertyPage from './ObjectPropertyPage';
 import DataPropertyPage from './DataPropertyPage';
@@ -9,6 +8,7 @@ import { Route, Redirect } from 'react-router'
 
 import { predicateTypes } from '../utils/utils'
 import IndividualPage from './IndividualPage';
+import OntologyDrawer from './OntologyDrawer';
 
 const { Content } = Layout;
 
@@ -61,33 +61,12 @@ export default class OntologyWiki extends React.Component {
         // console.log("RENDER: ",this.state)
         return (
             <Layout>
-                <Drawer title='Ontology Entities' visible={this.state.visible} onClose={this.toggle} width={'50vw'}>
-                    <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
-                </Drawer>
-                {/* <Header style={{ backgroundColor: 'transparent', display: 'flex', justifyContent: 'center', lineHeight: 1.5, paddingTop:16 }}>
-                    <div style={{ display: 'inline-flex' }}>
-                        <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
-                        <SearchIndividuals style={{ display: 'inherit' }} />
+                <OntologyDrawer
+                    ontology={this.props.ontology}
+                    visible={this.state.visible}
+                    toggle={this.toggle}
+                    onHandle={this.onHandle} />
 
-                    </div>
-
-                </Header> */}
-                {/* <Sider
-                    width={400}
-                    style={{ background: '#fff' }}
-                    collapsed={this.state.collapsed}
-                >
-                    <Icon
-                        style={{display: "inherit", cursor: "pointer",  transition: "color .3s"}}
-                        theme="filled"
-                        type={this.state.collapsed ? 'caret-right' : 'caret-left'}
-                        onClick={this.toggle}
-                    />
-
-                    <SearchIndividuals style={{ margin: '16px 8px 16px 0px'  }}/>
-                    <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
-
-                </Sider> */}
                 <Layout >
                     <Content >
                         <div style={{ height: 'calc(100vh - 25px)', overflowY: 'auto', padding: 8 }}>

@@ -1,10 +1,12 @@
 import React from 'react'
 import { getInstancePage } from '../api/KgApi';
-import { Spin } from 'antd';
+import { Spin, Card } from 'antd';
 import InstanceNavigationSubjectTable from './InstanceNavigationSubjectTable';
 import InstanceNavigationObjectTable from './InstanceNavigationObjectTable';
 import { Link } from 'react-router-dom'
 import { getUrlVars } from '../utils/utils';
+import DownloadFile from './DownloadFile';
+import ListItem from './ListItem';
 
 var resource;
 
@@ -14,19 +16,7 @@ var resource;
 //         .replace(/text-decoration: underline; color:#0000ff;/g, "color:#000000;");
 // }
 
-function renderFormats() {
-    const ar = { 'RDF/XML': '.rdf', 'N-TRIPLES': '.ntriples', 'N3/Turtle': '.n3' };//, 'TTL':'.ttl'};
-    let html = []
-    for (let element in ar) {
-        html.push(<a href={window.location.href + ar[element]} key={element}>{element + ' '}</a>)
-    };
 
-    return (
-        <div>
-            {html}
-        </div>
-    )
-}
 
 function renderType(ob) {
     if (ob.type === undefined) return '';
@@ -87,23 +77,33 @@ export default class InstanceNavigation extends React.Component {
         }
         return (
             <div style={{ padding: 8 }}>
-                <div style={{ float: "right" }}>
-                    <div id="formats">{renderFormats()}</div>
+                <div style={{ textAlign: 'center' }}>
+                    <h1 id="title">{label}</h1>
+                    <h3 id="iri">{resource}</h3>
+                    <h2 id="type">{renderType(ob)}</h2>
                 </div>
-                <h1 id="title">{label}</h1>
-                <h3 id="iri">{resource}</h3>
-                <h2 id="type">{renderType(ob)}</h2>
-
-                <InstanceNavigationSubjectTable
-                    kg={this.props.kg}
-                    resource={resource}
-                    subjects={this.state.data.subjects}
-                    renderShortIRI={renderShortIRI} />
-                <InstanceNavigationObjectTable
-                    kg={this.props.kg}
-                    resource={resource}
-                    objects={this.state.data.objects}
-                    renderShortIRI={renderShortIRI} />
+                <div style={{ paddingBottom: 16 }}>
+                    <Card title="Description" className='description'>
+                        <ListItem label data={ob.descriptions} />
+                    </Card>
+                </div>
+                <div style={{ paddingBottom: 16 }}>
+                    <InstanceNavigationSubjectTable
+                        kg={this.props.kg}
+                        resource={resource}
+                        subjects={this.state.data.subjects}
+                        renderShortIRI={renderShortIRI} />
+                </div>
+                <div style={{ paddingBottom: 16 }}>
+                    <InstanceNavigationObjectTable
+                        kg={this.props.kg}
+                        resource={resource}
+                        objects={this.state.data.objects}
+                        renderShortIRI={renderShortIRI} />
+                </div>
+                <div style={{ display: 'flex' }}>
+                    <DownloadFile kgInstance kg={this.props.kg} />
+                </div>
             </div>
         )
 

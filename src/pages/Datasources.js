@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Divider, Select, Button, Icon, Drawer } from 'antd';
+import { List, Divider, Select, Button, Icon, Drawer, Spin } from 'antd';
 import DatasourceCard from './DatasourceCard';
 import DatasourceForm from './DatasourceForm';
 import { getDatasources, deleteDatasources } from '../api/MastroApi';
@@ -10,7 +10,8 @@ export default class Datasources extends React.Component {
     state = {
         data: [],
         visible: false,
-        drawer: null
+        drawer: null,
+        loading: true
     }
 
     componentDidMount() {
@@ -22,7 +23,7 @@ export default class Datasources extends React.Component {
     }
 
     loaded = (data) => {
-        this.setState({ data, visible: false })
+        this.setState({ data, visible: false, loading: false })
     }
 
     delete = (datasourceID) => {
@@ -52,48 +53,49 @@ export default class Datasources extends React.Component {
 
     render() {
         return (
-            <div>
-                <Divider>datasources</Divider>
-                <Select defaultValue='date' onChange={this.changeSort} style={{ padding: 6 }}>
-                    <Option value='date' >
-                        Sort by date
+            this.state.loading ? <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
+                <div>
+                    <Divider>datasources</Divider>
+                    <Select defaultValue='date' onChange={this.changeSort} style={{ padding: 6 }}>
+                        <Option value='date' >
+                            Sort by date
                     </Option>
-                    <Option value='name' >
-                        Sort by name
+                        <Option value='name' >
+                            Sort by name
                     </Option>
-                </Select>
-                <List
-                    className='bigCards'
-                    rowKey="ontologiesView"
-                    grid={{ gutter: 12, lg: 3, md: 2, sm: 1, xs: 1 }}
-                    dataSource={['', ...this.state.data]}
-                    renderItem={item =>
-                        item ? (
-                            <List.Item key={item.id} style={{ paddingBottom: 6 }} >
-                                <DatasourceCard datasource={item} open={this.open} delete={this.delete} />
-                            </List.Item>
-                        ) : (
-                                <List.Item>
-                                    <Button type='primary' style={{ height: 274, width: '100%' }} onClick={this.showDrawer}>
-                                        <Icon type="plus" /> Add Datasource
-                                    </Button>
-                                    <Drawer
-                                        width='40vw'
-                                        onClose={() => this.setState({ visible: false, drawer: null })}
-                                        visible={this.state.visible}
-                                        style={{
-                                            overflow: 'auto',
-                                            height: 'calc(100% - 108px)',
-                                            paddingBottom: '108px',
-                                        }}
-                                    >
-                                        {this.state.drawer}
-                                    </Drawer>
+                    </Select>
+                    <List
+                        className='bigCards'
+                        rowKey="ontologiesView"
+                        grid={{ gutter: 12, lg: 3, md: 2, sm: 1, xs: 1 }}
+                        dataSource={['', ...this.state.data]}
+                        renderItem={(item, index) =>
+                            item ? (
+                                <List.Item key={index} style={{ paddingBottom: 6 }} >
+                                    <DatasourceCard datasource={item} open={this.open} delete={this.delete} />
                                 </List.Item>
-                            )
-                    }
-                />
-            </div>
+                            ) : (
+                                    <List.Item key={index}>
+                                        <Button type='primary' style={{ height: 274, width: '100%' }} onClick={this.showDrawer}>
+                                            <Icon type="plus" /> Add Datasource
+                                        </Button>
+                                        <Drawer
+                                            width='40vw'
+                                            onClose={() => this.setState({ visible: false, drawer: null })}
+                                            visible={this.state.visible}
+                                            style={{
+                                                overflow: 'auto',
+                                                height: 'calc(100% - 108px)',
+                                                paddingBottom: '108px',
+                                            }}
+                                        >
+                                            {this.state.drawer}
+                                        </Drawer>
+                                    </List.Item>
+                                )
+                        }
+                    />
+                </div>
         );
     }
 }

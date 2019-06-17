@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import InstanceNavigationSubjectType from './InstanceNavigationSubjectType';
+import { Card } from 'antd';
 // const arrow = '<br><font color="black">&#8618; </font>';
 
 function renderDataValue(data) {
@@ -99,12 +100,12 @@ export default class InstanceNavigationSubjectTable extends React.Component {
                 let suff = nRes === 1 ? '' : 's';
                 values.push(
                     <li key={j}>
-                        <button
+                        <span
                             className='link'
                             onClick={() => this.expandTypeSubject(predicateLink, type, pages)}
                         >
                             {this.props.renderShortIRI(obj.subject_object_properties[i].objects_types[j].object_type_short)}
-                        </button>
+                        </span>
                         {'(' + nRes + ' resource' + suff + ')'}
                         {this.state.expanded[predicateLink] && this.state.expanded[predicateLink].has(type) &&
                             <InstanceNavigationSubjectType
@@ -119,7 +120,7 @@ export default class InstanceNavigationSubjectTable extends React.Component {
             }
 
             tableInnerS.push(
-                <tr key={i}>
+                <tr key={i} style={{ wordBreak: 'break-all' }}>
                     <td>
                         <Link to={'?iri=' + encodeURIComponent(predicateLink)}>
                             {this.props.renderShortIRI(predicate)}
@@ -136,22 +137,22 @@ export default class InstanceNavigationSubjectTable extends React.Component {
         }
 
         return (
-            <div>
+            <Card tabList={[{ tab: 'Direct Relations', key: 'dr' }]} >
                 <div style={{ overflow: 'auto' }}>
-                    <table style={{ width: '100%', tableLayout: 'fixed1' }}>
-                        <thead className='ant-table-thead'>
+                    <table style={{ width: '100%', tableLayout: 'fixed' }}>
+                        {/* <thead className='ant-table-thead'>
                             <tr>
-                                <th>Direct Relations</th>
-                                <th></th>
+                                <th style={{width: '40%', height: 0}}></th>
+                                <th style={{width: '60%', height: 0}}></th>
                             </tr>
-                        </thead>
+                        </thead> */}
                         <tbody className='ant-table-tbody'>
                             {tableInnerD}
                             {tableInnerS}
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </Card>
         )
     }
 }

@@ -29,7 +29,18 @@ export default class Assertion extends React.Component {
         return (
             <Card className='mappingAssertion' title={this.props.entity === true &&
                 <Entity entity={this.props.assertion.currentEntity} />
-            } >
+            } actions={!this.props.entity && [
+                <span onClick={
+                    () => console.log('edit')
+                }>
+                    edit
+                </span>,
+                <span onClick={
+                    () => console.log('delete')
+                }>
+                    delete
+                </span>
+            ]}>
                 <ListMapItem data={data} />
             </Card>
         );

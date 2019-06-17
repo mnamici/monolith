@@ -15,7 +15,7 @@ const { Content, Footer, Sider } = Layout;
 
 export default class MainLayout extends React.Component {
   state = {
-    collapsed: false,
+    collapsed: true,
     current: {},
     open: {
       ontologies: [],
@@ -142,7 +142,7 @@ export default class MainLayout extends React.Component {
     return (
       <Layout style={{ height: '100vh' }} >
         <Sider
-          collapsible
+          // collapsible
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
           className='mainMenu'

@@ -204,6 +204,10 @@ td {
   padding: 0
 }
 
+.ant-drawer-body .ant-tabs .ant-tabs-content .ant-tabs-tabpane-active {
+  height: 80vh
+}
+
 /***************************
 *                          *
 *                          *
@@ -383,13 +387,17 @@ a:hover, .link:hover {
 }
 
 .ant-layout-footer {
-  background-color: var(--light) !important
+  background-color: var(--highlight-gray) !important
 }
 
 .ant-popover-inner-content, .ant-popover-arrow {
   border-color: rgb(43, 43, 43) !important;
   background-color: rgb(43, 43, 43);
   color: var(--white)
+}
+
+.kgInstancesCard .ant-card-head {
+  background-color: transparent;
 }
 
 /* TITLES AND BUTTONS BACKGROUND */
@@ -427,7 +435,7 @@ a:hover, .link:hover {
   text-decoration: none !important
 }
 
-.ant-tabs-extra-content .ant-tabs-new-tab:hover, .ant-layout-sider-trigger:hover, .ontologyTrigger:hover, .mainMenuArrow:hover, .ant-dropdown-menu-item-active {
+.ant-tabs-extra-content .ant-tabs-new-tab:hover, .ant-layout-sider-trigger:hover, .ontologyTrigger:hover, .ant-dropdown-menu-item-active {
   border-color: transparent;
   color: var(--highlight) !important;
   transition: .4s ease-in-out

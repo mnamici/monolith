@@ -1,11 +1,12 @@
 import React from 'react'
 import { getClasses } from '../api/KgApi';
-import { Table } from 'antd';
-import { NavLink } from 'react-router-dom'
+import { List, Card } from 'antd';
+import KnowledgeGraphInstances from './KnowledgeGraphInstances';
 
 export default class KnowledgeGraphClasses extends React.Component {
     state = {
-        data: []
+        data: [],
+        expanded: {}
     }
 
     componentDidMount() {
@@ -13,31 +14,40 @@ export default class KnowledgeGraphClasses extends React.Component {
     }
 
     loaded = (data) => {
-        this.converData(data)
-    }
-
-    converData(receivedData) {
-        let data = []
-        for (let i = 0; i < receivedData.length; i++) {
-            data.push({
-                key: i,
-                value: <NavLink to={'/open/kg/instances/?classIri=' + receivedData[i]}>{receivedData[i]}</NavLink>
-            })
-        }
         this.setState({ data })
     }
 
+    expandClass(className) {
+        let expanded = { ...this.state.expanded }
+        expanded[className] = !expanded[className]
+
+        this.setState({ expanded })
+    }
+
     render() {
-        return (
-            <div style={{ padding: 8 }}>
-                <h1 id="title">Knowledge Graph Classes</h1>
-                <Table
-                    columns={[{ dataIndex: 'value' }]}
-                    showHeader={false}
-                    pagination={false}
-                    dataSource={this.state.data}
-                />
+        const receivedData = this.state.data
+        let data = []
+        for (let i = 0; i < receivedData.length; i++) {
+            data.push(<div>
+                <span className='link' onClick={() => this.expandClass(receivedData[i])} style={{ background: 'transparent' }}>
+                    {receivedData[i]}
+                </span>
+                {this.state.expanded[receivedData[i]] && <KnowledgeGraphInstances kg={this.props.kg} kgClass={receivedData[i]} />}
             </div>
+            )
+        }
+        return (
+            <List
+                className='kgInstancesCard'
+                style={{margin: '0px 6px'}}
+                grid={{ column: 1, gutter: 6 }}
+                dataSource={data}
+                renderItem={(item, index) =>
+                    <List.Item key={index}>
+                        <Card title={item} style={{ background: 'transparent' }} />
+                    </List.Item>
+
+                } />
         )
     }
 }

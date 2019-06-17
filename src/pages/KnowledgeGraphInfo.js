@@ -68,11 +68,11 @@ export default class KnowledgeGraphInfo extends React.Component {
             users: [
                 {
                     mapKey: 'Creator',
-                    mapValue: this.state.data.kgCreator.username
+                    mapValue: this.state.data.kgCreator.name
                 },
                 {
                     mapKey: 'Contributors',
-                    mapValue: this.state.data.kgContributors.map((u, i) => u.username + (i !== this.state.data.kgContributors.length - 1 ? ', ' : ''))
+                    mapValue: this.state.data.kgContributors.map((u, i) => u.name + (i !== this.state.data.kgContributors.length - 1 ? ', ' : ''))
                 },
             ]
         }

@@ -426,8 +426,9 @@ export default class MastroSPARQLTabPane extends React.Component {
                     numberOfResults={this.state.status.numResults}
                     running={this.state.loading}
                     queryType={this.yasqe.getQueryType()}
-                />,
-                <QueryExecutionReport
+                />)
+            if (this.yasqe.getQueryType() !== 'CONSTRUCT')
+                elements.push(<QueryExecutionReport
                     ontology={this.props.ontology}
                     mappingID={this.state.selectedMappingID}
                     executionID={this.state.executionID}

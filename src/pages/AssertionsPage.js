@@ -43,6 +43,16 @@ export default class AssertionsPage extends React.Component {
         this._isMounted = false
     }
 
+    load = () => {
+        this.setState({ loading: true })
+        getMappingAssertion(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            this.props.mappingID,
+            this.props.current,
+            this.loaded)
+    }
+
     loaded = (data) => {
         // console.log(data)
         this._isMounted && this.setState({ data: data, loading: false })
@@ -63,7 +73,12 @@ export default class AssertionsPage extends React.Component {
                 </div>
 
                 <div style={{ height: 'calc(100vh - 163px)', overflowY: 'auto', }}>
-                    <AssertionsList list={this.state.data} />
+                    <AssertionsList
+                        ontology={this.props.ontology}
+                        mappingID={this.props.mappingID}
+                        predicateType={this.props.predicateType}
+                        list={this.state.data}
+                        rerender={this.load} />
                 </div>
             </div>
         );

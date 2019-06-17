@@ -139,7 +139,7 @@ export default class KnowledgeGraphResultsTable extends React.Component {
                     loading={this.state.loading}
                     onChange={this.handleTableChange}
                 />
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 8, marginTop: -48 }}>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 8, marginTop: -48, marginLeft: 8 }}>
                     <Button type='primary' icon='download' onClick={this.downloadResults}>
                         Download Query Results
                     </Button>

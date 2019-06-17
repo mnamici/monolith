@@ -100,7 +100,15 @@ export default class UploadFile extends React.Component {
   };
 
   render() {
-    const title = this.props.type === 'mapping' ? 'Add Mapping' : this.props.type === 'kg' ? 'Add RDF file' : 'Add Ontology Version'
+    const title = this.props.type === 'mapping' ?
+      <div>
+        <p>Click or Drag Mapping here</p>
+        <p>or</p>
+        <p>Create a new Mapping through form below</p>        
+      </div> :
+      this.props.type === 'kg' ?
+        'Upload RDF file' :
+        'Upload Ontology Version'
     return (
       <div style={{ height: 270, width: '100%' }}>
         <Upload className='bigUpload' beforeUpload={beforeUpload.bind(this)} fileList={[]}>

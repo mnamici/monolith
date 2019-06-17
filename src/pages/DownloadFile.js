@@ -27,6 +27,12 @@ export default class DownloadFile extends React.Component {
       menuItems.push(<Menu.Item key='owl'>OWL</Menu.Item>)
       menuItems.push(<Menu.Item key='graphol'>GRAPHOL</Menu.Item>)
     }
+    else if (this.props.kgInstance) {
+      menuItems.push(<Menu.Item key='rdfInstance'>RDF/XML</Menu.Item>)
+      menuItems.push(<Menu.Item key='ntriplesInstance'>NTRIPLES</Menu.Item>)
+      menuItems.push(<Menu.Item key='n3Instance'>N3/Turtle</Menu.Item>)
+
+    }
     else if (this.props.kg) {
       menuItems.push(<Menu.Item key='rdf'>RDF/XML</Menu.Item>)
       menuItems.push(<Menu.Item key='ntriples'>NTRIPLES</Menu.Item>)

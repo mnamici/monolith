@@ -1,7 +1,6 @@
 import React from 'react'
 import { getInstances } from '../api/KgApi';
 import { Table } from 'antd';
-import { getUrlVars } from '../utils/utils';
 import { NavLink } from 'react-router-dom'
 
 export default class KnowledgeGraphInstances extends React.Component {
@@ -10,7 +9,7 @@ export default class KnowledgeGraphInstances extends React.Component {
     }
 
     componentDidMount() {
-        getInstances(this.props.kg.kgIri, getUrlVars()['classIri'], this.loaded)
+        getInstances(this.props.kg.kgIri, this.props.kgClass, this.loaded)
     }
 
     loaded = (data) => {
@@ -31,11 +30,12 @@ export default class KnowledgeGraphInstances extends React.Component {
     render() {
         return (
             <div style={{ padding: 8 }}>
-                <h1 id="title">Instances</h1>
                 <Table
+                    // style={{ maxHeight: 200, overflow: 'auto' }}
                     columns={[{ dataIndex: 'value' }]}
                     showHeader={false}
                     dataSource={this.state.data}
+                    // pagination={false}
                 />
             </div>
         )

@@ -1,10 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { List, Card, Divider as h1, Popover, Spin } from 'antd';
-import UploadFile from './UploadFile';
 import { getMappings, downloadMappingFile, deleteMappingFile } from '../api/MastroApi';
 import { saveFileInfo, dateFormat } from '../utils/utils';
 import moment from 'moment'
+import AddMapping from './AddMapping';
 
 export default class LoadMappings extends React.Component {
     _isMounted = false;
@@ -101,11 +101,8 @@ export default class LoadMappings extends React.Component {
                                 </List.Item>
                             ) : (
                                     <List.Item>
-                                        <UploadFile type='mapping' current={this.props.ontology} rerender={this.requestMappings.bind(this)} />
-                                        {/* <Button type="dashed" onClick={() => console.log("Add version of ontology")}>
-                                        <Icon type="plus" />
-                                        Add Ontology Version
-                                    </Button> */}
+                                        {/* <UploadFile type='mapping' current={this.props.ontology} rerender={this.requestMappings.bind(this)} /> */}
+                                        <AddMapping current={this.props.ontology} rerender={this.requestMappings.bind(this)}/>
                                     </List.Item>
                                 )
                         }

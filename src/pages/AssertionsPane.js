@@ -1,7 +1,7 @@
 import React from 'react';
-import { Layout, Drawer, Button } from 'antd';
-import SearchTree from './FastSearchTree'
+import { Layout, Button } from 'antd';
 import AssertionsPage from './AssertionsPage'
+import OntologyDrawer from './OntologyDrawer';
 
 const {
     Content,
@@ -10,6 +10,7 @@ const {
 export default class AssertionsPane extends React.Component {
     state = {
         current: null,
+        predicateType: null,
         visible: true
     }
 
@@ -19,9 +20,10 @@ export default class AssertionsPane extends React.Component {
         });
     }
 
-    onHandle = (entityID) => {
+    onHandle = (entityID, predicateType) => {
         this.setState({
             current: entityID,
+            predicateType,
             visible: false
         })
     }
@@ -35,9 +37,11 @@ export default class AssertionsPane extends React.Component {
                     </div>
 
                 </Header> */}
-                <Drawer title='Ontology Entities' visible={this.state.visible} onClose={this.toggle} width={'50vw'}>
-                    <SearchTree ontology={this.props.ontology} onHandle={this.onHandle} />
-                </Drawer>
+                <OntologyDrawer
+                    ontology={this.props.ontology}
+                    visible={this.state.visible}
+                    toggle={this.toggle}
+                    onHandle={this.onHandle} />
                 {/* <Sider
                     // width={200} 
                     style={{ background: '#fff' }}
@@ -54,6 +58,7 @@ export default class AssertionsPane extends React.Component {
                                     ontology={this.props.ontology}
                                     mappingID={this.props.mappingID}
                                     current={this.state.current}
+                                    predicateType={this.state.predicateType}
                                 />}
                         </div>
                     </Content>

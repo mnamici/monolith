@@ -132,3 +132,7 @@
 .treeRoots {
     font-weight: bold
 }
+
+.leaf {
+    margin-left: 13px
+}

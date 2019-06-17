@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import InstanceNavigationObjectType from './InstanceNavigationObjectType';
+import { Card } from 'antd';
 
 export default class InstanceNavigationObjectTable extends React.Component {
     state = {
@@ -51,12 +52,12 @@ export default class InstanceNavigationObjectTable extends React.Component {
                 let suff = nRes === 1 ? '' : 's';
                 values.push(
                     <li key={j}>
-                        <button
+                        <span
                             className='link'
                             onClick={() => this.expandTypeSubject(predicateLink, type, pages)}
                         >
                             {this.props.renderShortIRI(obj.object_triples[i].subjects_types[j].subject_type_short)}
-                        </button>
+                        </span>
                         {'(' + nRes + ' resource' + suff + ')'}
                         {this.state.expanded[predicateLink] && this.state.expanded[predicateLink].has(type) &&
                             <InstanceNavigationObjectType
@@ -71,7 +72,7 @@ export default class InstanceNavigationObjectTable extends React.Component {
             }
 
             tableInner.push(
-                <tr key={i}>
+                <tr key={i} style={{wordBreak: 'break-all'}}>
                     <td>
                         <Link to={'?iri=' + encodeURIComponent(predicateLink)}>
                             {this.props.renderShortIRI(predicate)}
@@ -88,21 +89,21 @@ export default class InstanceNavigationObjectTable extends React.Component {
         }
 
         return (
-            <div>
+            <Card tabList={[{ tab: 'Inverse Relations', key: 'ir' }]}>
                 <div style={{ overflow: 'auto' }}>
-                    <table style={{ width: '100%', tableLayout: 'fixed1' }}>
-                        <thead className='ant-table-thead'>
+                    <table style={{ width: '100%', tableLayout: 'fixed' }}>
+                        {/* <thead className='ant-table-thead'>
                             <tr>
-                                <th>Inverse Relations</th>
-                                <th></th>
+                                <th style={{width: '40%'}}>Inverse Relations</th>
+                                <th style={{width: '60%'}}></th>
                             </tr>
-                        </thead>
+                        </thead> */}
                         <tbody className='ant-table-tbody'>
                             {tableInner}
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </Card>
         )
     }
 }

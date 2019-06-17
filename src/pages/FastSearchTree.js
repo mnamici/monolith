@@ -4,7 +4,6 @@ import DropdownTreeSelect from 'react-dropdown-tree-select'
 import 'react-dropdown-tree-select/dist/styles.css'
 import '../css/FastSearchTree.css'
 
-import { getOntologyVersionHierarchy } from '../api/MastroApi'
 
 import { renderEntity, predicateTypes } from '../utils/utils'
 
@@ -35,36 +34,12 @@ const onAction = ({ action, node }) => {
 }
 
 export default class SearchTree extends React.Component {
-  _isMounted = false;
-  state = { data: [], loading: true }
-
-  componentDidMount() {
-    this._isMounted = true;
-    this.setState({ loading: true })
-    getOntologyVersionHierarchy(
-      this.props.ontology.name,
-      this.props.ontology.version,
-      this.loaded)
-
-    // document.getElementsByClassName("dropdown-trigger")[0].click()
-
-  }
-
-  componentWillReceiveProps(props) {
-    // console.log(this.props)
-    this.setState({ loading: true })
-    getOntologyVersionHierarchy(
-      props.ontology.name,
-      props.ontology.version,
-      this.loaded)
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false
-  }
 
   onChange = (currentNode, selectedNodes) => {
-    if (currentNode._depth !== 0) {
+    if(!this.props.all) {
+      this.props.onHandle(currentNode.entityID, currentNode.predicateType)
+    }
+    else if (currentNode._depth !== 0) {
       // console.log('onChange::', currentNode)
       this.props.onHandle(currentNode.entityID, currentNode.predicateType)
       //simulate click away to close tree
@@ -91,34 +66,36 @@ export default class SearchTree extends React.Component {
 
   }
 
-  loaded = (mastroData) => {
-    const gData = [
-      {
-        label: "Classes",
-        className: 'treeRoots',
-        expanded: true,
-        children: convertData(mastroData.hierarchyTree.classTree.children, [], predicateTypes.c)
-      },
-      {
-        label: "Object Properties",
-        className: 'treeRoots',
-        expanded: true,
-        children: convertData(mastroData.hierarchyTree.objectPropertyTree.children, [], predicateTypes.op)
-      },
-      {
-        label: "Data Properties",
-        className: 'treeRoots',
-        expanded: true,
-        children: convertData(mastroData.hierarchyTree.dataPropertyTree.children, [], predicateTypes.dp)
-      }
-    ]
-    this._isMounted && this.setState({ data: gData, loading: false })
-  }
 
   render() {
-    const data = this.state.loading ?
-      [{ label: 'Loading...' }] :
-      this.state.data
+    let data = []
+    if (this.props.classes)
+      data = convertData(this.props.data.hierarchyTree.classTree.children, [], predicateTypes.c)
+    else if (this.props.objectProperties)
+      data = convertData(this.props.data.hierarchyTree.objectPropertyTree.children, [], predicateTypes.op)
+    else if (this.props.dataProperties)
+      data = convertData(this.props.data.hierarchyTree.dataPropertyTree.children, [], predicateTypes.dp)
+    else if (this.props.all)
+      data = [
+        {
+          label: "Classes",
+          className: 'treeRoots',
+          expanded: true,
+          children: convertData(this.props.data.hierarchyTree.classTree.children, [], predicateTypes.c)
+        },
+        {
+          label: "Object Properties",
+          className: 'treeRoots',
+          expanded: true,
+          children: convertData(this.props.data.hierarchyTree.objectPropertyTree.children, [], predicateTypes.op)
+        },
+        {
+          label: "Data Properties",
+          className: 'treeRoots',
+          expanded: true,
+          children: convertData(this.props.data.hierarchyTree.dataPropertyTree.children, [], predicateTypes.dp)
+        }
+      ]
 
     return <DropdownTreeSelect
       data={data}

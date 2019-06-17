@@ -34,7 +34,7 @@ export default class KnowledgeGraphMenu extends React.Component {
                     </Link>
                 </MenuItem>
                 <MenuItem key="explore" style={{ marginTop: 0 }}>
-                    <Link to="/open/kg/explore" >
+                    <Link to="/open/kg/explore/classes" >
                         <Icon type="search" />
                         <span>Explore</span>
                     </Link>

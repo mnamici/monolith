@@ -308,6 +308,24 @@ export function getMappings(name, version, callback) {
     });
 }
 
+export function postMapping(name, version, mapping, callback) {
+    if (fakeCalls) return callback(fakeData.mappings)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping'
+    const method = 'POST'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        data: mapping,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
 export function uploadMappingFile(name, version, file, callback) {
     if (fakeCalls) return callback(true);
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping'
