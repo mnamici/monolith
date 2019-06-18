@@ -240,6 +240,23 @@ export function getGraphol(name, version, callback) {
     });
 }
 
+export function getEntity(name, version, entityID, callback) {
+    if (fakeCalls) return callback(fakeData.mappings)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/entity/' + entityID
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
 export function getClassPage(name, version, classID, callback) {
     if (fakeCalls) return callback(fakeData.classData)
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/alphabet/class/' + classID + '/logical'
@@ -316,8 +333,7 @@ export function postMapping(name, version, mapping, callback) {
     axios({
         url: url,
         method: method,
-        params: { version: encodedVersion },
-        data: mapping,
+        params: { version: encodedVersion, create: btoa(JSON.stringify(mapping)) },
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data)
@@ -339,7 +355,7 @@ export function uploadMappingFile(name, version, file, callback) {
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         if (response.data.success)
-            callback(true)
+            callback(response.data)
         else {
             callback(false)
             message.error('Invalid mapping file: it may be malformed or not compliant with the ontology.')
@@ -419,6 +435,24 @@ export function getMappingAssertion(name, version, mapping, entityID, callback) 
     });
 }
 
+export function postMappingAssertion(name, version, mapping, assertion, callback) {
+    if (fakeCalls) return callback(fakeData.assertions)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/assertions'
+    const method = 'POST'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        data: assertion,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
 export function getMappingViews(name, version, mapping, callback) {
     if (fakeCalls) return callback(fakeData.sqlViews)
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/views'
@@ -428,6 +462,24 @@ export function getMappingViews(name, version, mapping, callback) {
         url: url,
         method: method,
         params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data.sqlViews)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function postMappingViews(name, version, mapping, view, callback) {
+    if (fakeCalls) return callback(fakeData.sqlViews)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/views'
+    const method = 'POST'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        data: view,
         headers: JSON.parse(localStorage.getItem('headers')),
     }).then(function (response) {
         callback(response.data.sqlViews)

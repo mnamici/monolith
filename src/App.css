@@ -1,4 +1,19 @@
 @import '~antd/dist/antd.css';
+@import 'css/font/helveticaneucyr/style.css';
+@import 'css/font/comfortaa/style.css';
+@import 'css/font/hindguntur/style.css';
+@import 'css/font/neutra/style.css';
+
+* {
+  font-family: 'NeutraTextTF-Demi', 'HelveticaNeueCyr-Roman', 'Comfortaa Regular', 'Hind Guntur Regular', Arial, sans-serif;
+  /* font-size: 16px; */
+}
+
+code * {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  /* font-size: 14px !important; */
+}
+
 /* BACKGORUND COLORS  */
 
 :root {

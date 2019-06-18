@@ -11,8 +11,10 @@ export default class AssertionsList extends React.Component {
 
     showDrawer = () => {
         this.setState({
-            drawer: <AssertionForm ontology={this.props.ontology}
+            drawer: <AssertionForm
+                ontology={this.props.ontology}
                 mappingID={this.props.mappingID}
+                entity={this.props.currentEntity}
                 type={this.props.predicateType}
                 rerender={this.props.rerender} />,
             visible: true
@@ -21,8 +23,11 @@ export default class AssertionsList extends React.Component {
 
     open = (open) => {
         this.setState({
-            drawer: <AssertionForm ontology={this.props.ontology}
+            drawer: <AssertionForm
+                ontology={this.props.ontology}
                 mapping={this.props.mappingID}
+                entity={this.props.currentEntity}
+                type={this.props.predicateType}
                 assertion={this.props.list.filter(d => d.id === open)[0]} />,
             visible: true
         })
@@ -52,7 +57,7 @@ export default class AssertionsList extends React.Component {
                             <List.Item key={index}>
                                 <Button type='primary' style={{ height: 294, width: '100%' }} onClick={this.showDrawer}>
                                     <Icon type="plus" /> Add Ontology Mapping
-                                        </Button>
+                                </Button>
                                 <Drawer
                                     title='Add Ontology Mapping'
                                     width='40vw'

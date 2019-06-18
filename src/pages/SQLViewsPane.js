@@ -37,12 +37,28 @@ export default class SQLViewsPane extends React.Component {
     render() {
         return (
             <Layout >
-                <Drawer title='SQL Views' visible={this.state.visible} onClose={this.toggle} width={this.state.visibleEdit ? '60vw' : '50vw'}>
-                    <Button style={{ float: 'right' }} onClick={this.toggleEdit} icon='plus' shape='circle' />
-                    <SearchList ontology={this.props.ontology} mappingID={this.props.mappingID} onHandle={this.onHandle} />
+                <Drawer title='SQL Views'
+                    visible={this.state.visible}
+                    onClose={this.toggle}
+                    width={this.state.visibleEdit ? '60vw' : '50vw'}>
+                    <Button
+                        style={{ float: 'right', backgroundColor: 'transparent' }}
+                        onClick={this.toggleEdit}
+                        icon='plus'
+                        shape='circle' />
+                    <SearchList
+                        ontology={this.props.ontology}
+                        mappingID={this.props.mappingID}
+                        onHandle={this.onHandle} />
                 </Drawer>
-                <Drawer title='Add SQL View' visible={this.state.visibleEdit} onClose={this.toggleEdit} width={'50vw'}>
-                    <AddSQLView />
+                <Drawer title='Add SQL View'
+                    visible={this.state.visibleEdit}
+                    onClose={this.toggleEdit}
+                    width={'50vw'}>
+                    <AddSQLView
+                        ontology={this.props.ontology}
+                        mappingID={this.props.mappingID}
+                        success={this.toggleEdit} />
                 </Drawer>
                 {/* <Header style={{ backgroundColor: 'transparent', display: 'flex', justifyContent: 'center', lineHeight: 1.5, height: 32 }}>
                     <div style={{ display: 'inline-flex' }}>

@@ -3,7 +3,7 @@ import {
     Drawer, Form, Button, Col, Row, Input, Icon, Spin, Select,
 } from 'antd';
 
-import { postMapping, getDatasources, getMappingInfo } from '../api/MastroApi'
+import { postMapping, getDatasources } from '../api/MastroApi'
 import UploadFile from './UploadFile';
 
 class DrawerForm extends React.Component {
@@ -34,9 +34,12 @@ class DrawerForm extends React.Component {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 const mapping = {
-                    mappingID: values.id,
-                    mappingVersion: values.version,
-                    mappingDescription: values.description
+                    id: values.id,
+                    version: values.version,
+                    description: values.description,
+                    databaseConnectionName: values.datasource,
+                    mappingTemplates: [],
+                    prefixes: [],
                 }
                 postMapping(this.props.current.name, this.props.current.version, mapping, this.onClose)
             }
@@ -45,14 +48,12 @@ class DrawerForm extends React.Component {
 
     }
 
-    uploaded = () => {
-        const mapping = null
-        getMappingInfo(this.props.current.name, this.props.current.version, mapping, this.loadedInfo)
-    }
-
-    loadedInfo = (mappingInfo) => {
+    uploaded = (uploadedResponse) => {
         this.props.form.setFieldsValue({
-            id: mappingInfo.mapping.mappingID
+            id: uploadedResponse.mappingInfo.mapping.mappingID,
+            description: uploadedResponse.mappingInfo.mapping.mappingDescription,
+            version: uploadedResponse.mappingInfo.mapping.mappingVersion,
+            datasource: uploadedResponse.mappingInfo.mappingDBConnections[0].name,
         });
     }
 

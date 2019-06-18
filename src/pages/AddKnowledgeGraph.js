@@ -30,7 +30,7 @@ class DrawerForm extends React.Component {
                     kgTitle: [{ lang: '', content: values.title }],
                     kgCreator: { name: localStorage.getItem('username') },
                     kgPublisher: {
-                        agentIri: values.publisherAgentIri,
+                        agentIri: values.publisherAgentIRI,
                         agentLabels: [{ lang: '', content: values.publisherAgentLabel }],
                         agentWebsite: values.publisherAgentWebsite,
                         agentEmail: values.publisherAgentEmail,
@@ -38,7 +38,7 @@ class DrawerForm extends React.Component {
                     },
                     kgContributors: [{ name: localStorage.getItem('username') }],
                     kgRightsHolder: {
-                        agentIri: values.rightsHolderAgentIri,
+                        agentIri: values.rightsHolderAgentIRI,
                         agentLabels: [{ lang: '', content: values.rightsHolderAgentLabel }],
                         agentWebsite: values.rightsHolderAgentWebsite,
                         agentEmail: values.rightsHolderAgentEmail,
@@ -97,7 +97,7 @@ class DrawerForm extends React.Component {
                 <Row gutter={16}>
                     <Col span={24}>
                         <Form.Item label="Email">
-                            {getFieldDecorator(`${id}AgenteMail`, {
+                            {getFieldDecorator(`${id}AgentEmail`, {
                                 rules: [
                                     { type: 'email', required: false, message: 'Please enter agent email', },
                                 ],

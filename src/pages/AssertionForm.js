@@ -1,8 +1,8 @@
 import React from 'react'
 import {
-    Form, Button, Col, Row, Input, message, Select,
+    Form, Button, Col, Row, Input, Select,
 } from 'antd';
-import { postDatasources, putDatasources, getMappingViews } from '../api/MastroApi';
+import { getMappingViews, postMappingAssertion } from '../api/MastroApi';
 import { predicateTypes } from '../utils/utils';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
@@ -40,28 +40,21 @@ class AssertionForm extends React.Component {
     submit = () => {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                const datasource = {
-                    id: values.name,
-                    description: values.description,
-                    dataSourceUsername: localStorage.getItem('username'),
-                    jdbcDriver: values.jdbcDriver,
-                    jdbcUrl: values.jdbcUrl,
-                    jdbcUsername: values.jdbcUsername,
-                    jdbcPassword: values.jdbcPassword
+                const assertion = {
+                    entityID: this.props.entity.entityID,
+                    viewName: values.body,
+                    template: this.props.type === predicateTypes.c ? values.template : values.domainTemplate,
+                    rangeTemplate: this.props.type === predicateTypes.c ? null : values.rangeTemplate,
                 }
-                if (this.props.dataSource)
-                    putDatasources(datasource, () => {
-                        message.success("Done.")
-                    })
-                else
-                    postDatasources(datasource, () => {
-                        message.success("Done.")
-                    })
-                this.props.rerender()
+                postMappingAssertion(
+                    this.props.ontology.name,
+                    this.props.ontology.version,
+                    this.props.mappingID,
+                    assertion,
+                    this.props.rerender
+                )
             }
         });
-
-
     }
 
     onSelect = (value) => {
@@ -130,7 +123,7 @@ class AssertionForm extends React.Component {
                             <Row gutter={16}>
                                 <Col span={12}>
                                     <Form.Item label="Range">
-                                        {getFieldDecorator('range', {
+                                        {getFieldDecorator('rangeTemplate', {
                                             rules: [
                                                 { required: true, message: 'Please enter datasource name' }],
                                         })(
@@ -149,7 +142,7 @@ class AssertionForm extends React.Component {
                                 })(
                                     <Select showSearch onSelect={this.onSelect}>
                                         {this.state.mappingViews.map(view => (
-                                            <Select.Option value={view.sqlViewID}>
+                                            <Select.Option value={view.sqlViewID} key={view.sqlViewID}>
                                                 {view.sqlViewID}
                                             </Select.Option>
                                         ))}

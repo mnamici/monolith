@@ -50,9 +50,9 @@ function beforeUpload(file) {
         uploadMappingFile(this.props.current.name, this.props.current.version, json, (success) => {
           if (success) {
             message.success('upload successfully.');
-            this.props.rerender()
+            this.props.rerender(success)
           }
-          else this.setState({ loading: false });
+          this.setState({ loading: false });
         })
       })
     }
@@ -104,7 +104,7 @@ export default class UploadFile extends React.Component {
       <div>
         <p>Click or Drag Mapping here</p>
         <p>or</p>
-        <p>Create a new Mapping through form below</p>        
+        <p>Create a new Mapping through form below</p>
       </div> :
       this.props.type === 'kg' ?
         'Upload RDF file' :

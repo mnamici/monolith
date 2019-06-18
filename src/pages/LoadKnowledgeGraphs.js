@@ -53,7 +53,7 @@ export default class LoadKnowledgeGraphs extends React.Component {
                         dataSource={['', ...this.state.data]}
                         renderItem={item =>
                             item ? (
-                                <List.Item key={item.mappingID}>
+                                <List.Item key={item.mappingID} style={{ paddingBottom: 6 }}>
                                     <Card hoverable actions={[
                                         <NavLink to={"/open/kg/info/" + item.mappingID}>
                                             <Popover content={
