@@ -4,7 +4,7 @@ import { Layout, Icon } from 'antd';
 import KnowledgeGraphMenu from './KnowledgeGraphMenu';
 import KnowledgeGraphInfo from './KnowledgeGraphInfo';
 import KnowledgeGraphSPARQLEndpoint from './KnowledgeGraphSPARQLEndpoint';
-import ImportKnowledgeGraph from './ImportKnowledgeGraph';
+import KnowledgeGraphImport from './KnowledgeGraphImport';
 import InstanceNavigation from './InstanceNavigationGroup';
 import KnowledgeGraphExplore from './KnowledgeGraphExplore';
 
@@ -44,7 +44,7 @@ export default class CurrentKnowledgeGraph extends React.Component {
                             <Route path="/open/kg/info" render={(props) =>
                                 <KnowledgeGraphInfo {...props} kg={this.props.kg} />} />
                             <Route path="/open/kg/import" render={(props) =>
-                                <ImportKnowledgeGraph {...props} kg={this.props.kg} />} />
+                                <KnowledgeGraphImport {...props} kg={this.props.kg} />} />
                             <Route path="/open/kg/explore/:tab" render={(props) =>
                                 <KnowledgeGraphExplore {...props} kg={this.props.kg} />} />
                             <Route path="/open/kg/endpoint" render={(props) =>

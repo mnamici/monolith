@@ -77,6 +77,7 @@ export default class OntologiesList extends React.Component {
         return (
             <div>
                 <Modal
+                    closable={false}
                     visible={this.state.modalVisible}
                     onOk={() => this.delete(this.state.toDelete)}
                     onCancel={() => this.setState({ modalVisible: false, toDelete: null })}

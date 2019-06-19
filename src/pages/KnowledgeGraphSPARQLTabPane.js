@@ -70,6 +70,10 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
             // console.debug(this.yasqe.getQueryType())
         })
         this.yasqe.refresh();
+
+        if (this.props.executionID) {
+            this.startPolling(this.props.executionID)
+        }
     }
 
     componentDidUpdate() {
@@ -176,6 +180,12 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
     }
 
     startPolling(executionID) {
+        let qc = JSON.parse(localStorage.getItem('kgQueryCatalog'))
+        let q = qc.filter(q => q.tab === this.state.tabKey)[0]
+        if (q)
+            q['executionID'] = executionID
+        localStorage.setItem('kgQueryCatalog', JSON.stringify(qc))
+
         this.setState({ executionID: executionID, interval: setInterval(this.polling.bind(this), POLLING_TIME), showResults: true, loading: true })
     }
 
@@ -335,6 +345,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
                 />
                 <Modal title="Insert query ID"
                     className={!this.state.validID && 'has-error'}
+                    closable={false}
                     visible={this.state.modalVisible}
                     onOk={this.handleOk}
                     confirmLoading={this.state.modalConfirmLoading}
@@ -345,6 +356,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
                     {!this.state.validID && <div className='ant-form-explain'>Not valid id: use letters numbers and underscores.</div>}
                 </Modal>
                 <Modal
+                    closable={false}
                     visible={this.state.overwirteModalVisible}
                     onOk={this.handleOkOverwrite}
                     onCancel={this.handleCancelOverwrite}

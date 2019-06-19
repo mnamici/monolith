@@ -61,7 +61,11 @@ export default class MastroSPARQLTabPane extends React.Component {
             selectedMappingID: currMappingID
         })
         this.props.mappings.forEach(mapping => {
-            getMastroStatus(this.props.ontology.name, this.props.ontology.version, mapping.mappingID, this.checkMastroStatus.bind(this))
+            getMastroStatus(
+                this.props.ontology.name,
+                this.props.ontology.version,
+                mapping.mappingID,
+                this.checkMastroStatus.bind(this))
         });
         /** INITIALIZE YASQE */
         this.changeDescription({ target: { value: this.props.query.queryDescription } })
@@ -93,6 +97,10 @@ export default class MastroSPARQLTabPane extends React.Component {
         })
 
         this.yasqe.refresh();
+
+        if (this.props.executionID) {
+            this.startPolling(this.props.executionID)
+        }
     }
 
     componentDidUpdate() {
@@ -110,20 +118,32 @@ export default class MastroSPARQLTabPane extends React.Component {
     }
 
     startMastro = () => {
-        startMastroAPI(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.startPollingMastro.bind(this))
+        startMastroAPI(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            this.state.selectedMappingID,
+            this.startPollingMastro.bind(this))
         this.setState({ loadingMastro: true })
 
     }
 
     stopMastro = () => {
         this.stopPollingMastro()
-        stopMastroAPI(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, (mapId) => {
-            this.setState({ runningMappingIDs: this.state.runningMappingIDs.filter(mid => mapId !== mid) })
-        })
+        stopMastroAPI(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            this.state.selectedMappingID,
+            (mapId) => {
+                this.setState({ runningMappingIDs: this.state.runningMappingIDs.filter(mid => mapId !== mid) })
+            })
     }
 
     pollingMastro() {
-        getMastroStatus(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.checkMastroStatus.bind(this))
+        getMastroStatus(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            this.state.selectedMappingID,
+            this.checkMastroStatus.bind(this))
     }
 
     startPollingMastro() {
@@ -263,15 +283,40 @@ export default class MastroSPARQLTabPane extends React.Component {
 
     polling() {
         if (this.yasqe.getQueryType() === 'CONSTRUCT') {
-            getConstructQueryStatus(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.state.executionID, this.checkStatus.bind(this))
+            getConstructQueryStatus(
+                this.props.ontology.name,
+                this.props.ontology.version,
+                this.state.selectedMappingID,
+                this.state.executionID,
+                this.checkStatus.bind(this))
         }
         else
-            getQueryStatus(this.props.ontology.name, this.props.ontology.version, this.state.selectedMappingID, this.state.executionID, this.checkStatus.bind(this))
+            getQueryStatus(
+                this.props.ontology.name,
+                this.props.ontology.version,
+                this.state.selectedMappingID,
+                this.state.executionID,
+                this.checkStatus.bind(this),
+                (err) => {
+                    message.error(err.message)
+                    this.stopPolling()
+                })
 
     }
 
     startPolling(executionID) {
-        this.setState({ executionID: executionID, interval: setInterval(this.polling.bind(this), POLLING_TIME), showResults: true, loading: true })
+        let qc = JSON.parse(localStorage.getItem('mastroQueryCatalog'))
+        let q = qc.filter(q => q.tab === this.state.tabKey)[0]
+        if (q)
+            q['executionID'] = executionID
+        localStorage.setItem('mastroQueryCatalog', JSON.stringify(qc))
+
+        this.setState({
+            executionID: executionID,
+            interval: setInterval(this.polling.bind(this), POLLING_TIME),
+            showResults: true,
+            loading: true
+        })
     }
 
     stopPolling() {
@@ -384,7 +429,14 @@ export default class MastroSPARQLTabPane extends React.Component {
                 value={this.state.queryDescription}
                 onChange={this.changeDescription}
             />,
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: 16 }}>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                marginBottom: 16
+            }}>
                 <div>
                     <Button.Group>
                         <Button
@@ -447,7 +499,9 @@ export default class MastroSPARQLTabPane extends React.Component {
                         </List.Item>
                     )}
                 />
-                <Modal title="Insert query ID"
+                <Modal
+                    closable={false}
+                    title="Insert query ID"
                     className={!this.state.validID && 'has-error'}
                     visible={this.state.modalVisible}
                     onOk={this.handleOk}
@@ -456,9 +510,12 @@ export default class MastroSPARQLTabPane extends React.Component {
                     okButtonProps={{ disabled: !this.state.validID }}
                 >
                     <Input placeholder='Specify query ID' value={this.state.queryID} onChange={this.changeQueryID} />
-                    {!this.state.validID && <div className='ant-form-explain'>Not valid id: use letters numbers and underscores.</div>}
+                    {!this.state.validID && <div className='ant-form-explain'>
+                        Not valid id: use letters numbers and underscores.
+                    </div>}
                 </Modal>
                 <Modal
+                    closable={false}
                     visible={this.state.overwirteModalVisible}
                     onOk={this.handleOkOverwrite}
                     onCancel={this.handleCancelOverwrite}

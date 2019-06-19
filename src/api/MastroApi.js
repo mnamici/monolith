@@ -758,7 +758,7 @@ export function getQueryStatus(name, version, mapping, queryID, callback, errorC
         callback(response.data)
     }).catch(function (err) {
         manageError(err)
-        errorCall()
+        errorCall(err)
     });
 }
 

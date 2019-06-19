@@ -139,12 +139,13 @@ export default class KnowledgeGraphResultsTable extends React.Component {
                     loading={this.state.loading}
                     onChange={this.handleTableChange}
                 />
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 8, marginTop: -48, marginLeft: 8 }}>
-                    <Button type='primary' icon='download' onClick={this.downloadResults}>
-                        Download Query Results
-                    </Button>
-                    <span style={{ paddingLeft: 8 }} className='results'>{this.props.numberOfResults} results</span>
-                </div>
+                {this.props.numberOfResults > 0 &&
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 8, marginTop: -48, marginLeft: 8 }}>
+                        <Button type='primary' icon='download' onClick={this.downloadResults}>
+                            Download Query Results
+                        </Button>
+                        <span style={{ paddingLeft: 8 }} className='results'>{this.props.numberOfResults} results</span>
+                    </div>}
             </div>
         );
     }

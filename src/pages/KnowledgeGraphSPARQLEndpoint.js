@@ -65,11 +65,9 @@ export default class KnowledgeGraphSPARQLEndpoint extends React.Component {
     }
 
     render() {
-        if (this.state.loadingCatalog || this.state.loadedMappings) {
-            return <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div>
-        }
-        else
-            return (
+        return (
+            this.state.loadingCatalog ?
+                <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
                 <Layout style={{ minHeight: 'calc(100vh - 25px)' }}>
                     <Sider
                         className='queryCatalog'
@@ -90,7 +88,6 @@ export default class KnowledgeGraphSPARQLEndpoint extends React.Component {
                                 onClick={this.toggle}
                             />
                         </div>
-                        {/* <MappingSelector ontology={this.props.ontology} mappings={this.state.mappings}/> */}
                     </Sider>
                     <Layout>
                         <Content >
@@ -106,7 +103,7 @@ export default class KnowledgeGraphSPARQLEndpoint extends React.Component {
                         </Content>
                     </Layout>
                 </Layout>
-            );
+        );
     }
 }
 

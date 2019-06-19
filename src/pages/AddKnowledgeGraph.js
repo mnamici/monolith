@@ -1,13 +1,13 @@
 import React from 'react'
 import {
-    Drawer, Form, Button, Col, Row, Input, Icon, Divider,
+    Drawer, Form, Button, Col, Row, Input, Icon, Divider, Checkbox,
 } from 'antd';
 
 import { postKnowledgeGraph } from '../api/KgApi'
 import { regexIri } from '../utils/utils';
 
 class DrawerForm extends React.Component {
-    state = { visible: false };
+    state = { visible: false, showRH: true };
 
     showDrawer = () => {
         this.setState({
@@ -25,25 +25,27 @@ class DrawerForm extends React.Component {
     submit = () => {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
+                const publisher = {
+                    agentIri: values.publisherAgentIRI,
+                    agentLabels: [{ lang: '', content: values.publisherAgentLabel }],
+                    agentWebsite: values.publisherAgentWebsite,
+                    agentEmail: values.publisherAgentEmail,
+                    agentAddress: values.publisherAgentAddress,
+                }
+
                 const kg = {
                     kgIri: values.iri,
                     kgTitle: [{ lang: '', content: values.title }],
                     kgCreator: { name: localStorage.getItem('username') },
-                    kgPublisher: {
-                        agentIri: values.publisherAgentIRI,
-                        agentLabels: [{ lang: '', content: values.publisherAgentLabel }],
-                        agentWebsite: values.publisherAgentWebsite,
-                        agentEmail: values.publisherAgentEmail,
-                        agentAddress: values.publisherAgentAddress,
-                    },
+                    kgPublisher: publisher,
                     kgContributors: [{ name: localStorage.getItem('username') }],
-                    kgRightsHolder: {
+                    kgRightsHolder: this.state.showRH ? {
                         agentIri: values.rightsHolderAgentIRI,
                         agentLabels: [{ lang: '', content: values.rightsHolderAgentLabel }],
                         agentWebsite: values.rightsHolderAgentWebsite,
                         agentEmail: values.rightsHolderAgentEmail,
                         agentAddress: values.rightsHolderAgentAddress,
-                    },
+                    } : publisher,
                     kgCreationTs: Date.now(),
                     kgLastModifiedTs: Date.now(),
                     kgDescriptions: [{ lang: '', content: values.description }],
@@ -181,7 +183,25 @@ class DrawerForm extends React.Component {
                         <Divider>Publisher</Divider>
                         {this.getAgentForm('publisher')}
                         <Divider>Rights Holder</Divider>
-                        {this.getAgentForm('rightsHolder')}
+                        <Row gutter={16}>
+                            <Col span={24}>
+                                <Form.Item>
+                                    {getFieldDecorator('sameAgents', {
+                                        rules: [
+                                            {
+                                                required: false,
+                                                message: 'Please enter knowledge graph description',
+                                            },
+                                        ],
+                                    })(
+                                        <Checkbox onChange={() => this.setState({ showRH: !this.state.showRH })}>
+                                            Same as Publisher
+                                        </Checkbox>
+                                    )}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        {this.state.showRH && this.getAgentForm('rightsHolder')}
                     </Form>
                     <div
                         style={{
@@ -204,7 +224,7 @@ class DrawerForm extends React.Component {
               </Button>
                     </div>
                 </Drawer>
-            </div>
+            </div >
         );
     }
 }

@@ -3,9 +3,10 @@
 @import 'css/font/comfortaa/style.css';
 @import 'css/font/hindguntur/style.css';
 @import 'css/font/neutra/style.css';
-
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 * {
-  font-family: 'NeutraTextTF-Demi', 'HelveticaNeueCyr-Roman', 'Comfortaa Regular', 'Hind Guntur Regular', Arial, sans-serif;
+  font-family: 'Montserrat<', 'Open Sans', 'NeutraTextTF-Demi', 'HelveticaNeueCyr-Roman', 'Comfortaa Regular', 'Hind Guntur Regular', Arial, sans-serif;
   /* font-size: 16px; */
 }
 
@@ -36,49 +37,16 @@ code * {
 *                          *
 ****************************/
 
-@keyframes logo-open {
-  0% {
-    content: url(only_logo.svg);
-    max-height: 30px;
-  }
-  50% {
-    margin-left: -800px;
-    max-height: 30px;
-  }
-  75% {
-    margin: 0px;
-  }
-  100% {
-    content: url(scritta.svg);
-    max-height: 23px;
-    margin-left: auto;
-  }
-}
-
 @keyframes logo-close {
-  0% {
-    content: url(scritta.svg);
-    max-height: 23px;
-  }
-  50% {
-    margin-left: -500px;
-    max-height: 23px;
-  }
-  75% {
-    margin: 0px;
-  }
   100% {
-    content: url(only_logo.svg);
-    max-height: 30px;
-    margin: auto;
+    transform: rotateY(360deg)
   }
-}
-
-.logo-open {
-  animation: logo-open 1.5s forwards ease-out;
 }
 
 .logo-closed {
+  content: url(only_logo.svg);
+  margin: auto;
+  max-height: 30px;
   animation: logo-close 1.5s forwards ease-out;
 }
 
@@ -236,7 +204,10 @@ td {
 }
 
 .mainMenu, .ant-layout-sider-trigger {
-  background-color: var(--light)
+  background-color: var(--light);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 62px)
 }
 
 .ant-layout, .SPARQLTab, .ant-tabs.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab-active {
@@ -397,7 +368,7 @@ a:hover, .link:hover {
   background-color: var(--light) !important;
 }
 
-.ant-drawer-header {
+.ant-drawer-header, .ant-modal-header {
   border-color: var(--highlight)
 }
 
@@ -505,7 +476,7 @@ a:hover, .link:hover {
 
 /* TEXT COLOR */
 
-h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-pagination-item-ellipsis, .ant-progress-text, .ant-select-selection, .ant-select-arrow, .ant-select-dropdown-menu-item, .ant-card-actions>li, .ant-drawer-title, .ant-form-item-label>label, .ant-table-thead>tr>th, .ant-modal-body, .ant-modal-close, .ant-input, .ant-tabs-tab-prev-icon, .ant-tabs-tab-next-icon, .ant-drawer-close, .search {
+h1, h1 a, h3, .ant-divider-inner-text, .ant-table-row, .results, .ant-checkbox-wrapper, .ant-card-meta-title, .ant-card-meta-description, .ant-pagination-item-ellipsis, .ant-progress-text, .ant-select-selection, .ant-select-arrow, .ant-select-dropdown-menu-item, .ant-card-actions>li, .ant-drawer-title, .ant-form-item-label>label, .ant-table-thead>tr>th, .ant-modal-body, .ant-modal-close, .ant-input, .ant-tabs-tab-prev-icon, .ant-tabs-tab-next-icon, .ant-drawer-close, .search, .ant-modal-header .ant-modal-title {
   color: var(--white) !important;
 }
 

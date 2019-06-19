@@ -75,6 +75,7 @@ export default class ImportKnowledgeGraph extends React.Component {
             <div>
                 <Modal
                     title='Import Settings'
+                    closable={false}
                     visible={this.state.visible}
                     onOk={() => console.log()}
                     onCancel={() => this.setState({ visible: false })}>

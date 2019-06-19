@@ -16,38 +16,15 @@ export default class MastroAddCloseTabs extends React.Component {
 
   componentDidMount() {
     this.newTabIndex = 0;
-    this.componentWillReceiveProps(this.props)
+    const props = this.props
+    if (props.mappings === undefined || props.catalog === undefined) return
+    const qc = JSON.parse(localStorage.getItem('mastroQueryCatalog')) || []
+    if (qc) {
+      this.openLastTabs(qc, props)
+    }
   }
 
   componentWillReceiveProps(props) {
-    if (props.mappings === undefined || props.catalog === undefined) return
-    const qc = JSON.parse(localStorage.getItem('mastroQueryCatalog'))
-    if (this.state.panes.length === 0) {
-      const panes = []
-      this.newTabIndex++;
-      const activeKey = newQueryID + this.newTabIndex
-      const title = newQueryID + this.newTabIndex
-      panes.push({
-        title: <span key={title}><Icon type='file' />{title + "*"}</span>,
-        content: <MastroSPARQLTabPane
-          ontology={props.ontology}
-          mappings={props.mappings}
-          catalog={props.catalog}
-          num={activeKey}
-          query={{ queryID: title }}
-          new
-          renameTab={this.renameTab}
-          setDirty={this.setDirty}
-          tabKey={activeKey}
-        />,
-        key: activeKey
-      });
-      this.setState({ panes, activeKey });
-    }
-
-    if(qc) {
-      this.openLastTabs(qc, props)
-    }
     // OPEN SELECTED TAB
     for (let i = 0; i < props.catalog.length; i++) {
       if (props.catalog[i].queryID === props.open) {
@@ -72,10 +49,6 @@ export default class MastroAddCloseTabs extends React.Component {
           this.state.panes.forEach(p => p.title.key === oq.queryID && this.setDirty(p.key))
         }
       }
-  }
-
-  componentWillUnmount() {
-    localStorage.setItem('mastroQueryCatalog', JSON.stringify(this.state.panes.map(p => p.title.key)))
   }
 
   onChange = (activeKey) => {
@@ -115,7 +88,7 @@ export default class MastroAddCloseTabs extends React.Component {
     const panes = this.state.panes;
     let activeKey = newQueryID + this.newTabIndex
     for (let q of qc) {
-      const query = props.catalog.filter(query => query.queryID === q)[0]
+      const query = props.catalog.filter(query => query.queryID === q.queryID)[0]
       if (query) {
         this.newTabIndex++
         activeKey = newQueryID + this.newTabIndex
@@ -131,6 +104,7 @@ export default class MastroAddCloseTabs extends React.Component {
             renameTab={this.renameTab}
             setDirty={this.setDirty}
             tabKey={activeKey}
+            executionID={q.executionID}
           />,
           key: activeKey
         });
@@ -156,7 +130,6 @@ export default class MastroAddCloseTabs extends React.Component {
       });
     }
     this.setState({ panes, activeKey });
-    localStorage.removeItem('mastroQueryCatalog')
   }
 
 
@@ -199,6 +172,9 @@ export default class MastroAddCloseTabs extends React.Component {
       this.props.openF(null)
     }
     this.setState({ panes, activeKey });
+    let qc = JSON.parse(localStorage.getItem('mastroQueryCatalog')) || []
+    qc.push({ queryID: query.queryID, tab: activeKey })
+    localStorage.setItem('mastroQueryCatalog', JSON.stringify(qc))
   }
 
   remove = (targetKey) => {
@@ -232,12 +208,21 @@ export default class MastroAddCloseTabs extends React.Component {
     }
 
     this.setState({ panes, activeKey, modalVisible: false, toClose: null });
+    localStorage.setItem('mastroQueryCatalog',
+      JSON.stringify(
+        JSON.parse(
+          localStorage.getItem('mastroQueryCatalog')
+        ).filter(q => q.tab !== targetKey)
+      )
+    )
+
   }
 
   render() {
     return (
       <div>
         <Modal
+          closable={false}
           visible={this.state.modalVisible}
           onOk={() => this.closeTab(this.state.toClose)}
           onCancel={() => this.setState({ modalVisible: false })}

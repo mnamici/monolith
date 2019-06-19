@@ -17,15 +17,15 @@ export default class App extends Component {
   logout() {
     localStorage.removeItem('headers')
     this.setState({ logged: false })
-}
+  }
 
   render() {
     return (
       <HashRouter>
         <Layout>
-            {this.state.logged ? 
-              <MainLayout logout={this.logout.bind(this)}/> : 
-              <LoginPage login={this.login.bind(this)} />}
+          {this.state.logged ?
+            <MainLayout logout={this.logout.bind(this)} /> :
+            <LoginPage login={this.login.bind(this)} />}
         </Layout>
       </HashRouter>
     );

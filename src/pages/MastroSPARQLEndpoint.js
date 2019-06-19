@@ -69,7 +69,7 @@ export default class MastroSPARQLEndpoint extends React.Component {
             data = []
         this._isMounted && this.setState({
             mappings: data.mappingList,
-            loadedMappings: false
+            loadingMappings: false
         });
     }
 
@@ -87,13 +87,11 @@ export default class MastroSPARQLEndpoint extends React.Component {
     }
 
     render() {
-        if (this.state.loadingCatalog || this.state.loadedMappings) {
-            // console.log("LOADING")
-            return <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div>
-        }
-        else
-            return (
-                <Layout style={{ minHeight: 'calc(100vh - 25px)'}}>
+
+        return (
+            this.state.loadingCatalog || this.state.loadingMappings ?
+                <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
+                <Layout style={{ minHeight: 'calc(100vh - 25px)' }}>
                     <Sider
                         className='queryCatalog'
                         collapsed={this.state.collapsed}
@@ -131,7 +129,7 @@ export default class MastroSPARQLEndpoint extends React.Component {
                         </Content>
                     </Layout>
                 </Layout>
-            );
+        );
     }
 }
 
