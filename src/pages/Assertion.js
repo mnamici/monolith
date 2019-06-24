@@ -31,12 +31,12 @@ export default class Assertion extends React.Component {
                 <Entity entity={this.props.assertion.currentEntity} />
             } actions={!this.props.entity && [
                 <span onClick={
-                    () => console.log('edit')
+                    () => this.props.edit(this.props.assertion)
                 }>
                     edit
                 </span>,
                 <span onClick={
-                    () => console.log('delete')
+                    () => this.props.delete(this.props.assertion)
                 }>
                     delete
                 </span>

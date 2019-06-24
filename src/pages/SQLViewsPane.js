@@ -12,7 +12,8 @@ export default class SQLViewsPane extends React.Component {
     state = {
         current: null,
         visible: true,
-        visibleEdit: false
+        visibleEdit: false,
+        sqlView: null
     }
 
     toggle = () => {
@@ -21,9 +22,14 @@ export default class SQLViewsPane extends React.Component {
         });
     }
 
-    toggleEdit = () => {
+    toggleEdit = (sqlView) => {
         this.setState({
             visibleEdit: !this.state.visibleEdit,
+            drawer: <AddSQLView
+                ontology={this.props.ontology}
+                mappingID={this.props.mappingID}
+                sqlView={sqlView}
+                success={this.toggleEdit} />
         });
     }
 
@@ -32,6 +38,13 @@ export default class SQLViewsPane extends React.Component {
             current: viewID,
             visible: false
         })
+    }
+
+    delete = () => {
+        this.setState({
+            visible: true,
+            current: null
+        });
     }
 
     render() {
@@ -55,10 +68,7 @@ export default class SQLViewsPane extends React.Component {
                     visible={this.state.visibleEdit}
                     onClose={this.toggleEdit}
                     width={'50vw'}>
-                    <AddSQLView
-                        ontology={this.props.ontology}
-                        mappingID={this.props.mappingID}
-                        success={this.toggleEdit} />
+                    {this.state.drawer}
                 </Drawer>
                 {/* <Header style={{ backgroundColor: 'transparent', display: 'flex', justifyContent: 'center', lineHeight: 1.5, height: 32 }}>
                     <div style={{ display: 'inline-flex' }}>
@@ -78,7 +88,13 @@ export default class SQLViewsPane extends React.Component {
                         <div>
                             <Button type='primary' style={{ float: 'right', margin: 8 }} icon='menu-fold' onClick={this.toggle} />
                             {this.state.current !== null &&
-                                <SQLViewsPage ontology={this.props.ontology} mappingID={this.props.mappingID} viewID={this.state.current} />
+                                <SQLViewsPage
+                                    ontology={this.props.ontology}
+                                    mappingID={this.props.mappingID}
+                                    viewID={this.state.current}
+                                    edit={this.toggleEdit} 
+                                    delete={this.delete}
+                                    />
                             }
                         </div>
                     </Content>

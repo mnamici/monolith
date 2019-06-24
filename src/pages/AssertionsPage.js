@@ -68,7 +68,7 @@ export default class AssertionsPage extends React.Component {
         }
         else
             this._isMounted &&
-                this.setState({ data: data, loading: false, currentEntity: this.state.data[0].currentEntity })
+                this.setState({ data: data, loading: false, currentEntity: data[0].currentEntity })
     }
 
     loadedEntity = (entity) => {

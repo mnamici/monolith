@@ -1,10 +1,21 @@
 import React from 'react';
 import { Form, Button } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import { postMappingViews } from '../api/MastroApi';
+import { postMappingViews, putMappingView } from '../api/MastroApi';
 
 
 class AddSQLViewForm extends React.Component {
+    componentDidMount() {
+        if (this.props.sqlView) {
+            const values = this.props.sqlView
+            this.props.form.setFieldsValue({
+                name: values.sqlViewID,
+                description: values.sqlViewDescription,
+                code: values.sqlViewCode
+            })
+        }
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
@@ -14,7 +25,21 @@ class AddSQLViewForm extends React.Component {
                     sqlViewDescription: values.description,
                     sqlViewCode: values.code
                 }
-                postMappingViews(this.props.ontology.name, this.props.ontology.version, this.props.mappingID, sqlView, this.props.success);
+                if (this.props.sqlView.sqlViewID)
+                    putMappingView(
+                        this.props.ontology.name,
+                        this.props.ontology.version,
+                        this.props.mappingID,
+                        this.props.sqlView.sqlViewID,
+                        sqlView,
+                        this.props.success);
+                else
+                    postMappingViews(
+                        this.props.ontology.name,
+                        this.props.ontology.version,
+                        this.props.mappingID,
+                        sqlView,
+                        this.props.success);
             }
         })
     }

@@ -435,6 +435,41 @@ export function getMappingAssertion(name, version, mapping, entityID, callback) 
     });
 }
 
+export function putMappingAssertion(name, version, mapping, mapID, assertion, callback) {
+    if (fakeCalls) return callback(fakeData.assertions)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/assertion/' + mapID
+    const method = 'PUT'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        data: assertion,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function deleteMappingAssertion(name, version, mapping, mapID, callback) {
+    if (fakeCalls) return callback(fakeData.assertions)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/assertion/' + mapID
+    const method = 'DELETE'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
 export function postMappingAssertion(name, version, mapping, assertion, callback) {
     if (fakeCalls) return callback(fakeData.assertions)
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/assertions'
@@ -492,6 +527,41 @@ export function getMappingView(name, version, mapping, viewID, callback) {
     if (fakeCalls) return callback(fakeData.sqlView)
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/views/' + viewID
     const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function putMappingView(name, version, mapping, viewID, sqlView, callback) {
+    if (fakeCalls) return callback(fakeData.sqlView)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/view/' + viewID
+    const method = 'PUT'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        data: sqlView,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function deleteMappingView(name, version, mapping, viewID, callback) {
+    if (fakeCalls) return callback(fakeData.sqlView)
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/view/' + viewID
+    const method = 'DELETE'
     const encodedVersion = version//encodeURIComponent(version)
     axios({
         url: url,

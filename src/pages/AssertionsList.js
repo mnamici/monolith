@@ -2,6 +2,7 @@ import React from 'react';
 import { List, Button, Icon, Drawer } from 'antd';
 import Assertion from './Assertion';
 import AssertionForm from './AssertionForm';
+import { deleteMappingAssertion } from '../api/MastroApi';
 
 export default class AssertionsList extends React.Component {
     state = {
@@ -21,16 +22,27 @@ export default class AssertionsList extends React.Component {
         })
     }
 
-    open = (open) => {
+    edit = (open) => {
         this.setState({
             drawer: <AssertionForm
                 ontology={this.props.ontology}
-                mapping={this.props.mappingID}
+                mappingID={this.props.mappingID}
                 entity={this.props.currentEntity}
                 type={this.props.predicateType}
-                assertion={this.props.list.filter(d => d.id === open)[0]} />,
+                assertion={open}
+                rerender={this.props.rerender} />,
             visible: true
         })
+    }
+
+    delete = (assertion) => {
+        deleteMappingAssertion(
+            this.props.ontology.name,
+            this.props.ontology.version,
+            this.props.mappingID,
+            assertion.id,
+            this.props.rerender
+        )
     }
 
     render() {
@@ -51,7 +63,11 @@ export default class AssertionsList extends React.Component {
                     renderItem={(item, index) =>
                         item ?
                             <List.Item key={index}>
-                                <Assertion entity={this.props.entity} assertion={item} />
+                                <Assertion
+                                    entity={this.props.entity}
+                                    assertion={item}
+                                    edit={this.edit}
+                                    delete={this.delete} />
                             </List.Item>
                             :
                             <List.Item key={index}>

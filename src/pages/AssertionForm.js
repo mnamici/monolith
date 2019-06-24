@@ -2,7 +2,7 @@ import React from 'react'
 import {
     Form, Button, Col, Row, Input, Select,
 } from 'antd';
-import { getMappingViews, postMappingAssertion } from '../api/MastroApi';
+import { getMappingViews, postMappingAssertion, putMappingAssertion } from '../api/MastroApi';
 import { predicateTypes } from '../utils/utils';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/styles/hljs';
@@ -20,15 +20,13 @@ class AssertionForm extends React.Component {
             this.props.ontology.version,
             this.props.mappingID,
             this.loaded)
-        if (this.props.dataSource) {
-            const ds = this.props.dataSource
+        if (this.props.assertion) {
             this.props.form.setFieldsValue({
-                name: ds.id,
-                description: ds.description,
-                jdbcDriver: ds.jdbcDriver,
-                jdbcUrl: ds.jdbcUrl,
-                jdbcUsername: ds.jdbcUsername,
-                jdbcPassword: ds.jdbcPassword
+                template: this.props.assertion.mappingHead.firstArg,
+                domainTemplate: this.props.assertion.mappingHead.firstArg,
+                rangeTemplate: this.props.assertion.mappingHead.secondArg,
+                body: this.props.assertion.mappingBody.bodyFrom[0].sqlViewID
+
             })
         }
     }
@@ -46,13 +44,24 @@ class AssertionForm extends React.Component {
                     template: this.props.type === predicateTypes.c ? values.template : values.domainTemplate,
                     rangeTemplate: this.props.type === predicateTypes.c ? null : values.rangeTemplate,
                 }
-                postMappingAssertion(
-                    this.props.ontology.name,
-                    this.props.ontology.version,
-                    this.props.mappingID,
-                    assertion,
-                    this.props.rerender
-                )
+                if (this.props.assertion) {
+                    putMappingAssertion(
+                        this.props.ontology.name,
+                        this.props.ontology.version,
+                        this.props.mappingID,
+                        this.props.assertion.id,
+                        assertion,
+                        this.props.rerender
+                    )
+                }
+                else
+                    postMappingAssertion(
+                        this.props.ontology.name,
+                        this.props.ontology.version,
+                        this.props.mappingID,
+                        assertion,
+                        this.props.rerender
+                    )
             }
         });
     }

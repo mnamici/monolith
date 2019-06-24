@@ -9,9 +9,9 @@ export default class MappingBody extends React.Component {
         const from = this.props.body.bodyFrom.map((e, i) =>
             <Popover placement='right' content={
                 <SyntaxHighlighter language='sql' style={darcula}>
-                    {sqlFormatter.format(e.sqlViewCode)}
+                    {e && sqlFormatter.format(e.sqlViewCode)}
                 </SyntaxHighlighter>} key={i}>
-                {"\n  "+e.sqlViewID}
+                {e && ("\n  "+e.sqlViewID)}
                 {this.props.body.bodyFrom.length !== i + 1 && ", "}
             </Popover>
         )

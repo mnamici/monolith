@@ -146,7 +146,8 @@ td {
 }
 
 .mappingAssertion>.ant-card-body {
-  height: unset
+  height: 247px;
+  overflow: auto;
 }
 
 /* FIX HEIGHT OF CARDS IN WIKI ETC */
