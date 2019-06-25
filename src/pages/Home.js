@@ -3,68 +3,58 @@ import LastLoadedList from './LastLoadedList'
 import MainMenuDescriptions from './MainMenuDescriptions'
 import logo from '../scritta.svg'
 import { isChrome } from '../utils/utils';
+import { getLastLoadedOntologies, getLastLoadedKnowledgeGraphs } from '../api/MastroApi';
+import { Spin } from 'antd';
 
-const dataOntologies = [
-  // {
-  //   ontologyID: 'ACI',
-  //   versionID: '1.0',
-  //   ontologyDescription: 'First version of ACI ontology'
-  // },
-  // {
-  //   ontologyID: 'ISTAT',
-  //   versionID: '1.0',
-  //   ontologyDescription: 'First version of ISTAT ontology'
-  // },
-  // {
-  //   ontologyID: 'ACI',
-  //   versionID: '121.0',
-  //   ontologyDescription: 'Last version of ACI ontology'
-  // },
-];
-
-const dataKG = [
-  // {
-  //   title: 'KG1',
-  //   description: 'First version of ACI knowledge graph'
-  // },
-];
-
-const dataDataset = [
-  // {
-  //   title: 'DS1',
-  //   description: 'First version of ACI dataset'
-  // },
-  // {
-  //   title: 'DS2',
-  //   description: 'Second version of ACI dataset'
-  // },
-
-];
 
 
 export default class Home extends React.Component {
+  state = {
+    dataOntologies: [],
+    dataKG: [],
+    loadingOntos: true,
+    loadingKgs: true
+  }
+
+  componentDidMount() {
+    getLastLoadedOntologies(this.loadedOntologies)
+    getLastLoadedKnowledgeGraphs(this.loadedKnowledgeGraphs)
+  }
+
+  loadedOntologies = (ontologies) => {
+    this.setState({ dataOntologies: ontologies.reverse(), loadingOntos: false })
+  }
+
+  loadedKnowledgeGraphs = (kgs) => {
+    this.setState({ dataKG: kgs.reverse(), loadingKgs: false })
+  }
+
   render() {
 
     return (
-      <div style={{ height: 'calc(100vh - 25px)', overflow: 'auto', padding: 8 }}>
-        <div style={{ display: 'flex', justifyContent: 'center' }}><img src={logo} alt="logo" style={isChrome ? { height: 100 } : { maxHeight: 100 }} /></div>
-        {<LastLoadedList
-          ontology title="Recent Ontologies"
-          data={dataOntologies}
-          path="/open/ontology/info"
-          open={this.props.openOntology} />}
-        {<LastLoadedList
-          title="Recent Knowledge Graphs"
-          data={dataKG}
-          path="/kg"
-          open={() => null} />}
-        {<LastLoadedList
+      this.state.loadingOntos || this.state.loadingKgs ?
+        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
+
+        <div style={{ height: 'calc(100vh - 25px)', overflow: 'auto', padding: 8 }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}><img src={logo} alt="logo" style={isChrome ? { height: 100 } : { maxHeight: 100 }} /></div>
+          {<LastLoadedList
+            ontology
+            title="Recent Ontologies"
+            data={this.state.dataOntologies}
+            path="/open/ontology/info"
+            open={this.props.openOntology} />}
+          {<LastLoadedList
+            title="Recent Knowledge Graphs"
+            data={this.state.dataKG}
+            path="/open/kg/info"
+            open={this.props.openKg } />}
+          {/* {<LastLoadedList
           title="Recent Datasets"
           data={dataDataset}
           path="/dataset"
-          open={() => null} />}
-        <MainMenuDescriptions />
-      </div>
+          open={() => null} />} */}
+          <MainMenuDescriptions />
+        </div>
     );
   }
 }

@@ -81,8 +81,6 @@ export default class AssertionsList extends React.Component {
                                     visible={this.state.visible}
                                     style={{
                                         overflow: 'auto',
-                                        height: 'calc(100% - 108px)',
-                                        paddingBottom: '108px',
                                     }}
                                 >
                                     {this.state.drawer}

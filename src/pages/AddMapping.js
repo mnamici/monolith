@@ -72,8 +72,6 @@ class DrawerForm extends React.Component {
                         visible={this.state.visible}
                         style={{
                             overflow: 'auto',
-                            height: 'calc(100% - 108px)',
-                            paddingBottom: '108px',
                         }}
                     >
                         <div style={{ paddingBottom: 12 }}>

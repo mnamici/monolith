@@ -175,7 +175,7 @@ export default class MainLayout extends React.Component {
             </Breadcrumb> */}
             {/* <div style={{ padding: '0px' }}> */}
             <Route exact path="/" render={(props) =>
-              <Home {...props} openOntology={this.openCurrentOntology.bind(this)} />} />
+              <Home {...props} openOntology={this.openCurrentOntology.bind(this)} openKg={this.openCurrentKg.bind(this)}/>} />
 
             <Route path="/ontology" render={(props) =>
               <LoadOntologies {...props} open={this.openCurrentOntology.bind(this)} close={this.closeOntology.bind(this)} />} />

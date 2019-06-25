@@ -1,12 +1,10 @@
 @import '~antd/dist/antd.css';
 @import 'css/font/helveticaneucyr/style.css';
-@import 'css/font/comfortaa/style.css';
 @import 'css/font/hindguntur/style.css';
-@import 'css/font/neutra/style.css';
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import 'css/font/proxima_ssv/style.css';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 * {
-  font-family: 'Montserrat<', 'Open Sans', 'NeutraTextTF-Demi', 'HelveticaNeueCyr-Roman', 'Comfortaa Regular', 'Hind Guntur Regular', Arial, sans-serif;
+  font-family: 'ProximaNova', 'Open Sans', 'HelveticaNeueCyr-Roman', 'Hind Guntur Regular', Arial, sans-serif;
   /* font-size: 16px; */
 }
 

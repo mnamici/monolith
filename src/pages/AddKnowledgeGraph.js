@@ -135,9 +135,7 @@ class DrawerForm extends React.Component {
                     onClose={this.onClose}
                     visible={this.state.visible}
                     style={{
-                        overflow: 'auto',
-                        height: 'calc(100vh - 108px)',
-                        paddingBottom: '108px',
+                        overflow: 'auto'
                     }}
                 >
                     <Form layout="vertical">
@@ -224,7 +222,7 @@ class DrawerForm extends React.Component {
               </Button>
                     </div>
                 </Drawer>
-            </div >
+            </div>
         );
     }
 }

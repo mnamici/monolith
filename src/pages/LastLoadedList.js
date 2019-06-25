@@ -1,8 +1,15 @@
 import React from 'react';
 import { List, Card, Divider } from 'antd';
 import { NavLink } from 'react-router-dom'
+import moment from 'moment';
+import { dateFormat } from '../utils/utils';
 
 export default class LastLoadedList extends React.Component {
+    open = (item) => {
+        this.props.ontology ?
+            this.props.open(item.onto.ontologyName, item.onto.ontologyVersion) :
+            this.props.open(item.iri)
+    }
     render() {
         return (
             <div>
@@ -13,12 +20,16 @@ export default class LastLoadedList extends React.Component {
                     dataSource={this.props.data}
                     renderItem={item => (
                         <List.Item>
-                            <NavLink to={this.props.path} onClick={() => this.props.open(item.ontologyID, item.versionID)}>
+                            <NavLink to={this.props.path} onClick={() => this.open(item)}>
                                 <Card hoverable >
                                     <Card.Meta
                                         avatar={item.icon}
-                                        title={this.props.ontology?item.ontologyID + '-' + item.versionID:item.title} 
-                                        description={this.props.ontology?item.ontologyDescription: item.description} />
+                                        title={this.props.ontology ?
+                                            item.onto.ontologyName + '-' + item.onto.ontologyVersion :
+                                            item.iri}
+                                        description={this.props.ontology ?
+                                            item.ontologyDescription : item.description} />
+                                    <div className='ant-card-meta-description' style={{ float: 'right' }}>{moment(item.timestamp).format(dateFormat)}</div>
                                 </Card>
                             </NavLink>
                         </List.Item>

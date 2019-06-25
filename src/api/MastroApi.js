@@ -1046,3 +1046,33 @@ export function getDatasourceDrivers(callback) {
         manageError(err)
     });
 }
+
+export function getLastLoadedOntologies(callback) {
+    if (fakeCalls) { return callback([]) }
+    const url = localStorage.getItem('mastroUrl') + '/lastLoaded/ontology'
+    const method = 'GET'
+    axios({
+        url: url,
+        method: method,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
+export function getLastLoadedKnowledgeGraphs(callback) {
+    if (fakeCalls) { return callback([]) }
+    const url = localStorage.getItem('mastroUrl') + '/lastLoaded/knowledgeGraph'
+    const method = 'GET'
+    axios({
+        url: url,
+        method: method,
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}

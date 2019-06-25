@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Divider, Select, Button, Icon, Drawer, Spin } from 'antd';
+import { List, Select, Button, Icon, Drawer, Spin } from 'antd';
 import DatasourceCard from './DatasourceCard';
 import DatasourceForm from './DatasourceForm';
 import { getDatasources, deleteDatasources } from '../api/MastroApi';
@@ -55,7 +55,6 @@ export default class Datasources extends React.Component {
         return (
             this.state.loading ? <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
                 <div>
-                    <Divider>datasources</Divider>
                     <Select defaultValue='date' onChange={this.changeSort} style={{ padding: 6 }}>
                         <Option value='date' >
                             Sort by date
@@ -85,8 +84,6 @@ export default class Datasources extends React.Component {
                                             visible={this.state.visible}
                                             style={{
                                                 overflow: 'auto',
-                                                height: 'calc(100% - 108px)',
-                                                paddingBottom: '108px',
                                             }}
                                         >
                                             {this.state.drawer}

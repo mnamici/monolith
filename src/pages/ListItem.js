@@ -7,6 +7,8 @@ export default class ListItem extends React.Component {
     render() {
         const propsData = this.props.data || []
 
+        const popoverAxioms = localStorage.getItem('popoverAxioms') === 'true'
+
         let dataIndex = 'value'
         var data = []
         if (this.props.entity) {
@@ -14,14 +16,16 @@ export default class ListItem extends React.Component {
                 const entity = <Entity predicateType={this.props.predicateType} entity={propsData[i]} />
                 data.push({
                     key: propsData[i].entityID,
-                    value: this.props.axiom ?
+                    value: popoverAxioms && this.props.axiom ?
                         <Popover content={
                             <code>
-                                {this.props.axiom.first && `${this.props.axiom.owl}(${renderEntity(this.props.axiom.first)} ${renderEntity(propsData[i])})`}
-                                {this.props.axiom.second && `${this.props.axiom.owl}(${renderEntity(propsData[i])} ${renderEntity(this.props.axiom.second)})`}
+                                {this.props.axiom.first &&
+                                    `${renderEntity(this.props.axiom.first)} ${this.props.axiom.owl}: ${renderEntity(propsData[i])}`}
+                                {this.props.axiom.second &&
+                                    `${renderEntity(propsData[i])} ${this.props.axiom.owl}: ${renderEntity(this.props.axiom.second)}`}
                             </code>
                         }>
-                            {<div>{entity}</div>}
+                            <div>{entity}</div>
                         </Popover> :
                         entity
                 })
@@ -30,18 +34,21 @@ export default class ListItem extends React.Component {
         }
         else if (this.props.partecipation) {
             for (let i = 0; i < propsData.length; i++) {
+                const entity = <Entity predicateType={this.props.predicateType} entity={propsData[i].property} />
                 data.push({
                     key: propsData[i].property.entityID,
-                    value: <Popover content={
-                        <code>
-                            {this.props.predicateType === predicateTypes.op &&
-                                `${this.props.axiom.owl}(${renderEntity(this.props.axiom.first)} ObjectSomeValuesFrom(${renderEntity(propsData[i].property)} ${renderEntity(propsData[i].filler)}))`}
-                            {this.props.predicateType === predicateTypes.dp &&
-                                `${this.props.axiom.owl}(${renderEntity(this.props.axiom.first)} DataSomeValuesFrom(${renderEntity(propsData[i].property)} ${renderEntity(propsData[i].filler)}))`}
-                        </code>
-                    }>
-                        <div><Entity predicateType={this.props.predicateType} entity={propsData[i].property} /></div>
-                    </Popover>
+                    value: popoverAxioms ?
+                        <Popover content={
+                            <code>
+                                {(this.props.predicateType === predicateTypes.op || this.props.predicateType === predicateTypes.dp) &&
+                                    `${renderEntity(this.props.axiom.first)} ${this.props.axiom.owl}: ${propsData[i].filler.entityIRI === "http://www.w3.org/2002/07/owl#Thing" ?
+                                        'some ' + renderEntity(propsData[i].property) :
+                                        'only ' + renderEntity(propsData[i].filler)}}`}
+                            </code>
+                        }>
+                            <div>{entity}</div>
+                        </Popover> :
+                        entity
                 })
             }
         }
@@ -72,9 +79,11 @@ export default class ListItem extends React.Component {
                 data.push({
                     key: i,
                     value: <div>
-                        {this.props.axiom ?
+                        {popoverAxioms && this.props.axiom ?
                             <Popover content={
-                                <code>{`${propsData[i]}${this.props.axiom.type}(${renderEntity(this.props.axiom.entity)})`}</code>
+                                <code>
+                                    {`${propsData[i]}${this.props.axiom.type}(${renderEntity(this.props.axiom.entity)})`}
+                                </code>
                             }>
                                 {propsData[i]}
                             </Popover> :
