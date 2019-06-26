@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
 import { Menu, Icon } from 'antd';
+import { FaSitemap } from 'react-icons/fa';
 
 const MenuItem = Menu.Item;
 
@@ -24,7 +25,8 @@ export default class MainMenu extends React.Component {
                             style={{ color: 'rgba(255, 255, 255, 0.75)' }}
                         >
                             <span>
-                                <Icon type="block" />
+                                <Icon component={FaSitemap} />
+                                
                                 <span>Ontology</span>
                             </span>
                         </NavLink>
