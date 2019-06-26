@@ -5,10 +5,11 @@
   "homepage": "./",
   "main": "public/electron.js",
   "dependencies": {
+    "@svgr/webpack": "^4.3.0",
     "ajax-request": "^1.2.3",
     "ant-design": "^1.0.0",
     "antd": "^3.12.4",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "cytoscape": "^3.3.2",
     "electron-is-dev": "^1.0.1",
     "griddle-callback": "^0.2.1",

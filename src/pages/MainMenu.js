@@ -8,8 +8,8 @@ export default class MainMenu extends React.Component {
 
     render() {
 
-        const mastroUrl = localStorage.getItem('mastroUrl')
-        const helpUrl = mastroUrl ? mastroUrl.substring(0, mastroUrl.length - 9) + "HelpPage" : '/'
+        // const mastroUrl = localStorage.getItem('mastroUrl')
+        // const helpUrl = mastroUrl ? mastroUrl.substring(0, mastroUrl.length - 9) + "HelpPage" : '/'
 
         return (
             <div>
@@ -18,28 +18,28 @@ export default class MainMenu extends React.Component {
                     className='mainMenu'
                     mode="vertical">
                     <MenuItem key="ontology">
-                            <NavLink
-                                to="/ontology"
-                                activeStyle={{ fontWeight: "bold" }}
-                                style={{ color: 'rgba(255, 255, 255, 0.75)' }}
-                            >
-                                <span>
-                                    <Icon type="block" />
-                                    <span>Ontology</span>
-                                </span>
-                            </NavLink>
+                        <NavLink
+                            to="/ontology"
+                            activeStyle={{ fontWeight: "bold" }}
+                            style={{ color: 'rgba(255, 255, 255, 0.75)' }}
+                        >
+                            <span>
+                                <Icon type="block" />
+                                <span>Ontology</span>
+                            </span>
+                        </NavLink>
                     </MenuItem>
 
                     <MenuItem key="kg">
-                            <NavLink
-                                to="/kg"
-                                activeStyle={{ fontWeight: "bold" }}
-                                style={{ color: 'rgba(255, 255, 255, 0.75)' }}
-                            >
-                                <span><Icon type="deployment-unit" /><span>Knowledge Graph</span></span>
-                            </NavLink>
+                        <NavLink
+                            to="/kg"
+                            activeStyle={{ fontWeight: "bold" }}
+                            style={{ color: 'rgba(255, 255, 255, 0.75)' }}
+                        >
+                            <span><Icon type="deployment-unit" /><span>Knowledge Graph</span></span>
+                        </NavLink>
                     </MenuItem>
-                    <MenuItem key="dataset">
+                    {/* <MenuItem key="dataset">
                             <NavLink
                                 to="/dataset"
                                 activeStyle={{ fontWeight: "bold" }}
@@ -47,18 +47,20 @@ export default class MainMenu extends React.Component {
                             >
                                 <span><Icon type="table" /><span>Dataset</span></span>
                             </NavLink>
-                    </MenuItem>
+                    </MenuItem> */}
 
-                    <MenuItem
+                    {/* <MenuItem
                         style={{ marginTop: 'auto' }}
                         key="admin">
                         <NavLink to="/admin">
                             <Icon type="user" />
                             <span>Administration</span>
                         </NavLink>
-                    </MenuItem>
+                    </MenuItem> */}
 
-                    <MenuItem key="sett">
+                    <MenuItem
+                        style={{ marginTop: 'auto' }}
+                        key="sett">
                         <NavLink
                             to="/settings"
                             activeStyle={{ fontWeight: "bold", color: "white" }}
@@ -68,12 +70,12 @@ export default class MainMenu extends React.Component {
                             <span>Settings</span>
                         </NavLink>
                     </MenuItem>
-                    <MenuItem key="help">
+                    {/* <MenuItem key="help">
                         <a href={helpUrl} target="_blank" rel="noopener noreferrer">
                             <Icon type="question-circle" />
                             <span>Help</span>
                         </a>
-                    </MenuItem>
+                    </MenuItem> */}
                     <MenuItem key="Logout">
                         <div
                             style={{ color: 'rgba(255, 255, 255, 0.75)' }}

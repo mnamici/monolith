@@ -36,7 +36,9 @@ export default class Home extends React.Component {
         <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
 
         <div style={{ height: 'calc(100vh - 25px)', overflow: 'auto', padding: 8 }}>
-          <div style={{ display: 'flex', justifyContent: 'center' }}><img src={logo} alt="logo" style={isChrome ? { height: 100 } : { maxHeight: 100 }} /></div>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <img src={logo} alt="logo" style={isChrome ? { height: 100 } : { maxHeight: 100 }} />
+          </div>
           {<LastLoadedList
             ontology
             title="Recent Ontologies"
@@ -47,7 +49,7 @@ export default class Home extends React.Component {
             title="Recent Knowledge Graphs"
             data={this.state.dataKG}
             path="/open/kg/info"
-            open={this.props.openKg } />}
+            open={this.props.openKg} />}
           {/* {<LastLoadedList
           title="Recent Datasets"
           data={dataDataset}

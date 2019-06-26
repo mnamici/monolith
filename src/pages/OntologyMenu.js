@@ -68,12 +68,12 @@ export default class OntologyMenu extends React.Component {
                     </MenuItem> */}
                 {/* </SubMenu> */}
 
-                <MenuItem key="dataQuality">
+                {/* <MenuItem key="dataQuality">
                     <Link to="/open/ontology/dataQuality">
                         <Icon type="gold" />
                         <span>Data Quality</span>
                     </Link>
-                </MenuItem>
+                </MenuItem> */}
             </Menu>
         )
     }
