@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
 import { Menu, Icon } from 'antd';
-import { FaSitemap } from 'react-icons/fa';
+import { FaSitemap, FaCog, FaSignOutAlt, FaDiceD20 } from 'react-icons/fa';
 
 const MenuItem = Menu.Item;
 
@@ -26,7 +26,7 @@ export default class MainMenu extends React.Component {
                         >
                             <span>
                                 <Icon component={FaSitemap} />
-                                
+
                                 <span>Ontology</span>
                             </span>
                         </NavLink>
@@ -38,7 +38,10 @@ export default class MainMenu extends React.Component {
                             activeStyle={{ fontWeight: "bold" }}
                             style={{ color: 'rgba(255, 255, 255, 0.75)' }}
                         >
-                            <span><Icon type="deployment-unit" /><span>Knowledge Graph</span></span>
+                            <span>
+                                <Icon component={FaDiceD20} />
+                                <span>Knowledge Graph</span>
+                            </span>
                         </NavLink>
                     </MenuItem>
                     {/* <MenuItem key="dataset">
@@ -64,11 +67,11 @@ export default class MainMenu extends React.Component {
                         style={{ marginTop: 'auto' }}
                         key="sett">
                         <NavLink
-                            to="/settings"
+                            to="/settings/datasource"
                             activeStyle={{ fontWeight: "bold", color: "white" }}
                             style={{ color: 'rgba(255, 255, 255, 0.75)' }}
                         >
-                            <Icon type="setting" />
+                            <Icon component={FaCog} />
                             <span>Settings</span>
                         </NavLink>
                     </MenuItem>
@@ -83,7 +86,7 @@ export default class MainMenu extends React.Component {
                             style={{ color: 'rgba(255, 255, 255, 0.75)' }}
                             onClick={this.props.logout}
                         >
-                            <Icon type="logout" />
+                            <Icon component={FaSignOutAlt} />
                             <span>
                                 <span>Logout </span>
                                 <span style={{ fontWeight: 'bold' }}>{localStorage.getItem('username')}</span>

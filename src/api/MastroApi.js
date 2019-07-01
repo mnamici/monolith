@@ -954,6 +954,23 @@ export function downloadQueryResults(name, version, mapping, executionID, callba
     });
 }
 
+export function downloadConstructQueryResults(name, version, mapping, executionID, callback) {
+    if (fakeCalls) { return fakeData.queryResults(callback) }
+    const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/cquery/' + executionID + '/export'
+    const method = 'GET'
+    const encodedVersion = version//encodeURIComponent(version)
+    axios({
+        url: url,
+        method: method,
+        params: { version: encodedVersion },
+        headers: JSON.parse(localStorage.getItem('headers')),
+    }).then(function (response) {
+        callback(response.data)
+    }).catch(function (err) {
+        manageError(err)
+    });
+}
+
 export function getPrefixes(name, version, mapping, callback) {
     if (fakeCalls) { return callback([]) }
     const url = localStorage.getItem('mastroUrl') + '/owlOntology/' + name + '/version/mapping/' + mapping + '/prefixes'

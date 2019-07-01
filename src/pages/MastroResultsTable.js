@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Button, Drawer } from 'antd';
-import { getQueryResults, downloadQueryResults, getConstructQueryResults } from '../api/MastroApi';
+import { getQueryResults, downloadQueryResults, getConstructQueryResults, downloadConstructQueryResults } from '../api/MastroApi';
 import { saveFileInfo } from '../utils/utils'
 import LoadKnowledgeGraphs from './LoadKnowledgeGraphs';
 import { patchKnowledgeGraphUnionQueryOBDA } from '../api/KgApi';
@@ -41,12 +41,22 @@ export default class MastroResultsTable extends React.Component {
     }
 
     downloadResults = () => {
-        downloadQueryResults(
-            this.props.ontology.name,
-            this.props.ontology.version,
-            this.props.mappingID,
-            this.props.executionID,
-            saveFileInfo)
+        if (this.props.queryType === 'CONSTRUCT') {
+            downloadConstructQueryResults(
+                this.props.ontology.name,
+                this.props.ontology.version,
+                this.props.mappingID,
+                this.props.executionID,
+                saveFileInfo)
+        }
+        else {
+            downloadQueryResults(
+                this.props.ontology.name,
+                this.props.ontology.version,
+                this.props.mappingID,
+                this.props.executionID,
+                saveFileInfo)
+        }
     }
 
     startPolling() {
@@ -158,17 +168,20 @@ export default class MastroResultsTable extends React.Component {
         const knowledgeGraphDestinationQueryOBDA = {
             source: {
                 execution: {
-                    executionID: this.props.executionID
+                    queryID: this.props.executionID
                 },
                 source: {
-                    ontologyID: this.props.ontology.name,
-                    ontologyVersion: this.props.ontology.version,
-                    mapping: this.props.mappingID,
+                    ontologyID: {
+                        ontologyName: this.props.ontology.name,
+                        ontologyVersion: this.props.ontology.version,
+                    },
+
+                    mappingID: this.props.mappingID,
                 }
             },
             target: {
                 destination: kgIri,
-                namedGraph: kgIri,
+                // namedGraph: kgIri,
             }
         }
         patchKnowledgeGraphUnionQueryOBDA(knowledgeGraphDestinationQueryOBDA, this.onClose)

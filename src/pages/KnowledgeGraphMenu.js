@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import { Menu, Icon } from 'antd';
+import { FaInfoCircle, FaFileImport, FaEye, FaSearchengin } from 'react-icons/fa';
+
 
 const MenuItem = Menu.Item;
 
@@ -23,25 +25,25 @@ export default class KnowledgeGraphMenu extends React.Component {
                 mode="inline">
                 <MenuItem key="info" style={{ marginTop: 0 }}>
                     <Link to="/open/kg/info" >
-                        <Icon type="info" />
+                        <Icon component={FaInfoCircle} />
                         <span>Info</span>
                     </Link>
                 </MenuItem>
                 <MenuItem key="import" style={{ marginTop: 0 }}>
-                    <Link to="/open/kg/import" >
-                        <Icon type="import" />
+                    <Link to="/open/kg/import/files" >
+                        <Icon component={FaFileImport} />
                         <span>Import</span>
                     </Link>
                 </MenuItem>
                 <MenuItem key="explore" style={{ marginTop: 0 }}>
                     <Link to="/open/kg/explore/classes" >
-                        <Icon type="search" />
+                        <Icon component={FaEye} />
                         <span>Explore</span>
                     </Link>
                 </MenuItem>
                 <MenuItem key="endpoint">
                     <Link to="/open/kg/endpoint">
-                        <Icon type="database" />
+                        <Icon component={FaSearchengin} />
                         <span>Endpoint</span>
                     </Link>
                 </MenuItem>

@@ -7,6 +7,8 @@ import KnowledgeGraphSPARQLEndpoint from './KnowledgeGraphSPARQLEndpoint';
 import KnowledgeGraphImport from './KnowledgeGraphImport';
 import InstanceNavigation from './InstanceNavigationGroup';
 import KnowledgeGraphExplore from './KnowledgeGraphExplore';
+import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
+
 
 const { Content, Sider } = Layout;
 export default class CurrentKnowledgeGraph extends React.Component {
@@ -32,7 +34,7 @@ export default class CurrentKnowledgeGraph extends React.Component {
                         <Icon
                             className="ontologyTrigger"
                             style={{ display: "inherit", cursor: "pointer", color: 'white', padding: 4 }}
-                            type={this.state.collapsed ? 'right' : 'left'}
+                            component={this.state.collapsed ? FaChevronCircleRight : FaChevronCircleLeft}                            
                             onClick={this.toggle}
                         />
                     </div>
@@ -43,7 +45,7 @@ export default class CurrentKnowledgeGraph extends React.Component {
                         <div>
                             <Route path="/open/kg/info" render={(props) =>
                                 <KnowledgeGraphInfo {...props} kg={this.props.kg} />} />
-                            <Route path="/open/kg/import" render={(props) =>
+                            <Route path="/open/kg/import/:tab" render={(props) =>
                                 <KnowledgeGraphImport {...props} kg={this.props.kg} />} />
                             <Route path="/open/kg/explore/:tab" render={(props) =>
                                 <KnowledgeGraphExplore {...props} kg={this.props.kg} />} />

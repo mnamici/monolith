@@ -2,7 +2,7 @@ import React from 'react';
 import { Upload, Icon, message, Button } from 'antd';
 import { uploadOntologyFile, uploadMappingFile } from '../api/MastroApi';
 import { getBase64 } from '../utils/utils'
-import { putKnowledgeGraphFile } from '../api/KgApi';
+import { postKnowledgeGraphFile } from '../api/KgApi';
 
 function beforeUpload(file) {
   this.setState({ loading: true });
@@ -73,17 +73,10 @@ function beforeUpload(file) {
           fileName: file.name
         }
 
-        const kgFile = {
-          file: fileInfo,
-          destination: {
-            destination: this.props.current.kgIri,
-            namedGraph: 'http://named.com'
-          }
-        }
-
-        putKnowledgeGraphFile(kgFile, (success) => {
+        postKnowledgeGraphFile(this.props.current.kgIri, fileInfo, (success) => {
           if (success) {
             message.success('upload successfully.');
+            this.props.rerender(success)
           }
           this.setState({ loading: false });
         })

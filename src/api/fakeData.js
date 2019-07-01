@@ -1238,3 +1238,27 @@ export const instancePage = {
     subjects: getInstanceSubjectTripsGroup,
     objects: getInstanceObjectTripsGroup,
 }
+
+export const kgFiles = [
+    {
+        fileName: 'pippo.rdf',
+        imported: true,
+        uploadDate: Date.now(),
+        numberOfTriples: 1987,
+        importingTime: 1,
+    },
+    {
+        fileName: 'pluto.rdf',
+        imported: false,
+        uploadDate: Date.now() - 100000000,
+        numberOfTriples: -1,
+        importingTime: -1,
+    },
+    {
+        fileName: 'paperino.rdf',
+        imported: true,
+        uploadDate: (Date.now() - 10000000000),
+        numberOfTriples: 19872131,
+        importingTime: 198,
+    }
+]

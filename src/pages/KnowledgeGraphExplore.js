@@ -8,15 +8,6 @@ const {
 } = Layout;
 
 export default class KnowledgeGraphExplore extends React.Component {
-    state = {
-        collapsed: false,
-    };
-
-    toggle = () => {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
-    }
 
     render() {
         const currTab = [this.props.match.params.tab]

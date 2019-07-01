@@ -180,7 +180,7 @@ export default class KnowledgeGraphSPARQLTabPane extends React.Component {
     }
 
     startPolling(executionID) {
-        let qc = JSON.parse(localStorage.getItem('kgQueryCatalog'))
+        let qc = JSON.parse(localStorage.getItem('kgQueryCatalog')) || []
         let q = qc.filter(q => q.tab === this.state.tabKey)[0]
         if (q)
             q['executionID'] = executionID

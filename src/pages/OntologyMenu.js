@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import { Menu, Icon } from 'antd';
+import { FaInfoCircle, FaBookOpen, FaBezierCurve, FaLink, FaSearchengin } from 'react-icons/fa';
 
 const MenuItem = Menu.Item;
 
@@ -20,11 +21,11 @@ export default class OntologyMenu extends React.Component {
         return (
             <Menu
                 selectedKeys={this.state.currMenu}
-                style={{ background: 'transparent', padding: '0px 1px 0px 0px', height: 'calc(100vh - 47px)', overflow: 'auto'}}
+                style={{ background: 'transparent', padding: '0px 1px 0px 0px', height: 'calc(100vh - 47px)', overflow: 'auto' }}
                 mode="inline">
                 <MenuItem key="info" style={{ marginTop: 0 }}>
                     <Link to="/open/ontology/info" >
-                        <Icon type="info" />
+                        <Icon component={FaInfoCircle} />
                         <span>Info</span>
                     </Link>
                 </MenuItem>
@@ -34,20 +35,20 @@ export default class OntologyMenu extends React.Component {
                 > */}
                 <MenuItem key="wiki">
                     <Link to="/open/ontology/wiki" >
-                        <Icon type="book" />
+                        <Icon component={FaBookOpen} />
                         <span>Navigation</span>
                     </Link>
                 </MenuItem>
                 <MenuItem key="graphol">
                     <Link to="/open/ontology/graphol" >
-                        <Icon type="cluster" />
+                        <Icon component={FaBezierCurve} />
                         <span>Graphol</span>
                     </Link>
                 </MenuItem>
                 {/* </SubMenu> */}
                 <MenuItem key="mappings">
                     <Link to="/open/ontology/mappings" >
-                        <Icon type="to-top" />
+                        <Icon component={FaLink} />
                         <span>Mappings</span>
                     </Link>
                 </MenuItem>
@@ -58,7 +59,7 @@ export default class OntologyMenu extends React.Component {
 
                 <MenuItem key="endpoint">
                     <Link to="/open/ontology/endpoint">
-                        <Icon type="database" />
+                        <Icon component={FaSearchengin} />
                         <span>Endpoint</span>
                     </Link>
                 </MenuItem>

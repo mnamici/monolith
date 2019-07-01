@@ -16,10 +16,11 @@ export default class LastLoadedList extends React.Component {
                 <Divider>{this.props.title}</Divider>
                 <List
                     className='bigCards'
-                    grid={{ gutter: 16, lg: 4, md: 2, sm: 1, xs: 1 }}
+                    style={{ height: 227, overflow: 'auto' }}
+                    grid={{ gutter: 12, lg: 4, md: 2, sm: 1, xs: 1 }}
                     dataSource={this.props.data}
                     renderItem={item => (
-                        <List.Item>
+                        <List.Item style={{ paddingBottom: 6 }}>
                             <NavLink to={this.props.path} onClick={() => this.open(item)}>
                                 <Card hoverable >
                                     <Card.Meta

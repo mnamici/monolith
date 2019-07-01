@@ -190,6 +190,14 @@ td {
   height: 80vh
 }
 
+.ant-menu-inline-collapsed>.ant-menu-item .anticon {
+  font-size: 1.5em;
+}
+
+.ant-menu-inline-collapsed>.ant-menu-item {
+  padding: 0px 29.5px !important;
+}
+
 /***************************
 *                          *
 *                          *

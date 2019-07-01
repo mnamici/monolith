@@ -1,6 +1,6 @@
 import React from 'react';
 import LastLoadedList from './LastLoadedList'
-import MainMenuDescriptions from './MainMenuDescriptions'
+// import MainMenuDescriptions from './MainMenuDescriptions'
 import logo from '../scritta.svg'
 import { isChrome } from '../utils/utils';
 import { getLastLoadedOntologies, getLastLoadedKnowledgeGraphs } from '../api/MastroApi';
@@ -55,7 +55,7 @@ export default class Home extends React.Component {
           data={dataDataset}
           path="/dataset"
           open={() => null} />} */}
-          <MainMenuDescriptions />
+          {/* <MainMenuDescriptions /> */}
         </div>
     );
   }

@@ -9,6 +9,8 @@ import MastroSPARQLEndpoint from './MastroSPARQLEndpoint';
 import CurrentMapping from './CurrentMapping';
 import Graphol from './Grapholscape';
 import UnderConstruction from './UnderConstruction';
+import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
+
 
 const { Content, Sider } = Layout;
 export default class CurrentOntology extends React.Component {
@@ -34,7 +36,7 @@ export default class CurrentOntology extends React.Component {
                         <Icon
                             className="ontologyTrigger"
                             style={{ display: "inherit", cursor: "pointer", color: 'white', padding: 4 }}
-                            type={this.state.collapsed ? 'right' : 'left'}
+                            component={this.state.collapsed ? FaChevronCircleRight : FaChevronCircleLeft}
                             onClick={this.toggle}
                         />
                     </div>

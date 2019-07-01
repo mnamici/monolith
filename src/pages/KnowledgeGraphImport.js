@@ -1,33 +1,37 @@
 import React from 'react'
-import { Tabs } from 'antd';
+import { Route, NavLink } from 'react-router-dom'
+import { Menu, Layout } from 'antd';
 import ImportKnowledgeGraphRDF from './KnowledgeGraphImportRDF';
 
+const {
+    Header, Content,
+} = Layout;
+
 export default class KnowledgeGraphImport extends React.Component {
-    state = { currentTab: 'rdf' }
-
-
-    tabClick = (key) => {
-        this.setState({ currentTab: key })
-    }
-
 
     render() {
+        const currTab = [this.props.match.params.tab]
+
         return (
-            <div style={{ padding: 8 }}>
-                <Tabs 
-                    onTabClick={this.tabClick}
-                    tabBarStyle={{backgroundColor: 'transparent'}}>
-                    <Tabs.TabPane
-                        tab='RDF'
-                        key='rdf'>
-                        <ImportKnowledgeGraphRDF kg={this.props.kg} />
-                    </Tabs.TabPane>
-                    <Tabs.TabPane
-                        tab='Knowledge Graph'
-                        key='kg'>
-                    </Tabs.TabPane>
-                </Tabs>
-            </div>
+            <Layout>
+                <Header style={{ background: 'transparent' }}>
+                    <Menu
+                        style={{ background: 'transparent', borderBottom: 'solid 1px var(--highlight-gray)' }}
+                        defaultSelectedKeys={currTab}
+                        mode="horizontal"
+                    >
+                        <Menu.Item key="files">
+                            <NavLink to={"/open/kg/import/files"} >
+                                Files
+                            </NavLink>
+                        </Menu.Item>
+                    </Menu>
+                </Header>
+                <Content>
+                    <Route path="/open/kg/import/files" render={(props) =>
+                        <ImportKnowledgeGraphRDF {...props} kg={this.props.kg} />} />
+                </Content>
+            </Layout>
         )
     }
 }

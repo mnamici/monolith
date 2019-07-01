@@ -67,14 +67,15 @@ export default class InstanceNavigationObjectType extends React.Component {
 
         return (
             <div>
+
+                <ul>
+                    {values}
+                </ul>
                 {pages > 1 && <div style={{ float: 'right' }}>
                     {this.state.page !== 0 && <button className="ant-btn" onClick={this.previousPage}>&lt;</button>}
                     {<button className="ant-btn" style={pages > this.state.page + 1 ? {} : { visibility: 'hidden' }} onClick={this.nextPage}>&gt;</button>}
                     <br /><small style={{ float: 'right' }}>{this.state.page + 1} of {pages}</small>
                 </div>}
-                <ul>
-                    {values}
-                </ul>
             </div>
         )
     }

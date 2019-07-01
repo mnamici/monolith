@@ -14,7 +14,9 @@ export default class DownloadFile extends React.Component {
     else if (e.key === 'xml')
       downloadMappingFile(this.props.ontology.name, this.props.ontology.version, this.props.mapping, saveFileInfo)
     else if (e.key === 'rdf')
-      downloadKnowledgeGraph(this.props.kg.kgIri, "RDF", saveFileInfo)
+      downloadKnowledgeGraph(this.props.kg.kgIri, "RDF/XML", saveFileInfo)
+    else if (e.key === 'ntriples')
+      downloadKnowledgeGraph(this.props.kg.kgIri, "N-TRIPLE", saveFileInfo)
   }
 
   render() {

@@ -161,7 +161,7 @@ export default class MainLayout extends React.Component {
               setcurrent={this.setCurrent.bind(this)}
               closeOntology={this.closeOntology.bind(this)}
               closeKnowledgeGraph={this.closeKnowledgeGraph.bind(this)}
-            logout={this.props.logout}
+              logout={this.props.logout}
             />
 
           </div>
@@ -175,7 +175,7 @@ export default class MainLayout extends React.Component {
             </Breadcrumb> */}
             {/* <div style={{ padding: '0px' }}> */}
             <Route exact path="/" render={(props) =>
-              <Home {...props} openOntology={this.openCurrentOntology.bind(this)} openKg={this.openCurrentKg.bind(this)}/>} />
+              <Home {...props} openOntology={this.openCurrentOntology.bind(this)} openKg={this.openCurrentKg.bind(this)} />} />
 
             <Route path="/ontology" render={(props) =>
               <LoadOntologies {...props} open={this.openCurrentOntology.bind(this)} close={this.closeOntology.bind(this)} />} />
@@ -196,7 +196,7 @@ export default class MainLayout extends React.Component {
             } />
             <Route path="/dataset" component={() => <UnderConstruction />} />
             <Route path="/admin" component={() => <UnderConstruction />} />
-            <Route path="/settings" component={() => <Settings />} />
+            <Route path="/settings/:tab" render={(props) => <Settings {...props} />} />
             {/* </div> */}
           </Content>
           <Footer style={{ padding: '2px', textAlign: 'center' }}>

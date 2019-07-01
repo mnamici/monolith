@@ -9,7 +9,7 @@ export default class KnowledgeGraphInstances extends React.Component {
     }
 
     componentDidMount() {
-        getInstances(this.props.kg.kgIri, this.props.kgClass, this.loaded)
+        getInstances(this.props.kg.kgIri, this.props.kgClass, this.props.namedGraph, this.loaded)
     }
 
     loaded = (data) => {
