@@ -80,7 +80,7 @@ export default class MastroResultsTable extends React.Component {
                 data.push(object);
             }
         }
-        else
+        else {
             for (let i = 0; i < results.results.length; i++) {
                 let object = {};
                 for (let j = 0; j < results.results[i].length; j++) {
@@ -89,7 +89,9 @@ export default class MastroResultsTable extends React.Component {
                 object['url'] = i;
                 data.push(object);
             }
-        this.setState({ headTerms: results.headTerms, data: data, loading: this.state.loading && results.results.length < this.state.pagination.defaultPageSize });
+        }
+        const columns = results.headTerms.map(item => ({ title: item, dataIndex: item }));
+        this.setState({ headTerms: columns, data: data, loading: this.state.loading && results.results.length < this.state.pagination.defaultPageSize });
     }
 
     handleTableChange = (pagination, filters, sorter) => {
@@ -188,42 +190,42 @@ export default class MastroResultsTable extends React.Component {
     }
 
     render() {
-        const columns = this.state.headTerms.map(item => ({ title: item, dataIndex: item }));
         return (
             <div>
                 <Drawer
                     visible={this.state.visible}
                     closable={false}
                     onClose={this.onClose}
-                    width='35vw'
+                    width='45vw'
                 >
                     {this.state.drawer}
                 </Drawer>
                 <Table
                     className='results'
                     style={{ minHeight: 200, marginBottom: 8, overflow: 'auto' }}
-                    columns={columns}
+                    columns={this.state.headTerms}
                     rowKey={record => record.url}
                     dataSource={this.state.data}
                     pagination={this.state.pagination}
                     loading={this.state.loading}
                     onChange={this.handleTableChange}
                 />
-                {(this.props.queryType === 'CONSTRUCT' || this.props.numberOfResults > 0) && <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: '-57px 0px 30px 1px' }}>
-                    {this.props.queryType === 'CONSTRUCT' &&
-                        <Button
-                            style={{ marginRight: 8 }}
-                            type='primary' icon='upload'
-                            onClick={this.addToKnowledgeGraph}
-                        >
-                            Export to Knowledge Graph
+                {(this.props.queryType === 'CONSTRUCT' || this.props.numberOfResults > 0) &&
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: '-57px 0px 30px 1px' }}>
+                        {this.props.queryType === 'CONSTRUCT' &&
+                            <Button
+                                style={{ marginRight: 8 }}
+                                type='primary' icon='upload'
+                                onClick={this.addToKnowledgeGraph}
+                            >
+                                Export to Knowledge Graph
                         </Button>
-                    }
-                    <Button type='primary' icon='download' onClick={this.downloadResults}>
-                        Download Query Results
+                        }
+                        <Button type='primary' icon='download' onClick={this.downloadResults}>
+                            Download Query Results
                     </Button>
-                    <span style={{ paddingLeft: 8 }} className='results'>{this.props.numberOfResults} results</span>
-                </div>}
+                        <span style={{ paddingLeft: 8 }} className='results'>{this.props.numberOfResults} results</span>
+                    </div>}
             </div>
         );
     }

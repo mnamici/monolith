@@ -5,24 +5,22 @@
   "homepage": "./",
   "main": "public/electron.js",
   "dependencies": {
-    "ajax-request": "^1.2.3",
-    "ant-design": "^1.0.0",
-    "antd": "^3.12.4",
+    "antd": "^3.20.0",
     "axios": "^0.19.0",
-    "cytoscape": "^3.3.2",
-    "electron-is-dev": "^1.0.1",
+    "cytoscape": "^3.7.3",
+    "electron-is-dev": "^1.1.0",
     "griddle-callback": "^0.2.1",
-    "griddle-react": "^0.8.1",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-dropdown-tree-select": "^1.16.0-beta.1",
+    "griddle-react": "^0.8.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-dropdown-tree-select": "^1.20.1",
     "react-icons": "^3.7.0",
     "react-infinite-scroller": "^1.2.4",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.8",
-    "react-syntax-highlighter": "^10.1.2",
-    "sql-formatter": "^2.3.2",
-    "typescript": "^3.3.3333",
+    "react-syntax-highlighter": "^10.3.5",
+    "sql-formatter": "^2.3.3",
+    "typescript": "^3.5.2",
     "yasgui-yasqe": "^2.11.22"
   },
   "scripts": {
@@ -44,9 +42,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "concurrently": "^4.1.0",
-    "electron": "^4.0.2",
-    "electron-builder": "^20.38.5",
+    "concurrently": "^4.1.1",
+    "electron": "^4.2.5",
+    "electron-builder": "^20.44.4",
     "wait-on": "^3.2.0"
   },
   "build": {

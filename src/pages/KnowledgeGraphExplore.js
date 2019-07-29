@@ -25,7 +25,7 @@ export default class KnowledgeGraphExplore extends React.Component {
                                 Classes
                             </NavLink>
                         </Menu.Item>
-                        <Menu.Item key="browse">
+                        {/* <Menu.Item key="browse">
                             <NavLink to={"/open/kg/explore/browse"}>
                                 Browse
                             </NavLink>
@@ -34,7 +34,7 @@ export default class KnowledgeGraphExplore extends React.Component {
                             <NavLink to={"/open/kg/explore/graphs"}>
                                 Graphs
                             </NavLink>
-                        </Menu.Item>
+                        </Menu.Item> */}
                     </Menu>
                 </Header>
                 <Content>

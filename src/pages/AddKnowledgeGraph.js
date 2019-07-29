@@ -1,26 +1,13 @@
 import React from 'react'
 import {
-    Drawer, Form, Button, Col, Row, Input, Icon, Divider, Checkbox,
+    Form, Button, Col, Row, Input, Divider, Checkbox,
 } from 'antd';
 
 import { postKnowledgeGraph } from '../api/KgApi'
 import { regexIri } from '../utils/utils';
 
 class DrawerForm extends React.Component {
-    state = { visible: false, showRH: true };
-
-    showDrawer = () => {
-        this.setState({
-            visible: true,
-        });
-    };
-
-    onClose = () => {
-        this.setState({
-            visible: false,
-        });
-        this.props.rerender()
-    };
+    state = { showRH: true };
 
     submit = () => {
         this.props.form.validateFieldsAndScroll((err, values) => {
@@ -126,107 +113,94 @@ class DrawerForm extends React.Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <div>
-                <Button type='primary' style={{ height: 270, width: '100%' }} onClick={this.showDrawer}>
-                    <Icon type="plus" /> Add Knowledge Graph
-                </Button>
-                <Drawer
-                    title="Create a new knowledge graph"
-                    width='40vw'
-                    onClose={this.onClose}
-                    visible={this.state.visible}
+                <Form layout="vertical">
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Form.Item label="Knowledge Graph IRI">
+                                {getFieldDecorator('iri', {
+                                    rules: [
+                                        { required: true, message: 'Please enter knowledge graph iri' },
+                                        { pattern: regexIri, message: 'Not a valid IRI' }],
+                                })(<Input placeholder="Please enter knowledge graph IRI" />)}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item label="Title">
+                                {getFieldDecorator('title', {
+                                    rules: [
+                                        {
+                                            required: true,
+                                            message: 'Please enter knowledge graph title',
+                                        },
+                                    ],
+                                })(<Input placeholder="Please enter knowledge graph title" />)}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item label="Description">
+                                {getFieldDecorator('description', {
+                                    rules: [
+                                        {
+                                            required: false,
+                                            message: 'Please enter knowledge graph description',
+                                        },
+                                    ],
+                                })(<Input.TextArea rows={4} placeholder="Please enter knowledge graph description" />)}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Divider>Publisher</Divider>
+                    {this.getAgentForm('publisher')}
+                    <Divider>Rights Holder</Divider>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item>
+                                {getFieldDecorator('sameAgents', {
+                                    rules: [
+                                        {
+                                            required: false,
+                                            message: 'Please enter knowledge graph description',
+                                        },
+                                    ],
+                                })(
+                                    <Checkbox onChange={() => this.setState({ showRH: !this.state.showRH })}>
+                                        Same as Publisher
+                                        </Checkbox>
+                                )}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    {this.state.showRH && this.getAgentForm('rightsHolder')}
+                </Form>
+                <div
                     style={{
-                        overflow: 'auto'
+                        position: 'absolute',
+                        left: 0,
+                        bottom: 0,
+                        width: '100%',
+                        borderTop: '1px solid #e9e9e9',
+                        padding: '10px 16px',
+                        textAlign: 'right',
+                        background: 'var(--light)'
+
                     }}
                 >
-                    <Form layout="vertical">
-                        <Row gutter={16}>
-                            <Col span={12}>
-                                <Form.Item label="Knowledge Graph IRI">
-                                    {getFieldDecorator('iri', {
-                                        rules: [
-                                            { required: true, message: 'Please enter knowledge graph iri' },
-                                            { pattern: regexIri, message: 'Not a valid IRI' }],
-                                    })(<Input placeholder="Please enter knowledge graph IRI" />)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={16}>
-                            <Col span={24}>
-                                <Form.Item label="Title">
-                                    {getFieldDecorator('title', {
-                                        rules: [
-                                            {
-                                                required: true,
-                                                message: 'Please enter knowledge graph title',
-                                            },
-                                        ],
-                                    })(<Input placeholder="Please enter knowledge graph title" />)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={16}>
-                            <Col span={24}>
-                                <Form.Item label="Description">
-                                    {getFieldDecorator('description', {
-                                        rules: [
-                                            {
-                                                required: false,
-                                                message: 'Please enter knowledge graph description',
-                                            },
-                                        ],
-                                    })(<Input.TextArea rows={4} placeholder="Please enter knowledge graph description" />)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Divider>Publisher</Divider>
-                        {this.getAgentForm('publisher')}
-                        <Divider>Rights Holder</Divider>
-                        <Row gutter={16}>
-                            <Col span={24}>
-                                <Form.Item>
-                                    {getFieldDecorator('sameAgents', {
-                                        rules: [
-                                            {
-                                                required: false,
-                                                message: 'Please enter knowledge graph description',
-                                            },
-                                        ],
-                                    })(
-                                        <Checkbox onChange={() => this.setState({ showRH: !this.state.showRH })}>
-                                            Same as Publisher
-                                        </Checkbox>
-                                    )}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        {this.state.showRH && this.getAgentForm('rightsHolder')}
-                    </Form>
-                    <div
-                        style={{
-                            position: 'absolute',
-                            left: 0,
-                            bottom: 0,
-                            width: '100%',
-                            borderTop: '1px solid #e9e9e9',
-                            padding: '10px 16px',
-                            textAlign: 'right',
-                            background: 'var(--light)'
-
-                        }}
-                    >
-                        <Button onClick={this.onClose} style={{ marginRight: 8 }}>
-                            Cancel
+                    <Button onClick={this.props.onClose} style={{ marginRight: 8 }}>
+                        Cancel
                         </Button>
-                        <Button onClick={this.submit} type="primary">
-                            Submit
-              </Button>
-                    </div>
-                </Drawer>
+                    <Button onClick={this.submit} type="primary">
+                        Submit
+                    </Button>
+                </div>
             </div>
         );
     }
 }
 
-const AddKnowledgeGraph = Form.create()(DrawerForm);
+const AddKnowledgeGraph = Form.create({name: 'addKG'})(DrawerForm);
 
 export default AddKnowledgeGraph;

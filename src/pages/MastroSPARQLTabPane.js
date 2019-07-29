@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Button, Progress, List, Popover, Modal, message } from 'antd';
+import { Switch, Button, Progress, Popover, Modal, message } from 'antd';
 import YASQE from 'yasgui-yasqe'
 import '../css/yasqe.min.css'
 import { Input } from 'antd';
@@ -29,6 +29,7 @@ const POLLING_TIME = 1000
 
 export default class MastroSPARQLTabPane extends React.Component {
     state = {
+        showResults: false,
         modalVisible: false,
         modalConfirmLoading: false,
         reasoning: true,
@@ -288,7 +289,11 @@ export default class MastroSPARQLTabPane extends React.Component {
                 this.props.ontology.version,
                 this.state.selectedMappingID,
                 this.state.executionID,
-                this.checkStatus.bind(this))
+                this.checkStatus.bind(this),
+                (err) => {
+                    message.error(err ? err.message : '')
+                    this.stopPolling()
+                })
         }
         else
             getQueryStatus(
@@ -407,98 +412,84 @@ export default class MastroSPARQLTabPane extends React.Component {
 
     render() {
         const enableRun = this.state.runningMappingIDs.includes(this.state.selectedMappingID)
-        const elements = [
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <MappingSelector
-                    mappings={this.props.mappings}
-                    onSelection={this.onSelectMapping.bind(this)}
-                    selected={this.state.selectedMappingID}
-                    loadingMastro={this.state.loadingMastro}
-                    runningMappingIDs={this.state.runningMappingIDs}
-                    startMastro={this.startMastro}
-                    stopMastro={this.stopMastro}
-
-                />
-            </div>,
-            <Progress percent={this.state.status.percentage} />,
-            <div id={"sparql_" + this.props.num} />,
-            <TextArea
-                style={{ margin: '12px 0px 12px 0px' }}
-                placeholder="Description"
-                autosize
-                value={this.state.queryDescription}
-                onChange={this.changeDescription}
-            />,
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                marginBottom: 16
-            }}>
-                <div>
-                    <Button.Group>
-                        <Button
-                            type="primary"
-                            icon="play-circle"
-                            loading={this.state.loading}
-                            onClick={this.start.bind(this)}
-                            disabled={!enableRun}
-                        >
-                            Run</Button>
-                        <Button
-                            type="danger"
-                            icon="stop"
-                            onClick={this.stop.bind(this)}
-                            disabled={!this.state.loading}
-                        >Stop</Button>
-                    </Button.Group>
-                    <span style={{ padding: '0px 10px', color: 'rgb(255, 255, 255, 0.75)' }}>Reasoning</span>
-                    <Popover content='Toggle Reasoning'>
-                        <Switch checked={this.state.reasoning} onClick={this.toggleReasoning} disabled={!enableRun} />
-                    </Popover>
-                </div>
-                <Button
-                    type='primary'
-                    icon="save"
-                    onClick={this.showModal}
-                >
-                    Store in catalog
-                </Button>
-            </div>
-        ]
-
-        if (this.state.showResults) {
-            elements.push(
-                <Results
-                    ontology={this.props.ontology}
-                    mappingID={this.state.selectedMappingID}
-                    executionID={this.state.executionID}
-                    numberOfResults={this.state.status.numResults}
-                    running={this.state.loading}
-                    queryType={this.yasqe.getQueryType()}
-                />)
-            if (this.yasqe.getQueryType() !== 'CONSTRUCT')
-                elements.push(<QueryExecutionReport
-                    ontology={this.props.ontology}
-                    mappingID={this.state.selectedMappingID}
-                    executionID={this.state.executionID}
-                    running={this.state.loading}
-                    status={this.state.status} />)
-        }
 
         return (
             <div style={{ padding: '0px 8px 8px 8px', height: 'calc(100vh - 81px)', overflow: 'auto' }}>
-                <List
-                    grid={{ gutter: 8, column: 1 }}
-                    dataSource={elements}
-                    renderItem={item => (
-                        <List.Item>
-                            {item}
-                        </List.Item>
-                    )}
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <MappingSelector
+                        mappings={this.props.mappings}
+                        onSelection={this.onSelectMapping.bind(this)}
+                        selected={this.state.selectedMappingID}
+                        loadingMastro={this.state.loadingMastro}
+                        runningMappingIDs={this.state.runningMappingIDs}
+                        startMastro={this.startMastro}
+                        stopMastro={this.stopMastro}
+                    />
+                </div>
+                <Progress percent={this.state.status.percentage} />
+                <div id={"sparql_" + this.props.num} />
+                <TextArea
+                    style={{ margin: '12px 0px 12px 0px' }}
+                    placeholder="Description"
+                    autosize
+                    value={this.state.queryDescription}
+                    onChange={this.changeDescription}
                 />
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    marginBottom: 16
+                }}>
+                    <div>
+                        <Button.Group>
+                            <Button
+                                type="primary"
+                                icon="play-circle"
+                                loading={this.state.loading}
+                                onClick={this.start.bind(this)}
+                                disabled={!enableRun}
+                            >
+                                Run</Button>
+                            <Button
+                                type="danger"
+                                icon="stop"
+                                onClick={this.stop.bind(this)}
+                                disabled={!this.state.loading}
+                            >Stop</Button>
+                        </Button.Group>
+                        <span style={{ padding: '0px 10px', color: 'rgb(255, 255, 255, 0.75)' }}>Reasoning</span>
+                        <Popover content='Toggle Reasoning'>
+                            <Switch checked={this.state.reasoning} onClick={this.toggleReasoning} disabled={!enableRun} />
+                        </Popover>
+                    </div>
+                    <Button
+                        type='primary'
+                        icon="save"
+                        onClick={this.showModal}
+                    >
+                        Store in catalog
+                    </Button>
+                </div>
+                {this.state.showResults &&
+                    <Results
+                        ontology={this.props.ontology}
+                        mappingID={this.state.selectedMappingID}
+                        executionID={this.state.executionID}
+                        numberOfResults={this.state.status.numResults}
+                        running={this.state.loading}
+                        queryType={this.yasqe && this.yasqe.getQueryType()}
+                    />}
+                {this.yasqe && this.yasqe.getQueryType() !== 'CONSTRUCT' &&
+                    <QueryExecutionReport
+                        ontology={this.props.ontology}
+                        mappingID={this.state.selectedMappingID}
+                        executionID={this.state.executionID}
+                        running={this.state.loading}
+                        status={this.state.status} />
+                }
                 <Modal
                     closable={false}
                     title="Insert query ID"

@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { List, Card, Divider as h1, Popover, Spin } from 'antd';
+import { List, Card, Popover, Spin, Button, Icon, Drawer } from 'antd';
 import { getKnowledgeGraphs, downloadKnowledgeGraph, deleteKnowledgeGraph } from '../api/KgApi';
 import { saveFileInfo, dateFormat } from '../utils/utils';
 import moment from 'moment'
@@ -10,6 +10,8 @@ export default class LoadKnowledgeGraphs extends React.Component {
     _isMounted = false;
     state = {
         data: [],
+        visible: false,
+        drawer: null,
         loading: true
     }
 
@@ -21,6 +23,21 @@ export default class LoadKnowledgeGraphs extends React.Component {
     componentWillUnmount() {
         this._isMounted = false
     }
+
+    showDrawer = () => {
+        this.setState({
+            visible: true,
+            drawer: <AddKnowledgeGraph onClose={this.onClose} />
+        });
+    };
+
+    onClose = () => {
+        this.setState({
+            visible: false,
+            drawer: null
+        });
+        this.requestKnowledgeGraphs()
+    };
 
     requestKnowledgeGraphs() {
         this._isMounted && this.setState({ loading: true })
@@ -39,9 +56,22 @@ export default class LoadKnowledgeGraphs extends React.Component {
 
     render() {
         return (
-            this.state.loading ? <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}> <Spin size='large' /></div> :
+            this.state.loading ? <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 36 }}>
+                <Spin size='large' /></div> :
 
                 <div>
+                    <Drawer
+                        title="Create a new knowledge graph"
+                        width='35vw'
+                        closable={false}
+                        onClose={this.onClose}
+                        visible={this.state.visible}
+                    // style={{
+                    //     overflow: 'auto'
+                    // }}
+                    >
+                        {this.state.drawer}
+                    </Drawer>
                     <div style={{ textAlign: 'center', padding: 6 }}>
                         <h1>Knowledge Graphs</h1>
                     </div>
@@ -104,7 +134,9 @@ export default class LoadKnowledgeGraphs extends React.Component {
                                 </List.Item>
                             ) : (
                                     <List.Item>
-                                        <AddKnowledgeGraph rerender={this.requestKnowledgeGraphs.bind(this)} />
+                                        <Button type='primary' style={{ height: 270, width: '100%' }} onClick={this.showDrawer}>
+                                            <Icon type="plus" /> Add Knowledge Graph
+                                        </Button>
                                     </List.Item>
                                 )
                         }
